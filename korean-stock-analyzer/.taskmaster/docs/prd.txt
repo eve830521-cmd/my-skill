@@ -1,0 +1,25 @@
+Project: my-skill (Korean Stock Analyzer) Reframing
+
+Goals:
+Re-architect the Korean Stock Analyzer skill to focus on deep, fact-based verification of company fundamentals (Phase 1) while streamlining the story reading process (Phase 2) to eliminate wasted time on broad web searches.
+
+Key Problems to Solve & Improvements:
+1. Phase 2 (Story Reader) Inefficiency:
+   - Current Issue: Searching Naver Finance for 6-month news/reports takes too long and wastes tokens/energy on irrelevant data.
+   - Solution: Eliminate broad web scraping in Phase 2. Restrict Phase 2 to targeted, high-quality inputs (e.g., relying on the user to provide specific target narratives or a single key analyst report) and shift the focus to strictly cross-referencing the "narratives" against the "numbers" verified in Phase 1.
+
+2. Phase 1 (Company Decoder) Depth & Quality:
+   - Current Issue: Needs to be more rigorous.
+   - Solution: Elevate Phase 1 to be the absolute core of the analysis. Deeply verify 5-year business reports, recent quarterly, and semi-annual reports. The ultimate goal is to prove whether the market's narrative is a realistic scenario backed by numerical evidence. Manual input via NotebookLM is acceptable and encouraged for high quality.
+
+3. NotebookLM Preprocessing Errors:
+   - Current Issue: Summarizing 5-year reports via NotebookLM works, but adding industry analysis reports causes errors in NotebookLM (likely context limits).
+   - Solution: Revise `notebooklm_prompts.md`. Split the data processing into a "Two-Track Prompting System" in NotebookLM:
+     Track A: Corporate Fundamentals Prompt (5-year filings).
+     Track B: Industry Analysis Prompt (Sector reports).
+     The Antigravity skill will then ingest both Track A and Track B markdown files in Phase 1 and merge them, rather than forcing NotebookLM to do it all at once.
+
+Action Items:
+- Redesign SKILL.md to reflect the new pipeline (Two-Track Phase 1 ingestion, streamlined Phase 2).
+- Rewrite notebooklm_prompts.md to introduce the split-prompt strategy for NotebookLM.
+- Update generate_html.py and the report templates to clearly contrast "Market Narrative" vs "Fact (Numbers)".

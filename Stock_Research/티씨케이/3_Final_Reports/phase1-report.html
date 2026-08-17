@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>🔍 Phase 1: 기업 해독기 (심층 팩트체크 코어)</h1>
+<p><strong>분석 대상</strong>: 티씨케이 (TCK)
+<strong>기준 데이터</strong>: 최근 5년 DART 공시 (Track A) + 산업 딥리서치 (Track B)</p>
+<hr />
+<h2>1. 비즈니스 모델 및 돈 버는 구조</h2>
+<p>[공시 팩트] 티씨케이는 반도체 드라이 에칭(식각) 공정에 필수적으로 사용되는 소모성 고순도 부품인 <strong>Solid SiC 링</strong>을 전문으로 제조합니다. 전체 매출의 약 90%가 이 단일 품목에서 발생합니다.</p>
+<h3>🔗 밸류체인 다이어그램</h3>
+<pre><code class="language-mermaid">graph LR
+    A[&quot;원재료 100% 독점 수입 (TOKAI CARBON)&quot;] --&gt; B[&quot;고순화 및 CVD SiC 코팅 제조 (안성공장)&quot;]
+    B --&gt; C[&quot;글로벌 4대 식각장비/소자 제조사 (매출 70.9%)&quot;]
+
+    style A fill:#fee2e2,stroke:#f87171
+    style B fill:#bfdbfe,stroke:#93c5fd
+    style C fill:#dcfce7,stroke:#86efac
+</code></pre>
+<h2>2. 주요 제품별 매출 비중 추이 (2021~2026.1Q)</h2>
+<p>[공시 팩트] Solid SiC 부품의 지배력이 매년 상승하여 압도적인 포션을 차지하고 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용 (2025년 기준)</th>
+<th style="text-align: left;">비고 (과거 대비 트렌드)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Solid SiC (식각용 링 등)</strong></td>
+<td style="text-align: left;">254,804백만 원 (<strong>84.6%</strong>)</td>
+<td style="text-align: left;">26년 1분기 기준 <strong>89.6%</strong>까지 비중 극대화</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Graphite (반도체/태양광)</strong></td>
+<td style="text-align: left;">33,729백만 원 (<strong>11.2%</strong>)</td>
+<td style="text-align: left;">꾸준한 10%대 현상 유지</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Susceptor 부문</strong></td>
+<td style="text-align: left;">12,383백만 원 (<strong>4.1%</strong>)</td>
+<td style="text-align: left;">2021년(5.7%) 대비 비중 축소</td>
+</tr>
+</tbody>
+</table>
+<h2>3. 전사 영업이익률 및 FCF 추이</h2>
+<p>[공시 팩트] 과거 2021~2022년 거의 40%에 달하던 OPM이 반도체 다운사이클을 거치며 27.8%로 하락했으나, 2026년 1분기에 다시 29.9%로 반등하는 추세입니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용 (2025년 기준)</th>
+<th style="text-align: left;">비고 (과거 대비 트렌드)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>매출 및 영업이익</strong></td>
+<td style="text-align: left;">매출 3,013억 원 / 영업이익 838억 원</td>
+<td style="text-align: left;">2023년 바닥(매출 2,266억) 확인 후 강력한 V자 반등 중</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>영업이익률 (OPM)</strong></td>
+<td style="text-align: left;"><strong>27.8%</strong></td>
+<td style="text-align: left;">과거 39.8%(22년) 대비 낮아졌으나, 여전히 제조업 최상위 수준</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>잉여현금흐름 (FCF)</strong></td>
+<td style="text-align: left;">496억 원 (CapEx 44억 반영)</td>
+<td style="text-align: left;">투자가 완료된 2024년 이후 강력한 FCF 현금 창출 재개</td>
+</tr>
+</tbody>
+</table>
+<h2>4. 핵심 KPI 추이 및 분석</h2>
+<p>[시장 내러티브] 메모리 감산 여파로 장비 및 부품 벤더들의 실적 회복이 더디다.
+[공시 팩트] 그러나 티씨케이의 <strong>공장 가동률은 2023년 61%에서 2025년 96%, 2026년 1분기 95.8%로 사실상 풀가동 상태를 완벽히 회복</strong>했습니다. 
+또한 <strong>해외 수출 비중이 2021년 54.2%에서 2025년 64.4%로 상승</strong>한 것은, 낸드 고단화에 따른 글로벌 식각 장비사들의 SiC 링 부품 수요가 폭발적으로 증가하고 있음을 팩트로 입증합니다.</p>
+<h2>5. 경영진 및 주주환원 이력</h2>
+<p>[공시 팩트] 배당 기조가 매우 안정적이며, 2025년 대규모 자사주 소각을 단행했습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>자사주 영구 소각</strong></td>
+<td style="text-align: left;">2025년 말 약 500억 원(495,584주) 전량 소각</td>
+<td style="text-align: left;">전체 유통주식수의 <strong>4.24% 영구 삭제</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>배당 성향</strong></td>
+<td style="text-align: left;"><strong>22.9%</strong> 고정 유지</td>
+<td style="text-align: left;">이익 증가 시 주당 배당금(DPS) 동반 상승 구조</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>지배구조 안정성</strong></td>
+<td style="text-align: left;">일본 TOKAI CARBON <strong>52.6%</strong> 독점 지배</td>
+<td style="text-align: left;">공급-판매의 완벽한 수직 계열망</td>
+</tr>
+</tbody>
+</table>
+<h2>6. 핵심 리스크 3가지</h2>
+<p>[공시 팩트] 티씨케이는 수익성이 높은 만큼 아킬레스건(리스크)도 매우 뚜렷한 기업입니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>원재료 100% 독점 의존</strong></td>
+<td style="text-align: left;">핵심 흑연을 최대주주(도카이카본)로부터 전량 수입</td>
+<td style="text-align: left;">공급 단가 인상 시 원가율 방어 취약</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>고객사 극단적 편중</strong></td>
+<td style="text-align: left;">상위 4개 대형 고객사 매출 비중 <strong>70.9%</strong></td>
+<td style="text-align: left;">글로벌 팹/장비사 CAPEX 축소 시 직격탄</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SiC 특허 소송 진행 중</strong></td>
+<td style="text-align: left;">디에스테크노와의 특허 침해 소송 (1심 진행)</td>
+<td style="text-align: left;">독점 지위 및 40%대 OPM 회복 여부의 최대 변수</td>
+</tr>
+</tbody>
+</table>
+<h2>7. 딥리서치 팩트체크 요약</h2>
+<p>[시장 내러티브] 딥리서치(Track B)에 따르면 글로벌 전공정 장비(WFE) 투자가 2026년까지 턴어라운드하고, 낸드플래시의 200단 이상 고단화 비중이 2026년 77%로 급증할 전망입니다.</p>
+<p>[공시 팩트] 식각(에칭) 공정은 낸드 단수가 높아질수록 가장 가혹한 플라즈마 환경을 견뎌야 합니다. 이로 인해 SiC 링의 마모 속도가 빨라져 소모품 교체 주기가 극단적으로 짧아집니다(Q의 폭발). 
+티씨케이의 가동률이 이미 96% 풀캐파에 도달했고 수출 비중이 64%로 치솟았다는 점은, 이러한 낸드 고단화 패러다임 수혜가 미래의 내러티브가 아니라 <strong>이미 현재 진행형인 확실한 실적 팩트</strong>임을 확인해 줍니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

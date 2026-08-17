@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>📖 Phase 2: 스토리 리더 (내러티브 팩트체크)</h1>
+<p><strong>분석 대상</strong>: 코미코 (KoMiCo)
+<strong>목적</strong>: 시장에 팽배한 막연한 기대감(내러티브)이 실제 기업의 공시 데이터(팩트)와 얼마나 부합하는지 철저히 검증합니다.</p>
+<hr />
+<h2>1. 타겟 내러티브 상정</h2>
+<p><em>(사용자의 명시적 증권사 리포트 제시가 없어, 산업 딥리서치(Track B)를 바탕으로 핵심 내러티브를 상정했습니다.)</em></p>
+<blockquote>
+<p><strong>[시장 내러티브]</strong> 
+"AI 서버 수요 폭증 및 삼성/SK 등 주요 칩 메이커들의 전공정(WFE) 장비 투자 재개에 힘입어, 코미코와 같은 장비 세정/코팅 부품사들의 가동률이 일제히 폭증하고 전례 없는 실적(이익) 턴어라운드 사이클에 진입할 것이다."</p>
+</blockquote>
+<hr />
+<h2>2. 내러티브 vs 공시 팩트 정밀 대조</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">검증 항목</th>
+<th style="text-align: left;">🗣️ 시장 내러티브 (기대감)</th>
+<th style="text-align: left;">📊 실제 공시 팩트 (냉정한 현실)</th>
+<th style="text-align: left;">팩트체크 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>① 전방위적 가동률 폭증 여부</strong></td>
+<td style="text-align: left;">주요 고객사 투자 재개로 모든 공장의 가동률이 90% 이상 풀캐파에 도달할 것이다.</td>
+<td style="text-align: left;"><strong>[절반의 사실]</strong> 북미 전공정 고객사 중심의 미국 오스틴 법인 세정 가동률은 92.2%로 이미 풀캐파에 근접했습니다. 반면, 같은 법인의 코팅 가동률(39.7%)이나 한국 안성 법인의 세정 가동률(52.2%) 등은 여전히 생산 여력이 매우 많이 남아있어 <strong>전면적인 가동률 폭증 상태는 아닙니다</strong>.</td>
+<td style="text-align: left;">⚠️ <strong>부분적 부합</strong> (특정 지역/공정에 편중)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>② 이익 턴어라운드 도래 여부</strong></td>
+<td style="text-align: left;">가동률 회복과 매출 증대에 따라 영업이익이 가파르게 상승하는 턴어라운드 구간이다.</td>
+<td style="text-align: left;"><strong>[사실과 다름]</strong> 2026년 반기 매출은 전년 동기 대비 18.5% 증가하며 외형은 커지고 있으나, <strong>영업이익률은 22.1%('24) → 18.4%('25) → 14.3%('26.1H)로 2년 연속 하락세</strong>를 면치 못하고 있습니다. 매출 증대가 이익 레버리지로 연결되지 못하고 있습니다.</td>
+<td style="text-align: left;">❌ <strong>불일치</strong> (수익성 지속 둔화)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>③ 현금 창출력 및 재무 안정성</strong></td>
+<td style="text-align: left;">턴어라운드에 성공하며 잉여 현금을 창출하고, 기업 밸류에이션(멀티플)이 리레이팅될 것이다.</td>
+<td style="text-align: left;"><strong>[사실과 다름]</strong> 현재 코미코는 공격적인 글로벌 확장으로 막대한 현금을 소모하고 있습니다. <strong>최근 1년 반 동안 발생한 잉여현금흐름(FCF) 누적 적자만 약 2,700억 원</strong>에 달하며, 2025년 총차입금은 4,892억 원을 돌파했습니다.</td>
+<td style="text-align: left;">❌ <strong>불일치</strong> (투자기 지속으로 재무 부담 가중)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. 팩트체크 종합 결론 (Phase 2 Insight)</h2>
+<p><strong>"코미코는 턴어라운드 수확기가 아닌, 혹독한 대규모 투자의 계곡을 지나는 중입니다."</strong></p>
+<p>시장 내러티브는 '전공정 투자 반등에 따른 즉각적인 실적 파티'를 기대하고 있지만, 실제 공시 팩트로 검증해 본 코미코의 현실은 다릅니다.</p>
+<ol>
+<li><strong>외형 성장 vs 마진 압박</strong>: 미코세라믹스 편입과 미국 오스틴 거점의 세정 수요 증가로 매출(Top-line)은 확실한 우상향을 그리고 있습니다.</li>
+<li><strong>이익 레버리지 지연</strong>: 그러나 선제적으로 건설해둔 글로벌 8개국 인프라의 감가상각비 부담과 막대한 차입금에 따른 이자 비용 탓에 영업이익률은 오히려 하락하고 현금은 계속 유출되고 있습니다.</li>
+</ol>
+<p><strong>결론적으로</strong>, 시장의 내러티브가 코미코의 실질적 주가 상승(멀티플 리레이팅)으로 직결되려면, <strong>가동률이 저조한 공정(미국 코팅, 안성 등)의 가동률이 올라와 전체 영업이익률의 하락세가 멈추고, 대규모 CapEx 집행이 마무리되어 FCF가 흑자로 돌아서는 시점</strong>을 공시로 반드시 먼저 확인해야 합니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 50000000000).toLocaleString();
+                
+                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>기준 FCF (원)</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>';
+
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    return parseFloat(val.toString().replace(/,/g, ''));
+                }
+
+                function formatNumberInput(e) {
+                    // Skip for number types
+                    if (e.target.type === 'number') return;
+                    
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    
+                    // Allow minus sign at the beginning for FCF
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
+
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const fcf = parseFormattedNum(elFcf.value);
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const targetValue = price * shares;
+                    
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    
+                    let low = -0.99;
+                    let high = 5.0; // max 500%
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 100; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetValue) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+
+                    if (found || Math.abs(high - low) < 0.0001) {
+                        const growthPercent = (g * 100).toFixed(2);
+                        elResultValue.textContent = growthPercent + "%";
+                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
+                        if (g < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (g > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+            }
+        });
+    </script>
+</body>
+</html>

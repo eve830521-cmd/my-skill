@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>📖 Phase 2: 스토리 리더 (내러티브 팩트체크)</h1>
+<p><strong>분석 대상</strong>: 티씨케이 (TCK)
+<strong>타겟 내러티브</strong>: 플래시 메모리 선단공정 업그레이드, SiC 링, 식각 강도 증가</p>
+<hr />
+<h2>1. 타겟 내러티브 검증: 낸드 고단화와 SiC 링의 'Q(수량)' 폭발</h2>
+<p>[시장 내러티브] 3D 낸드플래시가 200단, 300단 이상으로 수직 고단화(선단공정 업그레이드)될수록, 깊은 구멍을 뚫어야 하는 식각(에칭) 공정의 난이도와 강도가 극도로 높아진다. 이 가혹한 고전력 플라즈마 환경을 버티기 위해 기존 실리콘 링 대신 'Solid SiC 링'의 채택이 강제되며, 마모 속도마저 빨라져 소모품 교체 주기 단축으로 수요(Q)가 폭발할 것이다.</p>
+<p><strong>✅ 팩트체크 타격 결과: [ True - 가동률 숫자가 증명하는 '현재 진행형 팩트' ]</strong>
+[공시 팩트] 이 주장은 미래의 막연한 기대감이 아니라, 이미 티씨케이의 재무제표에 <strong>완벽한 숫자로 찍히고 있는 팩트</strong>입니다.
+시장의 메모리 감산 여파로 2023년 티씨케이 안성공장의 가동률은 61%까지 추락했습니다. 그러나 메모리 제조사들의 투자가 완전히 회복되지도 않은 2025년과 2026년 1분기, 티씨케이의 <strong>공장 가동률은 이미 96% (풀캐파)를 완벽하게 회복</strong>했습니다.</p>
+<p>이는 단일 웨이퍼당 소모되는 SiC 링의 '절대량(Q)' 자체가 식각 강도 증가로 인해 늘어났다는 움직일 수 없는 증거입니다.</p>
+<hr />
+<h2>2. 타겟 내러티브 검증: 글로벌 장비사들의 SiC 링 채택 가속</h2>
+<p>[시장 내러티브] 글로벌 식각 장비 독과점 기업들(램리서치, 어플라이드 머티어리얼즈 등)이 차세대 고단화 낸드용 식각 장비를 출하할 때, 고품질 SiC 링 부품을 대거 선탑재하고 있다.</p>
+<p><strong>✅ 팩트체크 타격 결과: [ True - 수출 비중 급증이 증명하는 밸류체인 장악력 ]</strong>
+[공시 팩트] 국내 반도체 사이클(내수)에만 의존했다면 달성할 수 없는 숫자가 티씨케이의 수출 지표에서 나타나고 있습니다. 2021년 54.2%였던 <strong>해외 수출 매출 비중이 2025년 64.4%로 폭증</strong>했습니다. 
+이는 글로벌 톱티어 식각 장비사들이 차세대 장비를 개발/출하할 때, 공정 수율을 좌우하는 핵심 소모품으로 티씨케이의 Solid SiC 링을 기본값(Default)으로 채택하여 글로벌 팹으로 쏟아내고 있음을 의미합니다.</p>
+<hr />
+<h2>💡 종합 결론 (내러티브의 실적화)</h2>
+<p>[시장 내러티브] "반도체 다운사이클이 끝났으니 이제 서서히 실적이 좋아질 것이다."</p>
+<p>[공시 팩트] 아닙니다. 단순한 '사이클 회복'을 넘어섰습니다. 전방 시장의 '플래시 메모리 선단공정 업그레이드'라는 거대한 기술 패러다임 변화가 식각 공정의 소모품 교체 주기를 획기적으로 앞당겼고, 티씨케이는 가동률 96%와 영업이익률(OPM) 30% 근접이라는 강력한 펀더멘털로 이를 증명해 냈습니다.
+다만, 이러한 엄청난 호황 속에서도 <strong>특허 소송 불확실성(DS테크노 1심 진행 중) 및 주요 4개 고객사에 대한 매출 편중(70.9%)</strong>이라는 고질적인 리스크가 공존하고 있으므로, 압도적인 실적 체력 대비 주가의 '안전마진'이 충분한지 다음 Phase 3에서 면밀히 따져보아야 합니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
