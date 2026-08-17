@@ -1,25 +1,21 @@
-Project: my-skill (Korean Stock Analyzer) Reframing
+# 프로젝트 목적
+현재 my-skill 폴더 내 마크다운(md) 가이드 문서 간의 명령어나 지시사항 충돌(Conflict)을 해결하고, 에이전트가 일관되게 동작할 수 있도록 문서들을 수정한다.
 
-Goals:
-Re-architect the Korean Stock Analyzer skill to focus on deep, fact-based verification of company fundamentals (Phase 1) while streamlining the story reading process (Phase 2) to eliminate wasted time on broad web searches.
+# 문제 상황 및 충돌 분석
+1. 초기 Raw Data 파일명 명명 규칙 불일치
+- GEMINI.md, 단계별 이용방법.md: `[기업명]_분석기초.md` 파일로 규정
+- SKILL.md: `{날짜}_TrackA.md` 및 `TrackB.md`로 규정
+- notebooklm_prompts.md: `기업명_기초분석`으로 규정
 
-Key Problems to Solve & Improvements:
-1. Phase 2 (Story Reader) Inefficiency:
-   - Current Issue: Searching Naver Finance for 6-month news/reports takes too long and wastes tokens/energy on irrelevant data.
-   - Solution: Eliminate broad web scraping in Phase 2. Restrict Phase 2 to targeted, high-quality inputs (e.g., relying on the user to provide specific target narratives or a single key analyst report) and shift the focus to strictly cross-referencing the "narratives" against the "numbers" verified in Phase 1.
+2. generate_html.py 스크립트 실행 경로 및 위치 불일치
+- GEMINI.md: `3_Final_Reports` 폴더 안에 스크립트를 복사한 후 실행하라고 규정 (복사 필수)
+- SKILL.md: `e:\antigravity-work\my-skill\korean-stock-analyzer\generate_html.py` 절대 경로에 있는 스크립트를 바로 실행하라고 규정
 
-2. Phase 1 (Company Decoder) Depth & Quality:
-   - Current Issue: Needs to be more rigorous.
-   - Solution: Elevate Phase 1 to be the absolute core of the analysis. Deeply verify 5-year business reports, recent quarterly, and semi-annual reports. The ultimate goal is to prove whether the market's narrative is a realistic scenario backed by numerical evidence. Manual input via NotebookLM is acceptable and encouraged for high quality.
+3. 데이터 입력 방식(UX) 충돌
+- SKILL.md, notebooklm_prompts.md: 사용자가 채팅창에 텍스트를 복사/붙여넣기하면 에이전트가 파일을 생성하는 방식
+- 단계별 이용방법.md: 사용자가 직접 `1_Raw_Data` 폴더에 마크다운 파일을 생성하고 저장한 뒤 에이전트에게 명령하는 방식
 
-3. NotebookLM Preprocessing Errors:
-   - Current Issue: Summarizing 5-year reports via NotebookLM works, but adding industry analysis reports causes errors in NotebookLM (likely context limits).
-   - Solution: Revise `notebooklm_prompts.md`. Split the data processing into a "Two-Track Prompting System" in NotebookLM:
-     Track A: Corporate Fundamentals Prompt (5-year filings).
-     Track B: Industry Analysis Prompt (Sector reports).
-     The Antigravity skill will then ingest both Track A and Track B markdown files in Phase 1 and merge them, rather than forcing NotebookLM to do it all at once.
-
-Action Items:
-- Redesign SKILL.md to reflect the new pipeline (Two-Track Phase 1 ingestion, streamlined Phase 2).
-- Rewrite notebooklm_prompts.md to introduce the split-prompt strategy for NotebookLM.
-- Update generate_html.py and the report templates to clearly contrast "Market Narrative" vs "Fact (Numbers)".
+# 주요 기능 및 요구사항 (수정 사항)
+- 파일명 규칙을 하나로 통일하여 모든 문서에 반영할 것.
+- HTML 생성 스크립트 실행 방식을 결정(복사 방식 vs 절대 경로 호출 방식)하고 관련 문서 통일할 것.
+- 데이터 입력 방식을 채팅창 입력 또는 직접 저장 중 하나로 결정하여 워크플로우 문서를 통일할 것.

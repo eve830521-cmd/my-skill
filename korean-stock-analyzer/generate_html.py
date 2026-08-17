@@ -72,7 +72,7 @@ html_template = f"""<!DOCTYPE html>
             if (dcfRoot) {{
                 const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
-                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 50000000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -86,7 +86,7 @@ html_template = f"""<!DOCTYPE html>
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>기준 FCF (원)</label>' +
+                            '<label>기준 FCF (억 원)</label>' +
                             '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
@@ -150,7 +150,7 @@ html_template = f"""<!DOCTYPE html>
                 function calculateImpliedGrowth() {{
                     const price = parseFormattedNum(elPrice.value);
                     const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
                     const wacc = parseFloat(elWacc.value) / 100.0;
                     const terminal = parseFloat(elTerminal.value) / 100.0;
 
