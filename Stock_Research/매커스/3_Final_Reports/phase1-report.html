@@ -302,15 +302,19 @@ p > em {
 </head>
 <body>
     <h1>🔍 Phase 1: 기업 해독기 (심층 팩트체크 코어)</h1>
-<h2>1. 비즈니스 모델 및 돈 버는 구조</h2>
-<p>[공시 팩트] 주식회사 매커스는 글로벌 비메모리 반도체 제조사(AMD/자일링스, 르네사스, 메이콤 등)로부터 FPGA 및 아날로그 반도체를 수입하여, 국내 IT 전자제품 및 반도체 장비 생산 기업에 맞춤형으로 기술영업을 수행하는 '비메모리 반도체 솔루션' 기업입니다. 특히, 단순 유통을 넘어 고객사의 제품 기획 단계부터 반도체 회로 설계 등 기술 지원을 제공하는 고객 밀착형 에셋라이트(Asset-light) 비즈니스를 영위합니다.</p>
+<h2>1. 매크로 및 산업 사이클(Sector Cycle) 현황</h2>
+<p>[시장 내러티브] 2026년 하반기 현재, 글로벌 AI 인프라 확장에 힘입어 국내 반도체 산업은 '외화내빈(공급 제약)' 구조를 타개하기 위한 <strong>'전공정 소부장 증설 사이클의 본격화'</strong>라는 차별적 턴어라운드(Turn-around) 국면에 돌입했습니다. <code>[전망: SK증권 8월, LS증권 9월 리포트]</code>
+실제로 삼성전자(P4)와 SK하이닉스(M15X)의 전공정 팹 투자가 가속화되면서, 국내 주요 장비사(원익IPS, 테스 등)의 2Q26 수주잔고가 전년 대비 +112%에서 +402%까지 폭증하며 하반기 실적 랠리를 예고하고 있습니다. <code>[팩트: SK증권 8월 리포트]</code> 이는 매커스의 주력 캡티브 고객사(와이아이케이 등 장비사)들의 핵심 부품(FPGA) 발주를 직접적으로 견인하는 강력한 업사이클 변곡점입니다.</p>
+<h2>2. 비즈니스 모델 및 경제적 해자(Moat)</h2>
+<p>[공시 팩트] 매커스는 자일링스(AMD), 르네사스 등에서 FPGA 및 아날로그 반도체를 수입하여 국내 고객사(와이아이케이 등 반도체 장비사, 방산, 통신사)에 기술을 지원하며 판매하는 에셋라이트(Asset-light) 톨게이트 기업입니다. <code>[팩트: 2022~2026 매커스 사업보고서]</code>
+<strong>경제적 해자 (전환 비용, Switching Cost):</strong> 단순 유통이 아닌 고객사 제품 기획 단계부터 회로 설계를 공동 진행하므로, 한 번 고객사 장비에 채택된 FPGA를 타사 칩으로 변경하려면 막대한 하드웨어/소프트웨어 재설계 비용이 발생합니다. 이는 고수익을 담보하는 매우 강력한 고객 락인(Lock-in) 효과를 창출합니다.</p>
 <pre><code class="language-mermaid">graph LR
-    A[&quot;글로벌 공급사 (AMD, RENESAS, MACOM)&quot;] --&gt;|&quot;비메모리 반도체 공급&quot;| B[&quot;매커스 (기술영업 &amp; 설계지원)&quot;]
-    B -. &quot;부품 및 솔루션 제안&quot; .-&gt; C[&quot;국내 고객사 (반도체장비, 방산, 통신)&quot;]
-    C --&gt;|&quot;매출 대금 결제&quot;| B
-    B --&gt;|&quot;제품 매입 결제&quot;| A
+    A[&quot;글로벌 공급사 (AMD, RENESAS)&quot;] --&gt;|&quot;반도체 수입&quot;| B[&quot;매커스 (기술영업 &amp; 설계지원)&quot;]
+    B -. &quot;부품 및 회로설계 제안&quot; .-&gt; C[&quot;국내 고객사 (장비, 방산, 통신)&quot;]
+    C --&gt;|&quot;매출 대금&quot;| B
+    B --&gt;|&quot;매입 대금&quot;| A
 </code></pre>
-<h2>2. 주요 사업별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
+<h2>3. 주요 사업별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
 <table>
 <thead>
 <tr>
@@ -322,23 +326,23 @@ p > em {
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>매커스 상품매출</strong></td>
-<td style="text-align: left;">AMD, MACOM, RENESAS 등 반도체 상품 매출 비중이 절대적 (90~96% 수준). 2026년 반기 1,163억원(95.31%) 달성.</td>
+<td style="text-align: left;"><code>[팩트: 2026.1H 반기보고서]</code> AMD 등 반도체 95% 내외 비중. 26년 반기 1,163억원(95.31%) 달성</td>
 <td style="text-align: left;">주력 캐시카우</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>매커스시스템즈 상품매출</strong></td>
-<td style="text-align: left;">퓨어스토리지(Pure Storage) 등 서버/스토리지 유통 매출. 2024년 7.46%까지 상승 후 2026년 반기 3.45% 기록.</td>
-<td style="text-align: left;">AI 데이터센터향 수요 연동</td>
+<td style="text-align: left;"><strong>시스템즈 상품매출</strong></td>
+<td style="text-align: left;"><code>[팩트: 2026.1H 반기보고서]</code> 퓨어스토리지 등 유통. 26년 반기 42억원(3.45%) 기록</td>
+<td style="text-align: left;">AI 데이터센터향</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>기타매출 및 영업수익</strong></td>
-<td style="text-align: left;">매커스인베스트먼트의 지분투자 등 기타 수익 0.5~1.3% 내외 발생.</td>
-<td style="text-align: left;">종속회사 수익</td>
+<td style="text-align: left;"><code>[팩트: 2026.1H 반기보고서]</code> 자회사 투자 수익 등 1% 내외 유지</td>
+<td style="text-align: left;">부수적 수익</td>
 </tr>
 </tbody>
 </table>
-<h2>3. 전사 영업이익률 및 FCF 추이</h2>
-<p>[공시 팩트] 매커스는 자체 생산 설비가 없기 때문에 CAPEX가 매우 작으며(2025년 부동산 취득 제외), 유통 파트너사임에도 불구하고 고도의 기술 지원 역량을 바탕으로 평균 13~19%대의 매우 우수한 영업이익률(OPM)을 기록하고 있습니다. 영업활동현금흐름(OCF)이 곧장 잉여현금흐름(FCF)으로 직결되는 훌륭한 현금 창출력을 보여줍니다.</p>
+<h2>4. 전사 영업이익률 및 FCF 추이</h2>
+<p>[공시 팩트] 매커스는 자체 생산 공장이 없어 평시 자본적 지출(CAPEX)이 거의 0에 수렴하며, 영업이익이 현금흐름으로 즉각 변환되는 압도적 현금 창출력을 지닙니다. <code>[팩트: 2021~2026 연결현금흐름표]</code></p>
 <table>
 <thead>
 <tr>
@@ -350,78 +354,61 @@ p > em {
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>영업이익률 (OPM)</strong></td>
-<td style="text-align: left;">2021년 18.49%에서 2025년 12.80%로 하락했으나, 2026년 반기 19.00%로 극적 반등. 기술 프리미엄 입증.</td>
-<td style="text-align: left;">고마진 유통 구조</td>
+<td style="text-align: left;"><code>[팩트: 2025~2026 연결포괄손익계산서]</code> 2025년 12.80% 저점 후 2026년 반기 19.00%로 급등</td>
+<td style="text-align: left;">고마진 회복</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>자본적 지출 (CAPEX)</strong></td>
-<td style="text-align: left;">생산 공장이 없어 평시 CAPEX는 소액(수천만 원 수준)에 불과. (2025년 예외적 41억 지출)</td>
-<td style="text-align: left;">구조적 이점</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>잉여현금흐름 (FCF)</strong></td>
-<td style="text-align: left;">2023년 재고자산 확보 등으로 일시적 마이너스(-519억)를 기록했으나, 2024~2025년 대규모 흑자(493억, 668억)로 전환.</td>
-<td style="text-align: left;">강한 현금 회수력</td>
+<td style="text-align: left;"><strong>FCF (잉여현금흐름)</strong></td>
+<td style="text-align: left;"><code>[팩트: 2024~2026 연결현금흐름표]</code> 2024년 493억, 2025년 668억 대규모 흑자 달성</td>
+<td style="text-align: left;">압도적 현금력</td>
 </tr>
 </tbody>
 </table>
-<h2>4. 핵심 KPI 추이 및 분석</h2>
-<p>[시장 내러티브] AI 데이터센터 및 가속기(GPU/NPU) 시장의 폭발적 성장으로 인해 전공정 장비 투자와 광통신 인프라(1.6T 광모듈, CPO 등)가 대거 확장 중이며, 이는 FPGA 및 하이엔드 아날로그 칩 수요를 강력하게 견인하고 있습니다.
-[공시 팩트] 당사는 공장이 없으므로 '재고자산 회전율'과 '내수 매출 비중'이 핵심 지표입니다. 최근 반도체 수급 불균형에도 불구하고 재고자산 회전율은 2.1~2.5회를 꾸준히 유지 중이며, 전체 매출의 약 98% 이상이 국내 반도체 장비 및 IT 고객사들(내수)로부터 발생하고 있어 국내 설비투자 사이클과 매우 밀접하게 연동됩니다.</p>
-<h2>5. 경영진 및 주주환원 이력</h2>
-<p>[공시 팩트] 신동철, 성종률 각자 대표이사 체제로, 대규모 자사주 소각에 따라 경영진 지분율이 11.00%에서 14.93%로 상승(2026년 반기말)했습니다. 특히 2025~2027년 별도 당기순이익의 30% 이상을 환원하겠다는 강력한 주주환원 정책을 발표하고, 2025~2026년에 걸쳐 426만 주 이상의 자사주 이익소각을 단행하는 등 주주가치 제고에 매우 적극적입니다.</p>
+<h2>5. 핵심 KPI 추이 및 분석 (과거 사이클 고점/저점 비교 필수)</h2>
+<p>[시장 내러티브] AI 설비투자로 인해 고성능 칩 단가가 오르고 재고 회전이 가속화되며 유통 마진이 극대화될 것이다.
+[공시 팩트] 공장이 없는 매커스의 핵심 펀더멘털 지표는 '재고자산 회전율'과 '수익성(OPM)'입니다. <code>[팩트: 2021~2026 사업/분기보고서]</code>
+- <strong>과거 호황기 고점 (2021년):</strong> 전방 사이클 호황으로 매출액 YoY +61.9% 성장, OPM 18.49% 달성.
+- <strong>과거 불황기 저점 (2023년):</strong> 반도체 다운사이클 여파로 매출액 YoY -9.5% 역성장, 재고회전율 2.1회로 둔화, OPM 15.02%까지 하락.
+- <strong>현재 턴어라운드 (2026년 반기):</strong> 2025년 재고회전율 2.5회 반등에 이어, 26년 반기 OPM은 19.00%를 기록하며 <strong>과거 IT 호황기 최상단 고점(18.49%)을 오히려 돌파하는 신고점 수익성</strong>을 증명하고 있습니다. 내수 매출 비중 98.5%를 유지하고 있어 2H26 국내 전공정 장비 수주 랠리의 직접적인 낙수효과를 받게 됩니다.</p>
+<h2>6. 경영진 및 주주환원 이력</h2>
+<p>[공시 팩트] 막대한 FCF를 배당과 소각으로 돌려주는 모범적인 자본 배치를 시현 중입니다. <code>[팩트: 2026년 반기보고서 주석 및 2025 공시]</code>
+- 2025~2027년 별도 당기순이익 30% 이상 환원 정책 공식 발표.
+- 25~26년 총 4,261,255주의 자사주 이익소각 단행 (총 발행주식수의 약 26% 영구 소각). 배당성향 역시 2025년 기준 45.1%로 대폭 상향하여 주주가치 제고의 교과서를 보여주고 있습니다.</p>
+<h2>7. 핵심 리스크 분석 (확률 및 파급력 계량화)</h2>
+<p>[공시 팩트] 사업보고서 상의 주요 경영 리스크를 바탕으로 확률(Prob)과 파급력(Impact)을 계량화했습니다. <code>[팩트: 2025 사업보고서 '이사의 경영진단']</code></p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: left;">핵심 내용</th>
-<th style="text-align: left;">비고</th>
+<th style="text-align: left;">리스크 요인</th>
+<th style="text-align: left;">핵심 내용 (발생 조건)</th>
+<th style="text-align: left;">확률(Prob)</th>
+<th style="text-align: left;">파급력(Impact)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>자사주 매입/소각</strong></td>
-<td style="text-align: left;">25~26년 총 4,261,255주 이익소각 단행. (약 114억원 이상 규모)</td>
-<td style="text-align: left;">유통주식수 대폭 감소</td>
+<td style="text-align: left;"><strong>벤더 의존도 (AMD 등)</strong></td>
+<td style="text-align: left;">핵심 파트너사인 AMD(자일링스)와의 한국 대리점 계약 해지 또는 판매 정책 불리 변경 시 사업 존립 위협</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">High</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>배당금 및 배당성향</strong></td>
-<td style="text-align: left;">2024년 주당 200원(9.4%)에서 2025년 주당 1,200원(45.1%)으로 배당액 6배 폭증.</td>
-<td style="text-align: left;">주주환원율 30% 목표 초과 달성</td>
+<td style="text-align: left;"><strong>전방산업 CAPEX 지연</strong></td>
+<td style="text-align: left;">삼성/SK하이닉스의 전공정 투자 스케줄 지연 시 당사 캡티브 장비사들의 FPGA 발주 취소/연기 발생</td>
+<td style="text-align: left;">Mid</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>원화 환율 변동 (강달러)</strong></td>
+<td style="text-align: left;">매입 대금 전액이 USD 단위로 결제되므로 극심한 원화 약세(강달러) 발생 시 매입 원가 상승 및 마진 훼손</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Mid</td>
 </tr>
 </tbody>
 </table>
-<h2>6. 핵심 리스크 3가지</h2>
-<p>[공시 팩트]</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: left;">핵심 내용</th>
-<th style="text-align: left;">비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>특정 벤더 의존도</strong></td>
-<td style="text-align: left;">AMD(자일링스) 등 주요 공급처의 정책 변화나 대리점 계약 해지 시 회사의 존립에 치명적인 타격이 발생할 수 있음.</td>
-<td style="text-align: left;">벤더 다변화 필요성</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>환율 변동성</strong></td>
-<td style="text-align: left;">제품 매입은 대부분 USD로 진행되므로, 급격한 환율 상승(원화 약세) 시 외화평가손익 악화 및 매입 원가 상승 부담이 발생.</td>
-<td style="text-align: left;">가격 전가력 점검 요망</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>IT 전방 산업 변동</strong></td>
-<td style="text-align: left;">FPGA 및 비메모리 솔루션은 국내 반도체 전공정 장비사 및 IT 세트 업체의 설비 투자 사이클에 절대적인 영향을 받음.</td>
-<td style="text-align: left;">캡티브 고객사 CAPEX 연동</td>
-</tr>
-</tbody>
-</table>
-<h2>7. 딥리서치 팩트체크 요약</h2>
-<p>[시장 내러티브] AI 가속기 폼팩터 대면적화, 전공정 장비(WFE) 투자 반등, 데이터센터 광인프라 고도화(1.6T 플러거블), 고성능 전력반도체(SiC, GaN) 수요 폭발 등 전방위적인 AI 하드웨어 슈퍼사이클이 전개 중입니다.
-[공시 팩트] 매커스는 자본적 지출(CAPEX)과 공정 개발 리스크를 전혀 부담하지 않으면서도, AI 데이터센터용 통신/연산 인프라 핵심인 AMD FPGA와 MACOM/Renesas 광학·전력 부품을 국내 밸류체인(반도체 장비, 통신 장비사)에 독점적으로 공급하는 <strong>'에셋라이트(Asset-light) 톨게이트'</strong> 비즈니스를 완성했습니다. AI 인프라 확장에 따른 트렌드는 매커스의 핵심 상품 수요와 직결되며, 이를 강력한 주주환원(소각/배당)으로 주주와 공유하는 완벽한 선순환 구조를 보여줍니다.</p>
+<h2>8. 딥리서치 팩트체크 요약</h2>
+<p>[시장 내러티브] 반도체 슈퍼사이클에는 대규모 공장과 설비를 갖춘 장비/소재 제조사만이 최대 수혜를 본다.
+[공시 팩트] 매커스는 천문학적인 공장 증설(CAPEX) 부담과 원자재 인플레이션 리스크를 완전히 회피하면서도, 전방 AI 인프라 장비 수요 확대의 열매를 '유통 마진'과 '전환 비용(고객 락인)'으로 온전히 흡수하는 강력한 해자를 갖췄습니다. 과거 사이클 고점을 상회하는 압도적 OPM(19%)과 426만 주의 기록적 이익소각은 이 에셋라이트(Asset-light) 모델의 구조적 우월성을 수치로 완벽하게 증명합니다. <code>[팩트: 2026.1H 반기보고서 영업이익률 19.00%, 자사주 소각 공시]</code></p>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {

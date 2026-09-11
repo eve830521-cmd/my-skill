@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>🔍 Phase 1: 기업 해독기 (심층 팩트체크 코어)</h1>
+<h2>1. 매크로 및 산업 사이클(Sector Cycle) 현황</h2>
+<p>[시장 내러티브] 
+현재 글로벌 반도체 및 IT 산업은 하이퍼스케일러들의 막대한 AI 인프라 투자 지속과 Agentic AI 확산에 따라 메모리 및 비메모리 반도체의 수요가 급증하는 <strong>수퍼 사이클 초기~중반 국면</strong>에 위치해 있습니다. 특히 메모리 반도체 공급 제약(외화내빈 현상)으로 인해 글로벌 반도체 장비(WFE) 투자가 2026년 1,500억 달러에서 2027년 1,900억 달러로 급등할 것으로 예상되며, 전공정 소부장 증설 사이클이 본격화되는 강력한 <strong>턴어라운드(Turn-around)</strong> 시점을 지나고 있습니다. 글로벌 빅테크들이 고부가가치 AI 칩 및 다변화된 애플리케이션으로 이동함에 따라, 반도체의 성능을 검증하는 테스트 부품에 대한 요구 사양(Pitch 축소, 고대역폭, 방열)도 한층 고도화되고 있어 프리미엄 테스트 소켓 수요 폭발이 기대됩니다.</p>
+<h2>2. 비즈니스 모델 및 경제적 해자(Moat)</h2>
+<p>[공시 팩트] 
+리노공업은 전량 수입에 의존하던 검사용 프로브(LEENO PIN)와 반도체 검사용 소켓(IC TEST SOCKET)을 국산화하여 891개의 글로벌 IT 고객사에 납품하는 테스트 소모품 핵심 기업입니다 (2025년 기준 해외 수출 비중 79.8%, 2026.2Q 기준 83.7%). 이 기업의 강력한 <strong>경제적 해자(Moat)</strong>는 미세조립, 정밀가공, 도금 등 10개 이상의 전 공정을 100% 내재화한 <strong>인하우스(In-house) 완전 수직계열화 시스템</strong>에 있습니다. 이를 통해 주문 후 일반 제품은 10일 이내, 특별 주문품은 2~4주 이내 납품이라는 <strong>초단납기(Quick Delivery)</strong>를 실현하며 글로벌 고객을 Lock-in 하고 있습니다. 이러한 다품종 소량 주문제작 방식은 판가 전가력을 매우 높여주어, 반도체 부품업계에서 보기 드문 40% 후반의 압도적 영업이익률을 달성하게 하는 원천 경쟁력이 됩니다.</p>
+<pre><code class="language-mermaid">graph TD
+    A[&quot;원자재 공급처&quot;] --&gt;|&quot;PIPE, 도금류 납품&quot;| B[&quot;리노공업 (In-house 제조)&quot;]
+    B --&gt;|&quot;설계/가공/도금/조립 원스톱&quot;| B
+    B -. &quot;완벽한 품질통제 및 초단납기 (2~4주)&quot; .-&gt; C[&quot;IC TEST SOCKET / LEENO PIN&quot;]
+    C --&gt;|&quot;소모성 테스트 부품 공급&quot;| D[&quot;글로벌 반도체 고객사 (891개사)&quot;]
+    C --&gt;|&quot;초음파 프로브 공급&quot;| E[&quot;글로벌 의료기기 제조사 (지멘스 등)&quot;]
+</code></pre>
+<h2>3. 주요 사업별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>IC TEST SOCKET 류</strong></td>
+<td style="text-align: left;">2021년 57.27% → 2026년 상반기 <strong>68.48%</strong> (지속 상승)</td>
+<td style="text-align: left;">고부가가치, 모바일/서버/AI 반도체 검사용. 전사 매출 성장을 견인</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LEENO PIN 류</strong></td>
+<td style="text-align: left;">2021년 33.59% → 2026년 상반기 <strong>23.25%</strong> (비중 하락)</td>
+<td style="text-align: left;">상품 및 이차전지 테스트핀 포함. 절대매출은 견조하나 소켓 성장세에 밀림</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>의료기기 부품류</strong></td>
+<td style="text-align: left;">2021년 8.17% → 2026년 상반기 <strong>7.65%</strong> (안정적 유지)</td>
+<td style="text-align: left;">글로벌 지멘스 등 장기 공급. 사업 다각화 및 캐시카우 역할</td>
+</tr>
+</tbody>
+</table>
+<h2>4. 전사 영업이익률 및 FCF 추이</h2>
+<p>[공시 팩트] 
+리노공업은 장기간 차입금이 전혀 없는 100% <strong>무차입 경영</strong>을 유지하고 있습니다. 막대한 영업활동현금흐름 창출 능력에 더해 대규모 유형자산 투자가 필요 없는 사업 구조상 잉여현금흐름(FCF)이 매년 폭발적으로 누적되고 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>전사 영업이익률</strong></td>
+<td style="text-align: left;">2021년 41.80% → 2023년 44.75% → 2025년 47.51% → 2026년 상반기 <strong>49.73%</strong></td>
+<td style="text-align: left;">고부가가치 믹스(Mix) 개선으로 매출이 꺾였던 23년에도 이익률은 우상향</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FCF (잉여현금흐름)</strong></td>
+<td style="text-align: left;">2021년 약 854억 → 2023년 약 418억(저점) → 2025년 <strong>약 1,195억</strong></td>
+<td style="text-align: left;">CapEx는 연평균 300~600억 내외로 관리되며 막대한 현금 창출력 입증</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>차입금 비율</strong></td>
+<td style="text-align: left;">지속적인 <strong>0%</strong> (무차입 경영)</td>
+<td style="text-align: left;">2026.2Q 기준 유동자산 약 5,638억원, 부채총계 약 801억원에 불과</td>
+</tr>
+</tbody>
+</table>
+<h2>5. 핵심 KPI 추이 및 분석 (과거 사이클 고점/저점 비교 필수)</h2>
+<p>[시장 내러티브] 
+일반적인 반도체 소부장 기업은 전방 사이클에 따라 이익률과 생산량이 동반 급등락하지만, 리노공업은 최악의 불황기에도 강력한 가격 결정력을 통해 방어할 수 있다는 가설이 존재합니다.</p>
+<p>[공시 팩트] 
+다품종 주문생산 특성상 공장 가동률과 수주잔고는 공시되지 않으나, 실물 KPI인 <strong>제품군 생산실적(EA)</strong>을 통해 사이클을 검증할 수 있습니다. 
+* <strong>슈퍼 사이클 고점 (2022년)</strong>: LEENO PIN 생산실적 1.34억 개, IC TEST SOCKET 31만 개 달성. (매출액 3,224억원, OPM 42.38%)
+* <strong>최악의 불황기 저점 (2024년)</strong>: PIN 5,428만 개, SOCKET 13만 개로 물량이 반토막 남. (매출액 2,781억원, OPM 44.65%)
+* <strong>회복/턴어라운드 (2026년 상반기)</strong>: PIN 3,557만 개, SOCKET 11만 개로 생산량 회복세 진입 중. (반기 매출 2,429억원, <strong>OPM 49.73%</strong>)
+과거 대비 확연히 증명되는 팩트는, 물량(Q) 측면에서는 아직 2022년 슈퍼사이클 고점에 미치지 못했음에도, 단가가 비싼 하이엔드 소켓 비중 증가와 AI/미세화 프리미엄(P)이 반영되며 <strong>영업이익률은 22년 42%대에서 26년 49%대로 오히려 사상 최고치를 경신</strong>하고 있다는 점입니다.</p>
+<h2>6. 경영진 및 주주환원 이력</h2>
+<p>[공시 팩트] 
+최대주주는 이채윤 대표이사로, 2026년 반기말 기준 <strong>25.48%</strong> (1,941만주)를 보유하고 있습니다. 삼성자산운용(6.42%), 미래에셋자산운용(5.91%) 등 대형 기관이 신뢰하는 주주 구성을 갖추고 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>현금 배당 성향</strong></td>
+<td style="text-align: left;">최근 3년간 당기순이익의 약 <strong>40~41%</strong> 수준 (현금배당수익률 1.3~1.5%대)</td>
+<td style="text-align: left;">매년 최저 가이드라인(30%)을 상회하는 안정적 현금 환원</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자사주 보유 및 소각</strong></td>
+<td style="text-align: left;">2026년 반기말 기준 보통주 <strong>316,250주 (0.41%)</strong> 보유 중</td>
+<td style="text-align: left;">해당 자사주 전체를 <strong>2027년 9월까지 소각</strong>하겠다고 명시적으로 공시</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>액면 분할</strong></td>
+<td style="text-align: left;">2025년 4월 보통주 액면가 500원 → 100원 주식분할(1:5) 실시</td>
+<td style="text-align: left;">유동성 확대 목적의 적극적 조치</td>
+</tr>
+</tbody>
+</table>
+<h2>7. 핵심 리스크 분석 (확률 및 파급력 계량화)</h2>
+<p>[공시 팩트] 
+전량 주문제작이므로 재고 리스크는 없으나, 글로벌 시장 변동과 외환 리스크에 노출되어 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">리스크 요인</th>
+<th style="text-align: left;">핵심 내용 (발생 조건)</th>
+<th style="text-align: left;">확률(Prob)</th>
+<th style="text-align: left;">파급력(Impact)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>전방 반도체/IT 경기 침체</strong></td>
+<td style="text-align: left;">스마트폰, AI, 서버 등 글로벌 설비투자 및 R&amp;D 축소 시 신제품용 테스트 소켓 수주 하락</td>
+<td style="text-align: left;">Low (현재 AI 사이클 강력)</td>
+<td style="text-align: left;">High (매출과 직결)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>환율 변동 (원화 강세)</strong></td>
+<td style="text-align: left;">전체 매출의 83.7%가 수출. 환율 10% 하락 시 당반기 기준 약 124억원의 손익 감소 발생</td>
+<td style="text-align: left;">Mid (금리인하로 원화강세 압력)</td>
+<td style="text-align: left;">Mid (영업이익률이 높아 흡수 가능)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>원자재 가격 폭등</strong></td>
+<td style="text-align: left;">PIPE 등 금속재, 도금류 원자재 가격 상승 및 수입망 교란 발생 시 제조원가율 악화</td>
+<td style="text-align: left;">Mid (지정학적 요인 상존)</td>
+<td style="text-align: left;">Low (판가 전가력 매우 우수함)</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 딥리서치 팩트체크 요약</h2>
+<p>[시장 내러티브] 
+"AI 반도체 인프라 투자 사이클 속에서, 테스트 장비와 소켓 부품 업체들은 고스펙 전환에 따른 강력한 판가 인상(P상승)의 수혜를 누릴 것이다."</p>
+<p>[공시 팩트] 
+이러한 내러티브는 리노공업의 재무 데이터로 완벽히 입증됩니다. 2024년 물량 저점 시기에도 OPM이 꺾이지 않았으며, 2025년과 2026년 AI 사이클이 도래하자 OPM은 49.73%라는 역대 최대 효율을 기록 중입니다. 또한, 글로벌 WFE(반도체 장비) 증설 사이클이 2026~2027년 본격화됨에 따라 전공정에 이어 테스트 장비/소모품에 대한 '외화내빈' 탈피 수요가 몰릴 예정이므로, 리노공업의 독자적인 100% 인하우스 생산 능력과 Coaxial/Large Device/High Power Cooling 등 하이엔드 소켓 라인업은 향후 극강의 마진 레버리지 확대로 직결될 것입니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                
+                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>기준 FCF (억 원)</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>';
+
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    return parseFloat(val.toString().replace(/,/g, ''));
+                }
+
+                function formatNumberInput(e) {
+                    // Skip for number types
+                    if (e.target.type === 'number') return;
+                    
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    
+                    // Allow minus sign at the beginning for FCF
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
+
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const targetValue = price * shares;
+                    
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    
+                    let low = -0.99;
+                    let high = 5.0; // max 500%
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 100; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetValue) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+
+                    if (found || Math.abs(high - low) < 0.0001) {
+                        const growthPercent = (g * 100).toFixed(2);
+                        elResultValue.textContent = growthPercent + "%";
+                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
+                        if (g < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (g > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+            }
+        });
+    </script>
+</body>
+</html>

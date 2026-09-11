@@ -1,0 +1,80 @@
+# Korean Stock Analyzer - Global_Trend 시스템 도입 및 SKILL.md 고도화 PRD
+
+## 프로젝트 개요
+korean-stock-analyzer 스킬의 산업 트렌드 분석 체계를 업그레이드한다.
+기존의 '기업별 Weekly_Trend에 섹터별 자료를 넣는 방식'에서, '공용 Global_Trend 폴더에 NotebookLM 종합 요약 MD를 축적하고, 에이전트가 Phase 1/2 실행 시 자동 필터링하여 반영'하는 구조로 전환한다.
+
+핵심 목표: 할루시네이션 방지, 크로스 섹터 투자 인사이트 극대화, 데이터 신선도 관리
+
+## 현재 상태
+- 스킬 위치: e:\antigravity-work\my-skill\korean-stock-analyzer\SKILL.md
+- 보고서 위치: e:\antigravity-work\my-skill\Stock_Research\[기업명]\
+- 기존 구조: 각 기업별 Weekly_Trend/ 폴더에 섹터별 트렌드 자료를 개별 배치
+- 문제: 한국 기업들의 BM이 여러 섹터에 걸쳐 있어 크로스 섹터 인사이트가 누락됨
+
+## 요구사항
+
+### 1. Global_Trend 폴더 구조 신설
+- Stock_Research/Global_Trend/ 폴더를 신설한다.
+- 이 폴더에는 다음 파일들이 들어간다:
+  - report_YYYY.MM.DD~DD.md: 2주치 NotebookLM 종합 요약 리포트 (예: report_2026.08.01~15.md)
+  - cycle_timeline.md: 산업 사이클 타임라인 누적 로그 (영구 파일, 삭제하지 않음)
+  - notebooklm_prompt_template.md: NotebookLM에 요청할 표준 프롬프트 템플릿
+- report.md 파일은 최대 25개를 유지하며, 6개월~1년 도래 시 오래된 파일부터 순차 삭제 (FIFO)
+
+### 2. NotebookLM 표준 프롬프트 템플릿 작성
+- Global_Trend/notebooklm_prompt_template.md 파일을 생성한다.
+- 내용: NotebookLM에 2주치 딥리서치 리포트를 종합 요약 요청할 때 사용할 표준 프롬프트
+- 핵심 규칙:
+  - 테마별(Theme-based) 구분 (섹터별 X)
+  - 핵심 수치 반드시 보존 (금액, %, 수량 등)
+  - 모든 수치 옆에 출처를 괄호로 표기
+  - 각 데이터를 [팩트], [전망], [의견] 중 하나로 태깅
+  - 컨센서스 방향(상향/하향/유지) 명시
+
+### 3. cycle_timeline.md 초기 파일 생성
+- Global_Trend/cycle_timeline.md 파일을 빈 템플릿으로 생성한다.
+- 포맷: | 기간 | 핵심 사이클 지표 | 국면 판단 | 형태의 표
+- 이 파일은 report.md가 추가될 때마다 에이전트가 1줄씩 누적 추가
+- report.md가 삭제되더라도 이 파일은 영구 보존
+
+### 4. SKILL.md 제1원칙 수정 - Global_Trend 폴더 구조 반영
+- 제1원칙의 폴더 구조 설명에 Global_Trend/ 폴더를 추가한다.
+- Stock_Research/ 루트 레벨의 공용 폴더임을 명시한다.
+- 파일명 컨벤션(report_YYYY.MM.DD~DD.md)을 명시한다.
+- 최대 25개 유지, FIFO 삭제 정책을 명시한다.
+
+### 5. SKILL.md 제1원칙 수정 - 기업별 Weekly_Trend 역할 재정의
+- 기업별 Weekly_Trend/ 폴더의 역할을 '기업 특화 자료 전용'으로 재정의한다.
+- 용도: 해당 기업의 개별 증권사 리포트, 특허 소송 뉴스, IR 자료 등
+- 자료 형식: 원본 텍스트를 그대로 MD에 복사-붙여넣기 (요약 금지, 원문 보존 원칙)
+- Global_Trend와의 역할 분리를 명확히 서술
+
+### 6. SKILL.md Phase 1 뼈대 수정 - Global_Trend 읽기 로직 추가
+- Phase 1 실행 시 에이전트가 Global_Trend/의 MD를 읽는 방법을 3레벨로 명시:
+  - L1(최신 정독): 최신 1~2개 MD (최근 1개월) → Phase 1 전체 + Phase 2에 심층 활용
+  - L2(사이클 스캔): 3~6개월 전 MD → Phase 1 "사이클 국면 판단" 목차에서만 과거 대비 비교용
+  - L3(무시): 6개월 이전 MD → 읽지 않음
+- cycle_timeline.md는 항상 읽어 사이클 궤적 참조
+
+### 7. SKILL.md Phase 1 뼈대 수정 - 에이전트 필터링 3레벨 명시
+- 에이전트가 Global_Trend MD에서 해당 기업에 연관된 테마를 추출할 때의 필터링 기준:
+  - 1차: 직접 연관 테마 (예: 티씨케이 → 반도체 전공정, SiC 소재)
+  - 2차: 간접 연관 매크로 (예: 환율, 금리, 원재료 가격 → 모든 제조업에 영향)
+  - 3차: 공급망/지정학적 리스크 (예: 미중 관세, 일본 정책 → 대주주/공급망 관련)
+
+### 8. SKILL.md Track 2 (델타 업데이트) 로직 수정
+- 기존의 '기업별 Weekly_Trend에 새 파일 추가 시' 트리거에 추가하여,
+  'Global_Trend에 새 report.md 추가 시' 트리거도 병기한다.
+- 새 report.md 추가 시 에이전트가 수행할 작업:
+  1. cycle_timeline.md에 1줄 추가 (새 report의 핵심 사이클 지표 요약)
+  2. 기존 기업 보고서에 관련 델타 반영 (필터링 3레벨 적용)
+
+### 9. 검증 - SKILL.md 최종 무결성 검증
+- 수정 완료된 SKILL.md를 전체 읽기하여 다음을 검증:
+  - 목차 번호가 연속적인지 (중간 누락 없는지)
+  - Phase 1 뼈대의 목차 번호 정합성
+  - Phase 3 뼈대의 목차 번호 정합성
+  - Mermaid 문법 규칙이 손상되지 않았는지
+  - 기존에 추가한 규칙들(출처 실명제, 리스크 확률/파급력, 핵심전제/검증지표)이 유지되는지
+  - 모든 Phase 워크플로우 트리거 설명이 일관적인지

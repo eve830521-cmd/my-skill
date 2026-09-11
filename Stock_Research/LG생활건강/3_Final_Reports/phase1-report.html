@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>🔍 Phase 1: 기업 해독기 (심층 팩트체크 코어)</h1>
+<h2>1. 매크로 및 산업 사이클(Sector Cycle) 현황</h2>
+<p>[시장 내러티브] 
+글로벌 K-뷰티 산업은 과거 중국 면세/따이궁에 의존하던 수출 생태계에서 완전히 벗어나, 미국(얼타, 타겟, 코스트코)과 유럽 오프라인 메인스트림 채널을 직접 공략하며 연일 사상 최고치를 경신하는 <strong>'수출 재가속화 및 제2라운드 확장 국면'</strong>에 돌입했습니다 <code>[팩트: 주간트렌드(화장품섹터 26.08)]</code>. 그러나 이러한 전례 없는 호황은 에이피알, 한국콜마, 코스맥스 등 중소 인디 및 ODM 브랜드 주도로 폭발하고 있습니다. 과거 2015년 K-뷰티 전체 시가총액의 90% 이상을 지배했던 LG생활건강 등 레거시 대기업의 시장 내 비중은 현재 30%대 초반까지 쪼그라들며, 산업의 대호황 속에서 역설적으로 <strong>'구조적 쇠퇴 방어 및 턴어라운드 모색기'</strong>에 놓여 있는 혹독한 사이클입니다.</p>
+<h2>2. 비즈니스 모델 및 경제적 해자(Moat)</h2>
+<p>[공시 팩트] 
+LG생활건강은 뷰티(화장품), HDB(생활용품), 리프레시먼트(음료)의 3각 포트폴리오를 통해 이익 변동성을 방어하는 안정적인 구조를 갖추고 있습니다 <code>[팩트: 26.1Q 분기보고서]</code>. 한류 럭셔리 붐이 일던 시기에는 '후(Whoo)' 등 프리미엄 화장품 브랜드의 막강한 가격 결정력이 절대적 해자였으나, 중국 리스크로 뷰티 부문이 붕괴된 현재는 코카콜라 등의 독점적 음료 판권과 일상 필수재 밸류체인이 전사 이익의 하방을 지지하는 기초 해자(Moat) 역할을 묵묵히 수행 중입니다.</p>
+<pre><code class="language-mermaid">graph TD
+    A[&quot;원자재 공급처 (엔에프씨, 이수화학 등)&quot;] --&gt;|&quot;화장품원료, 소다회 매입&quot;| B(&quot;LG생활건강 핵심 3각 생산기지&quot;)
+    B -. &quot;자체 공장 (청주, 울산, 여주 등) 가동&quot; .-&gt; C{&quot;사업 포트폴리오&quot;}
+    C --&gt;|&quot;Beauty (화장품)&quot;| D[&quot;백화점, 면세점, 글로벌 오프라인&quot;]
+    C --&gt;|&quot;HDB (생활용품)&quot;| E[&quot;대형마트, 온라인, 편의점&quot;]
+    C --&gt;|&quot;Refreshment (음료)&quot;| F[&quot;할인점, 체인슈퍼, 도매상&quot;]
+    D --&gt;|&quot;프리미엄 지향&quot;| G[&quot;최종 소비자&quot;]
+    E --&gt;|&quot;필수재 락인&quot;| G
+    F --&gt;|&quot;독점 판권 기반&quot;| G
+</code></pre>
+<h2>3. 주요 사업별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
+<p>2026년 1분기부터 닥터그루트, 유시몰 등 일부 뷰티성 생필품이 HDB에서 Beauty 부문으로 이관되어 반영되었습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Beauty (화장품)</strong></td>
+<td style="text-align: left;">'21년 54.9% → '26.1Q 48.9% (7,711억 원)</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 중국향 럭셔리 수요 부진으로 매출 볼륨 및 전사 비중 급감</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HDB (생활용품)</strong></td>
+<td style="text-align: left;">'21년 25.4% → '26.1Q 25.2% (3,979억 원)</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 생필품 수요 둔화이나 뷰티 부문 이관 효과 혼재</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Refreshment (음료)</strong></td>
+<td style="text-align: left;">'21년 19.7% → '26.1Q 25.9% (4,076억 원)</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 뷰티 부문의 실적 붕괴를 충실히 방어하는 핵심 캐시카우로 부상</td>
+</tr>
+</tbody>
+</table>
+<h2>4. 전사 영업이익률 및 FCF 추이</h2>
+<p>[공시 팩트] 
+중국 쇼크와 원자재가 상승이 겹치며 수익성이 크게 훼손된 이후, 최근 미약한 반등을 모색 중입니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>영업이익률 (OPM)</strong></td>
+<td style="text-align: left;">'21년 15.94% → '25년 2.69% → '26.1Q 6.84%</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 25년 최악의 저점을 지나 26년 1분기 원가 절감 노력 등으로 소폭 반등</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>연결 FCF (단순계산)</strong></td>
+<td style="text-align: left;">'21년 6,523억 원 → '26.1Q 660억 원</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 절대적인 이익 볼륨 붕괴(영업활동현금흐름 반토막)로 창출 현금 둔화</td>
+</tr>
+</tbody>
+</table>
+<h2>5. 핵심 KPI 추이 및 분석 (과거 사이클 고점/저점 비교 필수)</h2>
+<p>[시장 내러티브] 
+소비재 제조업의 핵심 KPI는 생산 설비의 원가율을 결정짓는 '공장 가동률'입니다.
+[공시 팩트] 
+핵심 화장품 라인인 청주 공장의 가동률은 과거 슈퍼사이클 고점('21년 82.2%) 수준에 근접한 81.7%를 유지하며 선방하고 있습니다 <code>[팩트: 26.1Q 분기보고서]</code>. 그러나 HDB(생활용품)를 생산하는 <strong>울산 공장의 가동률은 2021년 65.0%에서 2026년 1분기 40.9%</strong> <code>[팩트: 26.1Q 분기보고서]</code>로 완전히 붕괴되었습니다. 이는 오프라인 대형마트 폐점과 고마진 브랜드의 뷰티 이관 여파가 물리적 공장 유휴화 리스크(고정비 부담)로 직결되고 있음을 숫자로 명확히 방증합니다.</p>
+<h2>6. 경영진 및 주주환원 이력</h2>
+<p>[공시 팩트] 
+최대주주 주식회사 LG(34.74%) 지배 하에 주가 하락 방어를 위한 자사주 소각에 적극 나섰습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>주당 배당금 추이</strong></td>
+<td style="text-align: left;">'22년 4,000원 → '25년 2,000원</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 급격한 실적 둔화에 따른 배당금 삭감 불가피</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자사주 이익소각</strong></td>
+<td style="text-align: left;">2025년 중 총 307.9만 주 대규모 소각 (4월, 9월 2차례)</td>
+<td style="text-align: left;"><code>[팩트: 26.1Q 분기보고서]</code> 최대주주 지분율을 자연 상승(34.03%→34.74%)시킨 대규모 유통주식수 감축 액션</td>
+</tr>
+</tbody>
+</table>
+<h2>7. 핵심 리스크 분석 (확률 및 파급력 계량화)</h2>
+<p>[공시 팩트] 
+| 리스크 요인 | 핵심 내용 (발생 조건) | 확률(Prob) | 파급력(Impact) |
+| :--- | :--- | :---: | :---: |
+| <strong>중국 내수 침체 장기화</strong> | 궈차오(애국소비) 열풍 및 경제 둔화로 고마진 럭셔리 '후' 라인업 실적 회복 지연 | High | High |
+| <strong>에이본 라이선스 대형 소송</strong> | 미국 법인에서 진행 중인 에이본(Avon)과의 상표권 계약 위반 소송(약 700억 상당) 패소 시 우발채무 현실화 | Mid | Mid |
+| <strong>울산 공장 유휴화 (고정비)</strong> | HDB 생활용품 생산 물량 지속 감소로 울산공장 가동률 추가 하락 시 한계비용 붕괴 | Mid | High |</p>
+<h2>8. 딥리서치 팩트체크 요약</h2>
+<p>[시장 내러티브] 
+북미 오프라인 채널(얼타, 타겟) 입점 등 K-뷰티 수출 대호황 트렌드가 LG생활건강의 실적을 즉각 견인할 것이라는 장밋빛 전망이 일부 존재하나 실상은 전혀 다릅니다.</p>
+<p>[공시 팩트] 
+K-뷰티 르네상스 수혜의 90% 이상은 인디 브랜드 기획사(에이피알 등)와 OEM/ODM 공장(한국콜마, 코스맥스 등)에 온전히 집중되어 있습니다 <code>[팩트: 주간트렌드(화장품섹터 26.08)]</code>. LG생활건강은 2026.1Q 기준 OPM 6.84% 수준으로 과거 15%대의 영광을 회복하지 못한 채 길고 고통스러운 턴어라운드를 모색하고 있습니다. 글로벌 유통채널 다변화가 어느 정도 진행 중이나, 여전히 유휴화된 울산공장(가동률 40.9%)의 악성 고정비 해소와 북미 종속법인의 체질 개선 완수 여부가 LG생활건강 기업가치 리레이팅의 진짜 핵심 관건입니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                
+                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>기준 FCF (억 원)</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>';
+
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    return parseFloat(val.toString().replace(/,/g, ''));
+                }
+
+                function formatNumberInput(e) {
+                    // Skip for number types
+                    if (e.target.type === 'number') return;
+                    
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    
+                    // Allow minus sign at the beginning for FCF
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
+
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const targetValue = price * shares;
+                    
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    
+                    let low = -0.99;
+                    let high = 5.0; // max 500%
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 100; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetValue) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+
+                    if (found || Math.abs(high - low) < 0.0001) {
+                        const growthPercent = (g * 100).toFixed(2);
+                        elResultValue.textContent = growthPercent + "%";
+                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
+                        if (g < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (g > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+            }
+        });
+    </script>
+</body>
+</html>

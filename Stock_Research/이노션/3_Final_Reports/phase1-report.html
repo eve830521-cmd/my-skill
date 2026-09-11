@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h1>🔍 Phase 1: 기업 해독기 (심층 팩트체크 코어)</h1>
+<h2>1. 매크로 및 산업 사이클(Sector Cycle) 현황</h2>
+<p>[시장 내러티브]
+현재 광고 산업은 글로벌 고금리 장기화 기조와 내수 소비 침체로 인해 마케팅 예산이 전반적으로 동결/축소되는 <strong>'침체 국면(Downturn)'</strong>에 놓여 있습니다. 특히 미국 연준의 고금리 장기화(H4L) 리스크와 글로벌 기업들의 AI 인프라 자본조달(Cash Capex -&gt; Debt Capex)에 따른 비용 압박으로 인해 전통 매체(지상파, 인쇄) 광고 시장은 급격히 쇠퇴하고 있습니다 [추정: LS증권 9월 매크로 트렌드].
+그러나 동시에 AI 에이전트 및 디지털 전환 트렌드로 인해 타겟팅 고도화와 데이터 기반 퍼포먼스 마케팅에 대한 수요가 팽창하면서, 디지털 옴니채널 광고(뉴미디어) 중심의 질적 턴어라운드(Turn-around) 변곡점에 진입하고 있습니다. 따라서 전통 매체에서 뉴미디어로 포트폴리오를 빠르게 전환하고 있는 광고 대행사들의 실질적인 펀더멘털 방어력이 시험받는 핵심 구간입니다.</p>
+<h2>2. 비즈니스 모델 및 경제적 해자(Moat)</h2>
+<p>[공시 팩트]
+이노션은 글로벌 마케팅 니즈를 분석해 전략을 수립하고 매체대행, 광고제작, 옥외광고 등 통합 마케팅 커뮤니케이션(IMC) 솔루션을 제공하는 종합 광고 대행사입니다. 회사의 가장 강력한 경제적 해자(Moat)는 현대자동차그룹이라는 <strong>'초대형 캡티브(Captive) 고객망'</strong>에서 나옵니다. 현대차/기아를 기반으로 연간 총 연결 매출의 66.3%를 안정적으로 창출하며 [팩트: [이노션]2024.12.31 사업보고서, 88쪽, 641쪽], 이러한 방대한 취급고(Billings)는 매체사와의 협상에서 압도적인 <strong>'바잉 파워(네트워크 경제성)'</strong>를 발휘하게 만듭니다. 또한 디지털 전환을 위한 지속적인 M&amp;A(디퍼플, 스튜디오레논 등)를 통해 캡티브 물량을 비계열(금융, 식품 등) 고객으로 확장하는 '전환 비용(Switching Cost)' 해자를 구축하고 있습니다 [팩트: [이노션]2026.06.30 반기보고서, 5~6쪽].</p>
+<pre><code class="language-mermaid">graph TD
+    A[&quot;매체사 &amp; 외주제작사&quot;] --&gt;|&quot;광고 지면/시간 및 용역 공급&quot;| B[&quot;이노션 (바잉파워 및 IMC 솔루션)&quot;]
+    B --&gt;|&quot;매체 기획/구매 및 콘텐츠 제작&quot;| C[&quot;현대차그룹 (핵심 캡티브)&quot;]
+    B --&gt;|&quot;디지털 옴니채널 마케팅&quot;| D[&quot;비계열사 (금융/유통 등)&quot;]
+    C -. &quot;안정적 캐시카우 (매출 66.3% 차지)&quot; .-&gt; B
+</code></pre>
+<h2>3. 주요 사업별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">2022년</th>
+<th style="text-align: center;">2023년</th>
+<th style="text-align: center;">2024년</th>
+<th style="text-align: center;">2025년</th>
+<th style="text-align: center;">2026년 상반기</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>매체대행</strong></td>
+<td style="text-align: center;">80,365 (49.5%)</td>
+<td style="text-align: center;">75,501 (41.6%)</td>
+<td style="text-align: center;">69,177 (37.8%)</td>
+<td style="text-align: center;">66,223 (34.6%)</td>
+<td style="text-align: center;">24,477 (26.7%)</td>
+<td style="text-align: left;">전통 지상파 비중 급감 추세</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>광고제작</strong></td>
+<td style="text-align: center;">36,840 (22.7%)</td>
+<td style="text-align: center;">44,214 (24.3%)</td>
+<td style="text-align: center;">49,364 (27.0%)</td>
+<td style="text-align: center;">59,082 (30.8%)</td>
+<td style="text-align: center;">26,349 (28.7%)</td>
+<td style="text-align: left;">디지털 및 콘텐츠 제작 수요 증가</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>옥외광고</strong></td>
+<td style="text-align: center;">8,402 (5.2%)</td>
+<td style="text-align: center;">10,090 (5.6%)</td>
+<td style="text-align: center;">10,813 (5.9%)</td>
+<td style="text-align: center;">11,107 (5.8%)</td>
+<td style="text-align: center;">5,109 (5.6%)</td>
+<td style="text-align: left;">안정적 캐시카우 유지</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>프로모션</strong></td>
+<td style="text-align: center;">23,436 (14.5%)</td>
+<td style="text-align: center;">32,297 (17.8%)</td>
+<td style="text-align: center;">34,979 (19.1%)</td>
+<td style="text-align: center;">33,327 (17.4%)</td>
+<td style="text-align: center;">19,901 (21.7%)</td>
+<td style="text-align: left;">CX/BX 중심 공간 마케팅 확대</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기타</strong></td>
+<td style="text-align: center;">13,186 (8.1%)</td>
+<td style="text-align: center;">19,438 (10.7%)</td>
+<td style="text-align: center;">18,464 (10.1%)</td>
+<td style="text-align: center;">21,856 (11.4%)</td>
+<td style="text-align: center;">15,851 (17.3%)</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>본사 소계</strong></td>
+<td style="text-align: center;">162,229 (100%)</td>
+<td style="text-align: center;">181,540 (100%)</td>
+<td style="text-align: center;">182,797 (100%)</td>
+<td style="text-align: center;">191,596 (100%)</td>
+<td style="text-align: center;">91,686 (100%)</td>
+<td style="text-align: left;">본사 매출총이익 기준 [팩트: 2026.06.30 반기보고서]</td>
+</tr>
+</tbody>
+</table>
+<h2>4. 전사 영업이익률 및 FCF 추이</h2>
+<p>[공시 팩트]
+이노션은 무형 자산 중심의 비즈니스로 구조적으로 7~9% 수준의 안정적인 영업이익률을 향유하고 있습니다 [팩트: [이노션]2025.12.31 사업보고서]. 다만 디지털 전환 인력 확충에 따른 인건비 상승으로 인해 OPM은 과거 9%대에서 최근 7%대로 소폭 하락 안정화되었습니다. 잉여현금흐름(FCF)의 경우, 2024년 대규모 자산 대체(CAPEX 2,062억원 집행)로 인해 일시적 적자(-280억원)를 기록했으나, 2025년 즉각적으로 +2,616억원으로 정상 회귀하며 강력한 펀더멘털을 입증했습니다 [팩트: [이노션]2025.12.31 사업보고서, 39쪽, 52쪽].</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">2021년</th>
+<th style="text-align: center;">2023년</th>
+<th style="text-align: center;">2024년</th>
+<th style="text-align: center;">2025년</th>
+<th style="text-align: center;">2026년 상반기</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>매출액 (백만원)</strong></td>
+<td style="text-align: center;">1,502,034</td>
+<td style="text-align: center;">2,092,893</td>
+<td style="text-align: center;">2,120,578</td>
+<td style="text-align: center;">2,146,041</td>
+<td style="text-align: center;">1,022,844</td>
+<td style="text-align: left;">꾸준한 외형 성장 (M&amp;A 등)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>영업이익률 (%)</strong></td>
+<td style="text-align: center;">9.04%</td>
+<td style="text-align: center;">7.17%</td>
+<td style="text-align: center;">7.34%</td>
+<td style="text-align: center;">7.59%</td>
+<td style="text-align: center;">8.25%</td>
+<td style="text-align: left;">인건비 증가로 OPM 일부 훼손 후 반등</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FCF (백만원)</strong></td>
+<td style="text-align: center;">142,862</td>
+<td style="text-align: center;">50,479</td>
+<td style="text-align: center;">-28,021</td>
+<td style="text-align: center;">261,640</td>
+<td style="text-align: center;">66,104</td>
+<td style="text-align: left;">2024년 대규모 일시적 CAPEX 제외 시 매우 양호</td>
+</tr>
+</tbody>
+</table>
+<h2>5. 핵심 KPI 추이 및 분석 (과거 사이클 고점/저점 비교 필수)</h2>
+<p>[시장 내러티브]
+전통적인 수주/제조업체의 수주잔고나 가동률 대신, 광고 산업은 회계상 인식되는 '계약자산'과 '계약부채'를 통해 단기 프로젝트의 업황 턴어라운드를 파악해야 합니다.</p>
+<p>[공시 팩트]
+과거 유동성 랠리 고점이었던 2021~2022년 당시 영업이익률은 9.04% 수준이었으나, 불황기인 2023년에는 7.17%까지 급격히 둔화되었습니다 [팩트: 2025.12.31 사업보고서]. 그러나 가장 최신인 2026년 상반기 영업이익률은 8.25%로 저점 대비 확연히 반등하고 있습니다. 
+또한 선행 실적을 파악할 수 있는 <strong>'계약자산'</strong> 잔액은 2025년 말 845억원에서 2026년 상반기 말 <strong>1,569억원</strong>으로 단기간 내 약 2배 가까이 급증했습니다 [팩트: 2026.06.30 반기보고서, 64쪽]. 이는 불황에 축소되었던 기업들의 신규 캠페인이 2026년 상반기를 기점으로 강하게 턴어라운드(수주 증가)하고 있음을 시사하는 매우 긍정적인 실질 KPI 신호입니다.</p>
+<h2>6. 경영진 및 주주환원 이력</h2>
+<p>[공시 팩트]
+이노션의 경영진은 극도로 주주친화적인 현금 배분 정책을 영위하고 있습니다. 최대주주 및 특수관계인 지분율이 28.71%로 안정적이며 [팩트: 2026.06.30 반기보고서, 164쪽], 매년 2분기 또는 3분기에 225원씩 분기 배당을 정례화하여 실현 중입니다. 현금배당수익률은 연 5.4%~6.4%에 달하며, 연결 배당성향은 46%~51% 밴드를 견고하게 사수하고 있습니다 [팩트: 2025.12.31 사업보고서, 231~232쪽]. 자사주 매입/소각 이력이 없는 점은 아쉬우나, 5% 이상의 고배당수익률은 하방 경직성을 극대화합니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">2023년 결산</th>
+<th style="text-align: center;">2024년 결산</th>
+<th style="text-align: center;">2025년 결산</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>주당 현금배당금 (원)</strong></td>
+<td style="text-align: center;">1,175원</td>
+<td style="text-align: center;">1,175원</td>
+<td style="text-align: center;">1,175원</td>
+<td style="text-align: left;">중간배당 225원 + 결산배당 950원</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>연결 현금배당성향 (%)</strong></td>
+<td style="text-align: center;">46.2%</td>
+<td style="text-align: center;">46.9%</td>
+<td style="text-align: center;">51.2%</td>
+<td style="text-align: left;">이익의 절반을 주주에게 환원</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>현금배당수익률 (%)</strong></td>
+<td style="text-align: center;">5.4%</td>
+<td style="text-align: center;">6.4%</td>
+<td style="text-align: center;">5.8%</td>
+<td style="text-align: left;">배당 매력 매우 높음</td>
+</tr>
+</tbody>
+</table>
+<h2>7. 핵심 리스크 분석 (확률 및 파급력 계량화)</h2>
+<p>[공시 팩트]
+회사의 성장을 저해할 수 있는 구조적 3대 리스크 요인입니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">리스크 요인</th>
+<th style="text-align: left;">핵심 내용 (발생 조건)</th>
+<th style="text-align: center;">확률(Prob)</th>
+<th style="text-align: center;">파급력(Impact)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1) 거시경제 및 예산 축소</strong></td>
+<td style="text-align: left;">매크로 침체, 금리 상승으로 인한 기업 전반의 마케팅 비용 동결/축소 발생 시. 현재 지상파 대행 실적이 지속 역성장 중임.</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2) 계열사 의존 (Captive)</strong></td>
+<td style="text-align: left;">현대차, 기아의 전기차 캐즘 및 글로벌 판매량 둔화 시, 그룹사발 연결 매출(66.3%)이 직접적인 타격을 받음.</td>
+<td style="text-align: center;">Mid</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3) 고정비(인건비) 인플레이션</strong></td>
+<td style="text-align: left;">디지털 전환(M&amp;A) 및 IT 인력 영입 경쟁 심화로 인해 판관비 내 급여 항목이 구조적으로 급증하며 마진을 압박.</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Mid</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 딥리서치 팩트체크 요약</h2>
+<p>[시장 내러티브]
+시장은 광고 회사들이 전통 매체(TV)의 몰락으로 심각한 현금 창출력 위기에 봉착했다고 우려합니다. AI 붐은 IT 플랫폼에만 국한되고 광고 대행사는 수혜에서 소외된다는 내러티브가 팽배합니다.</p>
+<p>[공시 팩트]
+하지만 팩트체크 결과, 이노션은 이미 <strong>'매체대행' 비중을 34.6%(25년)에서 26.7%(26년 상반기)로 적극 축소</strong>하고, 고마진의 <strong>'광고제작 및 프로모션' 비중을 과반 이상으로 방어</strong>하며 포트폴리오 트랜스포메이션에 성공했습니다 [팩트: 2026.06.30 반기보고서]. 2024년의 FCF 적자는 유형자산 등 선제적 설비 투자의 일시적 현상일 뿐, 2025년 2,616억원의 잉여현금을 창출하며 구조적 훼손이 아님을 증명했습니다 [팩트: 2025.12.31 사업보고서]. 향후 관건은 선행지표인 '계약자산'의 급증(1,569억원)이 하반기 옴니채널 퍼포먼스 마케팅의 실적 확대로 무사히 직결되는지 여부입니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                
+                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>기준 FCF (억 원)</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>';
+
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    return parseFloat(val.toString().replace(/,/g, ''));
+                }
+
+                function formatNumberInput(e) {
+                    // Skip for number types
+                    if (e.target.type === 'number') return;
+                    
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    
+                    // Allow minus sign at the beginning for FCF
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
+
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const targetValue = price * shares;
+                    
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    
+                    let low = -0.99;
+                    let high = 5.0; // max 500%
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 100; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetValue) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+
+                    if (found || Math.abs(high - low) < 0.0001) {
+                        const growthPercent = (g * 100).toFixed(2);
+                        elResultValue.textContent = growthPercent + "%";
+                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
+                        if (g < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (g > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+            }
+        });
+    </script>
+</body>
+</html>
