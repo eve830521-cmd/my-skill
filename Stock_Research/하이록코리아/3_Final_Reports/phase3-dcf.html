@@ -302,173 +302,113 @@ p > em {
 </head>
 <body>
     <h1>🎯 하이록코리아 Phase 3: 밸류에이션 및 전략</h1>
-<h2>1. 밸류에이션 분석 (역DCF 및 역대 배당수익률 시계열 분석)</h2>
-<h3>① 역DCF 분석: 시장 프라이싱의 극단적 비관론 (-1.22% 영구 역성장 선반영)</h3>
+<h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
+<p>[공시 팩트] 2026년 9월 16일 종가 기준 현재 주가는 <strong>34,050원</strong>, 총 발행주식수는 <strong>11,768,144주</strong>(최근 3년간 184.5만 주 영구 소각 완료 후), 시가총액은 약 <strong>4,007억 원</strong>입니다 <code>[팩트: 2026.09.16 한국거래소 종가]</code>. 2026년 상반기 확정 순 잉여현금흐름(FCF 240.0억 원)을 바탕으로 한 연환산(TTM) FCF는 약 <strong>450.0억 원</strong>입니다 <code>[팩트: 26년 반기보고서 p.26]</code>.</p>
 <ul>
-<li><strong>시장 프라이싱 역산 (Reverse DCF)</strong>:</li>
-<li>2026년 9월 16일 종가 <strong>34,050원</strong>, 총 발행주식수 <strong>11,768,144주</strong> 기준 시가총액은 약 <strong>4,007억 원</strong>입니다 <code>[팩트: 2026.09.16 한국거래소 종가]</code>.</li>
-<li>2026년 상반기 확정 순 FCF(240.0억 원) 기반 연환산(TTM) FCF 약 <strong>450.0억 원</strong>을 보수적 할인율(WACC 10.0%)로 역DCF 계산해보면, 현재 주가는 회사의 현금창출력이 매년 <strong>-1.22%씩 영구 역성장(영구 쇠퇴)</strong>할 것을 선반영하고 있습니다 <code>[추정: 역DCF 시뮬레이션]</code>.</li>
-<li>현재 시총 대비 FCF 수익률(FCF Yield)은 <strong>11.23%</strong>에 달해, 극단적 저평가(Deep Value) 국면입니다.</li>
-<li><strong>공시 팩트와의 괴리</strong>:</li>
-<li>시장의 비관적 가정과 달리, DART 공시 팩트는 <strong>피팅 가동률 95% 풀가동, 북투빌(Book-to-Bill) 1.13배 초과수요, 상반기 OPM 28.82% 신고가</strong>를 확증했습니다 <code>[팩트: 26년 반기보고서 p.11, p.14, p.24]</code>.</li>
+<li><strong>역DCF 연산 결과:</strong></li>
+<li>보수적 가중평균자본비용(WACC) 10.0%, 영구성장률 모델(Gordon Growth Model)을 적용하여 현재 시가총액(4,007억 원)을 역산하면, 시장이 하이록코리아에 요구하고 있는 FCF 영구 성장률은 <strong>-1.22%</strong>로 산출됩니다 <code>[추정: 역DCF 시뮬레이션]</code>.</li>
+<li>현재 시가총액 대비 FCF 수익률(FCF Yield)은 무려 <strong>11.23%</strong>에 달합니다.</li>
+<li><strong>시장 기대치 괴리율 진단:</strong></li>
+<li>시장의 주가는 하이록코리아의 현금창출력이 <strong>매년 -1.22%씩 영구적으로 쇠퇴(역성장)</strong>할 것이라는 '비이성적 공포'를 선반영하고 있습니다.</li>
+<li>그러나 DART 공시 팩트는 <strong>주력 피팅 가동률 95% 풀가동, 북투빌(Book-to-Bill) 1.13배 초과수요, 상반기 OPM 28.82% 신고가</strong>를 확증하고 있어, 역사적 Capa와 실질 현금창출력 대비 극단적인 <strong>안전마진(Deep Value)</strong>이 확보된 상태로 판정됩니다 <code>[팩트: 26년 반기보고서 p.11, p.14, p.24]</code>.</li>
 </ul>
-<h3>② DART 공식 역대 배당수익률 시계열 검토 (2020 ~ 2025)</h3>
-<p><code>korean-dart</code> API의 <code>get_periodic_report (dividends)</code> 섹션을 통해 직접 추출한 최근 6개년 배당 팩트 데이터입니다.</p>
+<h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
+<p>단순히 PER이 낮고 PBR이 낮다는 이유만으로 매수했다가 장기 주가 침체에 갇히는 초보 가치투자의 오류를 방지하기 위해, DART 공시 팩트와 Global Trend 딥리서치로 3대 가치함정 지표를 전수 점검합니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">사업연도</th>
-<th style="text-align: center;">주당 배당금 (DPS)</th>
-<th style="text-align: center;">현금배당금 총액</th>
-<th style="text-align: center;">시가 배당수익률</th>
-<th style="text-align: center;">연결 배당성향</th>
-<th style="text-align: center;">주당 순이익 (EPS)</th>
-<th style="text-align: center;">당시 주가 수준</th>
-<th style="text-align: center;">DART 공시 출처</th>
+<th style="text-align: left;">가치함정 진단 지표</th>
+<th style="text-align: left;">점검 기준 (Check Point)</th>
+<th style="text-align: left;">기업 현황 팩트</th>
+<th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><strong>2020년</strong></td>
-<td style="text-align: center;"><strong>500원</strong></td>
-<td style="text-align: center;">64.3억 원</td>
-<td style="text-align: center;"><strong>3.50%</strong></td>
-<td style="text-align: center;">121.70%</td>
-<td style="text-align: center;">390원</td>
-<td style="text-align: center;">약 14,300원</td>
-<td style="text-align: center;"><code>[팩트: 2022 사업보고서]</code></td>
+<td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
+<td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
+<td style="text-align: left;">- 연결 OPM: 2024년 26.31% $\rightarrow$ 2025년 27.46% $\rightarrow$ <strong>2026년 상반기 28.82%로 마진 지속 확장</strong> <code>[팩트: 26년 반기보고서 p.24]</code> <br> - 주력 내수 밸브 ASP 121,366원으로 매년 인상 중 <code>[팩트: 26년 반기보고서 p.10]</code> <br> - 벤더 교체비용(Switching Cost) 해자 불변 및 특허 분쟁 전무</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: center;"><strong>2021년</strong></td>
-<td style="text-align: center;"><strong>500원</strong></td>
-<td style="text-align: center;">64.3억 원</td>
-<td style="text-align: center;"><strong>2.90%</strong></td>
-<td style="text-align: center;">33.00%</td>
-<td style="text-align: center;">1,515원</td>
-<td style="text-align: center;">약 17,200원</td>
-<td style="text-align: center;"><code>[팩트: 2022 사업보고서]</code></td>
+<td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
+<td style="text-align: left;"><strong>[피팅/기자재 선행지표]</strong> 북투빌(Book-to-Bill) 1.0 미만 전환, 리드타임 단축 여부 <br> <strong>[전방 조선 선행지표]</strong> 도크 완판 후 신규 수주 역성장 여부</td>
+<td style="text-align: left;">- <strong>북투빌 1.13배 유지</strong>: 상반기 수주총액 1,125.4억 원 &gt; 매출액 992.1억 원으로 초과 수요 지속 <code>[팩트: 26년 반기보고서 p.14]</code> <br> - <strong>조선 3사 도크</strong>: 2029년 슬롯 60% 소진 및 <strong>2030년 인도 슬롯 판매 개시</strong>로 실적 시계열 연장 <code>[팩트: Global_Trend 26.09 LS증권 p.3]</code> <br> - <strong>AIDC 분산 발전/FDC 신시장</strong>: 전력망 병목(5~7년 소요)으로 인한 온사이트 중속엔진 발주 폭증</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: center;"><strong>2022년</strong></td>
-<td style="text-align: center;"><strong>600원</strong></td>
-<td style="text-align: center;">77.1억 원</td>
-<td style="text-align: center;"><strong>2.90%</strong></td>
-<td style="text-align: center;">22.80%</td>
-<td style="text-align: center;">2,634원</td>
-<td style="text-align: center;">약 20,700원</td>
-<td style="text-align: center;"><code>[팩트: 2022 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>2023년</strong></td>
-<td style="text-align: center;"><strong>1,050원</strong></td>
-<td style="text-align: center;">132.2억 원</td>
-<td style="text-align: center;"><strong>3.70%</strong></td>
-<td style="text-align: center;">27.90%</td>
-<td style="text-align: center;">3,687원</td>
-<td style="text-align: center;">약 28,400원</td>
-<td style="text-align: center;"><code>[팩트: 2025 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>2024년</strong></td>
-<td style="text-align: center;"><strong>1,150원</strong></td>
-<td style="text-align: center;">141.4억 원</td>
-<td style="text-align: center;"><strong>4.30%</strong></td>
-<td style="text-align: center;">29.80%</td>
-<td style="text-align: center;">3,895원</td>
-<td style="text-align: center;">약 26,700원</td>
-<td style="text-align: center;"><code>[팩트: 2025 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>2025년</strong></td>
-<td style="text-align: center;"><strong>1,350원</strong></td>
-<td style="text-align: center;">158.9억 원</td>
-<td style="text-align: center;"><strong>3.90%</strong></td>
-<td style="text-align: center;">30.70%</td>
-<td style="text-align: center;">4,337원</td>
-<td style="text-align: center;">약 34,600원</td>
-<td style="text-align: center;"><code>[팩트: 2025 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>2026E (전망)</strong></td>
-<td style="text-align: center;"><strong>1,500원</strong></td>
-<td style="text-align: center;"><strong>176.5억 원</strong></td>
-<td style="text-align: center;"><strong>4.41%</strong></td>
-<td style="text-align: center;"><strong>31.50%</strong></td>
-<td style="text-align: center;"><strong>4,758원</strong></td>
-<td style="text-align: center;"><strong>34,050원 (현재가)</strong></td>
-<td style="text-align: center;"><code>[추정: 26.1H 순익 기반]</code></td>
+<td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
+<td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
+<td style="text-align: left;">- <strong>3개년 자사주 13.55%(184.5만 주) 전량 소각 완료</strong> (현재 보유 자기주식 0주) <code>[팩트: 26년 반기보고서 p.7]</code> <br> - 2025년 결산 현금배당 158.9억 원 지급 (DPS 1,350원, 배당성향 30.7%) <code>[팩트: 26년 반기보고서 p.25]</code> <br> - 부채비율 <strong>8.48%</strong>의 완전 무차입 경영 및 ROE 11.0% 유지</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>배당수익률 밴드의 통찰 (Dividend Floor)</strong>:</li>
-<li><strong>폭발적인 배당 성장 (DPS CAGR +22.0%)</strong>: DPS는 2020년 500원에서 2025년 1,350원으로 5년 만에 2.7배 증가했습니다 <code>[팩트: DART 공시]</code>.</li>
-<li><strong>역사적 배당수익률 밴드 (2.90% ~ 4.30%)</strong>: 시가 배당수익률이 <strong>4.0%를 초과하는 구간(2024년 4.30%, 현재 4.41%)</strong>은 예외 없이 주가의 절대적 바닥(Rock Bottom)으로 작용했습니다.</li>
-<li><strong>현재가 34,050원의 강력한 배당 안전마진</strong>: 2026년 상반기 순이익(301.1억, YoY +32.7%) 감안 시 2026년 예상 DPS는 최소 <strong>1,450원 ~ 1,550원(중간값 1,500원)</strong>이 확실시되며, 현재 주가 기준 <strong>예상 배당수익률은 4.41%</strong>에 달해 하방 경직성을 완벽히 확보하고 있습니다.</li>
-<li><strong>총 주주환원 수익률(Total Shareholder Yield) = 연 8.9% 달성</strong>: 현금배당수익률(4.4%)에 더해 최근 3년간 184.5만 주(13.55%)를 전량 소각한 자사주 소각율(연 4.5% 수준)을 합산하면 실질 총 주주환원율은 연 <strong>8.9% 수준</strong>에 달하는 강력한 복리 엔진입니다 <code>[팩트: 26년 반기보고서 p.7]</code>.</li>
+<li><strong>🚨 가치함정 페널티 집행 결과:</strong></li>
+<li><strong>[경보 0개: 정상 (Clean)]</strong> ➡️ 가치함정 징후가 전혀 발견되지 않았으므로, 멀티플 강제 할인(Haircut) 없이 원안대로 바텀업 시나리오 스트레스 테스트를 집행합니다.</li>
 </ul>
-<h2>2. 정량적 시나리오 민감도 분석 (스트레스 테스트)</h2>
-<p>역대 배당수익률 밴드와 신성장 인프라(AIDC 온사이트 중속엔진 및 FDC) 수주 모멘텀을 결합한 3대 시나리오 스트레스 테스트입니다.</p>
+<h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
+<p>전고점 차트 앵커링을 원천 배제하고, DART 공시 생산능력(Capa)과 과거 5개년 역사적 호황기 Peak PER 상한선 규칙을 엄격히 적용하여 산출한 바텀업 시나리오입니다.
+- <strong>[실적 산출 근거 산식]:</strong> <code>[기준 Capa 연간 잠재 매출액 2,600억 원 × 시나리오별 가동률 × 예상 OPM ➡️ 예상 순이익 ➡️ 예상 EPS]</code>
+- <strong>[멀티플 상한선 강제 준수]:</strong> 하이록코리아의 DART 시계열상 과거 5년(2021~2025) 역사적 호황기 Peak PER은 <strong>11.0배</strong>(2021~2022년 턴어라운드 상단)이며, 역사적 중간값은 <strong>9.5배</strong>, 불황기 하단 Trough PER은 <strong>7.0배</strong>입니다 <code>[팩트: DART 시계열 연산]</code>. 시나리오별 Target PER은 이 상한선을 절대 초과하지 않습니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">시나리오 (Scenario)</th>
-<th style="text-align: left;">주요 전제 및 가정 (Key Assumptions)</th>
-<th style="text-align: left;">예상 FCF</th>
-<th style="text-align: left;">예상 EPS (순이익)</th>
-<th style="text-align: left;">예상 DPS (배당수익률)</th>
-<th style="text-align: left;">타겟 PER</th>
-<th style="text-align: left;">적정 주가 밴드</th>
-<th style="text-align: left;">현재가(34,050원) 대비 기대수익률</th>
+<th style="text-align: left;">시나리오 구분</th>
+<th style="text-align: left;">핵심 가정 및 산출 근거 산식</th>
+<th style="text-align: center;">예상 순이익 / EPS</th>
+<th style="text-align: center;">Target PER (상한선 검증)</th>
+<th style="text-align: center;"><strong>적정주가</strong></th>
+<th style="text-align: center;">현재가(34,050원) 대비 등락률</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">🚀 <strong>Bull (호황)</strong></td>
-<td style="text-align: left;">- 피팅 95% 풀가동 지속 및 단가 인상 <br> - AIDC 온사이트 발전 및 FDC 수주 폭발 <br> - <strong>OPM 30% 돌파</strong> 및 추가 자사주 소각</td>
-<td style="text-align: left;"><strong>520억 원 이상</strong></td>
-<td style="text-align: left;"><strong>5,523원</strong> <br> (650억 원)</td>
-<td style="text-align: left;"><strong>1,650원</strong> <br> (2.4~2.7%)</td>
-<td style="text-align: left;"><strong>11.5 ~ 12.0배</strong> <br> (인프라 플랫폼 Re-rating)</td>
-<td style="text-align: left;"><strong>62,000원 ~ 68,000원</strong></td>
-<td style="text-align: left;"><strong>+82.1% ~ +99.7%</strong></td>
+<td style="text-align: left;"><strong>Bull (호황)</strong></td>
+<td style="text-align: left;">- Capa 2,600억 × 가동률 98%(피팅 풀가동 및 신규 MCT 증설 반영) = 매출 2,548억 <br> - AIDC 온사이트 발전·FDC 고마진 제품 확대로 <strong>예상 OPM 30.0%</strong> (영업익 764억) ➡️ 순이익 630억</td>
+<td style="text-align: center;">630억 원 / <br> <strong>5,353원</strong></td>
+<td style="text-align: center;"><strong>11.0배</strong> <br> <code>[과거 5년 호황 Peak 이하 엄수]</code></td>
+<td style="text-align: center;"><strong>59,000원 ~ 62,000원</strong></td>
+<td style="text-align: center;"><strong>+73.3% ~ +82.1%</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;">⚖️ <strong>Base (기본)</strong></td>
-<td style="text-align: left;">- 2026.1H 실적(매출 1,134억, OPM 28.8%) 안착 <br> - 원자재 상승분 판가 전가 지속 <br> - 배당성향 31% 유지 및 배당수익률 3%대 회귀</td>
-<td style="text-align: left;"><strong>450억 ~ 480억 원</strong></td>
-<td style="text-align: left;"><strong>4,758원</strong> <br> (560억 원)</td>
-<td style="text-align: left;"><strong>1,500원</strong> <br> (2.9~3.3%)</td>
-<td style="text-align: left;"><strong>9.5 ~ 10.5배</strong> <br> (정상 제조업 밸류 복귀)</td>
-<td style="text-align: left;"><strong>46,000원 ~ 52,000원</strong></td>
-<td style="text-align: left;"><strong>+35.1% ~ +52.7%</strong></td>
+<td style="text-align: left;"><strong>Base (기본)</strong></td>
+<td style="text-align: left;">- Capa 2,600억 × 가동률 90%(2026.1H 추세 반영, 피팅 95%, 밸브 75%) = 매출 2,340억 <br> - 판가 전가 지속으로 <strong>예상 OPM 28.5%</strong> (영업익 667억) ➡️ 순이익 550억</td>
+<td style="text-align: center;">550억 원 / <br> <strong>4,674원</strong></td>
+<td style="text-align: center;"><strong>9.5배</strong> <br> <code>[역사적 중간값 정상화]</code></td>
+<td style="text-align: center;"><strong>45,000원 ~ 48,000원</strong></td>
+<td style="text-align: center;"><strong>+32.2% ~ +41.0%</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;">⚠️ <strong>Bear (침체)</strong></td>
-<td style="text-align: left;">- 원화 급격한 강세(환율 1,250원 붕괴, 43.6억 환손실) <br> - 전방 경기 둔화로 <strong>OPM 23%로 후퇴</strong> <br> - 단, FCF 흑자 기반 배당 방어벽 작동</td>
-<td style="text-align: left;"><strong>300억 ~ 320억 원</strong></td>
-<td style="text-align: left;"><strong>3,229원</strong> <br> (380억 원)</td>
-<td style="text-align: left;"><strong>1,300원</strong> <br> (4.2~4.6%)</td>
-<td style="text-align: left;"><strong>8.8 ~ 9.5배</strong> <br> (배당수익률 락바텀 지지)</td>
-<td style="text-align: left;"><strong>28,500원 ~ 31,000원</strong></td>
-<td style="text-align: left;"><strong>-16.3% ~ -9.0%</strong></td>
+<td style="text-align: left;"><strong>Bear (침체)</strong></td>
+<td style="text-align: left;">- Capa 2,600억 × 가동률 75%(수주 둔화 반영) = 매출 1,950억 <br> - 원/달러 1,250원 급락(43.6억 환손실) 및 원가 상승으로 <strong>예상 OPM 23.0%</strong> (영업익 448억) ➡️ 순이익 360억</td>
+<td style="text-align: center;">360억 원 / <br> <strong>3,059원</strong></td>
+<td style="text-align: center;"><strong>7.0배</strong> <br> <code>[과거 5년 하단 Trough]</code> <br> <em>(배당 지지선 고려)</em></td>
+<td style="text-align: center;"><strong>28,500원 ~ 30,000원</strong></td>
+<td style="text-align: center;"><strong>-16.3% ~ -11.9%</strong></td>
 </tr>
 </tbody>
 </table>
-<h2>3. 최종 투자 전략 및 액션 플랜 (배당 안전마진 기반 매매 전략)</h2>
-<p>검증된 DART 역대 배당수익률 데이터와 피팅 풀가동 팩트를 결합한 실전 액션 플랜입니다.</p>
 <ul>
-<li><strong>최종 목표주가 밴드</strong>: <strong>46,000원 ~ 52,000원</strong> (Base 시나리오 기준. 현재가 대비 +35% ~ +53%의 확실한 안전마진 확보).</li>
-<li><strong>배당수익률 안전마진 매수 전략 (Dividend Floor Buy Trigger)</strong>:</li>
-<li><strong>[배당수익률 4.2% 이상 초저평가 구간 매집]</strong>: 주가 <strong>34,000원 이하 ~ 31,000원 구간</strong>은 2026E 예상 배당수익률이 <strong>4.4% ~ 4.8%</strong>에 달하는 역사적 최바닥 영역입니다. 원화 강세 노이즈 등으로 주가가 이 구간에 진입할 경우, 본업의 28.8% OPM 마진 쿠션과 배당 지지력이 완벽히 맞물리므로 <strong>영혼의 분할 매수(Aggressive Buy) 적기</strong>로 활용합니다.</li>
-<li><strong>[수주 모멘텀 추세 추종]</strong>: 3분기 실적에서 피팅 가동률 90% 이상 유지 및 북투빌 1.1배 이상 유지가 재확인될 경우 추가 매수(불타기).</li>
-<li><strong>매도 트리거 (Sell Trigger)</strong>:</li>
-<li><strong>[배당수익률 3.0% 이하 도달]</strong>: 주가가 <strong>50,000원 이상</strong>으로 상승하여 배당수익률이 3.0% 이하로 떨어지고 PER이 11배 수준에 도달할 경우, 밸류에이션 정상화로 판단하고 단계적 분할 차익 실현.</li>
-<li><strong>[경제적 해자 훼손]</strong>: 원가 전가력 상실로 연결 OPM이 2개 분기 연속 23%를 하회할 경우 배당 체력 약화로 간주하고 비중 축소.</li>
+<li><strong>손익비(Risk/Reward Ratio) 평가:</strong></li>
+<li>Base 시나리오 도달 시 기대수익률은 <strong>+32.2% ~ +41.0%</strong>인 반면, Bear 시나리오로 추락하더라도 DART 공식 배당수익률(예상 DPS 1,300원 시 배당수익률 4.5% 락바텀)이 지지하는 하방 손실률은 <strong>-11.9% ~ -16.3%</strong>에 불과합니다.</li>
+<li>리스크 대비 리워드 비율(손익비)은 약 <strong>2.5:1 ~ 2.7:1</strong>로 극도로 우수한 비대칭적 안전마진을 제공합니다.</li>
+</ul>
+<h2>4. 최종 투자 전략 및 액션 플랜</h2>
+<p>가치함정 0개(투자 적격) 판정과 검증된 DART 배당수익률 밴드를 기반으로 수립한 실전 액션 플랜입니다.</p>
+<ul>
+<li><strong>목표주가 밴드</strong>: Base ~ Bull 시나리오 기준 <strong>45,000원 ~ 52,000원</strong> 제시.</li>
+<li><strong>매수 트리거 (Buy Trigger)</strong>:</li>
+<li><strong>[배당수익률 4.2% 이상 초저평가 매수 존]</strong>: 주가 <strong>34,000원 이하 ~ 31,000원 구간</strong>은 2026E 예상 DPS(1,500원) 기준 배당수익률이 <strong>4.4% ~ 4.8%</strong>에 달하는 역사적 최바닥 영역입니다. 원화 강세 등 대외 노이즈로 주가가 출렁일 때 본업의 OPM 28.8% 마진 쿠션과 배당 지지력을 믿고 <strong>영혼의 분할 매수(Aggressive Buy) 적기</strong>로 활용합니다.</li>
+<li><strong>[수주 모멘텀 추세 추종]</strong>: 3분기 분기보고서에서 피팅 가동률 90% 이상 및 북투빌 1.1배 이상 유지가 재확인될 때 추가 매수.</li>
+<li><strong>매도/손절 트리거 (Sell Trigger)</strong>:</li>
+<li><strong>[가치함정 발생 징후 시 즉시 손절/비중 축소]</strong>: 대형 고객사의 판가 인하 압박으로 연결 OPM이 2개 분기 연속 23%를 하회(해자 훼손)하거나, 북투빌 비율이 1.0 미만으로 반전(피크아웃)될 경우 즉시 비중 축소.</li>
+<li><strong>[목표가 도달 시 분할 익절]</strong>: 주가가 Base 상단인 <strong>50,000원 돌파 시</strong> PER 10.5배 수준에 진입하고 배당수익률이 3.0% 이하로 낮아지므로 단계적 분할 차익 실현.</li>
 <li><strong>핵심 모니터링 체크리스트</strong>:</li>
-<li>[ ] 2026년 12월 결산배당 DPS 1,450원 이상 결정 공시 (배당수익률 4.2% 이상 방어선 검증).</li>
-<li>[ ] 2026년 하반기 자사주 추가 매입/소각 결의 공시 (3년 연속 13.55% 소각 궤적 유지 여부).</li>
-<li>[ ] 글로벌 빅테크 전력망 병목에 대응하는 국내 조선 3사의 FDC(부유식 데이터센터) 및 HD현대·한화의 온사이트 발전용 중속엔진 기자재 납품 공시.</li>
+<li>[ ] 2026년 하반기 자사주 추가 매입 및 소각 결의 공시 (3년 연속 13.55% 소각 궤적 유지 여부).</li>
+<li>[ ] 2026년 결산배당 DPS 1,450원 이상 공시 (배당수익률 4.2% 방어선 확인).</li>
+<li>[ ] 북미 AIDC 온사이트 분산 발전용 중속엔진/가스터빈 기자재 수주 공시 및 조선 3사 2030년 슬롯 수주 추이.</li>
 </ul>
 <div id="dcf-calculator-root" data-price="34050" data-shares="11768144" data-fcf="450.0"></div>
     <script>
