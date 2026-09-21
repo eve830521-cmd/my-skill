@@ -302,86 +302,116 @@ p > em {
 </head>
 <body>
     <h1>🎯 NAVER Phase 3: 밸류에이션 및 전략</h1>
-<h2>1. 밸류에이션 분석 (역DCF 등)</h2>
-<p>2026년 9월 16일 종가 기준 NAVER의 주가는 <strong>201,500원</strong>이며, 8월 3일 자사주 소각 후 확정된 총 발행주식수(152,076,491주)를 곱한 시가총액은 약 <strong>30조 6,434억 원</strong>입니다 <code>[팩트: 26.09.16 시장 데이터 종합; 반기보고서 p.387]</code>.</p>
-<p>동사의 정규화된 연간 잉여현금흐름(Normalized FCF)을 보수적인 기준인 <strong>1조 3,000억 원</strong>(2024년 2.0조 원, 2025년 9,879억 원, 2026년 상반기 3,325억 원 및 하반기 반등 반영)으로 두고 가중평균자본비용(WACC) 8.0%를 적용하여 역DCF(Reverse DCF) 모델을 구동하면, <strong>현재 주가는 향후 NAVER의 영구성장률(Terminal Growth Rate)을 불과 3.60% 수준으로 극단적으로 낮게 프라이싱</strong>하고 있음을 알 수 있습니다.</p>
-<blockquote>
-<p><strong>[26.09.16 글로벌 트렌드 델타 밸류에이션 반영 🌐]</strong><br />
-- <strong>인프라 자본배치 프리미엄</strong>: 최신 기관 분석(<code>유안타증권 26.09</code>)에서 확인된 바와 같이, 네이버는 2028년 200MW AIDC를 "외부 임대 상면 및 브룩필드 SPV(최대 $9B) 구조"로 확보하여 본체의 연간 1.3조~1.5조 원 FCF 창출력을 훼손 없이 보존했습니다.
-- <strong>주당 지표(EPS, FCFPS)의 영구적 상승</strong>: 8월 3일 단행된 490만 주(1조 170억 원) 자사주 소각으로 주당 FCF는 8,548원에 달하며, 현재 P/FCF 배수는 약 23.5배로 IT 플랫폼 역사상 가장 매력적인 밸류에이션 바닥 구간에 위치해 있습니다.
-- <strong>소버린 AI 리레이팅 룸</strong>: AI 탭 MAU 1,000만 명 돌파 및 AI 브리핑 연동 광고(CTR +30%, CPC +30%) 성과, 그리고 1GW 국가 AIDC 목표 추진에 따른 B2B GPUaaS 수익화를 감안할 때 3.6% 영구성장률은 비합리적인 과도한 할인입니다.</p>
-</blockquote>
-<h2>2. 정량적 시나리오 민감도 분석 (스트레스 테스트)</h2>
-<p>AIDC 200MW 임대 상면 활용 및 브룩필드 SPV 가동 일정, AI 브리핑 광고 단가 전사 확산율, C-커머스 점유율 방어력 및 9월 환율(1,300원대) 안정화 효과를 종합하여 3가지 시나리오(Bull / Base / Bear)별 EPS와 적정 주가를 도출했습니다. (기준 주식수: 152,076,491주)</p>
+<h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
+<p>[공시 팩트] 
+현재 주가 201,500원 기준 단순 시가총액은 약 31조 9,251억 원(총 발행주식수 158,437,008주)이나, 자기주식(9,099,786주)을 차감한 <strong>DART 공식 유통주식수 149,337,222주(실질 유통 시총 약 30조 914억 원)</strong>를 기준으로 5개년 역DCF를 산출했습니다 <code>[팩트: 2026.09 최근가, DART 반기보고서]</code>. 정규화 온기 잉여현금흐름(FCF) 약 1조 3,000억 원을 대입했습니다 <code>[팩트: 사업보고서]</code>.</p>
+<ul>
+<li><strong>역DCF 연산 결과 (방안 A 병기):</strong> 
+  <strong>향후 5년 기준, 영구성장률 2.0% 고정, WACC 8.5%</strong> 가정 하에 현재 실질 유통 시가총액(30.09조 원)에 내재된 시장의 향후 5개년(2027~2031) 연평균 요구 FCF 성장률은 <strong>DART 유통주식수 기준 연간 +11.22%</strong> (WACC 8.0% 적용 시 <strong>+9.21%</strong>, 총발행주식 기준 시 연간 <strong>+12.67%</strong>) 수준입니다. 만약 정규화 FCF(1.3조 원)가 2.0%로 영구 성장한다고 가정한 제로성장 영구현금흐름 내재가치만 산출해도 약 20.4조 원에 달해, 현재 주가의 하방은 극도로 단단합니다.</li>
+<li><strong>시장 기대치 괴리율 진단:</strong> 
+  시장이 요구하는 연 +11.2%의 FCF 성장은 빅테크 클라우드(B2B) 마진 정상화와 생성형 AI 광고(SearchGPT 등) 수익화가 본격화되는 현 시점에서 <strong>충분히 달성 가능한 합리적 눈높이</strong>입니다. 검색 점유율 방어와 사우디 스마트시티 등 소버린 AI 플랫폼 수출이 가시화되면 요구치를 상회하는 FCF 창출이 유력합니다.</li>
+</ul>
+<h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
+<p>단순 저PER/저PBR에 매몰되는 초보 가치투자의 함정을 파괴하기 위해, DART 공시 팩트와 최신 Global Trend를 결합하여 3대 가치함정 지표를 전수 점검했습니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">시나리오</th>
-<th style="text-align: left;">핵심 변수 및 가정 (Assumption)</th>
-<th style="text-align: center;">2026E 예상 순이익</th>
-<th style="text-align: center;">예상 EPS</th>
-<th style="text-align: center;">Target P/E</th>
-<th style="text-align: center;">적정주가</th>
-<th style="text-align: left;">비고</th>
+<th style="text-align: left;">가치함정 진단 지표</th>
+<th style="text-align: left;">점검 기준 (Check Point)</th>
+<th style="text-align: left;">기업 현황 팩트</th>
+<th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Bull (강세)</strong></td>
-<td style="text-align: left;">200MW 임대/SPV 가동 조기 안착 + AI 브리핑 전 카테고리 확산(CTR +30% 유지) + 소버린 AI 풀스택 B2B 수주 급증</td>
-<td style="text-align: center;">2조 2,000억 원</td>
-<td style="text-align: center;">14,466원</td>
-<td style="text-align: center;">22.0x</td>
-<td style="text-align: center;"><strong>약 320,000원</strong> (+59%)</td>
-<td style="text-align: left;"><code>[추정: 대신증권 8월 목표가 부합]</code></td>
+<td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
+<td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
+<td style="text-align: left;">OPM은 2023년 저점(15.39%) 통과 후 2025년 18.35%로 완벽 반등 완료. 2026년 상반기 OPM 16.02%(2Q 15.4%)는 AI 인프라 선제 비용 집행에 따른 일시적 조정이나 2Q 플랫폼 매출은 YoY +12.3%(1.9조 원) 고성장 지속. AI 브리핑 CTR +30%, Npay 결제액 25.2조 원(+21.0%), 누적 지식재산권 4,723건으로 해자 강화 <code>[팩트: 반기보고서, 대신증권 8월]</code>.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: left;">2027~2028년 55MW $\rightarrow$ 100MW $\rightarrow$ 200MW 정상 증설 + Npay 오프라인 10만 가맹점 결제액 성장 + 환율 1,300원대 외환손익 방어</td>
-<td style="text-align: center;">1조 7,500억 원</td>
-<td style="text-align: center;">11,507원</td>
-<td style="text-align: center;">23.5x</td>
-<td style="text-align: center;"><strong>약 270,000원</strong> (+34%)</td>
-<td style="text-align: left;">현재 펀더멘털 및 실적 추세 반영</td>
+<td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
+<td style="text-align: left;"><strong>[플랫폼/IT 맞춤형 선행지표]</strong> 트래픽/MAU 이탈, 광고주 단가 하락, 거래액 급감 여부</td>
+<td style="text-align: left;">AI 탭 MAU 1,000만 명 돌파. AI 브리핑 연동으로 광고 CTR +30%, 구매전환율 3배 개선으로 광고주 단위 효율 극대화. 2026.09.17 AI 쇼핑 에이전트 실시간 배송 도입으로 거래액 증가세 지속 <code>[팩트: 대신증권 26.09.17]</code>. 국가 AIDC 18.4GW 중 NAVER 1GW 목표 부여 및 2028년 200MW 단계적 확장 확정 <code>[팩트: 유안타 26.09]</code>. 피크아웃 전무, 소버린 AI 턴어라운드 초입.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Bear (약세)</strong></td>
-<td style="text-align: left;">AIDC 계통 접속 지연 + C-커머스 출혈 경쟁 재점화로 마케팅비 증가 (전사 OPM 14%대로 일시 둔화)</td>
-<td style="text-align: center;">1조 3,000억 원</td>
-<td style="text-align: center;">8,548원</td>
-<td style="text-align: center;">20.0x</td>
-<td style="text-align: center;"><strong>약 170,000원</strong> (-16%)</td>
-<td style="text-align: left;">1조 원 자사주 소각이 19~20만 원 하방 지지</td>
+<td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
+<td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
+<td style="text-align: left;">200MW AI 팩토리를 자체 CapEx가 아닌 엔비디아($1B 지분투자) 및 브룩필드(최대 $9B SPV 투자)와 외부 임대 상면으로 해결한 Asset-Light 자본배치의 극치. 2026년 8월 3일 보통주 <strong>4,901,094주 (약 1조 170억 원, 3.1%) 완전 이익소각 완료</strong>, 2025년 배당금 3,936억 원(주당 2,630원)으로 2배 증액 집행 <code>[팩트: 반기보고서 p.8, 387]</code>.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
-<h2>3. 최종 투자 전략 및 액션 플랜</h2>
 <ul>
-<li><strong>투자 의견:</strong> <strong>Strong BUY (적극 매수)</strong></li>
-<li><strong>최종 목표가 밴드:</strong> <strong>270,000원 ~ 310,000원</strong><ul>
-<li>산출 근거: 2026E 예상 EPS(11,507원 ~ 14,466원)에 글로벌 AI 플랫폼 평균 및 로컬 실행 스택 프리미엄을 감안한 Target P/E 22~23.5배 적용.</li>
-<li>현재가(201,500원) 대비 <strong>+34% ~ +54%</strong>의 강력한 업사이드 포텐셜 확보.</li>
+<li><strong>🚨 가치함정 페널티 집행:</strong></li>
+<li><strong>[경보 0개: 정상]</strong> ➡️ 3대 가치함정 리스크가 전무하므로, 멀티플 강제 할인(Haircut) 없이 원안대로 바텀업 스트레스 테스트를 진행합니다.</li>
 </ul>
-</li>
-<li><strong>매수 트리거 (Buy Trigger):</strong><ul>
-<li><strong>절대 바닥 구간:</strong> 주가 <strong>200,000원 ~ 210,000원</strong> 구간은 8월 단행된 1조 170억 원(490만 주) 자사주 소각으로 형성된 완벽한 안전마진(Margin of Safety) 매수 타점.</li>
-<li>AI 팩토리 1단계 200MW 관련 <strong>브룩필드 SPV 본계약 체결 및 첫 대규모 B2B GPUaaS 수주 공시</strong> 발생 시.</li>
+<h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
+<p>전고점 차트 앵커링을 원천 금지하며, 플랫폼 잠재 Capa 체력(연간 15조 원 수준)과 DART 시계열상 역사적 호황기 Peak PER 상한선 규칙을 엄격히 적용했습니다.
+- <strong>[실적 산출 근거 산식 강제]:</strong> <code>[기준 Capa 매출액(15조 원) × 시나리오별 가동/회전율 × 예상 OPM ➡️ 예상 순이익 ➡️ 예상 EPS]</code>
+- <strong>[멀티플 상한선 강제 준수]:</strong> DART 시계열로 확인된 과거 5년 역사적 호황기 Peak PER(2021년 45배, 2020년 55배 등 IT 버블기 제외하더라도 정상 호황기 25~30배)을 엄격히 감안하여, <strong>Bull 시나리오의 Target PER 상한선을 22.0배로 강력히 통제(Cap)</strong>했습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">시나리오 구분</th>
+<th style="text-align: left;">핵심 가정 및 산출 근거 산식</th>
+<th style="text-align: center;">예상 순이익 / EPS</th>
+<th style="text-align: center;">Target PER (상한선 검증)</th>
+<th style="text-align: center;"><strong>적정주가</strong></th>
+<th style="text-align: center;">현재가 대비 등락률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull (호황)</strong></td>
+<td style="text-align: left;"><code>[Capa 15조 × 플랫폼 가동 100% = 매출 15조]</code> <br> <code>[매출 15조 × OPM 20.0% = 영업익 3.0조 ➡️ 순익 2.25조]</code> <br> (200MW 임대/SPV 가동 조기 안착, AI 브리핑 전 카테고리 확산 CTR +30% 유지, 소버린 AI 풀스택 B2B 수주 급증)</td>
+<td style="text-align: center;">2조 2,500억 원 <br> <strong>14,795원</strong></td>
+<td style="text-align: center;">22.0배 <br> <code>[과거 호황 Peak 30배 이하]</code></td>
+<td style="text-align: center;"><strong>325,000원</strong></td>
+<td style="text-align: center;"><strong>+61.3%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base (기본)</strong></td>
+<td style="text-align: left;"><code>[Capa 15조 × 플랫폼 가동 90% = 매출 13.5조]</code> <br> <code>[매출 13.5조 × OPM 17.5% = 영업익 2.36조 ➡️ 순익 1.77조]</code> <br> (2027~2028년 55MW $\rightarrow$ 100MW $\rightarrow$ 200MW 순차 증설, Npay 10만 가맹점 결제 성장, 9월 환율 1,300원대 외환손익 방어)</td>
+<td style="text-align: center;">1조 7,700억 원 <br> <strong>11,639원</strong></td>
+<td style="text-align: center;">23.5배 <br> <code>[역사적 중간값]</code></td>
+<td style="text-align: center;"><strong>273,000원</strong></td>
+<td style="text-align: center;"><strong>+35.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear (침체)</strong></td>
+<td style="text-align: left;"><code>[Capa 15조 × 플랫폼 가동 80% = 매출 12.0조]</code> <br> <code>[매출 12조 × OPM 14.5% = 영업익 1.74조 ➡️ 순익 1.25조]</code> <br> (AIDC 계통 접속 지연, C-커머스 방어용 마케팅비 출혈 지속으로 OPM 14%대 둔화)</td>
+<td style="text-align: center;">1조 2,500억 원 <br> <strong>8,220원</strong></td>
+<td style="text-align: center;">20.0배 <br> <code>[역사적 하단 Trough]</code></td>
+<td style="text-align: center;"><strong>164,000원</strong></td>
+<td style="text-align: center;"><strong>-18.6%</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>손익비(Risk/Reward Ratio) 평가:</strong> </li>
+<li>Base 시나리오 도달 시 기대수익률은 <strong>+35.5%</strong>, Bull 시나리오 시 <strong>+61.3%</strong>인 반면, 최악의 Bear 추락 시 하방 손실률은 <strong>-18.6%</strong>에 그칩니다.</li>
+<li>손익비는 <strong>1.91 : 1 (Base 기준) ~ 3.30 : 1 (Bull 기준)</strong>로, 하방 위험 대비 상방 업사이드가 압도적으로 우세한 전형적인 비대칭 우상향 손익비 구조를 확보하고 있습니다.</li>
+</ul>
+<h2>4. 최종 투자 전략 및 액션 플랜</h2>
+<ul>
+<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy)</strong> (가치함정 경보 0개 정상 확인)</li>
+<li><strong>목표가 밴드:</strong> <strong>273,000원 ~ 325,000원</strong> (Base ~ Bull 시나리오 기준)</li>
+<li><strong>매수 트리거 (Buy Trigger):</strong> </li>
+<li>현재 주가 <strong>200,000원 ~ 210,000원 구간</strong>은 2026년 8월 3일 소각된 1조 170억 원(490만 주) 자사주 소각으로 형성된 강력한 하방 풋옵션(안전마진) 구간이므로 적극적인 분할 매수를 권고합니다.</li>
+<li>18.4GW 국가 AIDC 로드맵 상 <strong>브룩필드 SPV 본계약 체결 및 첫 대규모 B2B GPUaaS 수주 공시</strong> 확인 시.</li>
 <li>싱가포르 거린에너지 재생에너지 공급 본계약 체결 등 AIDC 전력망 조달 구체화 시 <code>[팩트: 26.09.16 MOU]</code>.</li>
-</ul>
-</li>
-<li><strong>매도/리스크 관리 트리거 (Sell Trigger):</strong><ul>
-<li>분기 실적 발표 시 네이버 플랫폼(광고/쇼핑) 부문 매출 성장률이 YoY 5% 미만으로 급랭할 경우.</li>
+<li><strong>매도/손절 트리거 (Sell Trigger):</strong> </li>
+<li>네이버 플랫폼(광고/쇼핑) 부문 매출 성장률이 YoY 5% 미만으로 2개 분기 연속 둔화되거나, 전사 OPM이 14% 이하로 급락할 경우.</li>
 <li>브룩필드 SPV 투자가 최종 결렬되어 90억 달러 규모의 CapEx 부담이 네이버 본체 재무제표로 직접 전이될 경우.</li>
-</ul>
-</li>
-<li><strong>핵심 모니터링 체크리스트:</strong><ol>
-<li>3Q26 실적 발표 시 'AI 탭' 기반 검색광고 클릭률(CTR +30%) 유지 및 쇼핑 구매전환율 추이.</li>
+<li><strong>핵심 모니터링 체크리스트:</strong> </li>
+<li>3Q26 실적 발표 시 'AI 탭' 연계 검색광고 CTR(+30%) 및 CPC 상승률 유지 여부.</li>
 <li>'Npay Connect' 오프라인 단말기 설치 가맹점 수(10만 개 $\rightarrow$ 15만 개) 확장 속도.</li>
 <li>정부 18.4GW AIDC 로드맵 상 2027년 상반기 55MW 준공 및 비수도권 계통 접속 인허가 진척도.</li>
-</ol>
-</li>
+<li>2026년 하반기 환율 1,300원대 유지 여부 및 글로벌 M&amp;A 자회사(포시마크, 왈라팝) 영업손익 개선 추이.</li>
 </ul>
-<div id="dcf-calculator-root" data-price="201500" data-shares="152076491" data-fcf="13000"></div>
+<div id="dcf-calculator-root" data-price="201500" data-shares="149337222" data-total-shares="158437008" data-fcf="13000" data-wacc="8.5" data-terminal="2.0"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -413,6 +443,8 @@ p > em {
                 const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
+                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -422,7 +454,7 @@ p > em {
                             '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>유통 주식수 (주)</label>' +
+                            '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
@@ -431,11 +463,11 @@ p > em {
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>할인율 (%, WACC)</label>' +
-                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-wacc" value="' + initWacc + '" step="0.1">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>영구성장률 (%, Terminal)</label>' +
-                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-terminal" value="' + initTerminal + '" step="0.1">' +
                         '</div>' +
                     '</div>' +
                     '<div class="dcf-result-box" id="dcf-result-box">' +

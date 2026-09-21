@@ -73,6 +73,8 @@ html_template = f"""<!DOCTYPE html>
                 const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
+                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -82,7 +84,7 @@ html_template = f"""<!DOCTYPE html>
                             '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>유통 주식수 (주)</label>' +
+                            '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
@@ -91,11 +93,11 @@ html_template = f"""<!DOCTYPE html>
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>할인율 (%, WACC)</label>' +
-                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-wacc" value="' + initWacc + '" step="0.1">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>영구성장률 (%, Terminal)</label>' +
-                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-terminal" value="' + initTerminal + '" step="0.1">' +
                         '</div>' +
                     '</div>' +
                     '<div class="dcf-result-box" id="dcf-result-box">' +

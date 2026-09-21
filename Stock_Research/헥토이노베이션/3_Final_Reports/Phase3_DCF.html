@@ -302,79 +302,117 @@ p > em {
 </head>
 <body>
     <h1>🎯 헥토이노베이션 Phase 3: 밸류에이션 및 전략</h1>
-<h2>1. 밸류에이션 분석 (역DCF 등)</h2>
-<p>2026년 9월 16일 현재, 헥토이노베이션의 주가는 미국 상원 '클래리티법(Clarity Act)' 표결 부결로 인한 가상자산/스테이블코인 테마성 패닉셀이 겹치며 전일 대비 -5.80% 급락한 <strong>13,490원</strong>에 마감했습니다 [팩트: 2026.09.16 시장 종가].
-발행주식수(12,993,367주)를 감안한 시가총액은 약 <strong>1,753억 원</strong>으로 급격히 주저앉았습니다 [팩트: 26년 사업보고서].</p>
-<p>[팩트: 26.03 사업보고서] 2025년 기준 당기순이익이 367.9억 원, 2026년 상반기 연결 영업현금흐름이 154.8억 원이며 2분기 실질 현금창출력을 대변하는 조정 EBITDA가 179억 원(마진율 17.4%)에 달함을 감안할 때, <strong>현재 Trailing PER은 불과 4.76배(EPS 약 2,832원)</strong>로 역사적 최저 락바텀(Rock-bottom) 딥밸류 구간에 진입했습니다.</p>
-<p>당사가 매년 창출하는 보수적 잉여현금흐름(FCF) 300억 원(CapEx가 미미한 에셋라이트 모델)을 기준으로 역DCF(Reverse DCF: WACC 10%, 영구성장률 2%)를 연산해 보면, 현재 시가총액 1,753억 원은 <strong>시장이 향후 5년간 당사의 FCF가 매년 -8% ~ -10%씩 역성장할 것으로 극단적 파산/쇠퇴 시나리오를 프라이싱</strong>하고 있음을 의미합니다. 그러나 실제 펀더멘털은 간편현금결제(YoY +29.8%)의 고성장과 건기식 중국 수출(1,550억) 및 다이어트 신제품 개별인정 획득으로 계단식 성장을 이어가고 있어, 현재 주가는 완벽한 시장의 가격 오류(Mispricing) 상태입니다.</p>
-<h2>2. 정량적 시나리오 민감도 분석 (스트레스 테스트)</h2>
-<p>Phase 2에서 검증된 '스테이블코인 무료 콜옵션 가설'과 '건기식 쌍끌이 턴어라운드(중국 수출 + 다이어트 개별인정)', 그리고 '본업 마진 방어력'을 핵심 변수로 하여 Bull / Base / Bear 3가지 시나리오별 적정주가를 [추정: 자체 DCF/멀티플 밸류에이션 모델]을 통해 산출했습니다.</p>
+<h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
+<p>[공시 팩트] 
+현재 주가는 <strong>13,490원</strong>이며, 자기주식 소각 완료 후 총 발행주식수 12,993,367주 기준 <strong>시가총액은 약 1,753억 원(유통주식수 12,993,367주 동일)</strong>입니다 <code>[팩트: 최근가, DART 반기보고서]</code>. 온기 연환산 FCF 약 300억 원을 대입하여 5개년 역DCF를 산출했습니다 <code>[팩트: 사업보고서]</code>.</p>
+<ul>
+<li><strong>역DCF 연산 결과 (방안 A 병기):</strong> 
+  향후 5년 기준, 영구성장률 2.0% 고정, WACC 9.0% 가정 하에 시장이 현재 주가(13,490원, 시총 1,753억 원)에서 요구하는 연평균 FCF 성장률은 <strong>DART 유통주식수 기준 연간 -17.91%</strong> (총발행주식 동일) 수준의 극단적 역성장입니다.</li>
+<li><strong>시장 기대치 괴리율 진단:</strong> 
+  시장이 요구하는 -17.9% 역성장은 회사의 본업인 보안/인증 및 B2B 금융결제가 완전히 붕괴된다는 비이성적 파산 시나리오를 가정한 수준입니다. 그러나 실제 펀더멘털은 2021~2025년 연결 매출 CAGR +15.8%, OPM 13~15%의 탄탄한 현금흐름을 창출하고 있으며, 배당성향 25% 이상과 지속적 자사주 소각을 통해 하방 경직성이 확보되어 있습니다.</li>
+</ul>
+<h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
+<p>단순 저PER(4.76배)/저PBR 착시에 매몰되는 초보 가치투자의 함정을 파괴하기 위해, DART 공시 팩트와 최신 Global Trend 및 Weekly_Trend(<code>thesis_log.md</code>)를 결합하여 3대 가치함정 지표를 전수 점검했습니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">시나리오 구분</th>
-<th style="text-align: left;">핵심 가정 (수출, 신제품, 스테이블코인 변수)</th>
-<th style="text-align: center;">추정 순이익(EPS)</th>
-<th style="text-align: center;">Target PER</th>
-<th style="text-align: left;">적정주가 산출 (기대수익률)</th>
+<th style="text-align: left;">가치함정 진단 지표</th>
+<th style="text-align: left;">점검 기준 (Check Point)</th>
+<th style="text-align: left;">기업 현황 팩트</th>
+<th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Bull (강세/트리거 폭발)</strong></td>
-<td style="text-align: left;">[추정] 중국 1,550억 수출 물량 조기 인식 + 체지방감소 다이어트 신제품 메가 히트 + 글로벌 스테이블코인(서클 CPN) 크로스보더 결제 수수료 유입 개시 (조정 EBITDA 20% 상회)</td>
-<td style="text-align: center;">500억 (3,850원)</td>
-<td style="text-align: center;">12.0x</td>
-<td style="text-align: left;"><strong>46,200원 (+242.5%)</strong><br>- 글로벌 핀테크/수출 멀티플 리레이팅</td>
+<td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
+<td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
+<td style="text-align: left;">OPM은 2024년 15.29% $\rightarrow$ 2025년 13.35% $\rightarrow$ 2026년 2분기 실질 조정 EBITDA 마진율 17.4%로 견고히 방어 <code>[팩트: 26.2Q 실적발표]</code>. 이통 3사 합산과금망 및 은행 펌뱅킹망 과점 독점으로 고객 전환비용 유지. 2분기 순익 감소(-33%)는 헬스케어 RCPS 상환 및 사채상환 회계비용에 불과. 서클(Circle) CPN 파트너십 및 VASP(옥텟) 인가 보유로 결제 관문 해자 확장 확인.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Base (기본/안전마진 정상화)</strong></td>
-<td style="text-align: left;">[추정] 가상자산/스테이블코인 매출은 '0'으로 완전 배제 (보수적 접근) + 중국 수출 점진적 반영 + 다이어트 신제품 무난한 안착 + 본업 17%대 견조한 현금흐름 유지</td>
-<td style="text-align: center;">380억 (2,925원)</td>
-<td style="text-align: center;">8.5x</td>
-<td style="text-align: left;"><strong>24,800원 (+83.8%)</strong><br>- 배당성향 25%, 자사주 1% 소각 우량 가치주 적정가</td>
+<td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
+<td style="text-align: left;"><strong>[소비재/플랫폼 맞춤형 선행지표]</strong> 유통 채널 재고 급증, 마케팅비 폭증(OPM 피크), 수주/성장 정점 통과 여부</td>
+<td style="text-align: left;">재고자산 비중은 자산총계(7,983억) 대비 2.08%(166억)에 불과하여 에셋라이트 모델 지속 <code>[팩트: 26.2Q 실적발표]</code>. 헬스케어 부문은 과거 100% 내수 정체기에서 2024년 말 중국 국약약재 1,550억 원 수출 계약 체결 <code>[팩트: 25.03 사업보고서]</code> 및 2026년 2분기 식약처 '체지방감소' 개별인정 획득 <code>[팩트: 26.2Q 실적발표]</code>으로 2027년 초 다이어트 신제품 론칭 대기 중. 피크아웃이 아닌 <strong>신규 성장 사이클 램프업 초입 단계</strong>.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Bear (비관/극단적 스트레스)</strong></td>
-<td style="text-align: left;">[추정] 중국 수출 선적 장기 지연 + 스테이블코인 입법 장기 표류로 신사업 좌초 + 앱테크 출혈 마케팅으로 마진율 9%대 급락</td>
-<td style="text-align: center;">250억 (1,924원)</td>
-<td style="text-align: center;">5.5x</td>
-<td style="text-align: left;"><strong>10,600원 (-21.4%)</strong><br>- 순현금 및 청산가치 수준의 극단적 하방 지지선</td>
+<td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
+<td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
+<td style="text-align: left;">최대주주 이경민 이사가 2025년 189만 주를 장내외 추가 취득하며 지분율을 39.13%까지 확대하여 책임경영 입증 <code>[팩트: 26.03 사업보고서]</code>. 3개년(2024~2026) 매년 1% 자사주 소각 계획을 발표하여 2024년(18.5억), 2025년(20억) 100% 소각 완료, 2026년 반기 기준 129,934주 소각 예정 자사주 기보유 <code>[팩트: 26.08 반기보고서]</code>. 2025년 결산 배당금 500원(총 62.9억 원, 배당성향 25% 이상 지향) 및 2026년 2분기 81억 원 현금배당 집행, RCPS 132억 조기 상환 완료 <code>[팩트: 26.2Q 실적발표]</code>. 코스닥 최상위권의 주주친화적 자본배치 실행 중.</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>[!NOTE]
-<strong>비대칭적 위험-보상 비율 (Risk-Reward Asymmetry)</strong>:
-현 주가 13,490원 기준, 하방 리스크는 최악의 스트레스(Bear) 상황에서도 -21.4%(10,600원)로 제한적인 반면, 상방 기대수익률은 Base 시나리오만으로도 <strong>+83.8%(24,800원)</strong>, Bull 시나리오 시 <strong>+242.5%(46,200원)</strong>에 달하여 위험 대비 기대수익비가 약 <strong>1 : 4 ~ 1 : 11</strong>에 이르는 극단적 비대칭 우위 구간입니다.</p>
-</blockquote>
-<h2>3. 최종 투자 전략 및 액션 플랜</h2>
-<h3>🎯 목표가 밴드 및 투자의견</h3>
 <ul>
-<li><strong>투자의견</strong>: <strong>강력 매수 (Strong Buy)</strong></li>
-<li><strong>1차 목표가 밴드 (Base Case)</strong>: [추정: 자체 모델] <strong>24,000원 ~ 26,000원</strong> (본업 FCF 300억 원 및 배당성향 25% 가치 정상화)</li>
-<li><strong>2차 장기 목표가 (Bull Case)</strong>: [추정: 자체 모델] <strong>42,000원 ~ 46,000원</strong> (중국 건기식 수출 본격화 및 스테이블코인 제도화 성공 시)</li>
+<li><strong>🚨 가치함정 페널티 집행:</strong></li>
+<li><strong>[경보 0개: 정상]</strong> ➡️ 3대 가치함정 리스크가 전혀 없으므로, 멀티플 할인 페널티 없이 원안대로 바텀업 시나리오 스트레스 테스트를 진행합니다.</li>
 </ul>
-<h3>⚡ 매수 / 매도 트리거</h3>
-<ol>
-<li>
-<p><strong>적극적 비중확대(매수) 트리거</strong>:</p>
+<h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
+<p>전고점 차트 앵커링을 원천 금지하며, 플랫폼 본업의 캐시카우와 헬스케어 파이프라인(중국 수출 + 다이어트 신제품) 및 가상자산 무료 콜옵션 가치를 반영한 엄격한 실적 산출 산식을 적용합니다.
+- <strong>[실적 산출 근거 산식]:</strong> <code>[본업(보안/결제) 매출 + 헬스케어(수출/신제품) 매출 = 전사 매출 × 예상 OPM ➡️ 예상 순이익 ➡️ 예상 EPS]</code>
+- <strong>[멀티플 상한선 강제 준수]:</strong> DART 시계열 상 과거 5년 역사적 호황기 Peak PER(2021년 15.0~16.5배)을 감안하여, <strong>Bull 시나리오의 Target PER 상한선을 12.0배로 엄격히 통제</strong>했습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">시나리오 구분</th>
+<th style="text-align: left;">핵심 가정 및 산출 근거 산식</th>
+<th style="text-align: center;">예상 순이익 / EPS</th>
+<th style="text-align: center;">Target PER (상한선 검증)</th>
+<th style="text-align: center;"><strong>적정주가</strong></th>
+<th style="text-align: center;">현재가 대비 등락률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull (호황/트리거 폭발)</strong></td>
+<td style="text-align: left;"><code>[본업 3,500억 + 수출/신제품 1,500억 = 매출 5,000억]</code> <br> <code>[매출 5,000억 × OPM 16.0% = 영업익 800억 ➡️ 순익 500억]</code> <br> (중국 1,550억 수출 조기 인식, 체지방감소 다이어트 신제품 메가 히트, 글로벌 스테이블코인 CPN 크로스보더 결제 수수료 유입 개시)</td>
+<td style="text-align: center;">500억 원 <br> <strong>3,848원</strong></td>
+<td style="text-align: center;">12.0배 <br> <code>[과거 호황 Peak 이하]</code></td>
+<td style="text-align: center;"><strong>46,200원</strong></td>
+<td style="text-align: center;"><strong>+242.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base (기본/안전마진 정상화)</strong></td>
+<td style="text-align: left;"><code>[본업 3,200억 + 건기식 1,000억 = 매출 4,200억]</code> <br> <code>[매출 4,200억 × OPM 14.0% = 영업익 588억 ➡️ 순익 380억]</code> <br> (가상자산/스테이블코인 매출은 '0'으로 배제, 중국 수출 점진 반영, 다이어트 신제품 무난한 안착, 본업 조정 EBITDA 17%대 현금흐름 유지)</td>
+<td style="text-align: center;">380억 원 <br> <strong>2,925원</strong></td>
+<td style="text-align: center;">8.5배 <br> <code>[역사적 중간값]</code></td>
+<td style="text-align: center;"><strong>24,800원</strong></td>
+<td style="text-align: center;"><strong>+83.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear (침체/극단적 스트레스)</strong></td>
+<td style="text-align: left;"><code>[본업 2,800억 + 건기식 700억 = 매출 3,500억]</code> <br> <code>[매출 3,500억 × OPM 10.0% = 영업익 350억 ➡️ 순익 250억]</code> <br> (중국 수출 선적 장기 지연, 스테이블코인 입법 표류, 앱테크 출혈 마케팅 지속으로 전사 OPM 10%로 둔화)</td>
+<td style="text-align: center;">250억 원 <br> <strong>1,924원</strong></td>
+<td style="text-align: center;">5.5배 <br> <code>[역사적 하단 Trough]</code></td>
+<td style="text-align: center;"><strong>10,600원</strong></td>
+<td style="text-align: center;"><strong>-21.4%</strong></td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><strong>[투자자 검증 가설 승격]</strong>: 오늘처럼 미국 클래리티법 부결 등 <strong>가상자산/스테이블코인 테마성 악재로 주가가 13,000원~14,000원 초반대(PER 4배 후반)로 패닉셀될 때마다 최우선 분할 매수 집행</strong>. (가상자산 매출이 0%이므로 본업 훼손 없는 완벽한 가격 오류 매수 찬스)</li>
-<li>[팩트: 26.03 사업보고서, 79] 2026년 3개년 주주환원 계획에 따른 <strong>연 1% 자사주 소각(129,934주) 이사회 결의 공시 발표 시</strong> 즉시 추가 비중 확대.</li>
-<li>2027년 초 식약처 개별인정 '체지방감소' 다이어트 신제품 공식 론칭 및 초도 물량 판매 데이터 호조 확인 시.</li>
+<li><strong>손익비(Risk/Reward Ratio) 평가:</strong></li>
+<li>Base 시나리오 적정주가는 <strong>24,800원(+83.8%)</strong>이며, Bull 시나리오 도달 시 기대수익률은 <strong>+242.5%(46,200원)</strong>입니다.</li>
+<li>최악의 Bear 스트레스 상황 시 하방 손실률은 <strong>-21.4%(10,600원)</strong>로 제한되어, 위험 대비 기대수익비가 약 <strong>1 : 3.9 ~ 1 : 11.3</strong>에 달하는 극단적 상방 비대칭성 구간입니다.</li>
 </ul>
-</li>
-<li>
-<p><strong>모니터링 체크리스트 및 매도(리스크) 트리거</strong>:</p>
+<h2>4. 최종 투자 전략 및 액션 플랜</h2>
 <ul>
-<li><strong>체크리스트 1</strong>: 헥토헬스케어의 중국(시노팜 국약약재) 1,550억 원 계약 분기별 실질 선적 여부 점검 (계약 해지 공시 발생 시 즉시 비중 축소).</li>
-<li><strong>체크리스트 2</strong>: 헥토파이낸셜의 분기별 조정 EBITDA 마진율이 10% 미만으로 2분기 연속 하향 이탈하는지 추적 (플랫폼 출혈 경쟁 징후).</li>
-<li><strong>목표가 도달 시 분할 매도</strong>: 1차 목표가 밴드(24,000원~26,000원) 진입 시 보유 물량의 50%를 이익 실현하고, 잔여 물량은 Bull 시나리오(중국 수출 및 스테이블코인 상용화) 진행 상황을 보며 40,000원대까지 트레일링 스탑 적용.</li>
+<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy)</strong> (가치함정 경보 0개 확인)</li>
+<li><strong>목표가 밴드:</strong> <strong>24,800원 ~ 46,200원</strong> (Base ~ Bull 시나리오 기준)</li>
+<li><strong>매수 트리거 (Buy Trigger):</strong> </li>
+<li>현재 주가 <strong>13,000원 ~ 14,000원 초반 구간</strong>은 2025A PER 4.76배, 2026F PER 4.4배로 역사적 최하단 밸류에이션 락바텀 영역입니다.</li>
+<li><strong>[검증된 가설 승격]</strong>: 미국 클래리티법 부결 등 <strong>가상자산/스테이블코인 테마 악재로 주가가 급락할 때마다 최우선 분할 매수 집행</strong>. (가상자산 직접 매출이 0%이므로 본업 훼손 없는 완벽한 시장 가격 오류 기회)</li>
+<li>2026년 3개년 주주환원 계획에 따른 <strong>연 1% 자사주 소각(129,934주) 이사회 결의 공시</strong> 발생 시 비중 추가 확대.</li>
+<li>2027년 초 식약처 개별인정 <strong>'체지방감소' 다이어트 신제품 공식 출시 및 초도 물량 완판 뉴스</strong> 확인 시 리레이팅 가속으로 판단.</li>
+<li><strong>매도/손절 트리거 (Sell Trigger):</strong></li>
+<li>헥토헬스케어의 중국(시노팜 국약약재) 1,550억 원 계약이 공식 해지·취소되는 악재 공시 발생 시.</li>
+<li>헥토파이낸셜의 전사 분기 조정 EBITDA 마진율이 10% 이하로 2개 분기 연속 급락할 경우 (가치함정 ① 해자 훼손 발생).</li>
+<li><strong>핵심 모니터링 체크리스트:</strong></li>
+<li><strong>조정 EBITDA 마진율:</strong> 2026년 하반기 분기보고서에서 본업 조정 EBITDA 17%대 유지 및 연간 연결 영업현금흐름 300억 클럽 안착 추적 <code>[팩트: 26.2Q 실적발표]</code>.</li>
+<li><strong>자사주 1% 소각 실행:</strong> 2026년 하반기 내 기보유 자기주식 129,934주 소각 완료 및 주당 배당금(500원 이상 유지 여부) 확인 <code>[팩트: 26.08 반기보고서]</code>.</li>
+<li><strong>중국 수출 선적 추이:</strong> 헥토헬스케어의 분기별 해외 수출 매출 인식액 증감 추적 <code>[팩트: 25.03 사업보고서]</code>.</li>
+<li><strong>다이어트 신제품 론칭 일정:</strong> 식약처 개별인정 획득에 따른 완제품 출시 일정 및 유통망 계약 점검.</li>
 </ul>
-</li>
-</ol>
-<div id="dcf-calculator-root" data-price="13490" data-shares="12993367" data-fcf="300"></div>
+<div id="dcf-calculator-root" data-price="13490" data-shares="12993367" data-total-shares="12993367" data-fcf="300" data-wacc="9.0" data-terminal="2.0"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -406,6 +444,8 @@ p > em {
                 const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
+                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -415,7 +455,7 @@ p > em {
                             '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>유통 주식수 (주)</label>' +
+                            '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
@@ -424,11 +464,11 @@ p > em {
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>할인율 (%, WACC)</label>' +
-                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-wacc" value="' + initWacc + '" step="0.1">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>영구성장률 (%, Terminal)</label>' +
-                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
+                            '<input type="number" id="dcf-input-terminal" value="' + initTerminal + '" step="0.1">' +
                         '</div>' +
                     '</div>' +
                     '<div class="dcf-result-box" id="dcf-result-box">' +

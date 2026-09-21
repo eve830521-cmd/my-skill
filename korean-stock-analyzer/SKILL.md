@@ -99,8 +99,12 @@ description: "DART 원본 공시(PDF) 및 증권사 딥리서치(PDF) 기반 한
 # 🎯 [기업명] Phase 3: 밸류에이션 및 전략
 
 ## 1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)
-([공시 팩트] 현재 주가, 시가총액, 온기/연환산 FCF 수치 명시)
-- **역DCF 연산 결과:** (향후 5년 기준, 영구성장률 2.0% 고정, WACC 8~10% 가정 하에 시장이 현재 주가에 요구하는 연평균 FCF 성장률 산출)
+([공시 팩트] 현재 주가, 총 발행주식수(`istc_totqy`), 자기주식수(`tesstk_co`), DART 공식 유통주식수(`distb_stock_co`), 명목 시가총액 및 실질 유통 시가총액, 온기/연환산 FCF 수치 명시)
+- **역DCF 연산 결과 (방안 A 병기):** 
+  (향후 5년 기준, 영구성장률 2.0% 고정, WACC 8~10% 가정 하에 **DART 유통주식수 기준 요구 FCF 성장률 산출**, 총발행주식 기준 수치 병기)
+  - *예시: "WACC 9.0%, 영구성장률 2.0% 가정 하에 실질 유통주식수(1,787.6만 주, 유통 시총 7,812억 원) 기준 향후 5개년 요구 FCF 성장률은 **연간 16.52%** (총발행주식 1,843만 주 기준 시 연간 17.31%)입니다."*
+- **[역DCF 연산 절대 규칙 - LLM 자체 암산 원천 금지]:**
+  에이전트는 역DCF 요구 성장률을 절대로 머릿속으로 어림잡아 기재하지 마십시오. 반드시 내장된 헬퍼 스크립트(`python e:\antigravity-work\my-skill\korean-stock-analyzer\calc_reverse_dcf.py --price [주가] --distb-shares [유통주식수] --total-shares [총발행주식수] --fcf [FCF억] --wacc [WACC] --terminal 0.02 --years 5`)를 실행하여 도출된 수치만을 마크다운과 HTML에 주입해야 합니다.
 - **시장 기대치 괴리율 진단:** (요구 성장률이 기업의 역사적 현금창출력 및 설비 Capa 한계 대비 '과도한 탐욕(고평가)'인지 '비이성적 공포(안전마진)'인지 팩트 판정. FCF 적자 기업은 P/B 밴드나 EV/EBITDA 플랜B 대체 적용)
 
 ## 2. 3대 가치함정(Value Trap) 진단 필터 🚨
@@ -180,7 +184,12 @@ description: "DART 원본 공시(PDF) 및 증권사 딥리서치(PDF) 기반 한
 ### Phase 3: 가격 판독기 (역DCF 및 가치함정 차단 액션 플랜)
 1. **트리거**: 사용자가 **"Phase 3 진행해 줘"** 명령.
 2. **4단계 정량 밸류에이션 파이프라인 수행**:
-   - **Step 1 (역DCF 및 기대치 진단)**: 현재 주가, 총 주식수, 온기/연환산 FCF를 산출하여 **[향후 5년 기준, 영구성장률 2.0% 고정]**으로 시장 요구 성장률 역산 및 현실성 검증. (FCF 적자 시 P/B, EV/EBITDA 대체 플랜B 가동)
+   - **Step 1 (역DCF 및 기대치 진단)**: 
+     1) `korean-dart` MCP `get_shareholders`(`sections=['total_stocks']`) 또는 DART 정기보고서에서 **총발행주식수(`istc_totqy`)**, **자기주식수(`tesstk_co`)**, **DART 공식 유통주식수(`distb_stock_co`)**를 1차 팩트로 확보.
+     2) `python e:\antigravity-work\my-skill\korean-stock-analyzer\calc_reverse_dcf.py --price [현재가] --distb-shares [유통주식수] --total-shares [총발행주식수] --fcf [FCF억] --wacc [WACC] --terminal 0.02 --years 5` 스크립트를 실행하여 정밀 요구 성장률 도출. (LLM 자체 암산 엄격 금지)
+     3) 방안 A 양식에 따라 **DART 유통주식수 기준 요구 성장률을 핵심 지표로 제시**하고, 총발행주식 기준 수치를 병기.
+     4) HTML 계산기 태그: `<div id="dcf-calculator-root" data-price="주가" data-shares="유통주식수" data-total-shares="총발행주식수" data-fcf="FCF(억단위)"></div>` (라벨: `유통 주식수 (주 - 자사주 제외)`)
+     5) (FCF 적자 기업은 P/B, EV/EBITDA 대체 플랜B 가동)
    - **Step 2 (3대 가치함정 필터 점검)**: 해자 훼손, 사이클 피크아웃(대상 기업의 전방 산업에 맞춰 5대 섹터 맞춤형 선행지표 정밀 대입), 자본배치 왜곡 3대 지표를 DART 및 Global Trend 팩트로 전수 점검. (🚨 1개 경보 시 Target PER 20~30% 할인 Haircut 적용, 🚨 2개 이상 시 '투자 부적격' 강제 확정)
    - **Step 3 (바텀업 시나리오 스트레스 테스트)**: `[Capa × 가동률 × OPM = 순익 ➡️ EPS]` 산출 과정을 표기하고, Target PER이 DART 시계열상 `과거 5년 호황기 Peak PER`을 초과하지 못하도록 상한선(Cap)을 강제. (임의의 전고점 앵커링 원천 금지)
    - **Step 4 (손익비 기반 액션 플랜)**: Phase 2에서 검증된 투자 가설과 손익비(Risk/Reward)를 바탕으로 정해진 [Phase 3 뼈대]에 맞춰 `3_Final_Reports/Phase3_DCF.md` 및 HTML 생성. (맨 하단 계산기 태그 유지)
