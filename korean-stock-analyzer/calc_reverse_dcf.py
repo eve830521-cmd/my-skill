@@ -29,28 +29,34 @@ def calc_dcf_value(fcf, g, wacc, terminal_g, years=5):
 def find_implied_growth(target_value, fcf, wacc, terminal_g=0.02, years=5):
     """
     Finds the implied growth rate g such that calc_dcf_value == target_value.
-    Uses binary search. Returns None if FCF <= 0.
+    Uses binary search. Returns None if FCF <= 0, WACC <= terminal_g, or convergence fails.
     """
     if fcf <= 0:
         return None
     
     if wacc <= terminal_g:
-        raise ValueError("WACC must be strictly greater than terminal growth rate.")
+        return None  # graceful return instead of crash
     
     low = -0.99
     high = 10.0  # Supports up to 1000% growth
+    TOLERANCE = 0.00001
+    MAX_ITER = 200
     
-    for _ in range(200):
+    g = 0.0
+    for _ in range(MAX_ITER):
         g = (low + high) / 2.0
         pv = calc_dcf_value(fcf, g, wacc, terminal_g, years)
-        if abs(pv - target_value) / max(target_value, 1.0) < 0.00001:
+        if abs(pv - target_value) / max(target_value, 1.0) < TOLERANCE:
             return g
         if pv > target_value:
             high = g
         else:
             low = g
-            
-    return g
+    
+    # Convergence failure: return g only if interval is tight enough, else None
+    if abs(high - low) < 0.001:
+        return g
+    return None
 
 def analyze_reverse_dcf(price, distb_shares, total_shares, fcf_eok, wacc=0.09, terminal_g=0.02, years=5):
     """
@@ -122,6 +128,10 @@ if __name__ == "__main__":
     print("-" * 60)
     if res['status'] == 'deficit':
         print("결과: FCF 적자(음수)로 인해 역DCF 계산 불가 (P/B, EV/EBITDA 대체 권장)")
+    elif args.wacc <= args.terminal:
+        print("결과: 할인율(WACC)이 영구성장률 이하여서 계산 불가. WACC > 영구성장률이어야 합니다.")
+    elif res['implied_g_distb_pct'] is None or res['implied_g_total_pct'] is None:
+        print("결과: 요구 성장률이 계산 범위를 벗어났습니다. (극단적 고평가 가능)")
     else:
         print(f"▶ [유통주식수 기준] 요구 FCF 성장률: 연간 {res['implied_g_distb_pct']}%")
         print(f"▶ [총발행주식 기준] 요구 FCF 성장률: 연간 {res['implied_g_total_pct']}%")

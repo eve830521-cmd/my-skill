@@ -192,13 +192,13 @@ html_template = f"""<!DOCTYPE html>
                     }}
                     
                     let low = -0.99;
-                    let high = 5.0; // max 500%
+                    let high = 10.0; // max 1000% — unified with Python
                     let g = 0;
                     let found = false;
-                    for (let iter = 0; iter < 100; iter++) {{
+                    for (let iter = 0; iter < 200; iter++) {{
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {{
+                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {{
                             found = true;
                             break;
                         }}
@@ -209,7 +209,7 @@ html_template = f"""<!DOCTYPE html>
                         }}
                     }}
 
-                    if (found || Math.abs(high - low) < 0.0001) {{
+                    if (found || Math.abs(high - low) < 0.00001) {{
                         const growthPercent = (g * 100).toFixed(2);
                         elResultValue.textContent = growthPercent + "%";
                         elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
