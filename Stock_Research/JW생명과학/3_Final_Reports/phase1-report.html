@@ -529,6 +529,73 @@ p > em {
   $$\text{연환산 완제수액 Capa}(168\text{백만 개}) \times \text{공장 가동률} \times \text{평균 ASP} \implies \text{매출액} \implies \text{영업이익(OPM 반영)} \implies \text{순이익} \implies \text{EPS}$$
 - <strong>선정 근거:</strong> 당사는 연간 1억 6,800만 개(1일 15시간 실동 기준) 규모의 아시아 최대 수액 전용 장치산업 생산기지를 갖추고 있으며, 전체 매출의 75% 이상이 JW중외제약에 확정 공급되는 B2B 팩토리형 비즈니스 모델입니다. 따라서 '생산 Capa 및 공장 가동률'이 매출 외형을 결정하고, '원재료(수입 원료/환율 및 석유화학 수지/유가) 스프레드와 가동률에 따른 고정비 레버리지'가 OPM을 결정하며, 안정적인 금융비용 구조를 거쳐 EPS로 직결되는 산식이 당사의 본질을 가장 정확하게 설명합니다.
 - <strong>고정 규칙:</strong> 본 공식은 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 기업의 구조적 BM 격변(신사업 비중 30% 초과 등) 또는 사용자의 명시적 재검토 요청이 없는 한 영구 유지됩니다.</p>
+<h2>8. 최적 밸류에이션 지표 백테스트 (Phase 3 연계)</h2>
+<p>(이 기업의 <strong>과거 5년 주봉(Weekly) 주가 데이터(총 300개 캔들)</strong>와 PER·PBR·배당수익률·EV/EBITDA 4개 밸류에이션 밴드의 상관관계를 분석하여, 주가 설명력이 가장 높은 최적 지표를 최초 1회 선정 및 영구 고정)</p>
+<h3>[백테스트 수행 방법]</h3>
+<ol>
+<li>DART 및 <code>korean-dart</code> MCP에서 5개년 분기별 EPS, BPS, DPS, EBITDA, 순차입금 시계열 확보.</li>
+<li>네이버증권 차트 시스템에서 2021년 1월부터 2026년 9월까지 동일 기간 <strong>주봉 종가(총 300개 캔들)</strong> 시계열 확보.</li>
+<li>각 지표별 밸류에이션 밴드(MIN/MAX/중앙값/현재)를 산출하고, 주봉 주가와의 <strong>상관계수(R²) 및 방향 일치율(Concordance Rate)</strong>을 비교하여 순위 매기기.</li>
+</ol>
+<h3>[백테스트 결과 표]</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">밸류에이션 지표</th>
+<th style="text-align: center;">5년 밴드 (MIN ~ MAX)</th>
+<th style="text-align: center;">현재 위치</th>
+<th style="text-align: center;">주봉 주가 상관계수 (R²)</th>
+<th style="text-align: center;">방향 일치율</th>
+<th style="text-align: center;"><strong>순위</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>배당수익률</strong></td>
+<td style="text-align: center;"><strong>2.21% ~ 5.01%</strong></td>
+<td style="text-align: center;"><strong>5.00%</strong> (중앙값 4.07%)</td>
+<td style="text-align: center;"><strong>0.90</strong></td>
+<td style="text-align: center;"><strong>97.0%</strong></td>
+<td style="text-align: center;"><strong>1위</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PBR</strong></td>
+<td style="text-align: center;">0.77배 ~ 2.70배</td>
+<td style="text-align: center;">0.77배 (중앙값 1.31배)</td>
+<td style="text-align: center;">0.83</td>
+<td style="text-align: center;">93.6%</td>
+<td style="text-align: center;">2위</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EV/EBITDA</strong></td>
+<td style="text-align: center;">3.60배 ~ 8.50배</td>
+<td style="text-align: center;">3.61배 (중앙값 5.65배)</td>
+<td style="text-align: center;">0.67</td>
+<td style="text-align: center;">93.3%</td>
+<td style="text-align: center;">3위</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PER</strong></td>
+<td style="text-align: center;">3.92배 ~ 20.68배</td>
+<td style="text-align: center;">6.70배 (중앙값 8.52배)</td>
+<td style="text-align: center;">0.58</td>
+<td style="text-align: center;">93.0%</td>
+<td style="text-align: center;">4위</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>채택 지표:</strong> <strong>배당수익률</strong> — 주가 설명력 R² = 0.90, 방향 일치율 97.0% (1순위)</li>
+<li><strong>선정 근거:</strong> 당사는 연간 77억~85억 원 규모의 안정적 현금 배당(DPS 500원 → 550원)을 확정 지급하는 고배당 수액제 B2B 팩토리 기업으로, 배당수익률 밴드(2.21% ~ 5.01%)가 주가의 천장과 바닥을 가장 높은 정밀도로 설명해 왔습니다. 주가가 11,000원선까지 하락할 때 배당수익률 5.00%가 강력한 하방 지지선(Trough) 역할을 수행하며 주가와의 상관계수 R² = 0.90 및 방향 일치율 97.0%로 4개 지표 중 압도적인 주가 설명력을 입증했습니다. (차순위인 PBR 역시 현재 0.77배로 5년 최하단에 도달하여 R² = 0.83의 높은 설명력을 보유)</li>
+<li><strong>Phase 3 연계:</strong> 이 결과는 Phase 3 시나리오 표의 <strong>주 밸류에이션 멀티플</strong> 선택에 직접 상속됩니다. (Bear 시나리오에서 <code>예상 DPS(550원) ÷ 목표 배당수익률(5.00~5.50%)</code>을 주 밸류에이션 바닥선으로 적용하고, PBR 0.77배를 자산가치 방어선으로 병행 적용)</li>
+<li><strong>고정 규칙:</strong> 본 채택 지표는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 아래 2대 예외 트리거가 아닌 한 영구 유지됩니다:</li>
+<li><em>사용자 명시적 요청</em>: 사용자가 "밸류에이션 지표 재검토해 줘"라고 지시할 때</li>
+<li><em>공시 기반 BM 구조적 격변 감지</em>: 신규 사업 매출 비중 30% 초과 확인 시, Peer 그룹 밸류에이션 비교와 함께 에이전트가 전략 전환을 사전 제안 후 승인 시 재백테스트 수행</li>
+<li><strong>전환 시 근거 명시 의무:</strong> 채택 지표를 변경할 때는 반드시 아래 내용을 기록:</li>
+<li><code>[전환 트리거]</code>: BM 격변 공시 출처 (DART 보고서명 + 페이지) 또는 사용자 요청 일시</li>
+<li><code>[기존 지표 → 신규 지표]</code>: 변경 전후 비교 및 재백테스트 R² 수치</li>
+<li><code>[Peer 그룹 참조]</code>: 신규 사업이 속한 업종의 Peer 그룹에서 유효한 밸류에이션 지표 현황</li>
+</ul>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
