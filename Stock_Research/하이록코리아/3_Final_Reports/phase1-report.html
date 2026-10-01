@@ -1,688 +1,150 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Stock Analyzer Report</title>
-    <style>
-    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
-
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
-@page {
-    margin: 20mm 15mm;
-    size: A4;
-}
-
-body {
-    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-    font-size: 11pt;
-    line-height: 1.6;
-    color: #333333;
-    background-color: #ffffff;
-    max-width: 100%;
-}
-
-/* Headers */
-h1 {
-    font-size: 24pt;
-    font-weight: 800;
-    color: #1a365d;
-    text-align: center;
-    border-bottom: 2px solid #1a365d;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
-
-h2 {
-    font-size: 16pt;
-    font-weight: 700;
-    color: #2b6cb0;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    border-left: 5px solid #2b6cb0;
-    padding-left: 10px;
-}
-
-h3 {
-    font-size: 13pt;
-    font-weight: 700;
-    color: #2d3748;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-/* Blockquotes (Used for [공시 팩트] and key takeaways) */
-blockquote {
-    background-color: #f7fafc;
-    border-left: 4px solid #4299e1;
-    margin: 15px 0;
-    padding: 15px 20px;
-    font-weight: 500;
-    color: #2c5282;
-    border-radius: 4px;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 10pt;
-}
-
-th, td {
-    border: 1px solid #e2e8f0;
-    padding: 10px 12px;
-    text-align: left;
-}
-
-th {
-    background-color: #ebf4ff;
-    color: #2b6cb0;
-    font-weight: 700;
-    text-align: center;
-}
-
-tr:nth-child(even) {
-    background-color: #f8fafc;
-}
-
-/* Lists */
-ul, ol {
-    margin-bottom: 15px;
-    padding-left: 25px;
-}
-
-li {
-    margin-bottom: 5px;
-}
-
-/* Highlights */
-strong {
-    color: #1a202c;
-    font-weight: 700;
-}
-
-/* Images */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-    border: 1px solid #edf2f7;
-    border-radius: 8px;
-}
-
-/* Mermaid Diagrams (if rendered as code block fallback) */
-.mermaid {
-    text-align: center;
-    margin: 20px 0;
-}
-
-/* Code blocks */
-pre {
-    background-color: #f1f5f9;
-    padding: 15px;
-    border-radius: 6px;
-    overflow-x: auto;
-    font-size: 9pt;
-}
-
-code {
-    background-color: #f1f5f9;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: 9pt;
-}
-
-/* Footnotes/small text */
-p > em {
-    font-size: 9pt;
-    color: #718096;
-}
-
-/* Fact vs Narrative UI Patterns */
-.fact-block {
-    background-color: #f0fdf4;
-    border-left: 4px solid #16a34a !important;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border-radius: 4px;
-}
-
-.narrative-block {
-    background-color: #fef2f2;
-    border-left: 4px solid #dc2626 !important;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border-radius: 4px;
-}
-
-.fact-badge {
-    background-color: #16a34a;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.85em;
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.narrative-badge {
-    background-color: #dc2626;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.85em;
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-/* DCF Calculator UI */
-.dcf-calc-container {
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 25px;
-    margin: 30px 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.dcf-calc-container h3 {
-    margin-top: 0;
-    color: #1e293b;
-    border-bottom: 2px solid #cbd5e1;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.dcf-calc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.dcf-input-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.dcf-input-group label {
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #475569;
-    margin-bottom: 5px;
-}
-
-.dcf-input-group input {
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    font-size: 1em;
-    font-family: inherit;
-    transition: all 0.2s ease-in-out;
-}
-
-.dcf-input-group input:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.dcf-result-box {
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    border: 2px solid #e2e8f0;
-    transition: all 0.3s ease;
-}
-
-.dcf-result-label {
-    font-size: 1em;
-    font-weight: 600;
-    color: #64748b;
-    margin-bottom: 10px;
-}
-
-.dcf-result-value {
-    font-size: 2.5em;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.dcf-result-msg {
-    font-size: 0.9em;
-    color: #475569;
-}
-
-/* Dynamic Result States */
-.dcf-result-box.error {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-}
-.dcf-result-box.error .dcf-result-value {
-    color: #ef4444;
-}
-
-.dcf-result-box.low-growth {
-    border-color: #10b981;
-    background-color: #ecfdf5;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
-}
-.dcf-result-box.low-growth .dcf-result-value {
-    color: #059669;
-}
-
-.dcf-result-box.normal-growth {
-    border-color: #3b82f6;
-    background-color: #eff6ff;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-}
-.dcf-result-box.normal-growth .dcf-result-value {
-    color: #2563eb;
-}
-
-.dcf-result-box.high-growth {
-    border-color: #f59e0b;
-    background-color: #fffbeb;
-    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
-}
-.dcf-result-box.high-growth .dcf-result-value {
-    color: #d97706;
-}
-
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하이록코리아 Phase 1: 기업 해독기</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--heading:#f0f6fc;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#d18616}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;padding:20px}
+.container{max-width:1100px;margin:0 auto}
+h1{color:var(--heading);font-size:1.8em;border-bottom:2px solid var(--accent);padding-bottom:12px;margin-bottom:24px}
+h2{color:var(--accent);font-size:1.3em;margin:28px 0 14px;padding:8px 12px;background:rgba(88,166,255,.08);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+h3{color:var(--heading);font-size:1.1em;margin:18px 0 10px}
+p{margin:8px 0}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88em}
+th{background:var(--card);color:var(--accent);padding:10px 8px;text-align:left;border:1px solid var(--border);font-weight:600}
+td{padding:8px;border:1px solid var(--border);vertical-align:top}
+tr:nth-child(even){background:rgba(22,27,34,.6)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.75em;font-weight:600;margin:0 2px}
+.fact{background:rgba(63,185,80,.15);color:var(--green);border:1px solid rgba(63,185,80,.3)}
+.trend{background:rgba(88,166,255,.15);color:var(--accent);border:1px solid rgba(88,166,255,.3)}
+.risk-high{color:var(--red);font-weight:700}
+.risk-mid{color:var(--yellow);font-weight:700}
+.risk-low{color:var(--green);font-weight:700}
+.kpi-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:14px 0}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
+.kpi-value{font-size:1.6em;font-weight:700;color:var(--green)}
+.kpi-label{font-size:.82em;color:var(--text);margin-top:4px}
+.formula-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;margin:14px 0;font-family:'Fira Code',monospace;font-size:.9em;line-height:1.8}
+.formula-box .chain{color:var(--accent);font-weight:600}
+.highlight{background:rgba(210,150,22,.1);border:1px solid rgba(210,150,22,.3);border-radius:6px;padding:12px;margin:12px 0}
+.meta{font-size:.8em;color:#8b949e;text-align:right;margin-top:30px;padding-top:12px;border-top:1px solid var(--border)}
+ol,ul{margin:8px 0 8px 20px}
+li{margin:4px 0}
+strong{color:var(--heading)}
+.winner{background:rgba(63,185,80,.12);border:1px solid rgba(63,185,80,.25)}
+</style>
 </head>
 <body>
-    <h1>🔍 Phase 1: 기업 해독기 (원천 팩트 초안)</h1>
+<div class="container">
+<h1>🔍 하이록코리아 Phase 1: 기업 해독기 (원천 팩트 초안)</h1>
+<p style="color:#8b949e;font-size:.9em;">분석 기준일: 2026.09.30 | 핵심 공시: 26년 반기보고서(2026.08.14) | Global Trend 최종 반영: 26.09.16~30</p>
+
 <h2>1. 비즈니스 모델 및 밸류체인</h2>
-<p>[공시 팩트] 하이록코리아는 유체 및 기체 이송 배관 라인의 누출을 원천 차단하고 흐름을 제어하는 계장용 관이음쇠(Fitting)와 밸브(Valve)를 전문 제조하는 글로벌 강소기업입니다 <code>[팩트: 26년 반기보고서 p.9]</code>.</p>
-<p>동사의 밸류체인은 국내외 특수강 및 비철금속 제련사(포스코, 세아베스틸 등)로부터 스테인리스강, 단조품, 황동, 카본스틸 등 정밀 원소재를 조달하여, 자체 보유한 첨단 CNC 선반 및 MCT 가공 라인을 통해 다품종 소량 생산 체제로 제품화합니다 <code>[팩트: 26년 반기보고서 p.10-12]</code>. 생산된 제품은 가스 누출 시 폭발로 직결되는 고압·초저온 위험 공정에 필수 투입되므로 까다로운 국제 선급 및 품질 인증(ASME, DNV, LR 등)과 높은 벤더 교체 비용(Switching Cost)을 바탕으로 강력한 경제적 해자(Moat)를 구축하고 있습니다 <code>[팩트: 26년 반기보고서 p.9]</code>.</p>
-<p>특히 최신 2026년 9월 글로벌 산업 사이클 분석에 따르면, 하이록코리아의 전방 밸류체인은 기존의 상선 중심 조선업을 넘어 <strong>'AI 데이터센터 전력망 우회용 육상 온사이트(On-site) 발전 설비(4행정 중속엔진, 가스터빈)'</strong>와 <strong>'해상 부유식 데이터센터(FDC: Floating Data Center)'</strong> 및 <strong>'AI 반도체 첨단 팹 라인'</strong>으로 영역이 구조적으로 확장되고 있습니다 <code>[팩트: Global_Trend 26.09 LS증권 AI시대 조선산업 p.2-5]</code>.</p>
-<pre><code class="language-mermaid">graph LR
-    A[&quot;원소재 공급사 (포스코, 세아베스틸 등: 스테인리스, 단조품, 황동)&quot;] --&gt;|&quot;원자재 매입 (282.5억 원)&quot;| B[&quot;하이록코리아 (CNC/MCT 정밀 절삭가공, 피팅 95% 풀가동)&quot;]
-    B --&gt;|&quot;계장용 Fitting (전사 38.7%)&quot;| C[&quot;전방 밸류체인 엔드유저 (조선 3사, 발전 엔진, AI 반도체 팹)&quot;]
-    B --&gt;|&quot;초정밀 Valve (전사 35.9%)&quot;| C
-    C --&gt;|&quot;확장 영역 1&quot;| D[&quot;차세대 선박 &amp; FLNG 해양 에너지&quot;]
-    C --&gt;|&quot;확장 영역 2&quot;| E[&quot;AIDC 온사이트 발전(중속엔진) &amp; 해상 부유식 데이터센터(FDC)&quot;]
-    C --&gt;|&quot;확장 영역 3&quot;| F[&quot;AI 반도체(HBM/DDR5) 고청정 가스 배관 라인&quot;]
-</code></pre>
-<h2>2. 주요 제품별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
+<p><span class="badge fact">공시 팩트</span> 하이록코리아는 유체 및 기체 이송 배관 라인의 누출을 원천 차단하고 흐름을 제어하는 <strong>계장용 관이음쇠(Fitting)와 밸브(Valve)를 전문 제조</strong>하는 글로벌 강소기업입니다. 가스 누출 시 폭발로 직결되는 고압·초저온 위험 공정에 필수 투입되므로 까다로운 국제 인증(ASME, DNV, LR, API, PED)과 높은 Switching Cost 기반의 강력한 경제적 해자(Moat)를 보유합니다.</p>
+<p><span class="badge trend">글로벌 트렌드</span> DS투자증권(26.09.29)은 하이록코리아를 <strong>조선 밸류체인 피팅 섹터 핵심 기업</strong>으로 분류하며, OPM 27.5%로 피팅·전장·보냉재 등 전체 기자재 밸류체인 내 <strong>최고 수준의 영업이익률</strong>을 기록하고 있음을 확인했습니다. (p.7)</p>
+
+<div class="kpi-box">
+<div class="kpi-card"><div class="kpi-value">46개국</div><div class="kpi-label">글로벌 대리점 네트워크</div></div>
+<div class="kpi-card"><div class="kpi-value">120개</div><div class="kpi-label">해외 대리점 수</div></div>
+<div class="kpi-card"><div class="kpi-value">3사</div><div class="kpi-label">해외법인 (미·유·중)</div></div>
+<div class="kpi-card"><div class="kpi-value">492명</div><div class="kpi-label">종업원 수 (2025말)</div></div>
+</div>
+
+<h2>2. 주요 제품별 매출 비중 추이</h2>
 <table>
-<thead>
-<tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: left;">핵심 내용</th>
-<th style="text-align: left;">비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Hy-Lok Fitting</strong></td>
-<td style="text-align: left;">2026년 반기 384.1억 원 (비중 38.7%) <code>[팩트: 26년 반기보고서 p.9]</code> <br> 2025년 781.1억(40.5%), 2024년 821.2억(47.5%), 2023년 854.3억(50.0%)</td>
-<td style="text-align: left;">전사 외형을 지탱하는 핵심 캐시카우 (직수출 비중 62.1%)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Hy-Lok Valve</strong></td>
-<td style="text-align: left;">2026년 반기 356.1억 원 (비중 35.9%) <code>[팩트: 26년 반기보고서 p.9]</code> <br> 2025년 714.3억(37.0%), 2024년 636.8억(36.9%), 2023년 575.3억(33.7%)</td>
-<td style="text-align: left;">초정밀·고단가 제품군으로 전사 OPM 28.8% 견인 (내수 비중 66.7%)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Bite Type Fitting</strong></td>
-<td style="text-align: left;">2026년 반기 69.0억 원 (비중 6.9%) <code>[팩트: 26년 반기보고서 p.9]</code> <br> 2025년 123.5억(6.4%), 2024년 108.2억(6.3%)</td>
-<td style="text-align: left;">유압·공압 시스템 배관 체결용 서브 제품군</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Pipe Fitting &amp; 기타</strong></td>
-<td style="text-align: left;">2026년 반기 182.9억 원 (비중 18.5%) <code>[팩트: 26년 반기보고서 p.9]</code> <br> Pipe Fitting 20.7억(2.1%) 및 상품·모듈 패키지 162.3억(16.4%)</td>
-<td style="text-align: left;">플랜트 턴키 대응용 모듈 패키지 및 상품 매출</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>내수 vs 수출 구조</strong></td>
-<td style="text-align: left;">2026년 반기 별도 기준 내수 590.7억(59.5%), 직수출 401.4억(40.5%) <code>[팩트: 26년 반기보고서 p.13]</code></td>
-<td style="text-align: left;">글로벌 46개국 120개 해외 대리점 네트워크망 보유</td>
-</tr>
-</tbody>
+<tr><th>구분</th><th>2026H1</th><th>2025</th><th>2024</th><th>2023</th><th>비고</th></tr>
+<tr><td><strong>Fitting</strong></td><td>384.1억 (38.7%)</td><td>936.2억 (48.5%)</td><td>821.2억 (47.5%)</td><td>854.3억 (50.0%)</td><td>직수출 62.1% — 핵심 캐시카우</td></tr>
+<tr><td><strong>Valve</strong></td><td>356.1억 (35.9%)</td><td>714.3억 (37.0%)</td><td>636.8억 (36.9%)</td><td>575.3억 (33.7%)</td><td>초정밀·고단가 — OPM 28.8% 견인</td></tr>
+<tr><td>Bite Type</td><td>69.0억 (6.9%)</td><td>123.5억 (6.4%)</td><td>108.2억 (6.3%)</td><td>—</td><td>유압·공압 서브 제품군</td></tr>
+<tr><td>기타/모듈</td><td>182.9억 (18.5%)</td><td>—</td><td>—</td><td>—</td><td>턴키 모듈 패키지</td></tr>
 </table>
+
+<h3>산업별 매출 구조 (별도 기준)</h3>
+<table>
+<tr><th>산업</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>비중(25)</th></tr>
+<tr><td><strong>석유화학</strong></td><td>536억</td><td>715억</td><td>724억</td><td>724억</td><td>803억</td><td>41.6%</td></tr>
+<tr><td><strong>조선+해양</strong></td><td>267억</td><td>240억</td><td>355억</td><td>454억</td><td>485억</td><td>25.0%</td></tr>
+<tr><td>반도체</td><td>201억</td><td>302억</td><td>210억</td><td>161억</td><td>193억</td><td>10.0%</td></tr>
+<tr><td>발전</td><td>61억</td><td>93억</td><td>124억</td><td>94억</td><td>93억</td><td>4.8%</td></tr>
+<tr><td>기타</td><td>330억</td><td>351억</td><td>294억</td><td>293억</td><td>357억</td><td>18.5%</td></tr>
+</table>
+
 <h2>3. 전사 영업이익률 및 FCF 추이</h2>
-<p>[공시 팩트] 연결 재무제표 기준 2026년 상반기 매출액 1,134.0억 원, 영업이익 326.8억 원을 달성하여 <strong>반기 사상 최고치인 영업이익률(OPM) 28.82%</strong>를 기록했습니다 <code>[팩트: 26년 반기보고서 p.24]</code>. 대규모 설비 투자가 일단락된 가운데 영업활동현금흐름(OCF 263.4억 원)에서 자본적 지출(CapEx 23.4억 원)을 차감한 <strong>상반기 순 FCF는 240.0억 원으로 전년 동기 대비 +53.5% 폭증</strong>하며 압도적인 현금 창출력을 입증했습니다 <code>[팩트: 26년 반기보고서 p.26]</code>.</p>
+<div class="kpi-box">
+<div class="kpi-card"><div class="kpi-value">28.82%</div><div class="kpi-label">2026H1 OPM (반기 사상 최대)</div></div>
+<div class="kpi-card"><div class="kpi-value">240억</div><div class="kpi-label">2026H1 FCF (YoY +53.5%)</div></div>
+<div class="kpi-card"><div class="kpi-value">1,855억</div><div class="kpi-label">보유 현금 (차입금 0원)</div></div>
+<div class="kpi-card"><div class="kpi-value">+32.9%</div><div class="kpi-label">영업이익 CAGR (21→25)</div></div>
+</div>
+
 <table>
-<thead>
-<tr>
-<th style="text-align: left;">연도/분기</th>
-<th style="text-align: left;">매출액</th>
-<th style="text-align: left;">영업이익</th>
-<th style="text-align: left;">OPM(%)</th>
-<th style="text-align: left;">FCF</th>
-<th style="text-align: left;">비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>2021년</strong></td>
-<td style="text-align: left;">1,467억 원</td>
-<td style="text-align: left;">189억 원</td>
-<td style="text-align: left;">12.89%</td>
-<td style="text-align: left;">177억 원</td>
-<td style="text-align: left;">코로나 이후 조선/플랜트 저점 통과 <code>[팩트: 2023 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2022년</strong></td>
-<td style="text-align: left;">1,829억 원</td>
-<td style="text-align: left;">407억 원</td>
-<td style="text-align: left;">22.26%</td>
-<td style="text-align: left;">443억 원</td>
-<td style="text-align: left;">조선 수주 턴어라운드 및 단가 인상 반영 <code>[팩트: 2024 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2023년</strong></td>
-<td style="text-align: left;">1,888억 원</td>
-<td style="text-align: left;">519억 원</td>
-<td style="text-align: left;">27.48%</td>
-<td style="text-align: left;">342억 원</td>
-<td style="text-align: left;">OPM 27% 돌파 및 고부가 믹스 체질 전환 <code>[팩트: 2025 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2024년</strong></td>
-<td style="text-align: left;">1,905억 원</td>
-<td style="text-align: left;">501억 원</td>
-<td style="text-align: left;">26.31%</td>
-<td style="text-align: left;">377억 원</td>
-<td style="text-align: left;">26%대 안정적 마진 방어 및 현금 유입 <code>[팩트: 2026 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2025년</strong></td>
-<td style="text-align: left;">2,146억 원</td>
-<td style="text-align: left;">589억 원</td>
-<td style="text-align: left;">27.46%</td>
-<td style="text-align: left;">373억 원</td>
-<td style="text-align: left;">사상 최대 연간 매출 및 영업이익 돌파 <code>[팩트: 2026 사업보고서]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2026년 1H (최신 반기)</strong></td>
-<td style="text-align: left;"><strong>1,134억 원</strong></td>
-<td style="text-align: left;"><strong>327억 원</strong></td>
-<td style="text-align: left;"><strong>28.82%</strong></td>
-<td style="text-align: left;"><strong>240억 원</strong></td>
-<td style="text-align: left;"><strong>반기 사상 최대 OPM 경신 및 FCF YoY +53.5% 폭증</strong> <code>[팩트: 26년 반기보고서]</code></td>
-</tr>
-</tbody>
+<tr><th>연도</th><th>매출액</th><th>영업이익</th><th>OPM</th><th>FCF</th><th>비고</th></tr>
+<tr><td>2021</td><td>1,467억</td><td>189억</td><td>12.9%</td><td>177억</td><td>코로나 후 저점</td></tr>
+<tr><td>2022</td><td>1,829억</td><td>407억</td><td>22.3%</td><td>443억</td><td>턴어라운드</td></tr>
+<tr><td>2023</td><td>1,888억</td><td>519억</td><td>27.5%</td><td>342억</td><td>OPM 27% 돌파</td></tr>
+<tr><td>2024</td><td>1,905억</td><td>501억</td><td>26.3%</td><td>377억</td><td>안정적 마진 방어</td></tr>
+<tr><td>2025</td><td>2,146억</td><td>589억</td><td>27.5%</td><td>373억</td><td>사상 최대 매출·OP</td></tr>
+<tr style="background:rgba(63,185,80,.1)"><td><strong>2026H1</strong></td><td><strong>1,134억</strong></td><td><strong>327억</strong></td><td><strong>28.8%</strong></td><td><strong>240억</strong></td><td><strong>반기 사상 최대 OPM</strong></td></tr>
 </table>
-<h2>4. 핵심 KPI 추이 (가동률, 수주잔고, ASP 등)</h2>
-<p>[공시 팩트] 2026년 상반기 확정 공시는 <strong>주력 설비 가동률의 풀가동 체제 돌입</strong>과 <strong>신규 수주가 납품 속도를 앞지르는 북투빌(Book-to-Bill) 팽창 국면</strong>을 명확히 증명합니다 <code>[팩트: 26년 반기보고서 p.11, p.14]</code>.</p>
-<ol>
-<li><strong>설비 가동률: 피팅 95% 풀가동 (물량 Q의 공급 병목 도달)</strong></li>
-<li><strong>Hy-Lok Fitting</strong>: 생산능력 5,712천 개 중 5,426천 개를 생산하여 <strong>가동률 95%</strong>를 기록했습니다 <code>[팩트: 26년 반기보고서 p.11]</code>. 2024년 75%, 2025년 89%에 이어 사실상 풀가동(Full Capacity) 상태입니다.</li>
-<li><strong>Hy-Lok Valve</strong>: 생산능력 558천 개 중 407천 개를 생산하여 <strong>가동률 73%</strong>를 유지했습니다 <code>[팩트: 26년 반기보고서 p.11]</code>.</li>
-<li><strong>전사 평균 가동률</strong>: 2025년 연간 68%에서 <strong>2026년 상반기 74%</strong>로 +6.0%p 반등하며 생산 물량이 가파르게 확대되고 있습니다 <code>[팩트: 26년 반기보고서 p.11]</code>.</li>
-<li><strong>수주 흐름 및 북투빌 (Book-to-Bill): 초과 수요 국면</strong></li>
-<li>2026년 상반기(1~6월) 신규 수주총액은 <strong>1,125.4억 원</strong>으로 별도 매출액(992.1억 원)을 133.3억 원 상회했습니다 <code>[팩트: 26년 반기보고서 p.14]</code>.</li>
-<li>상반기 <strong>Book-to-Bill 비율 1.13배</strong>를 기록하여, 조선 3사의 2030년 슬롯 판매 및 분산 발전 엔진용 발주가 유입되며 수주잔고가 매출보다 빠르게 쌓이고 있습니다 <code>[팩트: 26년 반기보고서 p.14]</code>, <code>[팩트: Global_Trend 26.09 LS증권 p.3]</code>.</li>
-<li><strong>판매단가(ASP)와 원재료 가격: 독점적 가격 전가력</strong></li>
-<li>주력 제품인 <strong>Hy-Lok Valve 내수 ASP</strong>는 2024년 115,836원 $\rightarrow$ 2025년 118,638원 $\rightarrow$ <strong>2026년 상반기 121,366원</strong>으로 매년 우상향하고 있습니다 <code>[팩트: 26년 반기보고서 p.10]</code>.</li>
-<li>황동 등 주요 원재료 매입단가가 2024년 11,390원/kg에서 2026년 상반기 15,102원/kg으로 +32.6% 상승했음에도 불구하고, 제품 믹스 고도화와 판가 전가를 통해 OPM 28.82%를 달성하며 강력한 해자를 입증했습니다 <code>[팩트: 26년 반기보고서 p.11, p.24]</code>.</li>
-</ol>
-<h2>5. 경영진 및 주주환원 이력</h2>
-<p>[공시 팩트] 창업주 문혁배 회장 및 문휴건 대표이사 부회장(지분율 22.44%)을 중심으로 한 특수관계인 지분율은 39.86%로 경영권이 매우 확고합니다 <code>[팩트: 26년 반기보고서 p.27, p.111]</code>. 특히 하이록코리아는 벌어들인 순현금을 바탕으로 <strong>취득한 자기주식을 100% 영구 소각</strong>하는 강력한 자본 배치 정책을 시행하고 있습니다 <code>[팩트: 26년 반기보고서 p.7]</code>.</p>
+
+<h2>4. 핵심 KPI (가동률, 수주, ASP)</h2>
+<div class="kpi-box">
+<div class="kpi-card"><div class="kpi-value" style="color:var(--red)">95%</div><div class="kpi-label">Fitting 가동률 (풀가동)</div></div>
+<div class="kpi-card"><div class="kpi-value">1.13배</div><div class="kpi-label">Book-to-Bill (초과수요)</div></div>
+<div class="kpi-card"><div class="kpi-value">121,366원</div><div class="kpi-label">Valve 내수 ASP (↑2.3%)</div></div>
+<div class="kpi-card"><div class="kpi-value">1,125억</div><div class="kpi-label">H1 신규수주 (매출+133억)</div></div>
+</div>
+
+<h2>5. 경영진 및 주주환원</h2>
 <table>
-<thead>
-<tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: left;">핵심 내용</th>
-<th style="text-align: left;">비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>3개년 자사주 영구 소각</strong></td>
-<td style="text-align: left;">최근 3년간 발행주식 총수의 <strong>13.55%에 달하는 1,845,088주 이익소각 완료</strong> <code>[팩트: 26년 반기보고서 p.7]</code> <br> - 2023.02.15: 757,182주 소각 (99.3억 원) <br> - 2024.11.11: 560,608주 소각 (150.0억 원) <br> - 2025.09.19: 527,298주 소각 (149.8억 원)</td>
-<td style="text-align: left;">발행주식수가 1,361만 주에서 1,176만 주로 영구 축소되어 주당 EPS 복리 증대</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>현재 보유 자기주식수</strong></td>
-<td style="text-align: left;"><strong>0주 (지분율 0.0%)</strong> <code>[팩트: 26년 반기보고서 p.7]</code></td>
-<td style="text-align: left;">자사주를 쌓아두지 않고 취득 즉시 전량 소각하는 신뢰성 증명</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>현금 배당 추이</strong></td>
-<td style="text-align: left;">2025 회계연도 결산 연차배당(2026년 초 지급): <strong>총 158.9억 원 (DPS 1,350원)</strong> <code>[팩트: 26년 반기보고서 p.25]</code> <br> 배당성향 30.7% 달성 (2023년 27.9% $\rightarrow$ 2025년 30.7%)</td>
-<td style="text-align: left;">FCF에 기반한 주주환원율 지속 확대</td>
-</tr>
-</tbody>
+<tr><th>구분</th><th>내용</th><th>핵심 수치</th></tr>
+<tr><td><strong>자사주 소각</strong></td><td>3년간 발행주식의 13.55% 영구 소각</td><td>1,845,088주 (약 399억 원)</td></tr>
+<tr><td><strong>현금 배당</strong></td><td>DPS: 500→600→1,050→1,150→<strong>1,350원</strong></td><td>배당성향 30.7% (2025년)</td></tr>
+<tr><td><strong>총주주환원</strong></td><td>배당 158.9억 + 소각 149.8억 = 308.7억</td><td>순이익 대비 <strong>60.8%</strong></td></tr>
+<tr><td>경영권</td><td>문혁배 회장·문휴건 대표 특수관계인</td><td>지분율 39.86%</td></tr>
 </table>
-<h2>6. 공시 본문 기반 3대 핵심 리스크</h2>
-<p>[공시 팩트] 2026년 반기보고서 본문 및 주석 공시에 최신 글로벌 매크로 환경을 접목하여 평가한 3대 리스크 요인입니다 <code>[팩트: 26년 반기보고서 p.15-16]</code>.</p>
+
+<h2>6. 3대 핵심 리스크</h2>
 <table>
-<thead>
-<tr>
-<th style="text-align: left;">리스크 요인</th>
-<th style="text-align: left;">핵심 내용 (발생 조건)</th>
-<th style="text-align: left;">확률(Prob)</th>
-<th style="text-align: left;">파급력(Impact)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>외환 환율 하락 (원화 강세) 리스크</strong></td>
-<td style="text-align: left;">- 외화 매출 비중 40.5%(연결 49%) 보유로 원/달러 및 원/유로 환율 <strong>10% 급락 시 세전이익 43.6억 원 장부상 환산 손실 노출</strong> (USD 31.8억, EUR 10.9억) <code>[팩트: 26년 반기보고서 p.16]</code>. <br> - 2026년 9월 증권가에서도 3Q26 실적에 대해 원화 강세에 따른 단기 손익 둔화 가능성을 지적하고 있어 단기 주가 변동성 요인으로 상존 <code>[팩트: Global_Trend 26.09 LS증권 p.2]</code>. <br> - 단, 2025년말 55.4억 노출 대비 익스포저가 11.8억 축소되었고 28.8% OPM 마진 쿠션으로 충격 흡수 가능.</td>
-<td style="text-align: left;"><strong>Mid</strong></td>
-<td style="text-align: left;"><strong>Mid</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>비철금속 원자재 급등 리스크</strong></td>
-<td style="text-align: left;">- 황동 매입단가(15,102원/kg) 등 주요 비철금속 가격 급등 시 일시적 원가 부담 가중 <code>[팩트: 26년 반기보고서 p.11]</code>. <br> - 단, 내수 밸브 ASP 121,366원 인상 및 가동률 95% 달성으로 OPM 28.82%를 기록하여 실질 판가 전가력 완벽 검증 완료.</td>
-<td style="text-align: left;"><strong>High</strong></td>
-<td style="text-align: left;"><strong>Low</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>전방 산업(조선/플랜트) CapEx 둔화 리스크</strong></td>
-<td style="text-align: left;">- 글로벌 경기 침체 및 신조 발주 지연 시 수주 공백 우려. <br> - 그러나 9월 최신 글로벌 트렌드 확인 결과, 조선 3사의 인도 슬롯 판매가 <strong>2030년까지 공식 확장</strong> 중이며, AIDC 전력망 병목(연결 대기 5~7년)에 따른 <strong>온사이트 중속엔진 및 FDC(해상 부유식 데이터센터) 신규 발주</strong>가 구조적으로 폭발하고 있어 수주 둔화 위험은 극히 제한적임 <code>[팩트: Global_Trend 26.09 LS증권 p.3, p.32]</code>.</td>
-<td style="text-align: left;"><strong>Low</strong></td>
-<td style="text-align: left;"><strong>High</strong></td>
-</tr>
-</tbody>
+<tr><th>리스크</th><th>핵심 내용</th><th>확률</th><th>파급</th></tr>
+<tr><td>환율 하락(원화 강세)</td><td>외화 매출 40.5%, 10% 급락 시 세전이익 43.6억 손실 노출</td><td class="risk-mid">Mid</td><td class="risk-mid">Mid</td></tr>
+<tr><td>비철금속 원자재 급등</td><td>황동 15,102원/kg (+32.6%) — 단, OPM 28.8%로 판가 전가 검증 완료</td><td class="risk-high">High</td><td class="risk-low">Low</td></tr>
+<tr><td>전방 CapEx 둔화</td><td>조선 슬롯 2030년 확장 중 + 에너지안보 구조적 수요 폭발 → 둔화 위험 극히 제한적</td><td class="risk-low">Low</td><td class="risk-high">High</td></tr>
 </table>
-    <script>
-        // Replace mermaid code blocks with div class="mermaid"
-        document.addEventListener("DOMContentLoaded", function() {
-            const blocks = document.querySelectorAll("code.language-mermaid");
-            blocks.forEach(block => {
-                const parent = block.parentNode; // <pre>
-                const div = document.createElement("div");
-                div.className = "mermaid";
-                div.textContent = block.textContent;
-                parent.parentNode.replaceChild(div, parent);
-            });
-            
-            // Highlight Fact vs Narrative
-            const allElements = document.querySelectorAll("p, li, blockquote, td");
-            allElements.forEach(el => {
-                if (el.innerHTML.includes("[공시 팩트]")) {
-                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
-                    el.classList.add("fact-block");
-                }
-                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
-                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
-                    el.classList.add("narrative-block");
-                }
-            });
-            
-            // DCF Calculator
-            const dcfRoot = document.getElementById('dcf-calculator-root');
-            if (dcfRoot) {
-                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
-                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
-                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                
-                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
-                    '<div class="dcf-calc-grid">' +
-                        '<div class="dcf-input-group">' +
-                            '<label>현재 주가 (원)</label>' +
-                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
-                            '<label>유통 주식수 (주)</label>' +
-                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
-                            '<label>기준 FCF (억 원)</label>' +
-                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
-                            '<label>할인율 (%, WACC)</label>' +
-                            '<input type="number" id="dcf-input-wacc" value="10.0" step="0.1">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
-                            '<label>영구성장률 (%, Terminal)</label>' +
-                            '<input type="number" id="dcf-input-terminal" value="2.0" step="0.1">' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="dcf-result-box" id="dcf-result-box">' +
-                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
-                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
-                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
-                    '</div>' +
-                '</div>';
 
-                const elPrice = document.getElementById('dcf-input-price');
-                const elShares = document.getElementById('dcf-input-shares');
-                const elFcf = document.getElementById('dcf-input-fcf');
-                const elWacc = document.getElementById('dcf-input-wacc');
-                const elTerminal = document.getElementById('dcf-input-terminal');
-                const elResultValue = document.getElementById('dcf-result-value');
-                const elResultMsg = document.getElementById('dcf-result-msg');
-                const elResultBox = document.getElementById('dcf-result-box');
-                
-                function parseFormattedNum(val) {
-                    return parseFloat(val.toString().replace(/,/g, ''));
-                }
+<h2>7. 표준 실적 산출 공식 (Phase 3 연계)</h2>
+<div class="highlight">
+<strong>🏭 채택 유형: A [연속공정·장치산업]</strong> — DART에 생산Capa·가동률 공시 확인
+</div>
+<div class="formula-box">
+<span class="chain">[Fitting Capa × 가동률 × ASP] + [Valve Capa × 가동률 × ASP] + 기타</span><br>
+→ <strong>전사 매출액</strong><br>
+→ × OPM(26~29%) = <strong>영업이익</strong><br>
+→ × (1 − 실효세율 23.8%) = <strong>순이익</strong><br>
+→ ÷ 유통주식수(11,768,144주) = <strong>EPS</strong>
+</div>
 
-                function formatNumberInput(e) {
-                    // Skip for number types
-                    if (e.target.type === 'number') return;
-                    
-                    let cursor = e.target.selectionStart;
-                    let originalLength = e.target.value.length;
-                    
-                    // Allow minus sign at the beginning for FCF
-                    let isNegative = e.target.value.startsWith('-');
-                    let val = e.target.value.replace(/[^\d.]/g, '');
-                    
-                    if (val !== '' && !isNaN(val)) {
-                        let parts = val.split('.');
-                        parts[0] = parseInt(parts[0], 10).toLocaleString();
-                        let formatted = parts.join('.');
-                        if (isNegative) formatted = '-' + formatted;
-                        e.target.value = formatted;
-                    } else if (isNegative) {
-                        e.target.value = '-';
-                    } else {
-                        e.target.value = '';
-                    }
-                    
-                    let newLength = e.target.value.length;
-                    cursor = cursor + (newLength - originalLength);
-                    if(cursor < 0) cursor = 0;
-                    e.target.setSelectionRange(cursor, cursor);
-                }
+<h2>8. 밸류에이션 백테스트 (Phase 3 연계)</h2>
+<table>
+<tr><th>지표</th><th>5년 밴드</th><th>현재 위치</th><th>설명력 평가</th><th>순위</th></tr>
+<tr class="winner"><td><strong>PER ⭐</strong></td><td>4.6배 ~ 11.2배</td><td><strong>7.2배</strong></td><td>EPS 성장과 주가 동행성 최고. 호황기 9배 상한이 천장 정확 포착</td><td><strong>1위</strong></td></tr>
+<tr><td>PBR</td><td>0.39배 ~ 0.98배</td><td>0.91배</td><td>자사주 소각 BPS 우상향, PBR 1.0배 심리적 저항선</td><td>2위</td></tr>
+<tr><td>배당수익률</td><td>2.6% ~ 5.8%</td><td>3.7%</td><td>DPS 증액으로 밴드 재설정 — 바닥 시그널만 유효</td><td>3위</td></tr>
+<tr><td>EV/EBITDA</td><td>—</td><td>—</td><td>순현금 1,855억으로 EV 왜곡 — 비교 불가</td><td>4위</td></tr>
+</table>
 
-                function calculateImpliedGrowth() {
-                    const price = parseFormattedNum(elPrice.value);
-                    const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
-                    const wacc = parseFloat(elWacc.value) / 100.0;
-                    const terminal = parseFloat(elTerminal.value) / 100.0;
+<div class="highlight">
+<strong>채택 지표: PER</strong> — EPS CAGR +29.1%(21→25)과 주가 상승률 방향 일치 최고.<br>
+<strong>Phase 3 상속:</strong> 호황 Peak PER 9.0배(Target 상한) / 중앙 7.0배 / Trough 4.6배
+</div>
 
-                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (fcf <= 0) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (wacc <= terminal) {
-                         elResultValue.textContent = "N/A";
-                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
-                         elResultBox.className = "dcf-result-box error";
-                         return;
-                    }
-
-                    const targetValue = price * shares;
-                    
-                    function calcDCFValue(g) {
-                        let pv = 0;
-                        let cf = fcf;
-                        for(let i=1; i<=5; i++) {
-                            cf = cf * (1 + g);
-                            pv += cf / Math.pow(1 + wacc, i);
-                        }
-                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
-                        pv += tv / Math.pow(1 + wacc, 5);
-                        return pv;
-                    }
-                    
-                    let low = -0.99;
-                    let high = 5.0; // max 500%
-                    let g = 0;
-                    let found = false;
-                    for (let iter = 0; iter < 100; iter++) {
-                        g = (low + high) / 2;
-                        let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
-                            found = true;
-                            break;
-                        }
-                        if (pv > targetValue) {
-                            high = g;
-                        } else {
-                            low = g;
-                        }
-                    }
-
-                    if (found || Math.abs(high - low) < 0.0001) {
-                        const growthPercent = (g * 100).toFixed(2);
-                        elResultValue.textContent = growthPercent + "%";
-                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
-                        if (g < 0) {
-                             elResultBox.className = "dcf-result-box low-growth";
-                        } else if (g > 0.15) {
-                             elResultBox.className = "dcf-result-box high-growth";
-                        } else {
-                             elResultBox.className = "dcf-result-box normal-growth";
-                        }
-                    } else {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
-                        elResultBox.className = "dcf-result-box error";
-                    }
-                }
-
-                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
-                inputs.forEach(input => {
-                    input.addEventListener('input', (e) => {
-                        formatNumberInput(e);
-                        calculateImpliedGrowth();
-                    });
-                });
-
-                calculateImpliedGrowth();
-            }
-        });
-    </script>
+<div class="meta">
+Phase 1 Report — 하이록코리아(013030) | Generated: 2026.09.30<br>
+Global Trend 반영: 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.7 (No-Blind-Citation 검증 완료)
+</div>
+</div>
 </body>
 </html>
