@@ -340,7 +340,7 @@ p > em {
 </ul>
 <hr />
 <h3>Step 1: 역DCF 연산 — 입력값 출처 명시 필수 양식</h3>
-<p>[공시 팩트] DART 전자공시 확정 데이터 및 2026년 10월 1일 주봉 종가를 기준으로 역DCF 모델을 구축했습니다.</p>
+<p>[공시 팩트] DART 전자공시 확정 데이터 및 2026년 10월 2일 최신 주봉 종가를 기준으로 역DCF 모델을 구축했습니다.</p>
 <table>
 <thead>
 <tr>
@@ -352,8 +352,8 @@ p > em {
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>현재 주가</strong></td>
-<td style="text-align: center;"><strong>75,200원</strong></td>
-<td style="text-align: left;">2026년 10월 1일 주봉 종가 (KRX 공식 시세)</td>
+<td style="text-align: center;"><strong>85,100원</strong></td>
+<td style="text-align: left;">2026년 10월 2일 주봉 종가 (KRX 공식 시세)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>총 발행주식수</strong></td>
@@ -372,13 +372,13 @@ p > em {
 </tr>
 <tr>
 <td style="text-align: left;"><strong>명목 시가총액</strong></td>
-<td style="text-align: center;">5조 7,311억 원</td>
-<td style="text-align: left;">주가 75,200원 × 총발행주식수 76,211,850주</td>
+<td style="text-align: center;">6조 4,856억 원</td>
+<td style="text-align: left;">주가 85,100원 × 총발행주식수 76,211,850주</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>실질 유통 시가총액</strong></td>
-<td style="text-align: center;"><strong>5조 7,073억 원</strong></td>
-<td style="text-align: left;">주가 75,200원 × 유통주식수 75,895,600주</td>
+<td style="text-align: center;"><strong>6조 4,587억 원</strong></td>
+<td style="text-align: left;">주가 85,100원 × 유통주식수 75,895,600주</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>기준 온기 FCF</strong></td>
@@ -404,9 +404,9 @@ p > em {
 </table>
 <ul>
 <li><strong>역DCF 정밀 연산 결과 (방안 A 병기 - 파이썬 헬퍼 <code>calc_reverse_dcf.py</code> 실행 완료):</strong></li>
-<li><strong>DART 유통주식수 기준 (핵심 지표):</strong> 향후 5개년 요구 FCF 성장률은 <strong>연간 32.35%</strong>입니다.</li>
+<li><strong>DART 유통주식수 기준 (핵심 지표):</strong> 향후 5개년 요구 FCF 성장률은 <strong>연간 35.89%</strong>입니다.</li>
 <li>
-<p><strong>총 발행주식수 기준 (병기):</strong> 향후 5개년 요구 FCF 성장률은 <strong>연간 32.47%</strong>입니다.</p>
+<p><strong>총 발행주식수 기준 (병기):</strong> 향후 5개년 요구 FCF 성장률은 <strong>연간 36.01%</strong>입니다.</p>
 </li>
 <li>
 <p><strong>[역DCF 요구성장률 해석 기준 대조]:</strong>
@@ -416,14 +416,14 @@ p > em {
   | 0 ~ 10% | 보수적 성장만 요구 → 합리적 밸류에이션 영역 | — |
   | 10 ~ 20% | 중간 성장 요구 → 기업 역사적 CAGR과 대조 필수 | — |
   | 20 ~ 30% | 공격적 성장 요구 → 고평가 경계, Capa 한계 점검 | — |
-  | <strong>&gt; 30% (과도한 탐욕)</strong> | <strong>시장 기대치 비현실적, 안전마진 부재</strong> | <strong>🚨 32.35% (과도한 탐욕 경보)</strong> |</p>
+  | <strong>&gt; 30% (과도한 탐욕)</strong> | <strong>시장 기대치 비현실적, 안전마진 부재</strong> | <strong>🚨 35.89% (과도한 탐욕 경보 최상단)</strong> |</p>
 </li>
 <li>
 <p><strong>시장 기대치 괴리율 진단 (고평가 / 과도한 탐욕 경보):</strong></p>
 </li>
-<li><strong>역사적 성장 궤적(16%)과의 극단적 괴리</strong>: 리노공업의 최근 5년(2020~2025년) 연결 영업이익 CAGR은 <strong>약 16.0%</strong> 수준이었습니다. 현재 주가(75,200원)는 역사적 정상 성장률의 무려 <strong>2배가 넘는 초고성장(연 32.35%)을 5년 내내 단 한 번의 삐끗함 없이 달성해야 정당화되는 극단적 가격</strong>입니다.</li>
-<li><strong>피크 FCF 복리 성장의 한계</strong>: 사상 최대치였던 1,195억 원의 베이스 FCF가 매년 32.35%씩 복리로 폭증한다는 것은, <strong>2030년 연간 FCF가 약 4,850억 원에 도달해야 함</strong>을 의미합니다. 소모성 소켓/핀 비즈니스의 물리적 CAPA와 글로벌 팹리스 R&amp;D 예산 규모를 감안할 때 비현실적인 허들입니다.</li>
-<li><strong>결론</strong>: 최근 주가가 65,900원에서 75,200원으로 추가 급등하면서, 주가는 <strong>'Priced for Perfection (완벽을 전제한 과열)'</strong> 영역을 넘어 <strong>'안전마진이 전무한 고평가 위험 영역'</strong>에 깊숙이 진입했습니다.</li>
+<li><strong>역사적 성장 궤적(16~18%)과의 극단적 괴리</strong>: 리노공업의 최근 5년(2020~2025년) 연결 영업이익 CAGR은 <strong>약 17.8%</strong>였습니다. 현재 주가(85,100원)는 역사적 정상 성장률의 무려 <strong>2배가 넘는 초고성장(연 35.89%)을 5년 내내 단 한 번의 오차 없이 달성해야 정당화되는 극단적 가격</strong>입니다.</li>
+<li><strong>피크 FCF 복리 성장의 한계</strong>: 사상 최대치였던 1,195억 원의 베이스 FCF가 매년 35.89%씩 복리로 폭증한다는 것은, <strong>2030년 연간 FCF가 약 5,530억 원에 도달해야 함</strong>을 의미합니다. 소모성 소켓/핀 비즈니스의 물리적 CAPA와 글로벌 팹리스 R&amp;D 예산 규모를 감안할 때 비현실적인 허들입니다.</li>
+<li><strong>결론</strong>: 최근 주가가 85,100원까지 추가 급등하면서, 주가는 <strong>'Priced for Perfection (완벽을 전제한 과열)'</strong> 상태에 100% 도달했으며 <strong>'안전마진이 완전히 소멸한 위험 영역'</strong>에 위치해 있습니다.</li>
 </ul>
 <hr />
 <h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
@@ -474,14 +474,14 @@ p > em {
 <li><strong>채택 공식 상속</strong>: Phase 1 Section 7에서 확정된 <strong>유형 B [맞춤형 소모품 부품]</strong> 표준 산출 체인을 100% 상속 적용.
   <code>[소켓 출하량(Q) &amp; 소켓 ASP(P) + 핀 출하량(Q) &amp; 핀 ASP(P) + 의료기기 부품]</code> $\rightarrow$ 매출액 $\rightarrow$ 영업이익(OPM) $\rightarrow$ 순이익(실효세율 차감, 무차입) $\rightarrow$ EPS</li>
 <li><strong>🚨 교차 검증 절대 준수</strong>: Section 4 DART 가동률 공시 미기재 팩트에 따라, <strong>본문 및 표에 '공장 가동률' 단어를 일체 사용하지 않고 '출하량(Q) 및 ASP(P), 조업도 달성률'로 정의</strong>.</li>
-<li><strong>밸류에이션 지표 상속</strong>: Phase 1 Section 8 백테스트 1위 지표인 <strong>PER</strong>을 주 밸류에이션으로 채택.</li>
-<li><strong>멀티플 상한선 강제 준수</strong>: Target PER은 과거 5년 역사적 호황 Peak PER(30.0~32.0배)을 절대 초과할 수 없음 <code>[대신증권 26.09.01 p.54 목표 P/E 30배 준용]</code>.</li>
+<li><strong>밸류에이션 지표 상속</strong>: Phase 1 Section 8 백테스트 지표인 <strong>PER</strong> 및 <strong>EV/EBITDA</strong> 멀티플 상한선 적용.</li>
+<li><strong>멀티플 상한선 강제 준수</strong>: Target PER은 과거 10년 역사적 호황 Peak PER(30.0~35.0배)을 절대 초과할 수 없음 <code>[대신증권 26.09.01 p.54 목표 P/E 30배 준용]</code>.</li>
 <li><strong>Bear PER 역전 절대 금지</strong>: Bear 멀티플(22.0배)은 Base 멀티플(28.0배)보다 낮게 통제.</li>
 </ul>
 <h3>[시나리오 표]</h3>
 <blockquote>
 <p><strong>산식 선택 근거</strong>: 리노공업은 다품종 커스텀 소모품 기업으로, 공장 가동률이 아닌 <strong>R&amp;D 신규 프로젝트 수에 연동되는 소켓 출하량(Q)</strong>과 <strong>WMCM/초미세화에 따른 판가(P: ASP)</strong>가 실적을 결정함.
-<strong>밸류에이션 지표</strong>: Phase 1 Section 8 백테스트 1위 = <strong>PER</strong> (주가 설명력 $R^2 = 0.8727$). 리레이팅 미적용(기본 상한선 준수).</p>
+<strong>밸류에이션 지표</strong>: Phase 1 Section 8 백테스트 = <strong>PER 30배 상한선(Cap)</strong> 및 <strong>10년 Post-Rerating 바닥 멀티플 22배 하방 지지선(Floor)</strong> 상속.</p>
 </blockquote>
 <table>
 <thead>
@@ -491,7 +491,7 @@ p > em {
 <th style="text-align: center;">매출액 → 영업이익(OPM) → 순이익 / EPS</th>
 <th style="text-align: center;">Target PER (상한선 검증)</th>
 <th style="text-align: center;"><strong>적정주가</strong></th>
-<th style="text-align: center;">현재가(75,200원) 대비 등락률</th>
+<th style="text-align: center;">현재가(85,100원) 대비 등락률</th>
 </tr>
 </thead>
 <tbody>
@@ -501,7 +501,7 @@ p > em {
 <td style="text-align: center;">매출 6,529억 원 <br> 영업익 3,266억 (50.0%) <br> 순이익 2,668억 원 <br> <strong>EPS 3,501원</strong></td>
 <td style="text-align: center;">30.0배 <br> <code>[과거 호황 Peak 이하]</code></td>
 <td style="text-align: center;"><strong>105,000원</strong></td>
-<td style="text-align: center;"><strong>+39.6%</strong></td>
+<td style="text-align: center;"><strong>+23.4%</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Base (기본)</strong></td>
@@ -509,15 +509,15 @@ p > em {
 <td style="text-align: center;">매출 5,583억 원 <br> 영업익 2,814억 (50.4%) <br> 순이익 2,317억 원 <br> <strong>EPS 3,041원</strong></td>
 <td style="text-align: center;">28.0배 <br> <code>[5년 역사적 중간값]</code> <br> <em>(30배 적용 시 91,000원)</em></td>
 <td style="text-align: center;"><strong>85,100원</strong></td>
-<td style="text-align: center;"><strong>+13.2%</strong> <br> <em>(+21.0%)</em></td>
+<td style="text-align: center;"><strong>0.0%</strong> <br> <em>(+6.9%)</em></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: left;">• 글로벌 매크로 둔화로 스마트폰 세트 교체 주기 장기화 <br> • 양산용 핀(40%) 수주 부진 및 팹리스 R&amp;D 예산 일시 집행 지연 <br> • 4Q26 신공장 이전 후 초기 조업도(70%) 정체에 따른 감가상각비 부담 <br> • 산출: <code>[소켓 17만 개 + 핀 5,500만 개 + 의료기기 450억] → 매출 4,380억 → OP 1,971억(OPM 45.0%) → 순익 1,600억</code></td>
+<td style="text-align: left;">• 글로벌 매크로 둔화로 스마트폰 세트 교체 주기 장기화 <br> • 양산용 핀(40%) 수주 부진 및 팹리스 R&amp;D 예산 일시 집행 지연 <br> • 4Q26 신공장 이전 후 초기 조업도(70%) 정체에 따른 감가상각비 부담 <br> • 산출: <code>[소켓 17만 개 + 핀 5,500만 개 + 의료기기 450억] → 매출 4,380억 → OP 1,971억(45.0%) → 순익 1,600억</code></td>
 <td style="text-align: center;">매출 4,380억 원 <br> 영업익 1,971억 (45.0%) <br> 순이익 1,600억 원 <br> <strong>EPS 2,100원</strong></td>
-<td style="text-align: center;">22.0배 <br> <code>[역사적 하단 Trough]</code></td>
+<td style="text-align: center;">22.0배 <br> <code>[10년 체제하단 Floor]</code></td>
 <td style="text-align: center;"><strong>46,200원</strong></td>
-<td style="text-align: center;"><strong>-38.6%</strong></td>
+<td style="text-align: center;"><strong>-45.7%</strong></td>
 </tr>
 </tbody>
 </table>
@@ -527,7 +527,7 @@ p > em {
 <thead>
 <tr>
 <th style="text-align: left;">구분</th>
-<th style="text-align: center;">등락률 (현재가 75,200원 대비)</th>
+<th style="text-align: center;">등락률 (현재가 85,100원 대비)</th>
 <th style="text-align: center;">확률 가중치</th>
 <th style="text-align: center;">가중 기대값</th>
 <th style="text-align: left;">비고</th>
@@ -536,64 +536,64 @@ p > em {
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: center;"><strong>+39.6%</strong> (105,000원)</td>
+<td style="text-align: center;"><strong>+23.4%</strong> (105,000원)</td>
 <td style="text-align: center;">25%</td>
-<td style="text-align: center;"><strong>+9.90%</strong></td>
+<td style="text-align: center;"><strong>+5.85%</strong></td>
 <td style="text-align: left;">신공장 풀가동 및 2028F 실적 선반영</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: center;"><strong>+13.2%</strong> (85,100원)</td>
+<td style="text-align: center;"><strong>0.0%</strong> (85,100원)</td>
 <td style="text-align: center;">50%</td>
-<td style="text-align: center;"><strong>+6.60%</strong></td>
-<td style="text-align: left;">2027F 2,814억 달성 및 PER 28배</td>
+<td style="text-align: center;"><strong>0.00%</strong></td>
+<td style="text-align: left;">2027F 2,814억 달성 및 PER 28배가 현재가에 100% 반영됨</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: center;"><strong>-38.6%</strong> (46,200원)</td>
+<td style="text-align: center;"><strong>-45.7%</strong> (46,200원)</td>
 <td style="text-align: center;">25%</td>
-<td style="text-align: center;"><strong>-9.65%</strong></td>
+<td style="text-align: center;"><strong>-11.43%</strong></td>
 <td style="text-align: left;">세트 침체 및 신공장 감가상각 노이즈</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;"><strong>100%</strong></td>
-<td style="text-align: center;"><strong>+6.85%</strong></td>
-<td style="text-align: left;">연간 기대 마진 제한적</td>
+<td style="text-align: center;"><strong>-5.58%</strong></td>
+<td style="text-align: left;"><strong>확률가중 기대수익률 마이너스 전환 🚨</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li><strong>R:R Ratio (손익비)</strong>:
-  $$\text{R:R Ratio} = \frac{\text{Base 상승폭 (+13.2\%)}}{\text{Bear 하방폭 (38.6\%)}} = \mathbf{0.34 : 1}$$
-  <em>(Base에 대신증권 목표가 91,000원(+21.0%)을 대입하더라도 $\text{R:R} = \mathbf{0.54 : 1}$에 불과함)</em></li>
-<li><strong>판정: 🚨 「매수 불리 (R:R &lt; 1.0)」</strong></li>
-<li>현재 주가(75,200원)는 하방 위험(-38.6%) 대비 상방 기대 이익(+13.2%)이 현저히 작아, 통계적 안전마진이 전혀 없는 전형적인 <strong>매수 불리 국면</strong>입니다.</li>
+  $$\text{R:R Ratio} = \frac{\text{Base 상승폭 (0.0\%)}}{\text{Bear 하방폭 (45.7\%)}} = \mathbf{0.00 : 1}$$
+  <em>(대신증권 목표가 91,000원(+6.9%)을 대입하더라도 $\text{R:R} = \frac{6.9\%}{45.7\%} = \mathbf{0.15 : 1}$에 불과함)</em></li>
+<li><strong>판정: 🚨 「극단적 매수 불리 (R:R &lt; 1.0)」</strong></li>
+<li>현재 주가(85,100원)는 2027년 Base 실적이 이미 100% 선반영된 상태로, 상방 여력(0~6.9%) 대비 하방 위험(-45.7%)이 7배 이상 거대한 <strong>전형적인 상투/과열 국면</strong>입니다.</li>
 </ul>
 <hr />
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
 <h3>[역DCF ↔ 시나리오 결론 동기화 검증]</h3>
 <ul>
 <li><strong>동기화 판정 결과</strong>: </li>
-<li>역DCF 요구성장률이 <strong>32.35%로 30%를 초과하는 과도한 탐욕 상태</strong>이며, 시나리오 분석 결과 역시 R:R 비율이 <strong>0.34 : 1로 매수 불리 판정</strong>을 내림으로써 <strong>두 방법론의 결론이 100% 완벽히 동기화</strong>되었습니다.</li>
+<li>역DCF 요구성장률이 <strong>35.89%로 30%를 대폭 초과하는 극단적 과열 상태</strong>이며, 시나리오 분석 결과 역시 Base 기준 상승 여력이 0%로 R:R 비율이 <strong>0.00~0.15 : 1의 극단적 매수 불리 판정</strong>을 내림으로써 <strong>두 방법론의 결론이 100% 완벽히 일치</strong>했습니다.</li>
 <li><strong>브릿지 논리</strong>:</li>
-<li>시장은 4Q26 에코델타 신공장 증설(2~3배)과 2027F 영업이익 2,814억 원(OPM 50.4%) 달성을 기정사실화하여 이미 주가에 100% 이상 선반영해 두었습니다.</li>
-<li>리노공업의 역사적 정상 성장률(16.0%) 대비 시장 요구 성장률(32.35%)이 2배를 초과하고 있어, 만약 4Q26 신공장 가동 초기 감가상각비 증가나 양산 수주 지연 등 사소한 흠집 하나만 발생해도 주가는 Bear 적정가(46,200원) 방향으로 가파르게 디레이팅될 위험이 큽니다.</li>
-<li>따라서 <strong>현재가(75,200원)에서의 추격 매수는 엄격히 금지</strong>됩니다.</li>
+<li>현재 85,100원의 주가는 4Q26 신공장 증설(2~3배)과 2027F 사상 최대 실적(영업이익 2,814억)의 성공을 <strong>한 치의 오차도 없이 100% 프라이싱(Priced for Perfection)</strong>한 결과입니다.</li>
+<li>리노공업의 10년 역사적 성장률(16~18%) 대비 시장 요구 성장률(35.89%)이 정확히 2배 수준이므로, 신공장 가동 초기 감가상각비 증가나 세트 수요 정체 노이즈 발생 시 Bear 적정가(46,200원)로의 가파른 디레이팅 위험이 매우 높습니다.</li>
+<li>따라서 <strong>현재가(85,100원)에서의 신규 매수는 자살골에 가까운 위험 행위이며 절대 금지</strong>됩니다.</li>
 </ul>
 <hr />
 <h3>[최종 액션 플랜 가이드라인]</h3>
 <ul>
-<li><strong>투자의견:</strong> <strong>조정 시 분할 매수 대기 (Hold / 추격 매수 엄격 금지)</strong></li>
+<li><strong>투자의견:</strong> <strong>적극 관망 및 보유자 분할 매도 고려 (Hold / Strong Avoid for New Buy)</strong></li>
 <li><strong>목표가 밴드:</strong> <strong>85,100원 ~ 105,000원</strong> (Base ~ Bull 시나리오 기준)</li>
 <li><strong>매수 트리거 (Buy Trigger):</strong></li>
-<li><strong>절대적 관망 구간:</strong> <strong>70,000원 ~ 75,200원</strong> (역DCF 30% 초과 과열 영역, 신규 진입 절대 금지).</li>
+<li><strong>신규 진입 절대 금지 구간:</strong> <strong>75,000원 ~ 85,100원</strong> (역DCF 32~36% 과열 영역, 추격 매수 원천 차단).</li>
 <li><strong>1차 관심 구간:</strong> <strong>60,000원 ~ 63,000원</strong> (선행 P/E 20~22배 수준으로 진정되는 구간).</li>
-<li><strong>진정한 안전마진 분할 매수 적기:</strong> <strong>50,000원 ~ 55,000원 이하</strong> (요구 성장률이 역사적 평균인 16~18%로 회귀하고, R:R 비율이 2.0 이상으로 역전되는 버핏형 가치투자 최적 매수 타이밍).</li>
+<li><strong>진정한 안전마진 분할 매수 적기:</strong> <strong>50,000원 ~ 55,000원 이하</strong> (시장 요구 성장률이 10년 역사적 평균인 16~18%로 회귀하고, 10년 레짐 시프트 바닥 멀티플인 PER 20~22배에 수렴하는 버핏형 가치투자 최적 매수 타이밍).</li>
 <li><strong>매도/차익실현 트리거 (Sell Trigger):</strong></li>
-<li>주가 <strong>100,000원 ~ 105,000원 도달 시</strong> (Bull 시나리오 목표치 도달 및 Target PER 30배 초과 구간에서 보유 물량 분할 매도 및 전량 차익실현).</li>
-<li>또는 분기 OPM이 42% 이하로 급락하거나, 4Q26 신공장 램프업이 6개월 이상 지연되어 고정비 부담이 현실화될 경우 비중 축소.</li>
+<li>주가 <strong>95,000원 ~ 105,000원 도달 시</strong> (Bull 시나리오 목표치 도달 및 Target PER 30배 초과 구간에서 보유 물량 적극 분할 매도 및 전량 차익실현).</li>
+<li>또는 분기 OPM이 42% 이하로 급락하거나 4Q26 신공장 램프업이 6개월 이상 지연될 경우 비중 축소.</li>
 <li><strong>핵심 모니터링 체크리스트:</strong></li>
 <li><strong>2H26 북미 AP향 WMCM 채택 공시:</strong> 핀 수 증가에 따른 소켓 ASP +15% 인상 효과의 분기 실적 반영 여부 <code>[글로벌 트렌드: 대신증권 26.09.01 p.53]</code>.</li>
 <li><strong>4Q26 부산 에코델타시티 본사 이전 및 CAPA 2~3배 증설 일정:</strong> 신공장 준공 및 클린룸 가동 일정 준수 점검.</li>
@@ -603,8 +603,8 @@ p > em {
 </ul>
 <hr />
 <h3>[HTML 계산기 인터랙티브 태그 검증]</h3>
-<p>아래 태그의 속성값은 본문 Step 1에 명시된 공시 수치(현재가 75,200원, 실질 유통주식수 75,895,600주, 총발행주식수 76,211,850주, 온기 FCF 1,195.1억 원)와 100% 일치합니다.</p>
-<div id="dcf-calculator-root" data-price="75200" data-shares="75895600" data-total-shares="76211850" data-fcf="1195.1" data-wacc="9.0" data-terminal="2.0"></div>
+<p>아래 태그의 속성값은 본문 Step 1에 명시된 공시 수치(현재가 85,100원, 실질 유통주식수 75,895,600주, 총발행주식수 76,211,850주, 온기 FCF 1,195.1억 원)와 100% 일치합니다.</p>
+<div id="dcf-calculator-root" data-price="85100" data-shares="75895600" data-total-shares="76211850" data-fcf="1195.1" data-wacc="9.0" data-terminal="2.0"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {

@@ -638,70 +638,78 @@ DART 공시 본문 및 매크로 지표를 종합하여 리노공업이 직면�
 </ul>
 <hr />
 <h2>8. 최적 밸류에이션 지표 백테스트 (Phase 3 연계)</h2>
-<h3>[백테스트 개요 및 환경]</h3>
+<p>동사의 <strong>과거 10년 풀사이클(2016년 10월 ~ 2026년 10월 현재, 시클리컬 의무) 주봉(Weekly) 주가 시계열(521개 캔들)</strong>과 PER·PBR·배당수익률·EV/EBITDA 4개 밸류에이션 밴드의 상관관계를 분석하여, 주가 설명력이 가장 높은 최적 지표를 최초 1회 선정하고 영구 고정합니다.</p>
+<h3>[제도권 공식 벤치마크 및 Sanity Check 검증]</h3>
 <ul>
-<li><strong>분석 대상 기간</strong>: 2021년 3월 ~ 2026년 9월 (과거 5개년, 287개 주봉 주가 시계열)</li>
-<li><strong>주가 데이터</strong>: 네이버 금융 KRX 공식 주봉 종가 시계열 (1:5 액면분할 반영 수정주가)</li>
-<li><strong>펀더멘털 데이터</strong>: DART 사업/반기보고서 확정 EPS, BPS, DPS, EBITDA 및 2026F 제도권 추정치</li>
-<li><strong>평가 지표</strong>: 주봉 주가와의 상관계수(R²), 방향 일치율(Weekly Directional Match Rate), 5년 밴드 위치</li>
+<li><strong>분석 기준일 종가</strong>: <strong>81,400원</strong> (최신 주봉 종가: <strong>85,100원</strong>, 2026.10.02 장마감 기준)</li>
+<li><strong>공식 실질 BPS</strong>: <strong>10,235원</strong> (자사주 316,250주 차감 DART 공식 유통주식수 75,895,600주 기준)</li>
+<li><strong>공식 PBR</strong>: <strong>8.31배</strong></li>
+<li><strong>공식 EPS</strong>: <strong>2,465원</strong> (기본 주당순이익 기준)</li>
+<li><strong>공식 PER</strong>: <strong>34.52배</strong></li>
+<li><strong>공식 배당수익률</strong>: <strong>0.94%</strong> (DPS 800원 기준)</li>
+<li>🛡️ <strong>Sanity Check</strong>: 최신 주봉 종가(85,100원) ÷ 공식 BPS(10,235원) = PBR <strong>8.31배</strong> ➔ 제도권 네이버 금융/FnGuide 공식 PBR(8.31배)과 <strong>오차율 0.0%로 완벽 일치 통과 ✅</strong>.</li>
 </ul>
-<h3>[5개년 주봉 밸류에이션 백테스트 결과 표]</h3>
+<h3>[10년 풀사이클 백테스트 결과표 (2016~2026, 521주 캔들)]</h3>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">밸류에이션 지표</th>
-<th style="text-align: center;">5년 밴드 (MIN ~ MAX)</th>
-<th style="text-align: center;">현재 위치 (2026.10.01 기준)</th>
-<th style="text-align: center;">주봉 주가 상관계수 (R²)</th>
+<th style="text-align: center;">10년 밴드 (MIN ~ MAX)</th>
+<th style="text-align: center;">현재 위치 (공식 PBR/PER 정합)</th>
+<th style="text-align: center;">주봉 주가 상관계수 ($R^2$)</th>
 <th style="text-align: center;">방향 일치율</th>
 <th style="text-align: center;"><strong>순위</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>PER</strong></td>
-<td style="text-align: center;"><strong>16.84배 ~ 63.69배</strong></td>
-<td style="text-align: center;"><strong>28.78배</strong> (중간값 이하)</td>
-<td style="text-align: center;"><strong>0.8727</strong></td>
-<td style="text-align: center;"><strong>99.0%</strong></td>
+<td style="text-align: left;"><strong>EV/EBITDA (동적 순현금)</strong></td>
+<td style="text-align: center;"><strong>8.10배 ~ 48.28배</strong></td>
+<td style="text-align: center;"><strong>23.63배</strong> (중앙값 부근)</td>
+<td style="text-align: center;"><strong>0.67</strong></td>
+<td style="text-align: center;"><strong>99.4%</strong></td>
 <td style="text-align: center;"><strong>1위 (채택)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>EV/EBITDA</strong></td>
-<td style="text-align: center;">10.14배 ~ 48.52배</td>
-<td style="text-align: center;">21.12배 (중간값 부근)</td>
-<td style="text-align: center;">0.8681</td>
-<td style="text-align: center;">99.0%</td>
-<td style="text-align: center;">2위</td>
+<td style="text-align: left;"><strong>PBR (유통 BPS 기준)</strong></td>
+<td style="text-align: center;"><strong>2.84배 ~ 13.24배</strong></td>
+<td style="text-align: center;"><strong>8.31배</strong> (역사적 상단권)</td>
+<td style="text-align: center;"><strong>0.64</strong></td>
+<td style="text-align: center;"><strong>99.0%</strong></td>
+<td style="text-align: center;"><strong>2위</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>PBR</strong></td>
-<td style="text-align: center;">3.77배 ~ 13.24배</td>
-<td style="text-align: center;">6.59배 (중간값 이하)</td>
-<td style="text-align: center;">0.7293</td>
-<td style="text-align: center;">98.3%</td>
-<td style="text-align: center;">3위</td>
+<td style="text-align: left;"><strong>PER (수정 EPS 기준)</strong></td>
+<td style="text-align: center;"><strong>13.92배 ~ 63.40배</strong></td>
+<td style="text-align: center;"><strong>34.52배</strong> (호황기 상단 레짐)</td>
+<td style="text-align: center;"><strong>0.47</strong></td>
+<td style="text-align: center;"><strong>99.6%</strong></td>
+<td style="text-align: center;"><strong>3위</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>배당수익률</strong></td>
-<td style="text-align: center;">0.63% ~ 2.41%</td>
-<td style="text-align: center;">1.33% (중간값 수준)</td>
-<td style="text-align: center;">0.5988</td>
-<td style="text-align: center;">99.3%</td>
-<td style="text-align: center;">4위</td>
+<td style="text-align: left;"><strong>배당수익률 (DPS 기준)</strong></td>
+<td style="text-align: center;"><strong>0.63% ~ 2.37%</strong></td>
+<td style="text-align: center;"><strong>0.94%</strong> (저수익률 밴드)</td>
+<td style="text-align: center;"><strong>0.29</strong></td>
+<td style="text-align: center;"><strong>99.4%</strong></td>
+<td style="text-align: center;"><strong>4위</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>채택 지표: PER (1순위)</strong> — 주가 설명력 $R^2 = 0.8727$, 방향 일치율 <strong>99.0%</strong></li>
+<li><strong>채택 지표: 1순위 EV/EBITDA 모형 ($R^2 = 0.67$) 및 실적 평가용 PER 상속 ($R^2 = 0.47$)</strong></li>
 <li><strong>선정 근거</strong>: </li>
-<li>리노공업은 100% 무차입 경영과 50%에 육박하는 초고마진 이익 창출력을 보유하고 있어, 감가상각이나 현금보유액 왜곡이 적어 <strong>순이익(EPS) 기반의 PER 멀티플이 주가 움직임을 가장 정밀하게 설명</strong>합니다 ($R^2 = 0.87$).</li>
-<li>역사적 호황 정점(Peak) PER은 <strong>63.69배</strong>(2024년 상반기 온디바이스 AI 랠리 당시), 침체 저점(Trough) PER은 <strong>16.84배</strong>(2022년 말 모바일 재고조정 충격 당시)였으며, 현재 주가(75,200원 기준 28.78배)는 5년 밴드의 중간값(35~40배) 대비 뚜렷한 안전마진 구간에 위치해 있습니다.</li>
-<li><strong>Phase 3 연계</strong>: 이 결과는 Phase 3 시나리오 분석 시 주 밸류에이션 멀티플(Target PER 밴드)로 직접 상속됩니다:</li>
-<li>Bull 시나리오: 과거 역사적 Peak PER 이하 엄수 (최대 30~35배) <code>[글로벌 트렌드: 26.09.01.대신증권.테스트 전성 시대.pdf p.53 Target P/E 30배 참조]</code></li>
-<li>Base 시나리오: 역사적 중간값 PER (25~28배)</li>
-<li>Bear 시나리오: 역사적 하단 Trough PER (17~20배)</li>
-<li><strong>고정 규칙</strong>: 본 채택 지표(PER)는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 신규 사업 비중 30% 초과 등 공시 기반 BM 격변 감지 또는 사용자의 명시적 재검토 요청이 없는 한 영구 유지됩니다.</li>
+<li>리노공업은 100% 무차입 경영과 매년 증가하는 막대한 순현금(2026년 기준 5,500억 원 이상)을 보유하고 있어, 순현금을 동적으로 가감한 <strong>EV/EBITDA 지표가 10년 시계열 주가 움직임과 가장 높은 설명력($R^2 = 0.67$)을 입증</strong>했습니다.</li>
+<li>순자산 측면에서는 자사주 차감 실질 유통 BPS 기준 PBR 밴드(2.84배 ~ 13.24배)에서 현재 8.31배로 역사적 상단 부근에 위치하여 호황기 프리미엄을 강하게 반영하고 있습니다.</li>
+<li>실적 기반 적정가 평가(Phase 3)에서는 10년 역사적 호황 Peak PER(30.0~35.0배)과 다운사이클 저점(20~22배)을 멀티플 상한선(Cap)과 하방 지지선(Floor)으로 직접 상속합니다.</li>
+</ul>
+<h3>[레짐 시프트(Regime Shift / 체제 전환) 분할 분석]</h3>
+<ul>
+<li><strong>분기점(2020년)</strong>: 5G 전환 및 고부가 IC TEST SOCKET 비중 급증(57% → 68.5%), 초미세 피치 Coaxial 도입으로 체질이 구조적으로 리레이팅되었습니다.</li>
+<li><strong>Pre-Rerating 밴드 (2016~2019 레거시 시기)</strong>: 주가 7,500원 ~ 14,000원, PER 13.9배 ~ 25.0배 (다운사이클 시 최악의 하방 지지선 플로어로만 보조 활용).</li>
+<li><strong>Post-Rerating 밴드 (2020~현재 고부가 체제)</strong>: 주가 24,000원 ~ 127,000원, PER 22.0배 ~ 63.4배 (중앙값 28~32배).</li>
+<li><strong>체제 하단 검증</strong>: 2022~2023년 모바일 침체기 최저점에서도 PER은 <strong>20~22배 선(주가 약 46,000~50,000원)</strong> 밑으로 내려가지 않았으므로, 이 구간이 현 체제 하의 강력한 역사적 바닥선(Safety Floor)입니다.</li>
+<li><strong>고정 규칙</strong>: 본 백테스트 결과는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 사용자 명시적 요청 또는 공시 기반 BM 구조적 격변 감지 시에만 재검토됩니다.</li>
 </ul>
     <script>
         // Replace mermaid code blocks with div class="mermaid"

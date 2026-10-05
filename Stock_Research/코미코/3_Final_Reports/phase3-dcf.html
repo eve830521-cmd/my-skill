@@ -303,118 +303,308 @@ p > em {
 <body>
     <h1>🎯 코미코 Phase 3: 밸류에이션 및 전략</h1>
 <h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
-<p>[공시 팩트] 
-2026년 9월 16일 현재 주가 <strong>27,300원</strong> 기준 단순 시가총액은 약 5,609억 원(총 발행주식수 20,546,360주)이나, 자기주식(758,656주)을 차감한 <strong>DART 공식 유통주식수 19,787,704주(실질 유통 시총 약 5,402억 원)</strong> 기준입니다 <code>[팩트: 2026.09.11 종가, DART 반기보고서]</code>. 
-당사는 2024~2025년 안성/미국/대만 세정·코팅 팹 선제 증설로 인해 대규모 CapEx가 집행되어 <strong>온기 FCF 약 -1,800억 원의 적자</strong>를 기록 중입니다 <code>[팩트: 사업보고서]</code>.</p>
+<h3>Step 0.5: FCF 품질 검증 (역DCF 연산 직전 필수 수행)</h3>
+<p>[공시 팩트] DART 반기보고서 및 5개년 사업보고서 현금흐름표를 바탕으로 당사의 잉여현금흐름(FCF) 품질을 점검합니다 <code>[[코미코]반기보고서(2026.08.14) p.139, 258]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">품질 체크</th>
+<th style="text-align: left;">점검 기준</th>
+<th style="text-align: left;">기업 현황 팩트</th>
+<th style="text-align: center;">위험 판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>OCF/순이익 갭</strong></td>
+<td style="text-align: left;">OCF÷순이익 비율 1.5배 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">2026년 상반기 OCF 301.1억 원 ÷ 당기순이익 314.1억 원 = <strong>0.96배</strong> (정상 범위 안착)</td>
+<td style="text-align: center;"><strong>정상</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>운전자본(WC) 변동</strong></td>
+<td style="text-align: left;">WC 순변동이 OCF의 30% 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">매출채권 및 재고자산 증감에 따른 운전자본 순변동은 약 -85억 원 수준으로 통제 중</td>
+<td style="text-align: center;"><strong>정상</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>일회성 항목</strong></td>
+<td style="text-align: left;">비경상적 현금유입(유형자산 처분이익 등)</td>
+<td style="text-align: left;">대규모 자산 매각 등 일회성 비경상 왜곡 요인 없음</td>
+<td style="text-align: center;"><strong>정상</strong></td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><strong>역DCF 대체 플랜B 진단 (FCF 적자 기업):</strong> 
-  FCF 적자 기업이므로 표준 역DCF 연산 대신 <strong>SKILL.md 제2원칙에 따른 대체 플랜B(P/B 밴드 및 EV/EBITDA 역산)</strong>를 가동합니다.</li>
-<li>현재 P/B는 약 <strong>1.15배</strong>로, 과거 5년 역사적 호황기 Peak P/B(2.8배)는 물론 역사적 중단 밴드(1.6~1.8배)를 크게 하회하는 바닥권입니다.</li>
-<li>시장은 대규모 CapEx 집행에 따른 단기 FCF 적자와 차입금 이자비용에 대한 공포에 매몰되어, <strong>"글로벌 8개국 거점에 선제 구축된 인프라가 2026년 하반기부터 신규 팹(P5, Y1 등) 가동과 함께 영업레버리지로 전환될 가치"</strong>를 완전히 할인해 버렸습니다.</li>
+<li><strong>FCF 품질 진단 및 정상화(Steady-State) FCF 산출</strong>:</li>
+<li><strong>보고 FCF 기준:</strong> 2024년 -401.8억, 2025년 -1,815.0억, 2026년 상반기 -877.5억 원(연환산 <strong>-1,755.0억 원</strong>)으로 적자가 지속 중입니다 <code>[DART 반기 p.139]</code>.</li>
+<li><strong>엔지니어링 원인:</strong> 본 FCF 적자는 영업 현금창출력 약화가 아니라, 8개국 글로벌 거점 완비 및 미코세라믹스 G4·G5 팹 신설에 따른 <strong>최근 2.5개년 누적 4,934억 원의 선제 CapEx 집행</strong>에 기인합니다.</li>
+<li><strong>정상화 FCF (Steady-State Reference):</strong> 2026년 하반기 대형 설비투자가 정점을 통과하고 유지보수(Maintenance) CapEx(연간 감가상각비 수준인 약 600억~800억 원)로 회귀할 경우, 연간 EBITDA 1,500억~1,600억 원 창출력 기반 <strong>정상화 FCF는 연간 약 +750억~900억 원</strong>으로 추정됩니다.</li>
 </ul>
+<hr />
+<h3>Step 1: 역DCF 연산 — 입력값 출처 명시 필수 양식</h3>
+<p>[공시 팩트] 분석 기준일(2026.10.01) 주가, DART 정기보고서 및 주식총수 현황 데이터 대조.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">입력 변수</th>
+<th style="text-align: left;">수치</th>
+<th style="text-align: left;">출처 (DART 문서명 + 항목)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>현재 주가</strong></td>
+<td style="text-align: left;"><strong>34,050원</strong></td>
+<td style="text-align: left;">2026.10.01 기준 종가 (최근 주봉 종가: 35,550원)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 발행주식수</strong></td>
+<td style="text-align: left;"><strong>51,363,275주</strong></td>
+<td style="text-align: left;">DART 반기보고서 (2026.05 무상증자 1:1, 2026.08 액면분할 2.5:1 반영)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자기주식수</strong></td>
+<td style="text-align: left;"><strong>940,145주</strong></td>
+<td style="text-align: left;">DART 반기보고서 p.295 「자기주식 보유 현황」 (지분율 1.83%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DART 공식 유통주식수</strong></td>
+<td style="text-align: left;"><strong>50,423,130주</strong></td>
+<td style="text-align: left;">총발행주식수(51,363,275주) − 자기주식수(940,145주)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>명목 시가총액</strong></td>
+<td style="text-align: left;">1조 7,489억 원</td>
+<td style="text-align: left;">주가 34,050원 × 총발행주식수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실질 유통 시가총액</strong></td>
+<td style="text-align: left;"><strong>1조 7,169억 원</strong></td>
+<td style="text-align: left;">주가 34,050원 × DART 실질 유통주식수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기준 FCF (연환산)</strong></td>
+<td style="text-align: left;"><strong>-1,755.0억 원</strong></td>
+<td style="text-align: left;">2026 상반기 영업CF 301.1억 − CapEx 1,178.6억 = -877.5억 원 × 2 <code>[DART 반기 p.139]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>(참조) 정상화 FCF</strong></td>
+<td style="text-align: left;">+750.0억 원</td>
+<td style="text-align: left;">설비투자 피크아웃 후 2027F 예상 정상화 FCF</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WACC / 영구성장률</strong></td>
+<td style="text-align: left;"><strong>9.0% / 2.0%</strong></td>
+<td style="text-align: left;">반도체 소부장 장치산업 표준 할인율 / 보수적 영구성장률</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>역DCF 연산 결과 (<code>calc_reverse_dcf.py</code> 엔진 실행 결과):</strong></li>
+<li><strong>[보고 FCF 기준 (-1,755.0억 원)]</strong>:
+    &gt; <em>"결과: FCF 적자(음수)로 인해 표준 역DCF 연산 불가 ➡️ </em><em>SKILL.md 원칙에 따라 대체 플랜B(P/B 밴드 및 EV/EBITDA)를 강제 가동</em><em>합니다."</em></li>
+<li>
+<p><strong>[보조 참조: 정상화 FCF (+750.0억 원) 기준]</strong>:</p>
+<ul>
+<li><strong>실질 유통주식수(50,423,130주) 기준 요구 성장률: 연간 12.85%</strong></li>
+<li>(총발행주식수 51,363,275주 기준 시 연간 13.31%)</li>
+<li><strong>해석</strong>: 10~20% 구간(중간 성장 요구)에 속하며, 2027년 신규 팹(삼성 P5, 테일러, 하이닉스 Y1/M15X) 본격 램프업 시 가동률 상승으로 무리 없이 충족 가능한 합리적 프라이싱 영역입니다.</li>
+</ul>
+</li>
+<li>
+<p><strong>대체 플랜B 진단 (P/B 밴드 및 EV/EBITDA 역산):</strong></p>
+</li>
+<li><strong>Phase 1 <code>## 8</code> 1순위 최적 지표 연계:</strong> 코미코의 주가 설명력이 가장 높은 밸류에이션 지표는 <strong>PBR (실질 유통 BPS 기준, $R^2 = 0.54$, 방향 일치율 78.4%)</strong>입니다.</li>
+<li>현재 주가(34,050원) 기준 PBR은 <strong>5.99배</strong> (공식 주봉 종가 35,550원 기준 <strong>6.25배</strong>)입니다.</li>
+<li><strong>10년 역사적 PBR 밴드 (1.35배 ~ 8.80배, 중앙값 2.99배)</strong>:<ul>
+<li>2023년 7월 미코세라믹스 편입 이전 레거시 밴드 상단은 5.46배였으나, 편입 이후 고부가 부품사로의 체질 개선(Post-Rerating)으로 2024~2026년 호황기 PBR 상단은 <strong>8.80배</strong>까지 확장되었습니다 <code>[공시 팩트]</code>.</li>
+<li>현재 PBR 5.99배는 역사적 밴드 중상단에 위치하며, 시장은 2026년 상반기 일시적 OPM 하락(14.3%)과 FCF 적자라는 '과거의 숫자'보다 <strong>2026년 말~2027년 글로벌 신규 팹 양산 시 오스틴 코팅(41.1%) 등 선제 투자 설비가 뿜어낼 강력한 영업레버리지</strong>를 적극 선반영하고 있습니다.</li>
+</ul>
+</li>
+</ul>
+<hr />
 <h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
-<p>초보 가치투자자가 흔히 빠지는 단순 저PER/저PBR 착시를 원천 차단하기 위해, DART 공시 팩트와 최신 Global Trend 및 기업 재무데이터를 결합하여 3대 가치함정 지표를 전수 점검했습니다.</p>
+<p>(단순 저PER/저PBR에 매몰되는 가치투자의 함정을 원천 차단하기 위해 DART 원천 공시 팩트와 최신 Global Trend 선행지표를 전수 점검합니다)</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">가치함정 진단 지표</th>
 <th style="text-align: left;">점검 기준 (Check Point)</th>
+<th style="text-align: left;">🚨 정량 경보 임계값</th>
 <th style="text-align: left;">기업 현황 팩트</th>
-<th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
+<th style="text-align: center;">위험 판정</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
 <td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
-<td style="text-align: left;">연결 OPM은 2024년 22.18% $\rightarrow$ 2025년 18.37% $\rightarrow$ 2026년 반기 14.26%로 일시 조정 국면이나, 이는 단가 인하나 점유율 침투가 아닌 <strong>해외 신설 팹 증설에 따른 초기 감가상각비(+21.3%) 및 인력 채용(+452명) 등 고정비의 선제적 증가</strong>에 기인함 <code>[팩트: 2025 IR Book]</code>. 국내 세정/코팅 점유율 1위(30~42%) 독점력 불변 <code>[추정: 웹 검색]</code>. 고마진 세라믹 부품(미코세라믹스) 매출 비중이 50.8%(1,693억 원)로 수직 상승하며 기술 장벽 강화 <code>[팩트: 26년 반기보고서]</code>.</td>
+<td style="text-align: left;">• OPM 연속 2분기 YoY 3%p 이상 하락 <br> • 핵심 제품 점유율 5%p 이상 감소 <br> • 특허 소송 패소 공시</td>
+<td style="text-align: left;">연결 OPM이 2024년 22.2% ➡️ 2025년 18.4% ➡️ 2026년 반기 14.3%로 하락했으나, 이는 단가 인하나 점유율 침투가 아닌 <strong>미코세라믹스 강릉 G4 완공 및 미국 피닉스 팹 신설에 따른 감가상각비(YoY +21.3%)와 인력 확충(+452명) 등 선제적 초기 고정비 집중에 기인함</strong> <code>[2025 IR Book p.37, 41]</code>. 국내 세정·코팅 1위 점유율(35~42%) 불변 및 세라믹 부품 비중 50.8%로 진입장벽 극대화 <code>[DART 반기 p.74]</code>. 특허 소송 패소 전무.</td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
 <td style="text-align: left;"><strong>[반도체/IT 맞춤형 선행지표]</strong> 전방 칩 재고 급증, WFE 발주 축소, 가동률 100% 정점 여부</td>
-<td style="text-align: left;">글로벌 WFE 투자는 2024년 저점(1,150억$) $\rightarrow$ 2025년 1,230억$ $\rightarrow$ <strong>2026년 1,360억~1,500억$ $\rightarrow$ 2027년 1,900억$로 폭발적 턴어라운드 초입</strong> <code>[전망: SK증권 8월]</code>. 삼성 평택 P4/P5, SK하이닉스 M15X/용인 Y1 등 대규모 클린룸 착공 및 장비 반입 선행 구간 개시 <code>[팩트: 9월 하나증권 반도체 인뎁스]</code>. 당사 안성 세정 가동률은 52.2%(21년 고점 54.1%), 미국 오스틴 세정 92.2%(풀가동)이나 오스틴 코팅 가동률은 39.7%로 아직 바닥 통과 중 <code>[팩트: 26년 반기보고서]</code>. 전방이 피크아웃한 것이 아니라 램프업 초기 국면.</td>
+<td style="text-align: left;">• 전방 칩 재고 급증 <br> • WFE 발주 축소 <br> • 주요 팹 가동률 100% 피크 도달 (2개 이상 동시 발생)</td>
+<td style="text-align: left;">글로벌 WFE 투자는 2024년 저점 통과 후 2026~2027년 사상 최대치(1,900억$) 증설 사이클 진입 <code>[SK증권 / 하나증권 반도체 인뎁스]</code>. HBM 웨이퍼 캐파 잠식으로 삼성 평택 P5, 테일러, 하이닉스 Y1·M15X 등 글로벌 선단 팹 증설 강제 중 <code>[Global Trend: 26.09.29.LS증권.AI병목의 전이.pdf p.33~35]</code>. 당사 오스틴 코팅 가동률(41.1%)은 램프업 대기 중인 바닥 국면으로 피크아웃 징후 전무.</td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
 <td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
-<td style="text-align: left;">8개년 누적 6,694억 원의 선제적 글로벌 거점(미국, 대만 등) 투자를 완료하여 글로벌 반도체 클러스터 인접 공급망을 장악함 <code>[팩트: 2025 IR Book]</code>. 2025년 배당성향 28.3%(총 141억 원)로 2배 이상 확대, 2026년 정관 변경으로 분기배당 전격 도입 <code>[팩트: 26년 반기보고서]</code>. (단, 모회사 미코의 코미코 주식담보대출 69% 오버행 리스크는 상시 모니터링 대상으로 관리)</td>
+<td style="text-align: left;">• ROIC 2개년 연속 WACC 미만 <br> • 순현금 증가 + 배당성향 20% 미만 + 투자 없음 <br> • TSR 3년 마이너스</td>
+<td style="text-align: left;">최근 2.5년간 4,934억 원(최근 8개년 총 6,694억 원)의 선제적 설비투자로 글로벌 8개국 거점망을 완비함 <code>[DART 반기 p.139 / IR Book p.44]</code>. 2025년 배당성향 28.3%(총 141억 원) 집행 및 2026년 분기배당 전격 도입 <code>[DART 반기 p.295]</code>. 주가는 3년간 3배 이상 상승하여 총주주수익률(TSR) 압도적 플러스.</td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li><strong>🚨 가치함정 페널티 집행:</strong></li>
-<li><strong>[경보 0개: 정상]</strong> ➡️ 3대 가치함정 리스크가 전혀 없으므로, 멀티플 할인 페널티 없이 원안대로 바텀업 시나리오 스트레스 테스트를 진행합니다.</li>
+<li><strong>[경보 0개: 완전 정상]</strong> ➡️ 3대 가치함정 리스크가 전혀 없으므로 멀티플 할인 페널티 없이 원안대로 바텀업 시나리오 스트레스 테스트를 집행합니다.</li>
 </ul>
 <hr />
 <h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
-<p>전고점 차트 앵커링을 원천 금지하며, 증설이 완료된 글로벌 거점 Capa와 DART 시계열, 그리고 2027년 신규 팹 램프업 가시성을 반영한 엄격한 실적 산출 산식을 적용합니다.
-- <strong>[실적 산출 근거 산식 강제]:</strong> <code>[기준 Capa 매출액 × 시나리오별 가동률 × 예상 OPM ➡️ 예상 순이익 ➡️ 예상 EPS]</code>
-- <strong>[기준 Capa 매출액]:</strong> 안성/강릉 G5 팹, 미국 피닉스/오스틴 팹, 대만 타이난 2공장 합산 연간 최대 생산능력 기준 <strong>8,500억 원</strong> 산정 <code>[팩트: 2025 IR Book 글로벌 Capa 기준 추정]</code>.
-- <strong>[멀티플 상한선 강제 준수]:</strong> DART 시계열 상 과거 5년 역사적 호황기 Peak PER(2021년 18.5배, 2024년 20.0배)을 감안하여, <strong>Bull 시나리오의 Target PER 상한선을 18.0배 이하로 엄격히 통제</strong>했습니다. Base는 역사적 중간값인 15.0배, Bear는 역사적 하단인 10.0배를 적용합니다.</p>
+<p>(전고점 차트 앵커링을 원천 금지하며, Phase 1 Section 7에서 확정된 장치산업 표준 공식과 Section 8 1순위 최적 지표(PBR)를 100% 상속하여 작성합니다)</p>
+<h3>[시나리오 실적 추론 3대 원칙 준수]</h3>
+<ol>
+<li><strong>산식 영구 고정 및 상속 [Phase 1 <code>## 7</code> 채택 공식 100% 상속]:</strong>
+   $$\left[ \text{글로벌 생산 Capa} \times \text{공장 가동률(\%)} \times \text{공정/부품당 블렌디드 ASP} \right]$$
+   $$\implies \text{연결 매출액} \implies \text{영업이익(OPM)} \implies \text{세전순이익(△이자비용)} \implies \text{당기순이익(지배주주)} \implies \text{EPS}$$</li>
+<li><strong>산출 체인 숫자 명시 강제:</strong>
+   대규모 CapEx 집행 및 차입금(4,892억 원)을 보유한 기업이므로, <code>영업이익 → △이자비용 → △법인세(실효세율 22%) → 당기순이익(지배주주) → EPS</code> 4단계 전환 과정을 모든 시나리오에 숫자로 명시합니다.</li>
+<li><strong>핵심 드라이버 수치 출처 강제:</strong>
+   2027년 증설 완료 기준 전사 최대 생산능력(Capa): <strong>연간 9,000억 원</strong> <code>[공시 팩트: DART 반기보고서 설비 현황 및 2025 IR Book 글로벌 거점 Capa 합산]</code>.</li>
+</ol>
+<h3>[밸류에이션 지표 및 멀티플 상한선 규칙]</h3>
+<ul>
+<li><strong>주 밸류에이션 멀티플:</strong> Phase 1 <code>## 8</code> 1순위 지표인 <strong>PBR (실질 유통 BPS 기준)</strong> 적용.</li>
+<li><strong>공식 실질 유통 BPS:</strong> 5,686원 (2026 상반기 기준) ➡️ 2027F 지배주주 순이익 유보 반영 시나리오별 BPS 산출.</li>
+<li><strong>보조 교차 검증 멀티플:</strong> <strong>PER (수정 EPS 기준)</strong> — 과거 10년 역사적 Peak PER(80.34배)을 맹목 적용하지 않고, 2024년 호황기 수준(20~26배)으로 상한선을 엄격히 통제하여 보수성을 확보.</li>
+<li><strong>Bear 시나리오 역전 금지 규칙 준수:</strong> Bear 시나리오에서는 이익 급감으로 인한 왜곡을 방지하기 위해 BPS × 역사적 보수적 PBR(3.5배)을 적용합니다.</li>
+</ul>
+<h3>[2027F 시나리오 스트레스 테스트 표]</h3>
+<blockquote>
+<p><strong>산식 선택 근거</strong>: Phase 1 Section 7에서 규명된 [유형 A: 연속공정·장치산업 표준 공식] 상속. 거점별 24시간 가동 및 선제 CapEx 고정비 분기점 돌파 메커니즘 반영.<br />
+<strong>주 밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 채택 지표 = <strong>PBR (실질 유통 BPS 기준)</strong>. (보조: Target PER 교차 검증)</p>
+</blockquote>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">시나리오 구분</th>
-<th style="text-align: left;">핵심 가정 및 산출 근거 산식</th>
-<th style="text-align: center;">예상 순이익 / EPS</th>
-<th style="text-align: center;">Target PER (상한선 검증)</th>
+<th style="text-align: left;">핵심 드라이버 가정 <code>[출처 뱃지]</code> 및 전체 산출 체인</th>
+<th style="text-align: left;">4단계 산출 체인: 매출 → 영업익 → 이자·세금 → 순이익 / EPS</th>
+<th style="text-align: center;">주 밸류에이션 (BPS × PBR)</th>
+<th style="text-align: center;">보조 Target PER 검증</th>
 <th style="text-align: center;"><strong>적정주가</strong></th>
-<th style="text-align: center;">현재가(27,300원) 대비 등락률</th>
+<th style="text-align: center;">현재가(34,050원) 대비 등락률</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: left;"><code>[Capa 8,500억 × 가동률 95% = 매출 8,075억]</code> <br> <code>[매출 8,075억 × OPM 22% = 영업익 1,776억 ➡️ 순익 1,230억 원]</code> <br> (신규 팹 P5·Y1 장비 셋업 가속, 미국 팹 양산으로 오스틴 코팅 가동률 90% 회복, 부품 믹스 극대화로 고정비 레버리지 폭발)</td>
-<td style="text-align: center;">1,230억 원 <br> <strong>6,000원</strong></td>
-<td style="text-align: center;">18.0배 <br> <code>[과거 호황 Peak 이하]</code></td>
-<td style="text-align: center;"><strong>108,000원</strong></td>
-<td style="text-align: center;"><strong>+295.6%</strong></td>
+<td style="text-align: left;">• 전사 Capa 9,000억 <code>[공시 팩트: IR Book]</code> <br> • 통합 가동률 <strong>92.0%</strong> <code>[추정: 오스틴 코팅 85% 정상화 + 안성 믹스 고도화]</code> <br> • OPM <strong>22.0%</strong> <code>[공시 팩트: 2024년 OPM 22.18%]</code></td>
+<td style="text-align: left;">매출 8,280억 <br> ➡️ 영업익 1,822억 <br> ➡️ △이자비용 220억 ➡️ 세전 1,602억 <br> ➡️ △법인세 352억 ➡️ <strong>지배순익 980억</strong> <br> (2027F EPS <strong>1,944원</strong>, 27F BPS <strong>8,200원</strong>)</td>
+<td style="text-align: center;">BPS 8,200원 <br> × <strong>PBR 6.5배</strong> <br> <code>[Post-Peak 8.8배 이하]</code></td>
+<td style="text-align: center;">Target PER 26.0배 <br> (= 50,544원)</td>
+<td style="text-align: center;"><strong>53,300원</strong></td>
+<td style="text-align: center;"><strong>+56.5%</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: left;"><code>[Capa 8,500억 × 가동률 80% = 매출 6,800억]</code> <br> <code>[매출 6,800억 × OPM 18% = 영업익 1,224억 ➡️ 순익 850억 원]</code> <br> (WFE 1,500억$ 턴어라운드 정상 반영, 금리 100bp 인상 흡수, 평년 수준 가동률 안착 및 본업 마진율 18% 회복)</td>
-<td style="text-align: center;">850억 원 <br> <strong>4,150원</strong></td>
-<td style="text-align: center;">15.0배 <br> <code>[역사적 중간값]</code></td>
-<td style="text-align: center;"><strong>62,200원</strong></td>
-<td style="text-align: center;"><strong>+127.8%</strong></td>
+<td style="text-align: left;">• 전사 Capa 9,000억 <code>[공시 팩트: IR Book]</code> <br> • 통합 가동률 <strong>80.0%</strong> <code>[추정: 신규 팹 점진적 램프업]</code> <br> • OPM <strong>17.5%</strong> <code>[공시 팩트: 2025년 OPM 18.37%]</code></td>
+<td style="text-align: left;">매출 7,200억 <br> ➡️ 영업익 1,260억 <br> ➡️ △이자비용 230억 ➡️ 세전 1,030억 <br> ➡️ △법인세 227억 ➡️ <strong>지배순익 625억</strong> <br> (2027F EPS <strong>1,239원</strong>, 27F BPS <strong>7,500원</strong>)</td>
+<td style="text-align: center;">BPS 7,500원 <br> × <strong>PBR 5.0배</strong> <br> <code>[역사적 호황 밴드]</code></td>
+<td style="text-align: center;">Target PER 30.0배 <br> (= 37,170원)</td>
+<td style="text-align: center;"><strong>37,500원</strong></td>
+<td style="text-align: center;"><strong>+10.1%</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: left;"><code>[Capa 8,500억 × 가동률 65% = 매출 5,525억]</code> <br> <code>[매출 5,525억 × OPM 11% = 영업익 608억 ➡️ 순익 370억 원]</code> <br> (금리 200bp 폭등에 따른 이자비용 360억 반영, 전방 고객사 신규 팹 착공 1년 지연, 오스틴 코팅 가동률 35% 정체)</td>
-<td style="text-align: center;">370억 원 <br> <strong>1,800원</strong></td>
-<td style="text-align: center;">10.0배 <br> <code>[역사적 하단 Trough]</code></td>
-<td style="text-align: center;"><strong>18,000원</strong></td>
-<td style="text-align: center;"><strong>-34.1%</strong></td>
+<td style="text-align: left;">• 전사 Capa 9,000억 <code>[공시 팩트: IR Book]</code> <br> • 통합 가동률 <strong>65.0%</strong> <code>[추정: 테일러 팹 가동 1년 추가 지연]</code> <br> • OPM <strong>12.0%</strong> <code>[공시 팩트: 2023년 다운턴 OPM 10.75% 수준]</code></td>
+<td style="text-align: left;">매출 5,850억 <br> ➡️ 영업익 702억 <br> ➡️ △이자비용 250억(금리+100bp) ➡️ 세전 452억 <br> ➡️ △법인세 99억 ➡️ <strong>지배순익 275억</strong> <br> (2027F EPS <strong>545원</strong>, 27F BPS <strong>6,600원</strong>)</td>
+<td style="text-align: center;">BPS 6,600원 <br> × <strong>PBR 3.5배</strong> <br> <code>[역사적 중간값 2.99배 방어]</code></td>
+<td style="text-align: center;">PBR 대체 적용 <br> (PER 역전 방지)</td>
+<td style="text-align: center;"><strong>23,100원</strong></td>
+<td style="text-align: center;"><strong>-32.2%</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>손익비(Risk/Reward Ratio) 평가:</strong></li>
-<li>Base 시나리오 도달 시 기대수익률은 <strong>+127.8%</strong>, Bull 시나리오 시 <strong>+295.6%</strong>에 달하는 반면, 최악의 Bear 추락 시 하방 손실률은 <strong>-34.1%</strong>에 그칩니다.</li>
-<li>손익비는 <strong>3.75 : 1 (Base 기준) ~ 8.67 : 1 (Bull 기준)</strong>로, 하방 위험 대비 상방 업사이드가 압도적으로 높은 최적의 비대칭 배팅 구간입니다.</li>
+<li><strong>손익비(Risk / Reward Ratio) 정량 산출:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">등락률</th>
+<th style="text-align: center;">확률 가중치</th>
+<th style="text-align: center;">가중 기대값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull</strong></td>
+<td style="text-align: center;">+56.5%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">+14.13%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base</strong></td>
+<td style="text-align: center;">+10.1%</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">+5.05%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear</strong></td>
+<td style="text-align: center;">-32.2%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">-8.05%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong>+11.13%</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>R:R Ratio (위험보상비율)</strong>:
+  $$\text{R:R Ratio} = \frac{\text{Base 상승폭 (+3,450원)}}{\text{Bear 하방폭 (10,950원)}} = \mathbf{0.32 : 1} \quad \left( \text{Bull 기준 적용 시 } \frac{19,250}{10,950} = \mathbf{1.76 : 1} \right)$$</li>
+<li><strong>손익비 판정:</strong></li>
+<li>현재 주가(34,050원)는 8월 액면분할 직후 저점(27,000원대) 대비 단기 급등하여 <strong>Base 시나리오 기준 단기 손익비는 1.0 미만(중립~신중 분할 구간)</strong>에 위치합니다.</li>
+<li>그러나 선단 팹 램프업이 본격화되는 <strong>Bull 시나리오 고려 시 손익비는 1.76:1로 개선</strong>되며, 확률가중 기대수익률은 <strong>+11.13%</strong>로 여전히 플러스 기대를 유지하고 있습니다.</li>
 </ul>
 <hr />
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
+<h3>[역DCF ↔ 시나리오 결론 동기화 검증 (브릿지 논리)]</h3>
 <ul>
-<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy)</strong> (가치함정 경보 0개 확인)</li>
-<li><strong>목표가 밴드:</strong> <strong>62,200원 ~ 108,000원</strong> (Base ~ Bull 시나리오 기준)</li>
-<li><strong>매수 트리거 (Buy Trigger):</strong> </li>
-<li>현재 주가 <strong>25,000원 ~ 28,000원 구간</strong>은 FCF 적자 및 차입금 공포로 2027F PER이 6배 수준까지 짓눌린 역사적 바닥권입니다.</li>
-<li>본업의 8개국 글로벌 거점 선점 해자와 고마진 세라믹 부품(비중 50.8%)의 현금창출력은 전혀 훼손되지 않았으므로, 현 가격대에서 적극 분할 매수를 강력히 권고합니다.</li>
+<li><strong>시장 프라이싱 괴리 해독:</strong></li>
+<li>코미코의 공식 보고 FCF는 대규모 선제 투자(-1,755억 원)로 적자이나, 이는 본업 붕괴가 아닌 <strong>2024~2026년 4,934억 원에 달하는 글로벌 거점 인프라 완비를 위한 성장통</strong>입니다.</li>
+<li>설비 증설이 마무리된 후 정상화 FCF(+750억 원)를 대입할 경우, 시장이 현재 주가(34,050원)에서 요구하는 성장률은 <strong>연간 12.85%</strong>로 산출됩니다.</li>
+<li>
+<p>본 시나리오의 Base 케이스는 2027년 가동률 80% 회복 시 연간 지배순이익 625억 원 달성을 전망하므로, <strong>역DCF 요구 성장률(12.85%)과 시나리오 실적 추정치는 완벽한 정합성을 확보</strong>하고 있습니다.</p>
+</li>
+<li>
+<p><strong>투자의견:</strong> <strong>매수 (Buy) — 조정 시 적극 분할 매수</strong> (가치함정 경보 0개 정상)</p>
+</li>
+<li><strong>목표가 밴드:</strong> <strong>37,500원 ~ 53,300원</strong> (Base ~ Bull 시나리오 기준)</li>
+<li><strong>매수 트리거 (Buy Trigger):</strong></li>
+<li><strong>1차 분할 매수 구간:</strong> 현재 주가 <strong>31,000원 ~ 34,000원</strong> (PBR 5.5배 내외, 단기 조정 시 30% 비중 진입)</li>
+<li><strong>적극 추가 매수 구간:</strong> <strong>25,000원 ~ 28,000원</strong> (PBR 4.5~5.0배 밸류에이션 바닥권 도달 시 적극 비중 확대)</li>
 <li><strong>매도/손절 트리거 (Sell Trigger):</strong></li>
-<li>모회사 (주)미코의 코미코 주식담보대출(지분의 69%)에 대한 담보권 실행/반대매매 사태 등 대주주 지배구조 뇌관이 현실화될 경우.</li>
-<li>또는 글로벌 주요 팹 가동률이 2개 분기 연속 급락하며 코미코 분기 OPM이 10% 미만으로 추락하고 이자보상배율이 1.5배 미만으로 위협받을 때.</li>
+<li><strong>목표가 도달:</strong> 주가 45,000원 ~ 53,000원 진입 시 단계적 차익 실현 (PBR 6.5배 초과 과열 구간)</li>
+<li><strong>해자 훼손/재무 리스크:</strong> 모회사 (주)미코의 코미코 주식담보대출 담보권 실행 등 대주주 리스크 돌출, 또는 전방 팹 가동 중단으로 분기 OPM이 10% 미만으로 추락하고 이자보상배율이 1.5배 미만으로 위협받을 때 전량 손절.</li>
 <li><strong>핵심 모니터링 체크리스트:</strong></li>
-<li><strong>오스틴 코팅 가동률 반등:</strong> 현재 바닥권(39.7%)에서 60% $\rightarrow$ 80%대 회복 여부 추적 <code>[팩트: 26년 반기보고서]</code>.</li>
-<li><strong>CapEx 집행 정점 통과 및 FCF 흑자 턴:</strong> 2026년 하반기 분기보고서에서 분기 설비투자 지출 축소 및 순차입금 감소 전환 확인.</li>
-<li><strong>신규 팹 장비 수주:</strong> 삼성 평택 P5 및 SK하이닉스 용인 Y1향 세라믹 히터/ESC 초도 납품(First Install) 규모 확인.</li>
-<li><strong>대주주 미코 주식담보대출 모니터링:</strong> 대주주 담보유지비율 및 리파이낸싱 안정성 추적.</li>
+<li><strong>오스틴 코팅 가동률 반등:</strong> DART 정기보고서에서 오스틴 코팅 가동률이 현재 41.1%에서 60% ➡️ 80%로 정상화되는지 분기별 추적.</li>
+<li><strong>CapEx 집행 정점 통과 및 FCF 턴:</strong> 2026년 3분기 및 연간 보고서에서 분기 CapEx 축소와 순차입금(4,300억) 감소 전환 확인.</li>
+<li><strong>삼성 테일러 팹 가동 일정:</strong> 삼성전자 파운드리 테일러 팹 장비 반입 및 2027년 상업 양산 개시 공시 확인.</li>
+<li><strong>미코세라믹스(MCC) 믹스 추이:</strong> 전사 매출 중 세라믹 부품 비중 50% 이상 유지 여부 및 강릉 신규 라인 가동률 점검.</li>
 </ul>
-<div id="dcf-calculator-root" data-price="27300" data-shares="19787704" data-total-shares="20546360" data-fcf="-1800" data-wacc="9.0" data-terminal="2.0"></div>
+<hr />
+<div id="dcf-calculator-root" data-price="34050" data-shares="50423130" data-total-shares="51363275" data-fcf="-1755.0" data-wacc="9.0" data-terminal="2.0"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -565,13 +755,13 @@ p > em {
                     }
                     
                     let low = -0.99;
-                    let high = 5.0; // max 500%
+                    let high = 10.0; // max 1000% — unified with Python
                     let g = 0;
                     let found = false;
-                    for (let iter = 0; iter < 100; iter++) {
+                    for (let iter = 0; iter < 200; iter++) {
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
                             found = true;
                             break;
                         }
@@ -582,7 +772,7 @@ p > em {
                         }
                     }
 
-                    if (found || Math.abs(high - low) < 0.0001) {
+                    if (found || Math.abs(high - low) < 0.00001) {
                         const growthPercent = (g * 100).toFixed(2);
                         elResultValue.textContent = growthPercent + "%";
                         elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";

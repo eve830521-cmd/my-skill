@@ -337,7 +337,7 @@ p > em {
 </table>
 <ul>
 <li><strong>경고 발생에 따른 FCF 기준 2행 병기 처리</strong>:</li>
-<li>운전자본 회수 시차 및 감가상각 가산 효과를 감안하여, 1H26 연환산 FCF(4,280억 원)를 단순 대입하지 않고, 운전자본 정상화 및 보수적 이익 체력을 반영한 <strong>"보수적 기준 FCF 3,000억 원"</strong>과 <strong>"1H26 연환산 보고 FCF 4,280억 원"</strong>을 분리하여 역DCF에 병기 검증합니다.</li>
+<li>운전자본 회수 시차 및 감가상각 가산 효과를 감안하여, 1H26 연환산 보고 FCF(4,280억 원)를 단순 대입하지 않고, 운전자본 정상화 및 보수적 이익 체력을 반영한 <strong>"보수적 기준 FCF 3,000억 원"</strong>과 <strong>"1H26 연환산 보고 FCF 4,280억 원"</strong>을 분리하여 역DCF에 병기 검증합니다.</li>
 </ul>
 <hr />
 <h3>Step 1: 역DCF 연산 — 입력값 출처 명시 필수 양식</h3>
@@ -354,7 +354,7 @@ p > em {
 <tr>
 <td style="text-align: left;"><strong>현재 주가</strong></td>
 <td style="text-align: left;"><strong>303,000원</strong></td>
-<td style="text-align: left;">분석 기준일(2026.09.30) 종가</td>
+<td style="text-align: left;">분석 기준일(2026.09.30) 종가 (현 주가 271,500원 반영 시 안전마진 추가 확대)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>총 발행주식수 (<code>istc_totqy</code>)</strong></td>
@@ -454,7 +454,7 @@ p > em {
 </table>
 <ul>
 <li><strong>시장 기대치 괴리율 진단</strong>:</li>
-<li>시장이 현재 유통 시가총액(4.44조 원, 주가 303,000원)을 설명하기 위해 요구하는 연평균 FCF 성장률은 <strong>연간 +2.37%</strong>에 불과하며, 상반기 실물 현금흐름 체력(연환산 4,280억)을 대입하면 오히려 <strong>매년 -5.7%씩 역성장해도 현재 주가가 설명</strong>됩니다.</li>
+<li>시장이 현재 유통 시가총액(4.44조 원, 주가 303,000원)을 설명하기 위해 요구하는 연평균 FCF 성장률은 <strong>연간 +2.37%</strong>에 불과하며, 상반기 실물 현금흐름 체력(연환산 4,280억)을 대입하면 오히려 <strong>매년 -5.68%씩 역성장해도 현재 주가가 설명</strong>됩니다.</li>
 <li>이는 시장이 중국 화장품 시장 부진과 K-뷰티 수출 지수 제외라는 부정적 내러티브에 과도하게 매몰되어 <strong>'비이성적 공포에 의한 극단적 안전마진 구간'</strong>을 형성하고 있음을 숫자로 명확히 증명합니다.</li>
 </ul>
 <hr />
@@ -502,21 +502,21 @@ p > em {
 <h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
 <h3>[시나리오 실적 추론 3대 원칙 준수 검증]</h3>
 <ol>
-<li><strong>산식 영구 고정 및 상속</strong>: Phase 1 <code>## 7</code>에서 정의된 표준 실적 산출 공식을 <strong>100% 상속</strong> 적용합니다.</li>
-<li><code>[채택 공식: 기준 Capa 매출액(8.0조 원) × 시나리오별 가동/회전율 × 예상 OPM ➡️ 영업이익 ➡️ 순이익(실효세율 반영) ➡️ EPS (Phase 1 확정)]</code></li>
+<li><strong>산식 영구 고정 및 상속</strong>: Phase 1 <code>## 7</code>에서 정의된 <strong>유형 A [연속공정·장치산업]</strong> 표준 실적 산출 공식을 <strong>100% 상속</strong> 적용합니다.</li>
+<li><code>[채택 공식: 기준 Capa 매출액(8.0조 원) × 시나리오별 가동/회전율 × 예상 OPM ➡️ 매출액 ➡️ 영업이익 ➡️ 순이익(실효세율 반영) ➡️ EPS (Phase 1 Section 7 확정)]</code></li>
 <li><strong>산출 체인 숫자 명시 강제</strong>: <code>[핵심 드라이버] → 매출액 → 영업이익(OPM) → 순이익 → EPS</code> 4단계 체인을 모든 시나리오에 숫자로 명시. 부채비율 25%의 무차입 경영 기업으로 법인세 실효세율(약 24%)을 반영하여 <code>영업이익 × (1 − 실효세율) = 순이익</code>으로 전환.</li>
 <li><strong>핵심 드라이버 수치 출처 강제</strong>: 기준 Capa 8.0조 원 <code>[공시 팩트: 과거 최대 매출 8.09조 원 체력]</code>, OPM 6.51% <code>[공시 팩트: 1H26 반기보고서]</code>.</li>
 </ol>
 <h3>[멀티플 및 밸류에이션 규칙]</h3>
 <ul>
-<li><strong>밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 백테스트 1순위 채택 지표인 <strong>PBR(주가순자산비율)</strong>을 상속하여 Bear 시나리오의 자산가치 방어선으로 설정하고, 정상화 국면의 Target PER(Base 17.0배, Bull 19.0배)과 상호 정합성을 검증합니다.</li>
-<li><strong>PER 리레이팅 미적용</strong>: DART 공시상 신규 사업 매출 비중 30% 초과가 발생하지 않았으므로, 공식 PER 리레이팅 CAP 확장을 적용하지 않고 기본값(과거 5년 Peak PER 30~35배 이하 통제)을 유지합니다. (리레이팅 근거 요약표 생략)</li>
-<li><strong>Bear 시나리오 PER 역전 금지</strong>: Bear 시나리오에서 PER 역전(Base 17배보다 높은 멀티플)을 엄격히 금지하며, Phase 1 1순위 지표인 <strong>PBR 0.65배(5년 역사적 최하단 청산가치)</strong>를 주 밸류에이션으로 대체 적용하여 250,000원을 산출했습니다.</li>
+<li><strong>밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 10년 풀사이클 백테스트 1순위 채택 지표인 <strong>PBR(주가순자산비율, 실질 유통 BPS 기준)</strong>을 상속하여 Bear 시나리오의 자산가치 방어선으로 설정하고, 정상화 국면의 Target PER(Base 17.0배, Bull 19.0배)과 상호 정합성을 검증합니다.</li>
+<li><strong>PER 리레이팅 미적용</strong>: DART 공시상 신규 사업 매출 비중 30% 초과가 발생하지 않았으므로, 공식 PER 리레이팅 CAP 확장을 적용하지 않고 기본값(과거 10년 Peak PER 30~35배 이하 통제)을 유지합니다.</li>
+<li><strong>Bear 시나리오 PER 역전 금지</strong>: Bear 시나리오에서 PER 역전(Base 17배보다 높은 멀티플)을 엄격히 금지하며, Phase 1 1순위 지표인 <strong>PBR 0.65배(10년 역사적 최하단 바닥권)</strong>를 주 밸류에이션으로 대체 적용하여 250,000원을 산출했습니다.</li>
 </ul>
 <h3>[시나리오 표]</h3>
 <blockquote>
-<p><strong>산식 선택 근거</strong>: 전국 10여 개 대형 생산기지와 3각 포트폴리오를 보유한 종합 소비재 제조업체로, 8조 원의 잠재 Capa와 공장 가동률, 전사 OPM이 손익을 직결하므로 이 산식이 실적 펀더멘털을 가장 정확하게 설명합니다.<br />
-<strong>밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 채택 지표 = <strong>PBR</strong>. 리레이팅 적용 여부: <strong>미적용 (기본값 유지)</strong>.</p>
+<p><strong>산식 선택 근거</strong>: 전국 10여 개 대형 생산기지와 3각 포트폴리오를 보유한 종합 소비재 제조업체로, 8조 원의 잠재 Capa와 공장 가동률, 전사 OPM이 손익을 직결하므로 이 산식(유형 A 장치산업)이 실적 펀더멘털을 가장 정확하게 설명합니다.<br />
+<strong>밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 10년 백테스트 채택 지표 = <strong>PBR (유통 BPS 337,569원 기준)</strong>. 리레이팅 적용 여부: <strong>미적용 (기본값 유지)</strong>.</p>
 </blockquote>
 <table>
 <thead>
@@ -550,7 +550,7 @@ p > em {
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
 <td style="text-align: left;"><code>[Capa 8.0조 × 가동 75% = 매출 6.0조]</code> <code>[공시 팩트]</code> <br> <code>[매출 6.0조 × OPM 5.0% = 영업익 3,000억]</code> <br> (중국 침체 장기화, 울산공장 가동률 38.2% 고정비 부담 지속, $107 초고유가 지속)</td>
 <td style="text-align: center;">매출 6.0조 → OP 3,000억(OPM 5.0%) → NI 1,800억 / <strong>EPS 12,280원</strong></td>
-<td style="text-align: center;"><strong>PBR 0.65배 대체</strong> <br> <code>[Phase 1 1순위 지표 상속, 5년 바닥 PBR]</code></td>
+<td style="text-align: center;"><strong>PBR 0.65배 대체</strong> <br> <code>[Phase 1 1순위 지표 상속, 10년 바닥 PBR]</code></td>
 <td style="text-align: center;"><strong>250,000원</strong></td>
 <td style="text-align: center;"><strong>-17.5%</strong></td>
 </tr>
@@ -606,14 +606,14 @@ p > em {
 <li><strong>역DCF 요구성장률</strong>: 보수적 FCF(3,000억) 기준 <strong>연간 +2.37%</strong>, 1H26 연환산 보고 FCF(4,280억) 기준 <strong>연간 -5.68%</strong>로 10% 이하의 매우 보수적인 성장만을 요구하고 있습니다.</li>
 <li><strong>시나리오 판정</strong>: Base +17.2%, Bull +79.5%로 적극 매수를 권고하고 있습니다.</li>
 <li>
-<p><strong>동기화 검증 결과</strong>: 시장 프라이싱 역DCF가 극단적인 저평가/안전마진 영역에 위치하고 있으며, 바텀업 시나리오의 실적 턴어라운드 및 자산가치 방어선(PBR 0.65~0.78배)과 완벽하게 정합성을 이룹니다.</p>
+<p><strong>동기화 검증 결과</strong>: 시장 프라이싱 역DCF가 극단적인 저평가/안전마진 영역에 위치하고 있으며, 바텀업 시나리오의 실적 턴어라운드 및 자산가치 방어선(10년 PBR 0.65~0.80배)과 완벽하게 정합성을 이룹니다.</p>
 </li>
 <li>
 <p><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy / Deep Value 턴어라운드 가치주)</strong> (가치함정 경보 0개 정상 확인)</p>
 </li>
 <li><strong>목표가 밴드:</strong> <strong>355,000원 ~ 544,000원</strong> (Base ~ Bull 시나리오 기준).</li>
 <li><strong>매수 트리거 (Buy Trigger):</strong> </li>
-<li><strong>현재 주가 300,000원 이하 하회 시</strong>: 2025년 보통주 307만 주(17%) 전량 소각 + 에이본 매각 완료 + PBR 0.78배 이하의 절대적 안전마진 구간으로 적극 분할 매수 권고.</li>
+<li><strong>현재 주가 300,000원 이하 하회 시 (현재 271,500원 강력 매수 구간)</strong>: 2025년 보통주 307만 주(17%) 전량 소각 + 에이본 매각 완료 + PBR 0.80배 이하의 절대적 안전마진 구간으로 적극 분할 매수 권고.</li>
 <li>HDB 부문 유휴 캐파(울산공장 가동률 38.2%)에 대한 매각이나 타사 위탁 생산 전환 등 구체적인 고정비 다이어트 공시 발표 시.</li>
 <li><strong>매도/손절 트리거 (Sell Trigger):</strong> </li>
 <li>본업의 근본적 탑라인 회복 없이 단순 숏커버링 및 비용 절감 모멘텀으로 <strong>480,000원 이상 단기 오버슈팅 시</strong> 분할 차익 실현.</li>

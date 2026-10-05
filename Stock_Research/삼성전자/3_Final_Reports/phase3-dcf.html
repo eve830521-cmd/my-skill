@@ -303,22 +303,196 @@ p > em {
 <body>
     <h1>🎯 삼성전자 Phase 3: 밸류에이션 및 전략</h1>
 <h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
+<h3>Step 0.5: FCF 품질 검증 (역DCF 연산 직전 필수 수행)</h3>
 <p>[공시 팩트] 
-2026년 9월 17일 기준 삼성전자의 현재 주가는 <strong>253,000원</strong>이며, 보통주 총 발행주식수 5,919,637,922주 기준 명목 시가총액은 약 1,497.7조 원이나, 자기주식(42,892,472주)을 차감한 <strong>DART 공식 유통주식수 5,876,745,450주(실질 유통 시총 약 1,486.8조 원)</strong>를 기준으로 5개년 역DCF를 산출했습니다 <code>[팩트: 26.09.17 종가, DART 반기보고서]</code>. 온기 창출 FCF 약 228.2조 원을 대입했습니다 <code>[팩트: 연결재무제표]</code>.</p>
+DART 반기보고서 연결현금흐름표 및 손익계산서를 바탕으로 FCF 품질 3대 항목을 전수 점검하였습니다 <code>[[삼성전자]반기보고서(2026.08.14), Page 65, 72]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">품질 체크</th>
+<th style="text-align: left;">점검 기준</th>
+<th style="text-align: left;">기업 현황</th>
+<th style="text-align: center;">판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>OCF/순이익 갭</strong></td>
+<td style="text-align: left;">OCF÷순이익 비율이 1.5배 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">2026.1H 영업CF 145조 3,552억 원 ÷ 반기순이익 71조 6,245억 원 = <strong>2.03배</strong></td>
+<td style="text-align: center;">⚠️ 경고</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>운전자본(WC) 변동</strong></td>
+<td style="text-align: left;">WC 순변동이 OCF의 30% 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">운전자본 순변동은 OCF 대비 14.2% 수준으로 매출채권 및 재고 회전율 안정적</td>
+<td style="text-align: center;">정상</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>일회성 항목</strong></td>
+<td style="text-align: left;">유형자산 처분이익, 보험금 등 비경상 현금유입</td>
+<td style="text-align: left;">대규모 비경상 처분이익 전무, 순수 반도체 판가 상승 기반 현금유입 확인</td>
+<td style="text-align: center;">정상</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><strong>역DCF 연산 결과 (방안 A 병기):</strong> 
-  <strong>향후 5년 기준, 영구성장률 2.0% 고정, WACC 9.5%</strong> 가정 하에 현재 실질 유통 시가총액(1,486.8조 원)에 내재된 시장의 향후 5개년(2027~2031) 연평균 요구 FCF 성장률은 <strong>DART 유통주식수 기준 연간 -14.37%</strong> (총발행주식 기준 시 연간 -14.22%) 수준의 극심한 역성장입니다.</li>
-<li><strong>시장 기대치 괴리율 진단:</strong> 
-  시장은 현재 주가에서 메모리 반도체 실적이 당장 2027년부터 급격히 꺾여 5년 연속 매년 14% 이상 쪼그라들 것이라는 <strong>'파국적 피크아웃(Catastrophic Peak-out)'</strong>을 가격에 선반영하고 있습니다.
-  그러나 이는 1) Agentic AI 확산에 따른 서버 DRAM 비트 수요 폭증(연 +30% 이상) <code>[전망: LS증권 8월]</code>, 2) 1d 미세공정 지연 및 HBM 웨이퍼 잠식(31~35%)에 따른 <strong>구조적 공급 제약('외화내빈' 호황 지속)</strong>, 3) 평택 P5 인프라 조기 집행 및 파운드리 대형 수주 모멘텀을 완전히 무시한 <strong>비이성적 공포</strong>입니다. 역사적 하단 밸류에이션에서 강력한 안전마진이 확보되어 있습니다.</li>
+<li><strong>경고 발생에 따른 조치:</strong></li>
+<li>OCF/순이익 비율(2.03배)이 1.5배를 초과한 원인은 부실 회계가 아니라, 24시간 풀가동되는 반도체 설비 특성상 <strong>30조 원을 상회하는 대규모 감가상각비(D&amp;A)가 영업활동현금흐름에 정상 가산</strong>되었기 때문입니다.</li>
+<li>이에 따라 SKILL.md 규정에 의거하여 역DCF에 <strong>"보고 FCF 기준(연환산 228.2조 원)"</strong>과 <strong>"보수적 조정 FCF 기준(180.0조 원)"</strong> 2행을 병기하여 시장 요구 성장률을 교차 검증합니다.</li>
 </ul>
+<hr />
+<h3>Step 1: 역DCF 연산 — 입력값 출처 명시 필수 양식</h3>
+<p>[공시 팩트] 
+분석 기준일(2026.10.01) 주가와 DART 공식 주식수 및 현금흐름 수치 명시:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">입력 변수</th>
+<th style="text-align: center;">수치</th>
+<th style="text-align: left;">출처 (DART 문서명 + 페이지/항목)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>현재 주가</strong></td>
+<td style="text-align: center;">268,500원</td>
+<td style="text-align: left;">분석 기준일(2026.10.01) 공식 종가 (최신 주봉 종가: 274,500원)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 발행주식수</strong></td>
+<td style="text-align: center;">5,846,278,608주</td>
+<td style="text-align: left;">DART 반기보고서(2026.08.14) p.16 <code>istc_totqy</code> 보통주 기준</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자기주식수</strong></td>
+<td style="text-align: center;">82,086,705주</td>
+<td style="text-align: left;">DART 반기보고서 p.15 <code>tesstk_co</code> (4월 7,336만 주 소각 반영 후)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>공시 유통주식수</strong></td>
+<td style="text-align: center;"><strong>5,764,191,903주</strong></td>
+<td style="text-align: left;">DART 반기보고서 p.16 <code>distb_stock_co</code> (실질 유통주식수)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>명목 시가총액</strong></td>
+<td style="text-align: center;">1,569조 7,258억 원</td>
+<td style="text-align: left;">현재 주가(268,500원) × 총 발행주식수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실질 유통 시가총액</strong></td>
+<td style="text-align: center;"><strong>1,547조 6,855억 원</strong></td>
+<td style="text-align: left;">현재 주가(268,500원) × 공시 유통주식수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기준 FCF (보고)</strong></td>
+<td style="text-align: center;"><strong>228조 2,408억 원</strong></td>
+<td style="text-align: left;">2026년 상반기 FCF 114조 1,204억 원 × 2 (연환산 FCF) <code>[DART p.72]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기준 FCF (조정)</strong></td>
+<td style="text-align: center;"><strong>180조 0,000억 원</strong></td>
+<td style="text-align: left;">보수적 CAPEX 증가 및 D&amp;A 효과 조정한 정상화 FCF</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>할인율 (WACC)</strong></td>
+<td style="text-align: center;"><strong>9.0%</strong></td>
+<td style="text-align: left;">반도체 장치산업 표준 할인율</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>영구성장률 (Terminal)</strong></td>
+<td style="text-align: center;"><strong>2.0%</strong></td>
+<td style="text-align: left;">한국 장기 잠재성장률 고정</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>추정 기간</strong></td>
+<td style="text-align: center;">5년</td>
+<td style="text-align: left;">2027~2031년 5개년 역DCF 모델</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>역DCF 연산 결과 (<code>calc_reverse_dcf.py</code> 헬퍼 스크립트 실행 정밀 도출 결과):</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">산출 기준</th>
+<th style="text-align: center;">유통주식수 기준 요구 FCF 성장률 (핵심)</th>
+<th style="text-align: center;">총발행주식수 기준 요구 FCF 성장률 (병기)</th>
+<th style="text-align: center;">시장 프라이싱 판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>보고 FCF 기준 (228.2조 원)</strong></td>
+<td style="text-align: center;"><strong>연간 -14.82%</strong></td>
+<td style="text-align: center;"><strong>연간 -14.52%</strong></td>
+<td style="text-align: center;">극단적 저평가 (안전마진 극대화)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>조정 FCF 기준 (180.0조 원)</strong></td>
+<td style="text-align: center;"><strong>연간 -9.78%</strong></td>
+<td style="text-align: center;"><strong>연간 -9.48%</strong></td>
+<td style="text-align: center;">극단적 저평가 (안전마진 극대화)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>[역DCF 요구성장률 해석 기준표 대조]:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">요구 성장률 범위</th>
+<th style="text-align: left;">해석</th>
+<th style="text-align: center;">본 기업 적용 판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>&lt; 0% (역성장)</strong></td>
+<td style="text-align: left;"><strong>시장이 FCF 축소를 반영 $\rightarrow$ 극단적 저평가 또는 안전마진 확보</strong></td>
+<td style="text-align: center;"><strong>해당 (연간 -14.82%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">0~10%</td>
+<td style="text-align: left;">보수적 성장만 요구 $\rightarrow$ 합리적 밸류에이션 영역</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;">10~20%</td>
+<td style="text-align: left;">중간 성장 요구 $\rightarrow$ 기업 역사적 CAGR과 대조 필수</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;">20~30%</td>
+<td style="text-align: left;">공격적 성장 요구 $\rightarrow$ 고평가 경계, Capa 한계 점검</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;">&gt; 30%</td>
+<td style="text-align: left;">과도한 탐욕 반영 $\rightarrow$ 시장 기대치 비현실적, 안전마진 부재</td>
+<td style="text-align: center;">-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>시장 기대치 괴리율 진단:</strong></li>
+<li>현재 삼성전자의 주가(268,500원 / 실질 유통 시총 1,547.7조 원)는 향후 5개년 동안 삼성전자의 잉여현금흐름(FCF)이 <strong>매년 연평균 -14.82%씩 5년 연속 축소될 것</strong>이라는 극단적 역성장 시나리오를 선반영하고 있습니다.</li>
+<li>이는 1) HBM4 조기 양산 및 P4 1c 전환, 2) 평택 P5 1기(2028년)·2기(2029년) 신규 팹 착공을 통한 생산능력(Q) 확장, 3) 테슬라 22조 원 수주에 기반한 파운드리 턴어라운드라는 실물 펀더멘털을 완전히 무시한 <strong>비이성적 시장 공포</strong>입니다.</li>
+<li>매년 14% 이상 현금흐름이 급감하더라도 현재 주가가 정당화된다는 것은 주가 하방에 <strong>막대한 안전마진(Margin of Safety)</strong>이 구축되어 있음을 완벽히 증명합니다.</li>
+</ul>
+<hr />
 <h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
-<p>단순 저PER/저PBR에 매몰되는 초보 가치투자의 함정을 파괴하기 위해, DART 공시 팩트와 최신 Global Trend를 결합하여 3대 가치함정 지표를 전수 점검했습니다.</p>
+<p>[공시 팩트] 
+DART 정기보고서와 최신 Global Trend 데이터를 바탕으로 3대 가치함정 정량 임계값을 전수 점검하였습니다.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">가치함정 진단 지표</th>
 <th style="text-align: left;">점검 기준 (Check Point)</th>
+<th style="text-align: left;">🚨 정량 경보 임계값</th>
 <th style="text-align: left;">기업 현황 팩트</th>
 <th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
 </tr>
@@ -327,90 +501,161 @@ p > em {
 <tr>
 <td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
 <td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
-<td style="text-align: left;">OPM은 2023년 불황기 저점(2.54%) 이후 2024년 10.88% $\rightarrow$ 2025년 13.07% $\rightarrow$ <strong>2026년 상반기 48.05%로 수직 폭등 중</strong> <code>[[삼성전자]반기보고서(2026.08.14), Page 65]</code>. 메모리 비중 64.1% 및 특직판 72% 확대로 가격 결정력 극대화. 테슬라 22조 원 수주로 파운드리 해자 입증.</td>
+<td style="text-align: left;">• OPM 연속 2분기 전년동기 대비 3%p 이상 하락 <br> • 핵심 제품 시장점유율 5%p 이상 감소 <br> • 특허 소송 패소 또는 핵심 라이선스 만료 공시</td>
+<td style="text-align: left;">• OPM 2025.1H 2.41% $\rightarrow$ <strong>2026.1H 48.05%(+45.64%p 수직 폭등)</strong> <code>[DART 반기 p.65]</code><br>• 특직판 비중 <strong>72%</strong> 수직상승으로 가격 협상력 극대화 <code>[DART 반기 p.33]</code><br>• Tesla 165.4억 달러(약 22조 원) 파운드리 수주 확보 <code>[DART 반기 p.34]</code></td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
-<td style="text-align: left;"><strong>[반도체/IT 맞춤형 선행지표]</strong> 전방 칩 재고 급증, WFE 발주 축소, 가동률 100% 정점 여부</td>
-<td style="text-align: left;">HBM 캐파 잠식과 Agentic AI 도입으로 범용 DRAM 공급 부족 심화 <code>[팩트: SK증권 8~9월]</code>. 전 세계 WFE 투자는 2026년 1,500억 달러 $\rightarrow$ 2027년 1,900억 달러(+26.7%)로 상향 <code>[팩트: SK증권 8월]</code>. <strong>평택 P4 연내 셋업 및 평택 P5 인프라 조기 착공 선행</strong> <code>[팩트: cycle_timeline.md 9월]</code>. 메모리/디스플레이 100% 풀가동 지속. 피크아웃 징후 전무.</td>
+<td style="text-align: left;"><strong>[반도체/IT 선행지표]</strong> 정점 통과 여부 — <strong>2개 이상 동시 하락 반전 시 경보</strong> <br> • 전방 칩 재고 급증 <br> • WFE 발주 축소 <br> • 가동률 100% 정점</td>
+<td style="text-align: left;">선행지표 2개 이상 동시 하락 반전</td>
+<td style="text-align: left;">• DS 메모리 가동률 <strong>100.0% 연중 풀가동 지속</strong> <code>[DART 반기 p.26]</code><br>• 1d 전환 지연 및 HBM 캐파 잠식으로 '외화내빈' 공급 부족 지속<br>• 평택 P4 하반기 램프업 및 <strong>평택 P5 1기(2028년)·2기(2029년) 선제 착공</strong> <code>[LS증권 26.09.29 p.7]</code><br>• 온양 HBM4 재편 및 베트남 범용 이설로 병목 타개 <code>[한화투자증권 26.09.30 p.10, 22]</code></td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
 <td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
-<td style="text-align: left;">상반기 CAPEX 31.2조 원 집행으로 미래 성장동력 선점. 2026년 상반기에만 <strong>자사주 13.2조 원 매입 및 5.35조 원 소각(보통주 7,336만 주) 완료</strong>, 배당금 4.91조 원 지급으로 주주가치 극대화 <code>[[삼성전자]반기보고서(2026.08.14), Page 15, 16, 202]</code>.</td>
+<td style="text-align: left;">• ROIC 2개년 연속 WACC(8~10%) 미만 하락 <br> • 순현금 3년 연속 증가 + 배당성향 20% 미만 + 신규투자 없음 <br> • 총주주수익률(TSR) 3년 마이너스 지속</td>
+<td style="text-align: left;">• 상반기 CAPEX 31.2조 원 집행으로 미래 팹 인프라 공격적 선점<br>• 2026년 상반기에만 <strong>자사주 13.2조 원 매입 및 5.35조 원 전량 이익소각 완료</strong> <code>[DART 반기 p.15, 16]</code><br>• 2026년 반기 배당금 4.91조 원 지급 완료 <code>[DART 반기 p.202]</code></td>
 <td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>🚨 가치함정 페널티 집행:</strong></li>
-<li><strong>[경보 0개: 정상]</strong> ➡️ 3대 가치함정 리스크가 전무하므로, 멀티플 할인 페널티 없이 원안대로 바텀업 스트레스 테스트를 진행합니다.</li>
+<li><strong>🚨 가치함정 페널티 집행 결과:</strong></li>
+<li><strong>[경보 0개: 정상 (Value Trap Clean)]</strong></li>
+<li>3대 가치함정 리스크가 전무하므로, 멀티플 할인 Haircut 페널티 없이 <strong>원안대로 바텀업 스트레스 테스트</strong>를 진행합니다.</li>
 </ul>
+<hr />
 <h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
-<p>전고점 차트 앵커링을 원천 금지하며, 연간 기준 Capa 매출 체력과 DART 시계열상 역사적 호황기 Peak PER 상한선 규칙을 엄격히 적용했습니다.
-- <strong>[실적 산출 근거 산식 강제]:</strong> <code>[기준 Capa 매출액(650조 원) × 시나리오별 가동률 × 예상 OPM ➡️ 예상 순이익 ➡️ 예상 EPS]</code>
-- <strong>[멀티플 상한선 강제 준수]:</strong> DART 시계열로 확인된 과거 5년 역사적 호황기 Peak PER(2021년 15.8배, 2024년 14.5배)을 엄격히 감안하여, <strong>Bull 시나리오의 Target PER 상한선을 10.0배로 강력히 통제(Cap)</strong>했습니다.</p>
+<h3>[시나리오 실적 추론 3대 원칙 준수 검증]</h3>
+<ol>
+<li><strong>산식 영구 고정 및 상속</strong>: Phase 1의 Section 7에서 정의된 <strong>유형 A [연속공정·장치산업] 표준 실적 산출 공식</strong>을 100% 상속하여 적용합니다.
+   $$\text{[채택 공식: [전사 생산 Capa } \times \text{ 공장 가동률 } \times \text{ 블렌디드 ASP]} \rightarrow \text{매출액} \rightarrow \text{영업이익(OPM)} \rightarrow \text{순이익} \rightarrow \text{EPS (Phase 1 확정)]}$$</li>
+<li><strong>산출 체인 숫자 명시 강제</strong>: <code>[핵심 드라이버] → 매출액 → 영업이익(OPM) → 순이익 → EPS</code> 4단계 전환 수치를 모든 시나리오에 구체적 숫자로 명시합니다.</li>
+<li><strong>핵심 드라이버 수치 출처 강제</strong>: 가동률, Capa, 단가 등에 <code>[공시 팩트]</code> 또는 <code>[추정: 증권사]</code> 뱃지를 엄격히 부착하였습니다.</li>
+</ol>
+<h3>[멀티플 및 밸류에이션 규칙]</h3>
+<ul>
+<li><strong>주 밸류에이션 멀티플</strong>: Phase 1 Section 8 백테스트에서 채택된 <strong>PBR (유통 BPS 기준, R²=0.84)</strong>을 주 잣대로 상속하며, 제도권 공식 BPS(<strong>86,052원</strong>)를 앵커링합니다.</li>
+<li><strong>Target PER 상한선 검증</strong>: 과거 10년 역사적 호황 Peak PER(15.8배) 이하로 강력 통제(Cap).</li>
+<li><strong>Bear 시나리오 PER 역전 방지</strong>: Bear Target PER(8.4배) $\le$ Base Target PER(8.5배) $\le$ Bull Target PER(9.0배) 규칙을 100% 준수합니다.</li>
+</ul>
+<h3>[시나리오 표]</h3>
+<blockquote>
+<p><strong>산식 선택 근거</strong>: 전사 이익의 80% 이상이 메모리(DS) 및 디스플레이(SDC) 등 24시간 가동 장치산업에서 발생하며 DART 가동률 100%가 공시되는 유형 A 표준 산출 체인 적용.<br />
+<strong>밸류에이션 지표</strong>: Phase 1 Section 8 채택 지표 = <strong>PBR (유통 BPS 86,052원 기준)</strong> 및 Target PER 교차 검증.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">시나리오 구분</th>
-<th style="text-align: left;">핵심 가정 및 산출 근거 산식</th>
-<th style="text-align: center;">예상 순이익 / EPS</th>
-<th style="text-align: center;">Target PER (상한선 검증)</th>
+<th style="text-align: left;">핵심 드라이버 가정 <code>[출처 뱃지]</code> 및 산출 체인</th>
+<th style="text-align: center;">매출 $\rightarrow$ 영업이익(OPM) $\rightarrow$ 순이익 / EPS</th>
+<th style="text-align: center;">Target 밸류에이션 (PBR / PER 상한선 검증)</th>
 <th style="text-align: center;"><strong>적정주가</strong></th>
 <th style="text-align: center;">현재가 대비 등락률</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: left;"><code>[Capa 650조 × 가동률 100% = 매출 650조]</code> <br> <code>[매출 650조 × OPM 48% = 영업익 312조 ➡️ 순익 240조]</code> <br> (Agentic AI 메모리 수요 폭발, HBM/DRAM 공급 극도 부족 지속, 평택 P5 조기 가동, 파운드리 글로벌 빅테크 추가 메가 수주)</td>
-<td style="text-align: center;">240조 원 <br> <strong>41,000원</strong></td>
-<td style="text-align: center;">10.0배 <br> <code>[과거 호황 Peak 이하]</code></td>
-<td style="text-align: center;"><strong>410,000원</strong></td>
-<td style="text-align: center;"><strong>+62.1%</strong></td>
+<td style="text-align: left;"><strong>Bull (호황 유지·2차 레버리지)</strong></td>
+<td style="text-align: left;">• 메모리 가동률 <strong>100.0%</strong> <code>[공시 팩트: 반기 p.26]</code><br>• HBM4 본격 양산 및 P4 Ph4 셋업 완수로 블렌디드 ASP +15% 상승 <code>[추정: 한화투자증권 26.09.30]</code><br>• 산출 체인: 매출 <strong>640조 원</strong> $\rightarrow$ 영업이익 <strong>295조 원(OPM 46.1%)</strong> $\rightarrow$ 법인세 차감 후 순이익 <strong>242조 원</strong> / EPS <strong>42,000원</strong></td>
+<td style="text-align: center;">매출 640조 <br> $\rightarrow$ OP 295조(46.1%) <br> $\rightarrow$ NI 242조 / <strong>EPS 42,000원</strong></td>
+<td style="text-align: center;"><strong>Target PBR 4.4배</strong> <br> (Target PER 9.0배 검증) <br> <code>[10년 Peak PER 이하]</code></td>
+<td style="text-align: center;"><strong>378,000원</strong></td>
+<td style="text-align: center;"><strong>+40.8%</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: left;"><code>[Capa 650조 × 가동률 92% = 매출 598조]</code> <br> <code>[매출 598조 × OPM 40% = 영업익 239조 ➡️ 순익 184조]</code> <br> (DRAM/HBM 가격의 완만한 강세 유지, 평택 P4 Ph4 안정적 셋업, 테슬라 22조 원 수주 바탕 파운드리 점진적 흑자 안착)</td>
-<td style="text-align: center;">184조 원 <br> <strong>31,500원</strong></td>
-<td style="text-align: center;">10.5배 <br> <code>[역사적 중간값]</code></td>
-<td style="text-align: center;"><strong>330,000원</strong></td>
-<td style="text-align: center;"><strong>+30.4%</strong></td>
+<td style="text-align: left;"><strong>Base (기본·현재 런레이트 유지)</strong></td>
+<td style="text-align: left;">• 메모리 가동률 <strong>100.0%</strong> <code>[공시 팩트]</code><br>• 현 DRAM/NAND ASP 수준 유지 <code>[공시 팩트: 반기 p.31]</code><br>• 산출 체인: 매출 <strong>610조 원</strong> (상반기 305.4조 × 2) $\rightarrow$ 영업이익 <strong>275조 원(OPM 45.1%)</strong> $\rightarrow$ 순이익 <strong>225조 원</strong> / EPS <strong>39,000원</strong></td>
+<td style="text-align: center;">매출 610조 <br> $\rightarrow$ OP 275조(45.1%) <br> $\rightarrow$ NI 225조 / <strong>EPS 39,000원</strong></td>
+<td style="text-align: center;"><strong>Target PBR 3.85배</strong> <br> (Target PER 8.5배) <br> <code>[역사적 중간 밸류]</code></td>
+<td style="text-align: center;"><strong>331,500원</strong></td>
+<td style="text-align: center;"><strong>+23.5%</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: left;"><code>[Capa 650조 × 가동률 80% = 매출 520조]</code> <br> <code>[매출 520조 × OPM 25% = 영업익 130조 ➡️ 순익 100조]</code> <br> (지정학적 거시 인플레로 IT 세트 수요 회복 지연, 역외 ETF 순유출 일시 지속으로 마진율 20%대 둔화)</td>
-<td style="text-align: center;">100조 원 <br> <strong>17,100원</strong></td>
-<td style="text-align: center;">11.0배 <br> <code>[역사적 하단 Trough]</code></td>
-<td style="text-align: center;"><strong>188,000원</strong></td>
-<td style="text-align: center;"><strong>-25.7%</strong></td>
+<td style="text-align: left;"><strong>Bear (침체·고유가 수요 둔화)</strong></td>
+<td style="text-align: left;">• 메모리 가동률 <strong>95.0%</strong>로 완만한 조정 <code>[전망: cycle_timeline.md 9월 하반기]</code><br>• 세트 부문 마진 압박 및 범용 판가 -10% 하락<br>• 산출 체인: 매출 <strong>520조 원</strong> $\rightarrow$ 영업이익 <strong>180조 원(OPM 34.6%)</strong> $\rightarrow$ 순이익 <strong>148조 원</strong> / EPS <strong>25,600원</strong></td>
+<td style="text-align: center;">매출 520조 <br> $\rightarrow$ OP 180조(34.6%) <br> $\rightarrow$ NI 148조 / <strong>EPS 25,600원</strong></td>
+<td style="text-align: center;"><strong>Target PBR 2.50배</strong> <br> (Target PER 8.4배) <br> <code>[역사적 중간 지지선]</code></td>
+<td style="text-align: center;"><strong>215,000원</strong></td>
+<td style="text-align: center;"><strong>-19.9%</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>손익비(Risk/Reward Ratio) 평가:</strong> </li>
-<li>Base 시나리오 도달 시 기대수익률은 <strong>+30.4%</strong>, Bull 시나리오 시 <strong>+62.1%</strong>인 반면, 최악의 Bear 추락 시 하방 손실률은 <strong>-25.7%</strong>에 그칩니다.</li>
-<li>손익비는 <strong>1.18 : 1 (Base 기준) ~ 2.42 : 1 (Bull 기준)</strong>로, 하방 위험 대비 상방 업사이드가 확실히 우세한 전형적인 비대칭 우상향 손익비 구조를 형성하고 있습니다.</li>
+<li><strong>손익비(Risk/Reward Ratio) 정량 산출:</strong></li>
 </ul>
-<h2>4. 최종 투자 전략 및 액션 플랜</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">등락률</th>
+<th style="text-align: center;">확률 가중치</th>
+<th style="text-align: center;">가중 기대값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull</strong></td>
+<td style="text-align: center;">+40.8%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">+10.2%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base</strong></td>
+<td style="text-align: center;">+23.5%</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">+11.8%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear</strong></td>
+<td style="text-align: center;">-19.9%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">-5.0%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong>+17.0%</strong></td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy)</strong> (가치함정 경보 0개 정상 확인)</li>
-<li><strong>목표가 밴드:</strong> <strong>330,000 원 ~ 410,000 원</strong> (Base ~ Bull 시나리오 기준)</li>
-<li><strong>매수 트리거 (Buy Trigger):</strong> </li>
-<li>현재 주가 <strong>248,000원 ~ 253,000원 구간</strong>은 역외 야간선물과 ETF(-0.52조 원) 단기 유출이 만든 일시적 '가격 채널 노이즈'이자 2027F PER 8.0배의 역사적 바닥권입니다.</li>
-<li>15조 원 규모 자사주 매입이 강력한 하방 풋옵션(쿠션) 역할을 하므로, 25만 원 안팎 구간에서는 적극적인 분할 매수를 강력히 권고합니다.</li>
-<li><strong>매도/손절 트리거 (Sell Trigger):</strong> </li>
-<li>1d DRAM 공정 수율이 조기 정상화되고 마이크론의 1γ 양산이 선제 완공되어 공급 쇼티지가 소멸됨으로써, 삼성전자의 전사 재고자산회전율이 2개 분기 연속 하락세로 전환되는 사이클 피크아웃 징후 발생 시.</li>
-<li><strong>핵심 모니터링 체크리스트:</strong> </li>
-<li><strong>역외 수급 정상화:</strong> 최근 20영업일간 순유출을 기록한 해외 ETF(EWY, FLKR, DRAM) 자금 흐름의 순유입 반전 여부 추적 <code>[팩트: SK증권 26.09 리포트]</code>.</li>
-<li><strong>평택 P5 인프라 공정률:</strong> 2027년 준공 예정인 평택 P5 메가팹의 클린룸 및 선행 장비 발주 타임라인 확인 <code>[팩트: cycle_timeline.md 9월]</code>.</li>
-<li><strong>AIDC 차세대 냉각 및 메모리 채택률:</strong> 액체·액침냉각 확산에 따른 고부가 SOCAMM/CXL 메모리 매출 비중 확대 추이 <code>[팩트: 유안타증권 26.09 리포트]</code>.</li>
-<li><strong>파운드리 추가 수주:</strong> 테슬라(22조 원)에 이은 북미 빅테크향 신규 메가 수주 공시 여부.</li>
+<li><strong>R:R Ratio (손익비)</strong> = Base 상승폭(23.5%) ÷ Bear 하방폭(19.9%) = <strong>1.18 : 1</strong> (Bull 기준 시 40.8% ÷ 19.9% = <strong>2.05 : 1</strong>)</li>
+<li><strong>판정</strong>: <strong>「매수 유리 (Favorable Buy)」</strong> (기대수익률 +17.0%, 하방 위험 대비 상방 업사이드 우세).</li>
 </ul>
-<div id="dcf-calculator-root" data-price="253000" data-shares="5876745450" data-total-shares="5919637922" data-fcf="2282000" data-wacc="9.5" data-terminal="2.0"></div>
+<hr />
+<h2>4. 최종 투자 전략 및 액션 플랜</h2>
+<h3>[역DCF ↔ 시나리오 결론 동기화 검증 — 필수 체크]</h3>
+<ul>
+<li><strong>동기화 브릿지 논리:</strong></li>
+<li>역DCF 요구성장률이 <strong>연간 -14.82%의 극단적 역성장</strong>을 가리키고 있음에도 시나리오가 <strong>매수(Base +23.5%, Bull +40.8%)</strong>를 권고하는 이유는 명확합니다.</li>
+<li>현재 시장 주가(268,500원)는 메모리 실적이 당장 내년부터 5년 연속 14%씩 급감할 것이라는 비이성적 공포를 이미 선반영하고 있습니다.</li>
+<li>
+<p>따라서 현재 주가는 다운사이클 충격까지 흡수할 수 있는 <strong>압도적인 안전마진(Margin of Safety)</strong>을 제공하고 있으며, 펀더멘털이 현 수준(Base)만 유지하더라도 최소 +23.5% 이상의 주가 재평가가 필연적임을 동기화 검증하였습니다.</p>
+</li>
+<li>
+<p><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy)</strong> (3대 가치함정 위험 0건, 비대칭 우상향 손익비 확보)</p>
+</li>
+<li><strong>목표가 밴드:</strong> <strong>331,500 원 ~ 378,000 원</strong> (Base ~ Bull 시나리오 기준)</li>
+<li><strong>매수 트리거 (Buy Trigger):</strong> </li>
+<li><strong>260,000원 ~ 270,000원 구간</strong>은 역외 파생 노이즈와 중동 고유가 우려가 만든 일시적 시초가 갭 왜곡 구간이자 PBR 3.1배의 강력한 밸류에이션 바닥권입니다.</li>
+<li>상반기 5.35조 원 자사주 소각에 이어 추가 매입·소각 여력이 풍부하므로, 현 가격대에서의 <strong>적극적 분할 매수</strong>를 강력 권고합니다.</li>
+<li><strong>매도/손절 트리거 (Sell Trigger):</strong> </li>
+<li>공장 가동률이 90% 미만으로 하락하거나, DART 정기보고서 기준 전사 OPM이 연속 2개 분기 전년동기 대비 3%p 이상 하락하며 '해자 훼손' 가치함정 경보가 발동될 시 비중 축소.</li>
+<li><strong>핵심 모니터링 체크리스트:</strong> </li>
+<li><strong>HBM4 고객사 양산 램프업 및 수율:</strong> 2026년 하반기 엔비디아 및 빅테크향 HBM4 납품 공식 확인 여부.</li>
+<li><strong>평택 P5 인프라 공정:</strong> 평택 P5 1기(2028년 완공) 및 2기(2029년 완공) 선행 클린룸/유틸리티 시공 진척도 <code>[LS증권 26.09.28 p.33; 26.09.29 p.7]</code>.</li>
+<li><strong>온양-베트남 후공정 재편:</strong> 온양 HBM 전용화 및 테스터 발주 집행률 추적 <code>[한화투자증권 26.09.30 p.10, 22]</code>.</li>
+<li><strong>파운드리 추가 수주:</strong> 테슬라 22조 원 수주에 이은 북미 빅테크향 추가 수주 공시 여부.</li>
+</ul>
+<hr />
+<h3>[HTML 계산기 태그 검증 — Phase 3 최종 단계 필수]</h3>
+<p>본문 Step 1에 명시된 공시 유통주식수(5,764,191,903주), 총발행주식수(5,846,278,608주), 기준 FCF(228조 2,408억 원), 현재 주가(268,500원)와 1주/1원 단위까지 100% 일치하도록 구성되었습니다.</p>
+<div id="dcf-calculator-root" data-price="268500" data-shares="5764191903" data-total-shares="5846278608" data-fcf="2282408" data-wacc="9.0" data-terminal="2.0"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -561,13 +806,13 @@ p > em {
                     }
                     
                     let low = -0.99;
-                    let high = 5.0; // max 500%
+                    let high = 10.0; // max 1000% — unified with Python
                     let g = 0;
                     let found = false;
-                    for (let iter = 0; iter < 100; iter++) {
+                    for (let iter = 0; iter < 200; iter++) {
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.0001) {
+                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
                             found = true;
                             break;
                         }
@@ -578,7 +823,7 @@ p > em {
                         }
                     }
 
-                    if (found || Math.abs(high - low) < 0.0001) {
+                    if (found || Math.abs(high - low) < 0.00001) {
                         const growthPercent = (g * 100).toFixed(2);
                         elResultValue.textContent = growthPercent + "%";
                         elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";

@@ -94,12 +94,19 @@ def run_valuation_backtest(stock_code, years=10, rerating_date=None, custom_data
     bench = fetch_naver_official_metrics(stock_code)
     if bench:
         print(f"\n[1] 🏛️ 제도권 공식 벤치마크 (네이버 금융 / FnGuide / KRX 기준):")
-        print(f"    - 현재 주가: {bench.get('close', 0):,.0f}원")
-        print(f"    - 공식 BPS:  {bench.get('bps', 0):,.0f}원 (자사주 제외 실질 유통주식수 기준)")
-        print(f"    - 공식 PBR:  {bench.get('pbr', 0):.2f}배")
-        print(f"    - 공식 EPS:  {bench.get('eps', 0):,.0f}원 (기본 주당순이익 기준)")
-        print(f"    - 공식 PER:  {bench.get('per', 0):.2f}배")
-        print(f"    - 공식 배당: {bench.get('div_yield', 0):.2f}% (DPS: {bench.get('dps', 0):,.0f}원)")
+        close_str = f"{bench['close']:,.0f}원" if bench.get('close') is not None else "N/A"
+        bps_str = f"{bench['bps']:,.0f}원" if bench.get('bps') is not None else "N/A"
+        pbr_str = f"{bench['pbr']:.2f}배" if bench.get('pbr') is not None else "N/A"
+        eps_str = f"{bench['eps']:,.0f}원" if bench.get('eps') is not None else "N/A"
+        per_str = f"{bench['per']:.2f}배" if bench.get('per') is not None else "N/A"
+        div_str = f"{bench['div_yield']:.2f}%" if bench.get('div_yield') is not None else "N/A"
+        dps_str = f"{bench['dps']:,.0f}원" if bench.get('dps') is not None else "N/A"
+        print(f"    - 현재 주가: {close_str}")
+        print(f"    - 공식 BPS:  {bps_str} (자사주 제외 실질 유통주식수 기준)")
+        print(f"    - 공식 PBR:  {pbr_str}")
+        print(f"    - 공식 EPS:  {eps_str} (기본 주당순이익 기준)")
+        print(f"    - 공식 PER:  {per_str}")
+        print(f"    - 공식 배당: {div_str} (DPS: {dps_str})")
     
     # 2. Fetch Weekly Candles
     df = fetch_weekly_candles(stock_code, count=int(years * 52 + 30))
@@ -115,16 +122,18 @@ def run_valuation_backtest(stock_code, years=10, rerating_date=None, custom_data
     print(f"    - 최신 주봉 종가:             {df['close'].iloc[-1]:,.0f}원")
     
     # 3. Sanity Check Alert
-    if bench.get('bps'):
+    if bench.get('bps') is not None:
         curr_price = df['close'].iloc[-1]
         calc_pbr = curr_price / bench['bps']
-        diff_pct = abs(calc_pbr - (bench.get('pbr') or calc_pbr)) / (bench.get('pbr') or 1.0) * 100
+        official_pbr = bench.get('pbr')
         print(f"\n[3] 🛡️ Sanity Check (유통 BPS 검증):")
         print(f"    - 현재 주가({curr_price:,.0f}원) ÷ 공식 BPS({bench['bps']:,.0f}원) = PBR {calc_pbr:.2f}배")
-        if diff_pct > 5.0:
-            print(f"    ⚠️ [경고] 공식 PBR({bench.get('pbr')}배)과 오차 {diff_pct:.1f}% 발생! 분모(주식수) 매핑 확인 필요.")
-        else:
-            print(f"    ✅ [검증 통과] 제도권 공식 PBR({bench.get('pbr')}배)과 정합성 100% 일치.")
+        if official_pbr is not None:
+            diff_pct = abs(calc_pbr - official_pbr) / official_pbr * 100
+            if diff_pct > 5.0:
+                print(f"    ⚠️ [경고] 공식 PBR({official_pbr:.2f}배)과 오차 {diff_pct:.1f}% 발생! 분모(주식수) 매핑 확인 필요.")
+            else:
+                print(f"    ✅ [검증 통과] 제도권 공식 PBR({official_pbr:.2f}배)과 정합성 100% 일치.")
     
     # 4. Regime Shift Check
     if rerating_date:
