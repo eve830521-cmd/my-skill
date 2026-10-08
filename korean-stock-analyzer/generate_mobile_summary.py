@@ -158,9 +158,19 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             raw_ig = "연간 " + raw_ig
         data["implied_growth"] = clean_md(raw_ig)
 
-    # 4. Bull / Base / TP1 / Bear targets from scenario table (robust last-2-columns parser)
+    # 4. Bull / Base / TP1 / Bear targets from scenario table (supports both single price and Model B / Model A side-by-side)
     sec3_match = re.search(r"##\s*3\..*?(?=##\s*4\.|\Z)", text, re.DOTALL)
     sec3_text = sec3_match.group(0) if sec3_match else text
+
+    def _format_price_upside_cell(raw_p_cell: str, raw_u_cell: str) -> str:
+        if "/" in raw_p_cell and "/" in raw_u_cell:
+            p_parts = [clean_md(x) for x in raw_p_cell.split("/") if x.strip()]
+            u_parts = [clean_md(x) for x in raw_u_cell.split("/") if x.strip()]
+            if len(p_parts) >= 2 and len(u_parts) >= 2:
+                return f"🛡️B: {p_parts[0]} ({u_parts[0]})<br>🚀A: {p_parts[1]} ({u_parts[1]})"
+        price_str = clean_md(raw_p_cell)
+        upside_str = clean_md(raw_u_cell)
+        return f"{price_str} ({upside_str})"
 
     for line in sec3_text.splitlines():
         s_line = line.strip()
@@ -182,16 +192,10 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             target_key = "bear_target"
 
         if target_key and data[target_key] == "-":
-            # Read last two non-empty columns (cells[-2] = 적정주가, cells[-1] = 등락률)
-            # Handle 7-column case where cells[-1] & cells[-2] are both % (e.g. 기준가 대비 / 직전가 대비)
             if "원" in cells[-2]:
-                price_str = clean_md(cells[-2])
-                upside_str = clean_md(cells[-1])
-                data[target_key] = f"{price_str} ({upside_str})"
+                data[target_key] = _format_price_upside_cell(cells[-2], cells[-1])
             elif len(cells) >= 6 and "원" in cells[-3] and "%" in cells[-2]:
-                price_str = clean_md(cells[-3])
-                upside_str = clean_md(cells[-2])
-                data[target_key] = f"{price_str} ({upside_str})"
+                data[target_key] = _format_price_upside_cell(cells[-3], cells[-2])
 
     if data["tp1_target"] != "-" and data["base_target"] != "-":
         data["base_target"] = f"{data['base_target']}<br><span class='rr-sub'>🎯 TP1(단기1차): {data['tp1_target']}</span>"

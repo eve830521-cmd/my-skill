@@ -136,37 +136,50 @@ html_template = f"""<!DOCTYPE html>
                 const initWacc = rawWacc.toFixed(1);
                 const initTerminal = rawTerm.toFixed(1);
 
-                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low from attributes or Phase 3 scenario table
-                function extractFirstKrwPrice(str) {{
-                    if (!str) return null;
-                    const m = str.match(/([0-9]{{1,3}}(?:,[0-9]{{3}})+|[0-9]{{4,}})\\s*원/);
-                    if (m) return parseFloat(m[1].replace(/,/g, ''));
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {{
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{{1,3}}(?:,[0-9]{{3}})+|[0-9]{{4,}})\\s*원/g)];
+                    if (matches.length > 0) {{
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }}
                     const m2 = str.match(/([0-9]{{1,3}}(?:,[0-9]{{3}})+)/);
-                    if (m2) return parseFloat(m2[1].replace(/,/g, ''));
-                    return null;
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
                 }}
 
                 let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
                 let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
 
-                if (!autoBull || !autoBase || !autoBear) {{
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {{
                     const rows = document.querySelectorAll('table tr');
                     rows.forEach(tr => {{
                         const tds = tr.querySelectorAll('td');
                         if (tds.length >= 5) {{
                             const label = tds[0].innerText.trim();
-                            // Find the target price column (usually tds[tds.length - 2], or tds[tds.length - 3] if 2 upside columns exist)
-                            let priceCandidate = extractFirstKrwPrice(tds[tds.length - 2].innerText);
-                            if (!priceCandidate && tds.length >= 6) {{
-                                priceCandidate = extractFirstKrwPrice(tds[tds.length - 3].innerText);
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {{
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
                             }}
-                            if (priceCandidate) {{
-                                if (!autoBull && /bull/i.test(label)) autoBull = priceCandidate;
-                                if (/tp1/i.test(label)) autoBase = priceCandidate;
-                                else if (!autoBase && /base/i.test(label)) autoBase = priceCandidate;
-                                if (!autoBear && /bear/i.test(label)) autoBear = priceCandidate;
+                            if (prices.length > 0) {{
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {{
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }}
+                                if (/tp1/i.test(label)) {{
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                }} else if (/base/i.test(label)) {{
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }}
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
                             }}
                         }}
                     }});
@@ -181,6 +194,8 @@ html_template = f"""<!DOCTYPE html>
                 if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
                 if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
                 if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
                 const initBuy1 = autoBear;
@@ -218,7 +233,11 @@ html_template = f"""<!DOCTYPE html>
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>총 투자예산 (원)</label>' +
@@ -435,6 +454,12 @@ html_template = f"""<!DOCTYPE html>
                     const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
                     const trailingStop3 = Math.round(tBull * 0.92);
 
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
                     function fmtSignedKrw(v) {{
                         const r = Math.round(v);
                         return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
@@ -471,7 +496,25 @@ html_template = f"""<!DOCTYPE html>
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>총 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>';
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }}
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {{
+                    btnModelB.addEventListener('click', () => {{
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    }});
+                }}
+                if (btnModelA) {{
+                    btnModelA.addEventListener('click', () => {{
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    }});
                 }}
 
                 const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
