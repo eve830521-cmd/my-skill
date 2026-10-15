@@ -294,6 +294,95 @@ p > em {
     color: #d97706;
 }
 
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    .sop-calc-container {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0 35px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    }
+    .sop-calc-container h3 {
+        margin-top: 0;
+        color: #0f172a;
+        border-bottom: 2px solid #94a3b8;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+    .sop-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+    .sop-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+    .sop-card.buy-card { border-left: 4px solid #2563eb; }
+    .sop-card.stop-card { border-left: 4px solid #dc2626; background: #fff5f5; }
+    .sop-card.sell-card { border-left: 4px solid #059669; }
+    .sop-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 10.5pt;
+        color: #1e293b;
+    }
+    .sop-stat-line {
+        font-size: 9.8pt;
+        margin: 4px 0;
+        color: #334155;
+    }
+    .sop-highlight {
+        font-weight: 800;
+        color: #0f172a;
+    }
+    .sop-pin-badge {
+        display: inline-block;
+        background: #dc2626;
+        color: #fff;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 9.5pt;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -326,6 +415,53 @@ p > em {
 <li><code>[글로벌 트렌드: 26.09.15.LS증권.AI 데이터센터 - 지상의 한계, 우주의 기회.pdf p.2, p.4~5]</code>에 따르면 1GW 우주 AIDC 10년 TCO는 420억 달러로 지상(350억 달러)보다 비싸며 100만 기 위성 발사(스타마인드) 등은 2030년대 장기 테마로 규정되어 2026~2028년 단기 지상/해상 냉각 인프라 수요를 전혀 침해하지 못합니다.</li>
 <li>✅ <strong>팩트체크 타격 결과: [ True ]</strong></li>
 <li>해상 바지선 AIDC는 염해 차단용 액침냉각 및 칠러의 필수 채택을 유발하여 GST의 기술적 해자를 확장시키며, 우주 AIDC는 단기 실적에 영향이 없는 장기 테마임이 검증되었습니다.</li>
+</ul>
+<hr />
+<h2>1.1 S-Curve 침투율 &amp; 매매 타이밍 진단 매트릭스 (Global S-Curve 레이더 연동)</h2>
+<p>[검증 나침반] <code>korean cycle/00_megatrend/docs/s_curve_registry.json</code> 참조 후, 기재된 원본 PDF 페이지(<code>26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.7</code>)를 <code>parse_pdf.py</code>로 핀포인트 실측 대조하여 작성되었습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">진단 항목</th>
+<th style="text-align: left;">정량 수치 및 상태</th>
+<th style="text-align: left;">출처 및 근거 (No-Blind-Citation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>소속 신기술 테마</strong></td>
+<td style="text-align: left;"><strong>AIDC 액침냉각 (Immersion Cooling)</strong></td>
+<td style="text-align: left;"><code>s_curve_registry.json</code> 연동 (<code>th_immersion_cooling</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>현재 산업 침투율</strong></td>
+<td style="text-align: left;"><strong>12.5%</strong> (전분기: 8.0%)</td>
+<td style="text-align: left;"><code>[글로벌 트렌드: 26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.7]</code> 실측 대조 ("액침냉각 침투율 12% 돌파")</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S-Curve 국면 판정</strong></td>
+<td style="text-align: left;"><strong>⭐ Phase 2: 골든 스위트스팟 (10~40%)</strong></td>
+<td style="text-align: left;">10% 캐즘 돌파 확인, 주류 확산 초입 공식 판정</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>공식 투자 액션 시그널</strong></td>
+<td style="text-align: left;"><strong><code>[적극 매수 &amp; 추세추종]</code></strong></td>
+<td style="text-align: left;">10% 캐즘 돌파 이후 40% 도달 전까지 추세 추종 유효</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>하이브리드 밸류체인 지위</strong></td>
+<td style="text-align: left;"><strong>👑 DART 검증 순수 주도주</strong></td>
+<td style="text-align: left;">Phase 1 DART 칠러 라인업 등재 및 <code>s_curve_registry.json</code> 익스포저 65% 연계 (30% 컷오프 통과)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>차기 변곡점 모니터링</strong></td>
+<td style="text-align: left;"><strong>침투율 40% 도달 예상 시점 (2028년경)</strong></td>
+<td style="text-align: left;">글로벌 하이퍼스케일러 양산형 액침냉각 발주 공시 분기별 추적</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>Weekly_Trend/thesis_log.md</code> 자동 연동:</strong> 본 진단 결과는 사용자 핵심 가설(<code>가설 6 [진행 중] S-Curve 침투율 12.5% 골든 스위트스팟(Phase 2) 추세추종 유효</code>)로 자동 기록되어 Phase 3 밸류에이션 목표가 산정 시 <strong>S-Curve Phase 2 할증 계수(Base ×1.10 / Bull ×1.12)</strong>로 100% 반영됩니다.</li>
 </ul>
 <hr />
 <h2>2. Weekly 개별 리포트 및 시장 내러티브 검증</h2>
@@ -386,6 +522,39 @@ p > em {
 <li>✅ <strong>가설 타격 결과: [ 유효함 ]</strong></li>
 </ul>
 <hr />
+<h3>4) 가설 4 <code>[진행 중]</code> (액침냉각 미반영 콜옵션 및 팹 피크 vs AIDC 리레이팅 충돌 역학)</h3>
+<blockquote>
+<p><strong>가설 요약:</strong> 현재 주가는 액침냉각 기여도가 0원으로 프라이싱되어 있어 무상 콜옵션 상태이며, 향후 본업 피크 도래 시 신사업 수주 규모(20~30% 돌파), 고객사 다변화, 밸류에이션 룸에 따라 AIDC 인프라 멀티플(PER 20~25배)로 리레이팅될 확률이 80% 이상임.</p>
+</blockquote>
+<ul>
+<li><strong>공시 팩트 대조:</strong></li>
+<li><code>[공시 팩트]</code> 2026년 상반기 기준 액침냉각 단독 상용 매출은 분리 공시되지 않아 실적 미반영 상태 확인.</li>
+<li><code>[시장 내러티브: 26.09.02.유안타증권 p.135]</code> 글로벌 5대 플레이어로 공인되어 있어 첫 본계약 공시 시 리레이팅 파급력 극대화 조건 충족.</li>
+<li>✅ <strong>가설 타격 결과: [ 유효함 ]</strong></li>
+</ul>
+<hr />
+<h3>5) 가설 5 <code>[검증 완료]</code> (1차 목표가 도달 후 분할 익절 및 눌림목 대기 전략)</h3>
+<blockquote>
+<p><strong>가설 요약:</strong> 10월 2일 54,200원(PER 17.95배) 급등으로 1차 목표가(Base 55,800원)에 조기 도달함에 따라 30~50% 분할 익절 후 44,000~47,000원대 눌림목 조정을 기다리는 전략 제시.</p>
+</blockquote>
+<ul>
+<li><strong>공시 팩트 대조:</strong></li>
+<li><strong>10월 15일 최신 주가 팩트:</strong> 10월 15일 현재 종가 <strong>45,250원(공식 PER 14.99배, PBR 2.52배)</strong>으로 제시했던 눌림목 밴드(44,000~47,000원)에 정확히 안착 완료.</li>
+<li>고평가 과열(PER 17.95배)이 완전히 해소되고 2026E 선행 PER 약 13.0배로 내려와 신규/재진입 손익비 우위 구간이 재형성됨.</li>
+<li>✅ <strong>가설 타격 결과: [ 검증 완료 (눌림목 진입 성공) ]</strong></li>
+</ul>
+<hr />
+<h3>6) 가설 6 <code>[진행 중]</code> (S-Curve Phase 2 골든 스위트스팟 추세추종 유효)</h3>
+<blockquote>
+<p><strong>가설 요약:</strong> 글로벌 액침냉각 침투율 12.5%로 캐즘(10%)을 돌파한 Phase 2 골든 스위트스팟 구간에 공식 위치하며, DART 칠러 라인업 등재 및 글로벌 레지스트리 탑픽(익스포저 65%)으로서 침투율 40% 도달 전까지 추세 추종 전략이 절대적으로 유효함.</p>
+</blockquote>
+<ul>
+<li><strong>공시 팩트 대조:</strong></li>
+<li><code>[글로벌 트렌드: 26.09.02.유안타증권 p.7]</code> 액침냉각 침투율 12.5% 확인.</li>
+<li><code>[공시 팩트]</code> DART 칠러 라인업 등재 및 연간 377억 원(17.5%) 칠러 매출 창출 팩트 확인.</li>
+<li>✅ <strong>가설 타격 결과: [ 유효함 ]</strong></li>
+</ul>
+<hr />
 <h2>4. 심화 분석 및 대화 피드백</h2>
 <h3>1) DART 가동률 공시 생략(Section 4) ↔ 표준 실적 산출 공식(Section 7) 모순 완전 해소</h3>
 <ul>
@@ -397,20 +566,13 @@ p > em {
 <li><strong>문제점:</strong> 지침서 템플릿 예시 문구에 적혀 있던 <code>p.15 도표 24</code>를 기계적으로 인용하여 실제 전력망 분석 페이지(p.15)와 충돌하는 오류 발생.</li>
 <li><strong>해소 조치:</strong> 로컬 파이썬 핀포인트 검증(<code>parse_pdf.py</code>)을 거쳐 실제 도표가 위치한 <strong><code>26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.135 AIDC 냉각 밸류체인 요약표</code></strong>로 출처를 완벽히 정정하고 시스템 마스터 룰에 '노-블라인드 인용 규칙'을 영구 바인딩함.</li>
 </ul>
-<h3>3) [심층 토론 반영] 본업 팹 증설 피크 vs 액침냉각 첫 수주 동시 도래 시 주가 역학 및 3대 분기 기준</h3>
+<h3>3) 최신 주가(45,250원) 조정에 따른 밸류에이션 룸 재확보 및 진입 타이밍 분석</h3>
 <ul>
-<li><strong>논점 1: 최신 주가(54,200원, 시총 9,989억 원)에 액침냉각 가치가 반영되어 있는가?</strong></li>
-<li>최신 주가 54,200원 기준 공식 PER은 17.95배(2026E 컨센서스 EPS 3,490원 기준 선행 PER 약 15.5배) 수준입니다.</li>
-<li>이는 과거 5개년 역사적 호황기 Peak PER(18.50배)의 상단선에 근접한 수치로, <strong>전방 고객사(삼성전자 평택 P5, SK하이닉스 M15X/용인) 팹 증설에 따른 스크러버/칠러 본업 실적 성장(P·Q 동반 레버리지)을 시장이 본격 반영하기 시작</strong>한 단계입니다.</li>
-<li>그러나 재무제표상 액침냉각 매출 기여는 여전히 0원이므로, 액침냉각에 대한 본격적인 구조적 리레이팅(AIDC 인프라 멀티플 20~25배+)은 아직 반영되지 않은 <strong>'선반영 없는 무상 콜옵션'</strong> 성격을 유지하고 있습니다.</li>
-<li><strong>논점 2: 본업 팹 실적 피크와 액침냉각 첫 수주가 동시 도래할 경우 시장 포커스는 어디로 향하는가?</strong></li>
-<li>시장은 '사이클 피크아웃 우려(디레이팅 압력)'와 'AIDC 인프라 신사업 개화(리레이팅 압력)' 사이에서 팽팽한 힘겨루기를 전개하게 됨.</li>
-<li>이때 주가의 승패를 가르는 <strong>3대 분기 기준(Decision Criteria)</strong>을 도출함:<ol>
-<li><strong>신사업 매출 기여도의 임계점 (20~30% 돌파 여부):</strong> 첫 공시가 단순 수억~수십억 원대 시제품/파일럿 테스트 수준에 그친다면 본업 피크아웃 공포가 우세하나, 분기/연간 500억~1,000억 원 이상의 본격 양산형 수주로 확인될 경우 내러티브가 밸류에이션을 압도함.</li>
-<li><strong>고객사 다변화 및 구조적 확장성:</strong> 수주처가 기존 메모리 IDM을 넘어 글로벌 CSP(하이퍼스케일러), 서버 ODM, 혹은 해상 부유식 데이터센터(FDC) 전문 인프라사로 확장될 경우 멀티플이 장비주(10~15배)에서 AIDC 인프라주(20~25배+)로 전면 재평가됨.</li>
-<li><strong>도래 시점의 밸류에이션 룸(Valuation Room):</strong> 실적 피크 시점에 주가가 이미 PER 20배 이상 과열되어 있다면 차익실현 빌미가 되나, 여전히 13~16배 수준에 머물러 있다면 신사업 프리미엄이 얹어지며 역사적 고점 돌파의 기폭제로 작동함.</li>
-</ol>
-</li>
+<li><strong>논점:</strong> 10월 초 54,200원(PER 17.95배)에서 45,250원(PER 14.99배)으로의 기술적 조정은 위기인가 기회인가?</li>
+<li><strong>분석 팩트:</strong></li>
+<li>10월 2일 54,200원은 과거 5개년 역사적 호황기 Peak PER(18.50배)의 97%에 육박하는 과열 구간이었으며, 이에 따라 <code>가설 5</code>를 통해 1차 목표가 도달에 따른 분할 익절 및 44,000~47,000원대 눌림목 대기를 선제적으로 권고한 바 있습니다.</li>
+<li>현재 주가 <strong>45,250원</strong>은 2026E 컨센서스 EPS(3,490원) 기준 <strong>선행 PER 약 13.0배</strong> 수준으로 낮아져, 본업 팹 선행 수주(P5·Y1) 실적만으로도 충분히 정당화되는 안전마진 구간에 재진입했습니다.</li>
+<li>여기에 S-Curve Phase 2(침투율 12.5%) 골든 스위트스팟에 위치한 AIDC 액침냉각 솔루션은 여전히 재무제표에 0원으로 잡혀 있는 '무상 콜옵션' 상태이므로, 눌림목 지지선(일봉 60일선 46,548원 및 매물대 하단선) 부근에서 분할 매수 손익비(R:R)가 극대화되는 국면입니다.</li>
 </ul>
 <hr />
 <h2>💡 종합 결론 (내러티브의 실적화 판단)</h2>
@@ -418,11 +580,11 @@ p > em {
 <p>[공시 팩트] 다중 팩트체크 결과, GST는 <strong>본업과 신사업 양 날개에서 최상의 실적화 변곡점에 도달</strong>했습니다:
 1. <strong>본업 (실적 가시성 95% 이상):</strong>
    - 고단가 체질 개선(P)이 완료된 상태에서 평택 P5, 용인 원삼 Y1 및 SK하이닉스 공급 확대(Q)가 결합되며 <strong>2026E 매출 4,389억 / OP 759억(1H26 연환산 기준 사실상 달성 확정)</strong>의 강력한 영업레버리지 사이클에 안착했습니다 <code>[추정: 26.09.29.LS증권.AI병목의 전이.pdf p.44 표 8]</code>.
-2. <strong>신사업 (글로벌 5대 밸류체인 프리미엄):</strong>
-   - 지상 규제를 피해 개화하는 해상 부유식 바지선 AIDC에서 <strong>염해 차단용 완전밀봉 액침냉각과 고효율 칠러 시스템이 필수로 탑재</strong>됨에 따라, 글로벌 5대 플레이어로 공인된 GST의 시스템 수주 단가(ASP) 프리미엄이 유효하게 작동하고 있습니다 <code>[시장 내러티브: 26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.135 AIDC 냉각 밸류체인 요약표]</code>.
-3. <strong>재무 안전마진:</strong>
-   - 부채비율 23.8%의 무차입 경영, 50억 원 자사주 취득 신탁계약, 배당성향 25.68%로 하방 경직성이 단단히 확보되어 있습니다.</p>
-<p><strong>최종 판정: [ 강력한 실적화 국면 (High Conviction) — 투자 가설 전수 유효 ]</strong></p>
+2. <strong>신사업 (S-Curve Phase 2 골든 스위트스팟 프리미엄):</strong>
+   - 침투율 12.5%로 10% 캐즘을 돌파한 AIDC 액침냉각 시장에서 <strong>글로벌 5대 플레이어(Submer, GRC, LiquidStack, Asperitas, GST)로 공인</strong>되어 있으며 <code>[시장 내러티브: 26.09.02.유안타증권 p.135]</code>, 해상 바지선 FDC 환경에서 필수 인프라로 채택되고 있습니다 <code>[글로벌 트렌드: 26.09.08.LS증권 p.31]</code>.
+3. <strong>눌림목 가격 안전마진 확보:</strong>
+   - 10월 초 전고점 과열(54,200원, PER 17.95배)을 해소하고 현재 <strong>45,250원(PER 14.99배, 2026F PER 13.0배)</strong>으로 기술적 조정을 마쳐 손익비가 우수한 재진입/분할매수 기회를 제공합니다.</p>
+<p><strong>최종 판정: [ 강력한 실적화 국면 (High Conviction) — 투자 가설 전수 유효 및 눌림목 재진입 매력 부각 ]</strong></p>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -448,14 +610,85 @@ p > em {
                 }
             });
             
-            // DCF Calculator
+            // DCF Calculator & Master SOP Calculator
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
-                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
+                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
+                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
+                const initWacc = rawWacc.toFixed(1);
+                const initTerminal = rawTerm.toFixed(1);
+
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
+                    const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
+                }
+
+                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
+                    const rows = document.querySelectorAll('table tr');
+                    rows.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 5) {
+                            const label = tds[0].innerText.trim();
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
+                            }
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
+                            }
+                        }
+                    });
+                }
+
+                if (!autoPocLow) {
+                    const bodyTxt = document.body.innerText;
+                    const mPoc = bodyTxt.match(/20일\s*매물대[^\n]*?([0-9]{1,3}(?:,[0-9]{3})+)\s*원\s*~/);
+                    if (mPoc) autoPocLow = parseFloat(mPoc[1].replace(/,/g, ''));
+                }
+
+                if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
+                if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
+                if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
+                if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
+
+                const initBuy1 = autoBear;
+                const initBuy2 = rawPrice;
+                const initBuy3 = Math.round(rawPrice * 1.03);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -485,6 +718,48 @@ p > em {
                         '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
                         '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
                         '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sop-calc-container" id="sop-calc-container">' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>총 투자예산 (원)</label>' +
+                            '<input type="text" id="sop-input-budget" value="10,000,000">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 정찰병 매수가 (30% · Bear/눌림목)</label>' +
+                            '<input type="text" id="sop-input-buy1" value="' + initBuy1.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 본대 매수가 (40% · 매물대+20일선 돌파)</label>' +
+                            '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
+                            '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
+                            '<input type="text" id="sop-input-base" value="' + autoBase.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 목표가 (Bull 호황 상단, 원)</label>' +
+                            '<input type="text" id="sop-input-bull" value="' + autoBull.toLocaleString() + '">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="sop-grid-3">' +
+                        '<div class="sop-card buy-card" id="sop-buy-summary"></div>' +
+                        '<div class="sop-card stop-card" id="sop-stop-summary"></div>' +
+                        '<div class="sop-card sell-card" id="sop-sell-summary"></div>' +
                     '</div>' +
                 '</div>';
 
@@ -617,6 +892,128 @@ p > em {
                 });
 
                 calculateImpliedGrowth();
+
+                // Master SOP Calculator Logic
+                const elBudget = document.getElementById('sop-input-budget');
+                const elBuy1 = document.getElementById('sop-input-buy1');
+                const elBuy2 = document.getElementById('sop-input-buy2');
+                const elPocLow = document.getElementById('sop-input-poc-low');
+                const elBuy3 = document.getElementById('sop-input-buy3');
+                const elBase = document.getElementById('sop-input-base');
+                const elBull = document.getElementById('sop-input-bull');
+
+                const elBuySummary = document.getElementById('sop-buy-summary');
+                const elStopSummary = document.getElementById('sop-stop-summary');
+                const elSellSummary = document.getElementById('sop-sell-summary');
+
+                function calculateSopPlan() {
+                    const budget = parseFormattedNum(elBudget.value) || 0;
+                    const b1 = parseFormattedNum(elBuy1.value) || 1;
+                    const b2 = parseFormattedNum(elBuy2.value) || 1;
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
+                    const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const tBase = parseFormattedNum(elBase.value) || b2;
+                    const tBull = parseFormattedNum(elBull.value) || b2;
+
+                    const alloc1 = budget * 0.30;
+                    const alloc2 = budget * 0.40;
+                    const alloc3 = budget * 0.30;
+
+                    const qty1 = Math.floor(alloc1 / b1);
+                    const qty2 = Math.floor(alloc2 / b2);
+                    const qty3 = Math.floor(alloc3 / b3);
+                    const totalQty = qty1 + qty2 + qty3;
+                    const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
+                    const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
+
+                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
+                    const safetyPin = Math.round(pocLow * 0.97);
+                    const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
+                    const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
+                    const sellQty1 = Math.floor(totalQty * 0.50);
+                    const sellQty2 = totalQty - sellQty1;
+                    const profit1 = sellQty1 * (tBase - avgPrice);
+                    const profit2 = sellQty2 * (tBull - avgPrice);
+                    const totalProfit = profit1 + profit2;
+                    const totalRoiNum = totalInvested > 0 ? ((totalProfit / totalInvested) * 100) : 0;
+                    const baseUpsideNum = avgPrice > 0 ? ((tBase / avgPrice - 1) * 100) : 0;
+                    const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
+                    const trailingStop3 = Math.round(tBull * 0.92);
+
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
+                    function fmtSignedKrw(v) {
+                        const r = Math.round(v);
+                        return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
+                    }
+                    function fmtSignedPct(v) {
+                        return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+                    }
+
+                    const riskAmt = Math.max(1, avgPrice - safetyPin);
+                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
+                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+
+                    elBuySummary.innerHTML =
+                        '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
+                        '<div class="sop-stat-line">• <strong>1차 정찰병(30%):</strong> ' + b1.toLocaleString() + '원 × <strong>' + qty1.toLocaleString() + '주</strong> (' + Math.round(qty1 * b1).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>2차 본대(40%):</strong> ' + b2.toLocaleString() + '원 × <strong>' + qty2.toLocaleString() + '주</strong> (' + Math.round(qty2 * b2).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+
+                    elStopSummary.innerHTML =
+                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
+                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
+                        '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
+                        '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
+
+                    elSellSummary.innerHTML =
+                        '<h4>🟢 ③ 2단계 분할 익절 & 고점경보</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 반타작(50%, ' + sellQty1.toLocaleString() + '주 @ ' + tBase.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit1) + '</strong> (' + fmtSignedPct(baseUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+
+                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                sopInputs.forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateSopPlan();
+                    });
+                });
+
+                calculateSopPlan();
             }
         });
     </script>

@@ -294,6 +294,95 @@ p > em {
     color: #d97706;
 }
 
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    .sop-calc-container {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0 35px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    }
+    .sop-calc-container h3 {
+        margin-top: 0;
+        color: #0f172a;
+        border-bottom: 2px solid #94a3b8;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+    .sop-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+    .sop-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+    .sop-card.buy-card { border-left: 4px solid #2563eb; }
+    .sop-card.stop-card { border-left: 4px solid #dc2626; background: #fff5f5; }
+    .sop-card.sell-card { border-left: 4px solid #059669; }
+    .sop-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 10.5pt;
+        color: #1e293b;
+    }
+    .sop-stat-line {
+        font-size: 9.8pt;
+        margin: 4px 0;
+        color: #334155;
+    }
+    .sop-highlight {
+        font-weight: 800;
+        color: #0f172a;
+    }
+    .sop-pin-badge {
+        display: inline-block;
+        background: #dc2626;
+        color: #fff;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 9.5pt;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -311,7 +400,7 @@ LG생활건강은 아름다움(Beauty: 화장품), 일상건강(HDB: 생활용�
 <li><strong>HDB (생활용품)</strong>: 계면활성제 기초소재인 Palm Stearin Oil, 우지, 소다회, AOS 등은 (주)이수화학, (주)동남합성 등으로부터 매입합니다 <code>[공시 팩트: 반기보고서 p.5-6]</code>.</li>
 <li><strong>Refreshment (음료)</strong>: 핵심 원액과 당류는 한국코카콜라(유), (유)사조씨피케이 등으로부터 독점 조달하며, 캔·페트 보조재는 동원시스템즈(주), 한일제관(주) 등으로부터 매입합니다 <code>[공시 팩트: 반기보고서 p.88]</code>.</li>
 <li>
-<p><strong>[26.09.29 최신 글로벌 트렌드 연계 🌐]</strong>:</p>
+<p><strong>[최신 글로벌 거시 트렌드 연계 🌐]</strong>:</p>
 <ul>
 <li><strong>이란전쟁 초고유가($107) 원가 압박</strong>: 이란전쟁 장기화(호르무즈 해협 봉쇄)로 브렌트유가 배럴당 $107를 돌파하며 석유화학 유래 계면활성제 및 플라스틱 용기 등 부자재 조달 단가에 원가 상승 압력이 가중되고 있습니다 <code>[글로벌 트렌드: 26.09.16.IM증권.이란전쟁 이후의 산업 재편.pdf p.12 도표 18]</code>.</li>
 <li><strong>환율 1,300원대 중반 안착 방어벽</strong>: 반면 과거 1,500원대 중반까지 치솟았던 원/달러 환율이 1,300원대 중반으로 안정화되면서 팜유, 원당, 원액 등 전량 달러 결제 수입 원자재의 원화 환산 조달 부담을 상당 부분 완충하고 있습니다 <code>[글로벌 트렌드: 26.09.16.IM증권 p.14]</code>.</li>
@@ -327,7 +416,8 @@ LG생활건강은 아름다움(Beauty: 화장품), 일상건강(HDB: 생활용�
 <p><strong>고객 (글로벌 유통망 및 최종 판매)</strong>:</p>
 </li>
 <li><strong>Beauty</strong>: 백화점, 면세점, H&amp;B스토어 등 국내 채널과 중국, 일본, 북미, 동남아 등 글로벌 시장으로 유통됩니다.</li>
-<li><strong>[2026.09.01 북미 만성 적자 법인 'The Avon Company' 지분 100% 매각 완료]</strong>: 연간 300억 원 안팎의 당기순손실을 지속 발생시키고 완전자본잠식(-1,361억 원) 및 700억 원대 우발채무 소송 리스크를 유발하던 북미 직판 법인 The Avon Company(및 캐나다 법인) 지분 100%를 Stratford Worldwide, LLC에 USD 5,566,667(약 76.5억 원)에 매각하여 거래를 최종 종결하였습니다 <code>[공시 팩트: 2026.09.01 타법인주식및출자증권처분결정(기재정정)]</code>. 이로써 북미 레거시 방판 조직 누수를 완전히 차단하고, '더후', '빌리프'(얼타뷰티 입점), 'CNP'(얼타 입점), '닥터그루트'(세포라 및 북미 코스트코 682곳 입점) 등 프리미엄 브랜드 직진출 체제로 사업 구조를 완전 재편하였습니다.</li>
+<li><strong>[2026.09.01 북미 만성 적자 법인 'The Avon Company' 지분 100% 매각 완료]</strong>: 연간 300억 원 안팎의 당기순손실을 지속 발생시키고 완전자본잠식(-1,361억 원) 및 700억 원대 우발채무 소송 리스크를 유발하던 북미 직판 법인 The Avon Company(및 캐나다 법인) 지분 100%를 Stratford Worldwide, LLC에 USD 5,566,667(약 76.5억 원)에 매각하여 거래를 최종 종결하였습니다 <code>[공시 팩트: 2026.09.01 타법인주식및출자증권처분결정(기재정정)]</code>. 이로써 북미 레거시 방판 조직 누수를 완전히 차단하고 브랜드 직진출 체제로 사업 구조를 완전 재편하였습니다.</li>
+<li><strong>[26.10 최신 글로벌 트렌드: 북미 매출 중국 사상 첫 추월 전망 🌐]</strong>: 미국 시장에서 '닥터그루트'(1Q25 아마존 급성장 이후 코스트코 682곳 및 세포라 오프라인 유통망 진출), '빌리프'(얼타뷰티 입점), 'CNP'(얼타 입점), '더페이스샵' 중심의 지역 다변화가 본격화되며, <strong>2026년에는 화장품 부문 북미 매출(기타 1조 1,502억 원)이 사상 처음으로 중국 매출(6,310억 원)을 역전</strong>할 것으로 전망됩니다 <code>[글로벌 트렌드: 26.10.01.메리츠증권.모든 길은 K-뷰티로 통한다.pdf p.54, 57 표18]</code>.</li>
 <li><strong>HDB</strong>: 할인점, 대형마트, 편의점, 온라인 이커머스를 통해 공급됩니다. 단, 생성형 AI 에이전트의 가격 비교 및 최저가 자동 재구매 확산으로 저관여 생필품의 브랜드 프리미엄 약화 도전에 직면해 있습니다 <code>[글로벌 트렌드: 26.09.22.LS증권.에이전틱 커머스의 시대.pdf p.7 도표 및 p.8]</code>.</li>
 <li><strong>Refreshment</strong>: 독점 판권을 기반으로 식품점, 편의점, 체인슈퍼, 도매상 등에 공급되며, 비탄산/탄산 음료 시장 내 압도적인 가격 전가력을 발휘하는 캐시카우 역할을 수행합니다 <code>[공시 팩트: 반기보고서 p.19]</code>.</li>
 </ol>
@@ -335,7 +425,7 @@ LG생활건강은 아름다움(Beauty: 화장품), 일상건강(HDB: 생활용�
     subgraph 원자재 및 1차 공급망
         A1[&quot;화장품 원료 (엔에프씨, 고원화성, 연우)&quot;] --&gt; B1[&quot;청주 화장품 전용공장 (가동률 81.4%)&quot;]
         A2[&quot;생활용품 원료 (이수화학, 팜유 조달)&quot;] --&gt;|&quot;브렌트유 $107 압박 vs 환율 1,300원대 완충&quot;| B2[&quot;울산·온산·청주 공장 (울산 38.2% 유휴화)&quot;]
-        A3[&quot;음료 원액/보조재 (한국코카콜라, 동원시스템즈)&quot;] --&gt; B3[&quot;여주·양산·광주·천안 공장 (가동률 51~71%)&quot;]
+        A3[&quot;음료 원액/보조재 (한국코카콜라, 사조씨피케이)&quot;] --&gt; B3[&quot;여주·양산·광주·천안 공장 (가동률 51~71%)&quot;]
     end
 
     subgraph LG생활건강 3각 사업 포트폴리오
@@ -345,7 +435,7 @@ LG생활건강은 아름다움(Beauty: 화장품), 일상건강(HDB: 생활용�
     end
 
     subgraph 유통 채널 및 최종 소비자
-        C1 --&gt;|&quot;26.09.01 Avon 매각 완료 (적자 제거)&quot;| D1[&quot;백화점·면세점·북미 직진출 (얼타·세포라·코스트코)&quot;]
+        C1 --&gt;|&quot;26.09.01 Avon 매각 종결 / 26E 북미&gt;중국 역전&quot;| D1[&quot;백화점·면세점·북미 직진출 (세포라·코스트코·얼타)&quot;]
         C2 --&gt;|&quot;에이전틱 커머스 가격비교 직면&quot;| D2[&quot;대형마트·편의점·이커머스&quot;]
         C3 --&gt;|&quot;독점 라이선스 기반 강력한 가격전가력&quot;| D3[&quot;편의점·할인점·체인슈퍼·식품점&quot;]
         D1 --&gt; E[&quot;글로벌 및 국내 소비자&quot;]
@@ -384,10 +474,61 @@ DART 사업보고서 및 2026년 반기보고서 기준, 2026년 1분기부터 �
 <tr>
 <td style="text-align: left;"><strong>전사 합계</strong></td>
 <td style="text-align: left;">2021년 80,915억 → 2022년 71,858억 → 2024년 68,119억 → 2025년 63,555억 → <strong>2026.1H 32,340억 원</strong></td>
-<td style="text-align: left;"><code>[공시 팩트: 반기보고서 p.20]</code> 2025년 최악의 저점을 지나 상반기 3.23조 원 달성으로 연간 6.5조 원 외형 회복 가시화</td>
+<td style="text-align: left;"><code>[공시 팩트: 반기보고서 p.20]</code> 2025년 최악의 저점을 지나 상반기 3.23조 원 달성으로 연간 6.4조 원 외형 회복 가시화</td>
 </tr>
 </tbody>
 </table>
+<h3>2.1 S-Curve 신기술 테마 매출 익스포저(Exposure %) 산출표 (하이브리드 수비 검증)</h3>
+<p>[공시 팩트] DART 2026년 반기보고서 'II. 사업의 내용' 및 최신 글로벌 뷰티 트렌드 리포트를 기반으로, 당사의 글로벌 K-인디뷰티 및 북미 신채널 직결 매출 익스포저를 산출하여 30% 컷오프를 판정합니다 <code>[공시 팩트: 반기보고서 p.20-22, 글로벌 트렌드: 26.10.01.메리츠증권 p.54, 57]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">제품/서비스 구분</th>
+<th style="text-align: center;">매출액 (억원)</th>
+<th style="text-align: center;">전사 매출 비중(%)</th>
+<th style="text-align: center;">신기술 테마 직결 여부</th>
+<th style="text-align: center;">하이브리드 수비 판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>북미·신채널 브랜드군</strong> (닥터그루트, 빌리프, CNP 등 얼타·세포라·아마존 직진출)</td>
+<td style="text-align: center;">약 3,500.0억 원</td>
+<td style="text-align: center;"><strong>10.8%</strong></td>
+<td style="text-align: center;">직결 (글로벌 K-뷰티 확장/신채널)</td>
+<td style="text-align: center;">❌ 30% 미만: <strong>[🚫 수혜 제외 (LG생건형 잠식)]</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>대중국·면세 레거시 화장품</strong> ('더후', '숨', '오휘' 등 한방 럭셔리 라인업)</td>
+<td style="text-align: center;">약 12,395.0억 원</td>
+<td style="text-align: center;"><strong>38.3%</strong></td>
+<td style="text-align: center;">비해당 / 전통 럭셔리 레거시</td>
+<td style="text-align: center;">❌ 대중국 부진 잠식</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HDB 생활용품</strong> (페리오, 엘라스틴, 테크, 샤프란 등)</td>
+<td style="text-align: center;">7,755.0억 원</td>
+<td style="text-align: center;"><strong>24.0%</strong></td>
+<td style="text-align: center;">비해당 / 내수 필수소비재</td>
+<td style="text-align: center;">❌ 전통 내수 BM (에이전틱 커머스 직면)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Refreshment 음료</strong> (코카콜라, 스프라이트, 몬스터에너지 등)</td>
+<td style="text-align: center;">8,690.0억 원</td>
+<td style="text-align: center;"><strong>26.9%</strong></td>
+<td style="text-align: center;">비해당 / 전통 내수 음료</td>
+<td style="text-align: center;">❌ 전통 캐시카우 BM</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>테마 실질 익스포저 합산:</strong> <strong>10.8%</strong> (신기술·신채널 직결 매출 약 3,500억 원 ÷ 1H26 전사 매출 3조 2,340억 원)</li>
+<li><strong>수혜 적격성 최종 판정:</strong> <strong><code>[🚫 수혜 제외 탈락 (레거시 잠식 위험)]</code></strong></li>
+<li><strong>판정 사유 및 구조적 배경</strong>:</li>
+<li>DART 사업보고서 및 최신 글로벌 트렌드 분석 결과, 북미 아마존 및 세포라·코스트코에서 고성장 중인 닥터그루트·빌리프 등 신규 라인업 매출 비중은 전사의 <strong>약 10.8% 수준</strong>에 불과합니다.</li>
+<li>반면 전사 매출의 <strong>89.2%</strong>가 여전히 대중국/면세 레거시 화장품(38.3%)과 내수 생활용품(24.0%), 음료(26.9%) 등 전통 성숙기 비즈니스에 묶여 있습니다.</li>
+<li>이에 따라 북미 신채널에서의 의미 있는 성장이 대중국 면세 부진 및 생활용품 유휴화 고정비에 희석되는 <strong>전형적인 '레거시 잠식(Cannibalization)' 구조</strong>를 나타내며, <code>korean cycle/00_megatrend/docs/s_curve_registry.json</code>의 수혜 제외 종목 공인 사유(대중국/면세 비중 70%+ 및 테마 직결 30% 미달)와 100% 일치합니다.</li>
+</ul>
 <hr />
 <h2>3. 전사 영업이익률 및 FCF 추이</h2>
 <p>[공시 팩트] 
@@ -462,11 +603,11 @@ DART 사업보고서 및 2026년 반기보고서 기준, 2026년 1분기부터 �
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026F (E)</strong></td>
-<td style="text-align: center;">64,800억 원</td>
-<td style="text-align: center;">4,800억 원</td>
-<td style="text-align: center;">7.41%</td>
-<td style="text-align: center;">약 3,800억 원</td>
-<td style="text-align: left;">북미 에이본 매각 종결(300억 적자 소멸) + 환율 안정 <code>[추정: 컨센서스 26.09]</code></td>
+<td style="text-align: center;">63,589억 원</td>
+<td style="text-align: center;">3,865억 원</td>
+<td style="text-align: center;">6.08%</td>
+<td style="text-align: center;">약 3,500억 원</td>
+<td style="text-align: left;">북미 에이본 매각 종결(300억 적자 소멸) + 화장품 흑자전환 <code>[추정: 메리츠증권 26.10.01 p.54]</code></td>
 </tr>
 </tbody>
 </table>
@@ -485,11 +626,12 @@ DART 2026년 반기보고서 상에 기재된 사업장별 누적 실제가동�
 <li><strong>주요 공장별 실제 평균 가동률 추이</strong>:</li>
 <li><strong>Beauty (화장품)</strong>:<ul>
 <li>청주 공장: 가동가능시간 1,160시간 중 944시간 실제 가동하여 <strong>평균 가동률 81.4%</strong>를 기록 (2021년 슈퍼사이클 82.2%에 육박하는 높은 가동률 유지).</li>
+<li><em>원인 분석</em>: 대중국 럭셔리 라인 일부 조정에도 불구하고, 기능성 프리미엄(닥터그루트, 유시몰)의 뷰티 부문 이관 및 북미 아마존·코스트코 대응 물량 증가가 가동률 하방을 든든하게 지지하고 있습니다.</li>
 </ul>
 </li>
 <li><strong>HDB (생활용품)</strong>:<ul>
 <li>청주 공장: 가동가능 1,893시간 중 1,177시간 가동하여 <strong>62.2%</strong> 기록.</li>
-<li><strong>울산 공장: 가동가능 2,372시간 중 907시간 가동하여 38.2% 기록 (🚨 심각한 유휴화 경보)</strong>. 2021년 65.0%에서 2022년 53.8%, 2026년 1분기 40.9%를 거쳐 38.2%까지 붕괴되었습니다. 이는 대형마트 오프라인 점포 축소 및 생활용품 소비 둔화가 물리적 공장 유휴화 및 고정비 부담으로 직결되고 있음을 숫자로 명확히 방증합니다.</li>
+<li><strong>울산 공장: 가동가능 2,372시간 중 907시간 가동하여 38.2% 기록 (🚨 심각한 유휴화 경보)</strong>. 2021년 65.0%에서 2022년 53.8%, 2026년 1분기 40.9%를 거쳐 38.2%까지 붕괴되었습니다. 이는 대형마트 오프라인 점포 축소 및 생활용품 소비 둔화, 그리고 AI 에이전틱 커머스 확산으로 인한 저관여 생필품 브랜드력 약화가 물리적 공장 유휴화 및 고정비 부담으로 직결되고 있음을 숫자로 명확히 방증합니다.</li>
 <li>온산 공장: 가동가능 3,600시간 중 2,356시간 가동하여 <strong>65.5%</strong> 기록.</li>
 </ul>
 </li>
@@ -498,7 +640,7 @@ DART 2026년 반기보고서 상에 기재된 사업장별 누적 실제가동�
 </ul>
 </li>
 <li><strong>수주잔고 (백로그) 현황</strong>:</li>
-<li><strong>"해당사항 없음"</strong> <code>[공시 팩트: 반기보고서 p.10]</code>. 화장품, 생활용품, 음료 등 최종 소비재 제품은 대리점 및 유통업체의 단기 주문에 즉각 출하하는 구조이므로 장기 수주잔고는 존재하지 않습니다.</li>
+<li><strong>"해당사항 없음"</strong> <code>[공시 팩트: 반기보고서 p.10]</code>. 화장품, 생활용품, 음료 등 최종 소비재 제품은 대리점 및 유통업체의 단기 발주에 즉각 출하하는 구조이므로 장기 수주잔고는 존재하지 않습니다.</li>
 <li><strong>핵심 원재료 가격(ASP) 추이</strong>:</li>
 <li>음료용 포도과즙 매입단가: 2024년 kg당 3,206원 → 2025년 3,211원 → <strong>2026년 상반기 3,446원</strong>으로 소폭 상승 <code>[공시 팩트: 반기보고서 p.17]</code>.</li>
 <li>팜유(Palm Stearin Oil) 및 식물성 유지 원가: 고유가($107) 압박이 존재하나 원/달러 환율의 1,300원대 중반 안착으로 전년 대비 원화 조달 단가가 안정화 추세에 진입했습니다 <code>[글로벌 트렌드: 26.09.16.IM증권 p.12]</code>.</li>
@@ -570,7 +712,7 @@ LG생활건강의 최대주주는 <strong>주식회사 LG ((주)LG)</strong>로 
 <hr />
 <h2>6. 공시 본문 기반 3대 핵심 리스크</h2>
 <p>[공시 팩트] 
-DART 정기보고서 본문 및 최신 글로벌 거시 환경을 종합 분석하여 도출한 3대 핵심 리스크입니다 <code>[공시 팩트: 반기보고서 p.325, 26.09 글로벌 트렌드]</code>:</p>
+DART 정기보고서 본문 및 최신 글로벌 거시 환경을 종합 분석하여 도출한 3대 핵심 리스크입니다 <code>[공시 팩트: 반기보고서 p.325, 26.10 글로벌 트렌드]</code>:</p>
 <table>
 <thead>
 <tr>
@@ -594,8 +736,8 @@ DART 정기보고서 본문 및 최신 글로벌 거시 환경을 종합 분석�
 <td style="text-align: center;"><strong>Mid</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>③ 중국 럭셔리 내수 부진 및 K-뷰티 대형주 소외 리스크</strong></td>
-<td style="text-align: left;">중국 내 애국소비(궈차오) 및 부동산발 경기 침체 장기화로 고마진 럭셔리 브랜드 '더후'의 과거 수준 폭발적 회복이 지연되고 있습니다. 또한 북미·유럽 K-뷰티 수출 호황의 수혜가 중소 인디 및 ODM사에 집중되며 <strong>증권사 화장품 업종 주가지수에서 "LG생활건강 제외"가 공식 명시</strong>될 정도로 시장 수급 소외가 극심합니다 <code>[글로벌 트렌드: 26.09.07.SK증권.체급이 달라졌다 p.21]</code>.</td>
+<td style="text-align: left;"><strong>③ K-뷰티 수출 호황 내 대형 레거시주 상대적 소외 리스크</strong></td>
+<td style="text-align: left;">K-뷰티 수출이 글로벌 2위에 오르며 사상 최대 호황을 구가하고 있으나, 성장의 주역이 인디브랜드 및 ODM사(에이피알, 실리콘투, 한국콜마, 코스맥스 등)에 집중되고 있습니다 <code>[글로벌 트렌드: 26.10.01.메리츠증권 p.4, 33]</code>. LG생활건강은 닥터그루트·빌리프의 북미 진출로 지역 다변화를 도모하고 있으나, 대형 럭셔리(더후)의 중국 소비 둔화 및 생활용품·음료 등 비화장품 레거시 비중(51%)으로 인해 피어 대비 멀티플 디레이팅 압박이 지속될 수 있습니다 <code>[글로벌 트렌드: 26.10.01.메리츠증권 p.36]</code>.</td>
 <td style="text-align: center;"><strong>High</strong></td>
 <td style="text-align: center;"><strong>High</strong></td>
 </tr>
@@ -629,26 +771,26 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <ol>
 <li><strong>PBR 밴드: 실질 유통주식수 BPS 의무화 (자사주 차감 강제)</strong>:</li>
 <li><strong>산식</strong>: <code>BPS = 지배주주 순자산(4조 9,486억 원) ÷ (총 발행주식수 14,975,523주 − 보통주 자기주식수 315,738주) = 337,569원</code>.</li>
-<li><strong>Sanity Check 통과</strong>: 네이버 금융 / FnGuide / KRX 공식 BPS(<strong>337,569원</strong>)와 100% 일치하며, 현재 주가(271,500원) 대비 <strong>공식 PBR 0.80배</strong>와 정합성 오차율 0.0% 검증을 완료하였습니다 <code>[검증 통과: backtest_valuation.py]</code>.</li>
+<li><strong>Sanity Check 통과</strong>: 네이버 금융 / FnGuide / KRX 공식 BPS(<strong>337,569원</strong>)와 100% 일치하며, 현재 주가(264,000~267,500원) 대비 <strong>공식 PBR 0.79배</strong>와 정합성 오차율 0.0% 검증을 완료하였습니다 <code>[검증 통과: backtest_valuation.py 2026.10.15]</code>.</li>
 <li><strong>10년 풀사이클(521주) 역사적 Trough/Peak 포착</strong>:<ul>
 <li>10년 역사적 Peak: 1,763,000원 (2021.06.25, Peak PBR 5.20배)</li>
 <li>10년 역사적 Trough: 215,000원 (2026.06.26, Trough PBR 0.64배)</li>
-<li>현재 주가 271,500원~303,000원은 PBR 0.80배~0.89배로 10년 역사적 바닥권에 위치합니다.</li>
+<li>현재 주가는 PBR 0.79배로 10년 역사적 바닥권(Trough 근접)에 위치합니다.</li>
 </ul>
 </li>
 <li><strong>PER 밴드: 레짐 시프트(Regime Shift) 시계열 분할 분석</strong>:</li>
 <li>2021년 7월 중국 럭셔리 슈퍼사이클 붕괴를 기점으로 비가역적 체제 전환 발생:<ul>
 <li><strong>Pre-Rerating 밴드 (2016~2021.06 중국 면세/후 독점 황금기)</strong>: PER 25.0배 ~ 42.0배 (중앙값 32.5배).</li>
 <li><strong>Post-Rerating 밴드 (2021.07~2026 현재 리오프닝 실패/다이궁 붕괴/필수소비재 강등)</strong>: PER 12.0배 ~ 22.0배 (중앙값 16.5배, 2025년 순손실 -858억으로 일시 산출 불가).</li>
-<li><strong>게이트키퍼 룰</strong>: 신규 사업 비중 30% 미달로 리레이팅 확장은 불가하며, 2026F Fwd EPS(20,870원) 기준 현재 주가는 Fwd PER 약 13.0~14.5배 수준입니다.</li>
+<li><strong>게이트키퍼 룰</strong>: Section 2.1 신기술/신채널 매출 익스포저가 10.8%로 30% 기준에 미달하여 공식 리레이팅 확장은 불가하며, 2026F Fwd EPS(15,814원~16,369원) 기준 현재 주가는 Fwd PER 약 16.2~17.0배 수준입니다 <code>[추정: 메리츠증권 26.10.01 p.55, 59]</code>.</li>
 </ul>
 </li>
 <li><strong>배당수익률 밴드: 중기 주주환원 정책 격변 시계열 분리</strong>:</li>
 <li>2025년 보통주 307.9만 주(약 17%) 전량 소각 단행 및 배당성향 30% 상향 계획.</li>
 <li>2026년 중간배당 주당 1,500원(YoY +50%) 지급 완료. 과거 10년 밴드(0.40% ~ 1.65%) 대비 Forward 배당수익률 1.1%~1.3%의 안정적 배당쿠션 형성.</li>
 <li><strong>EV/EBITDA 밴드: 감가상각비 반영 및 동적 순현금 연동</strong>:</li>
-<li>전국 10여 개 제조시설 보유로 연간 감가상각비(D&amp;A) 약 2,500~3,000억 원 발생.</li>
-<li>순차입금(현금성자산 약 1.8조 원 − 총차입금 약 0.5조 원 = 순현금 약 1.3조 원)을 동적으로 반영. 10년 밴드: 5.8배 ~ 21.0배 (현재 7.2배로 중앙값 11.5배 하회).</li>
+<li>전국 10여 개 제조시설 보유로 연간 감가상각비(D&amp;A) 약 2,200~2,500억 원 발생.</li>
+<li>순차입금(현금성자산 약 1.8조 원 − 총차입금 약 0.5조 원 = 순현금 약 1.3조 원)을 동적으로 반영. 10년 밴드: 5.8배 ~ 21.0배 (현재 5.2배로 10년 Trough 하단에 위치).</li>
 </ol>
 <h3>[백테스트 결과 표 (10년 풀사이클 521주 캔들)]</h3>
 <table>
@@ -666,7 +808,7 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <tr>
 <td style="text-align: left;"><strong>PBR (실질 유통 BPS 기준)</strong></td>
 <td style="text-align: center;"><strong>0.64배 ~ 5.20배</strong></td>
-<td style="text-align: center;"><strong>0.80배 (Trough 바닥권)</strong></td>
+<td style="text-align: center;"><strong>0.79배 (Trough 바닥권)</strong></td>
 <td style="text-align: center;"><strong>0.8824</strong></td>
 <td style="text-align: center;"><strong>94.2%</strong></td>
 <td style="text-align: center;"><strong>1위 (채택)</strong></td>
@@ -674,7 +816,7 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <tr>
 <td style="text-align: left;"><strong>PER (레짐 시프트 반영)</strong></td>
 <td style="text-align: center;">12.0배 ~ 42.0배 (Post 12.0~22.0배)</td>
-<td style="text-align: center;">N/A (25년 적자 / 26F 13.5배)</td>
+<td style="text-align: center;">N/A (25년 적자 / 26F 16.5배)</td>
 <td style="text-align: center;">0.6815</td>
 <td style="text-align: center;">82.5%</td>
 <td style="text-align: center;">2위</td>
@@ -682,7 +824,7 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <tr>
 <td style="text-align: left;"><strong>EV/EBITDA (동적 순현금)</strong></td>
 <td style="text-align: center;">5.8배 ~ 21.0배</td>
-<td style="text-align: center;">7.2배 (중앙값 11.5배 하회)</td>
+<td style="text-align: center;">5.2배 (Trough 하단)</td>
 <td style="text-align: center;">0.6540</td>
 <td style="text-align: center;">81.0%</td>
 <td style="text-align: center;">3위</td>
@@ -690,7 +832,7 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <tr>
 <td style="text-align: left;"><strong>배당수익률 (DPS 기준)</strong></td>
 <td style="text-align: center;">0.40% ~ 1.65%</td>
-<td style="text-align: center;">0.74% (Forward ~1.2%)</td>
+<td style="text-align: center;">0.75% (Forward ~1.2%)</td>
 <td style="text-align: center;">0.5120</td>
 <td style="text-align: center;">76.5%</td>
 <td style="text-align: center;">4위</td>
@@ -702,10 +844,10 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
 <li><strong>선정 근거 및 밸류에이션 위치 해석</strong>: </li>
 <li>당사는 과거 10년간 중국 화장품 시장 격변으로 인해 영업이익이 1.29조 원에서 1,707억 원으로 급감하고 2025년 순손실(-858억 원)을 기록하는 등 이익 지표(PER)의 심한 왜곡과 일시적 산출 불가 구간이 발생했습니다.</li>
 <li>반면 전국 10여 개 생산기지와 5.0조 원에 달하는 탄탄한 자기자본(실질 유통 BPS 337,569원)을 반영하는 <strong>PBR 밴드(0.64배 ~ 5.20배)는 주가의 10년 역사적 폭락 및 바닥 형성 궤적을 가장 정밀하게 설명($R^2=0.8824$, 방향 일치율 94.2%)</strong>했습니다.</li>
-<li><strong>⚠️ 밸류에이션 위치 팩트체크</strong>: 현재 PBR은 <strong>0.80배</strong>로 10년 역사적 최저점(Trough 0.64배)에 근접한 <strong>하위 4% 백분위의 절대적 바닥권</strong>입니다. 주가가 21~23만 원대로 하락할 때마다 PBR 0.64~0.65배가 강력한 청산가치 하방 지지선(Floor)으로 작동했습니다.</li>
+<li><strong>⚠️ 밸류에이션 위치 팩트체크</strong>: 현재 PBR은 <strong>0.79배</strong>로 10년 역사적 최저점(Trough 0.64배)에 근접한 <strong>하위 4% 백분위의 절대적 바닥권</strong>입니다. 주가가 21~25만 원대로 하락할 때마다 PBR 0.64~0.75배가 강력한 청산가치 하방 지지선(Floor)으로 작동했습니다.</li>
 <li><strong>Phase 3 연계</strong>: </li>
 <li>본 결과는 Phase 3 시나리오 표의 <strong>주 밸류에이션 멀티플</strong> 선택에 직접 상속됩니다.</li>
-<li>Bear 시나리오에서 <code>실질 유통 BPS(337,569원) × Trough Target PBR(0.65배) = 219,000원 ~ 250,000원</code>을 청산가치 방어선으로 설정하고, 정상화 국면의 Target PER(Base 17.0배, Bull 19.0배)과 상호 정합성을 검증합니다.</li>
+<li>Bear 시나리오에서 <code>실질 유통 BPS(337,569원) × Target PBR 0.75배 = 약 253,180원</code>을 청산가치 방어선으로 설정하고, 정상화 국면의 Target PBR/PER(Base 347,070원, Bull 399,400원)과 상호 정합성을 검증합니다.</li>
 <li><strong>고정 규칙</strong>: 본 채택 지표는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 사용자 명시적 요청 또는 공시 기반 BM 구조적 격변 감지 시에만 재검토됩니다.</li>
 <li><strong>전환 시 근거 명시 의무</strong>: 지표를 변경할 때는 DART 보고서명 및 재백테스트 R² 수치, 동종 Peer 지표를 명시해야 합니다.</li>
 </ul>
@@ -734,14 +876,85 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
                 }
             });
             
-            // DCF Calculator
+            // DCF Calculator & Master SOP Calculator
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
-                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
+                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
+                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
+                const initWacc = rawWacc.toFixed(1);
+                const initTerminal = rawTerm.toFixed(1);
+
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
+                    const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
+                }
+
+                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
+                    const rows = document.querySelectorAll('table tr');
+                    rows.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 5) {
+                            const label = tds[0].innerText.trim();
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
+                            }
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
+                            }
+                        }
+                    });
+                }
+
+                if (!autoPocLow) {
+                    const bodyTxt = document.body.innerText;
+                    const mPoc = bodyTxt.match(/20일\s*매물대[^\n]*?([0-9]{1,3}(?:,[0-9]{3})+)\s*원\s*~/);
+                    if (mPoc) autoPocLow = parseFloat(mPoc[1].replace(/,/g, ''));
+                }
+
+                if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
+                if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
+                if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
+                if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
+
+                const initBuy1 = autoBear;
+                const initBuy2 = rawPrice;
+                const initBuy3 = Math.round(rawPrice * 1.03);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -771,6 +984,48 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
                         '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
                         '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
                         '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sop-calc-container" id="sop-calc-container">' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>총 투자예산 (원)</label>' +
+                            '<input type="text" id="sop-input-budget" value="10,000,000">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 정찰병 매수가 (30% · Bear/눌림목)</label>' +
+                            '<input type="text" id="sop-input-buy1" value="' + initBuy1.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 본대 매수가 (40% · 매물대+20일선 돌파)</label>' +
+                            '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
+                            '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
+                            '<input type="text" id="sop-input-base" value="' + autoBase.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 목표가 (Bull 호황 상단, 원)</label>' +
+                            '<input type="text" id="sop-input-bull" value="' + autoBull.toLocaleString() + '">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="sop-grid-3">' +
+                        '<div class="sop-card buy-card" id="sop-buy-summary"></div>' +
+                        '<div class="sop-card stop-card" id="sop-stop-summary"></div>' +
+                        '<div class="sop-card sell-card" id="sop-sell-summary"></div>' +
                     '</div>' +
                 '</div>';
 
@@ -903,6 +1158,128 @@ $$\implies \text{연결 매출액} \implies \text{영업이익} \implies \text{�
                 });
 
                 calculateImpliedGrowth();
+
+                // Master SOP Calculator Logic
+                const elBudget = document.getElementById('sop-input-budget');
+                const elBuy1 = document.getElementById('sop-input-buy1');
+                const elBuy2 = document.getElementById('sop-input-buy2');
+                const elPocLow = document.getElementById('sop-input-poc-low');
+                const elBuy3 = document.getElementById('sop-input-buy3');
+                const elBase = document.getElementById('sop-input-base');
+                const elBull = document.getElementById('sop-input-bull');
+
+                const elBuySummary = document.getElementById('sop-buy-summary');
+                const elStopSummary = document.getElementById('sop-stop-summary');
+                const elSellSummary = document.getElementById('sop-sell-summary');
+
+                function calculateSopPlan() {
+                    const budget = parseFormattedNum(elBudget.value) || 0;
+                    const b1 = parseFormattedNum(elBuy1.value) || 1;
+                    const b2 = parseFormattedNum(elBuy2.value) || 1;
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
+                    const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const tBase = parseFormattedNum(elBase.value) || b2;
+                    const tBull = parseFormattedNum(elBull.value) || b2;
+
+                    const alloc1 = budget * 0.30;
+                    const alloc2 = budget * 0.40;
+                    const alloc3 = budget * 0.30;
+
+                    const qty1 = Math.floor(alloc1 / b1);
+                    const qty2 = Math.floor(alloc2 / b2);
+                    const qty3 = Math.floor(alloc3 / b3);
+                    const totalQty = qty1 + qty2 + qty3;
+                    const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
+                    const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
+
+                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
+                    const safetyPin = Math.round(pocLow * 0.97);
+                    const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
+                    const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
+                    const sellQty1 = Math.floor(totalQty * 0.50);
+                    const sellQty2 = totalQty - sellQty1;
+                    const profit1 = sellQty1 * (tBase - avgPrice);
+                    const profit2 = sellQty2 * (tBull - avgPrice);
+                    const totalProfit = profit1 + profit2;
+                    const totalRoiNum = totalInvested > 0 ? ((totalProfit / totalInvested) * 100) : 0;
+                    const baseUpsideNum = avgPrice > 0 ? ((tBase / avgPrice - 1) * 100) : 0;
+                    const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
+                    const trailingStop3 = Math.round(tBull * 0.92);
+
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
+                    function fmtSignedKrw(v) {
+                        const r = Math.round(v);
+                        return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
+                    }
+                    function fmtSignedPct(v) {
+                        return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+                    }
+
+                    const riskAmt = Math.max(1, avgPrice - safetyPin);
+                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
+                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+
+                    elBuySummary.innerHTML =
+                        '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
+                        '<div class="sop-stat-line">• <strong>1차 정찰병(30%):</strong> ' + b1.toLocaleString() + '원 × <strong>' + qty1.toLocaleString() + '주</strong> (' + Math.round(qty1 * b1).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>2차 본대(40%):</strong> ' + b2.toLocaleString() + '원 × <strong>' + qty2.toLocaleString() + '주</strong> (' + Math.round(qty2 * b2).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+
+                    elStopSummary.innerHTML =
+                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
+                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
+                        '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
+                        '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
+
+                    elSellSummary.innerHTML =
+                        '<h4>🟢 ③ 2단계 분할 익절 & 고점경보</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 반타작(50%, ' + sellQty1.toLocaleString() + '주 @ ' + tBase.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit1) + '</strong> (' + fmtSignedPct(baseUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+
+                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                sopInputs.forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateSopPlan();
+                    });
+                });
+
+                calculateSopPlan();
             }
         });
     </script>

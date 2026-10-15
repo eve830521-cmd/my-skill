@@ -294,6 +294,95 @@ p > em {
     color: #d97706;
 }
 
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    .sop-calc-container {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0 35px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    }
+    .sop-calc-container h3 {
+        margin-top: 0;
+        color: #0f172a;
+        border-bottom: 2px solid #94a3b8;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+    .sop-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+    .sop-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+    .sop-card.buy-card { border-left: 4px solid #2563eb; }
+    .sop-card.stop-card { border-left: 4px solid #dc2626; background: #fff5f5; }
+    .sop-card.sell-card { border-left: 4px solid #059669; }
+    .sop-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 10.5pt;
+        color: #1e293b;
+    }
+    .sop-stat-line {
+        font-size: 9.8pt;
+        margin: 4px 0;
+        color: #334155;
+    }
+    .sop-highlight {
+        font-weight: 800;
+        color: #0f172a;
+    }
+    .sop-pin-badge {
+        display: inline-block;
+        background: #dc2626;
+        color: #fff;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 9.5pt;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -302,6 +391,11 @@ p > em {
 </head>
 <body>
     <h1>🔍 Phase 1: 기업 해독기 (원천 팩트 초안)</h1>
+<blockquote>
+<p><strong>[S-Curve 국면 인증 뱃지]</strong>: <code>[🟢 더블 S-Curve 복합 수혜: 1차 초고단 NAND 70%+ 성숙기 캐시카우 + 2차 선단 DRAM/HBM 5~10% 골든엔트리 초입 (적극 매수 &amp; 추세추종)]</code><br />
+<strong>[하이브리드 밸류체인 지위]</strong>: <code>[👑 DART 검증 순수 주도 대장주 (Solid SiC 익스포저 89.8%)]</code> / <code>[💎 식각 공정 병목 밸류체인 히든 챔피언]</code></p>
+</blockquote>
+<hr />
 <h2>1. 비즈니스 모델 및 밸류체인</h2>
 <p>[공시 팩트] 
 주식회사 티씨케이(TOKAI CARBON KOREA CO., LTD., 종목코드: 064760)는 반도체·태양전지 및 LED용 부품 전문 제조기업으로, 국내 최초로 가공공정, 고순화공정, CVD SiC(화학기상증착 탄화규소) 코팅공정의 일괄생산체제를 구축하였습니다 <code>[[티씨케이]사업보고서(2026.03.10), p.14], [[티씨케이]반기보고서(2026.08.14), p.14]</code>.</p>
@@ -321,6 +415,7 @@ p > em {
     D --&gt;|&quot;양산 램프업 가동&quot;| E
     E --&gt;|&quot;초고단 3D NAND &amp; HBM/선단 DRAM 수율 극대화&quot;| F[&quot;글로벌 AI 데이터센터 및 엔터프라이즈 서버&quot;]
 </code></pre>
+<hr />
 <h2>2. 주요 제품별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
 <p>[공시 팩트] 
 티씨케이는 주력 캐시카우인 <strong>Solid SiC 부문의 매출 비중이 매년 지속 상승</strong>하여 2026년 반기(누적) 기준 전사 매출의 <strong>89.8%</strong>(1,708.9억 원)를 기록, 사실상 단일 핵심 품목 중심의 압도적 시장 지배력을 확보했습니다 <code>[[티씨케이]반기보고서(2026.08.14), p.15], [[티씨케이]사업보고서(2026.03.10), p.16]</code>.</p>
@@ -407,9 +502,63 @@ p > em {
 </tr>
 </tbody>
 </table>
+<hr />
+<h3>2.1 S-Curve 신기술 테마 매출 익스포저(Exposure %) 산출표 (하이브리드 수비 검증)</h3>
+<p>[공시 팩트] 
+<code>s_curve_spec.md</code> 표준 명세서 및 DART 2026년 반기보고서 <code>II. 사업의 내용 - 2. 주요 제품 및 서비스</code> 기반으로 동사의 신기술 테마(초고단 낸드 HARC 식각 및 선단 공정 SiC 링) 직결 매출 익스포저를 산출하여 30% 컷오프를 검증합니다 <code>[[티씨케이]반기보고서(2026.08.14), p.15]</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">제품/서비스 구분</th>
+<th style="text-align: center;">매출액 (억원)</th>
+<th style="text-align: center;">전사 매출 비중(%)</th>
+<th style="text-align: center;">신기술 테마 직결 여부</th>
+<th style="text-align: center;">하이브리드 수비 판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Solid SiC 부문</strong> (식각 Ring, Wafer)</td>
+<td style="text-align: center;"><strong>1,708.9</strong></td>
+<td style="text-align: center;"><strong>89.8%</strong></td>
+<td style="text-align: center;"><strong>직결 (초고단 NAND HARC 식각 &amp; 선단 DRAM 필수 소모품)</strong></td>
+<td style="text-align: center;"><strong>🟢 순수 주도주 (50%+ 압도적 초과 달성)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Graphite 부문 (반도체용)</strong></td>
+<td style="text-align: center;">134.6</td>
+<td style="text-align: center;">7.1%</td>
+<td style="text-align: center;">간접 수혜 (실리콘 잉곳 성장 장비 부품, 레거시 캐시카우)</td>
+<td style="text-align: center;">⚪ 보조 라인업 (안정적 현금 창출)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Susceptor 부문</strong> (ALD/LED)</td>
+<td style="text-align: center;">51.6</td>
+<td style="text-align: center;">2.7%</td>
+<td style="text-align: center;">비해당 / 성숙기 부품 (전사 비중 축소 추세)</td>
+<td style="text-align: center;">⚪ 보조 라인업</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Graphite (태양광) 및 상품 히터</strong></td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">0.4%</td>
+<td style="text-align: center;">비해당 / 비핵심 유통</td>
+<td style="text-align: center;">⚪ 비핵심 제품군</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>테마 실질 익스포저 합산:</strong> <strong>89.8%</strong> (DART 확정 수치)</li>
+<li><strong>수혜 적격성 최종 판정:</strong> <strong><code>[🟢 순수 주도주 합격 (Pure Play)]</code></strong> (30% 컷오프 임계값을 3배 가까이 초과한 89.8%의 초고순도 익스포저 확보로 LG생활건강형 레거시 잠식 위험 원천 배제)</li>
+<li><strong>[더블 S-Curve 복합 수혜 구조]</strong>:</li>
+<li><strong>1차 S-Curve (3D NAND HARC 식각)</strong>: 침투율 70%+ 성숙기(Phase 3). 연간 3,000억 원 이상의 안정적 반복 교체(Recurring) 매출과 OPM 30% 수준의 견고한 하방 이익 지지대 역할 수행.</li>
+<li><strong>2차 S-Curve (선단 1b/1c nm DRAM &amp; HBM TSV/커패시터 식각)</strong>: 현재 침투율 5~10% 수준의 태동기(Phase 1) ➔ 10% 돌파 골든 엔트리(Phase 2) 진입 대기 국면. 커패시터 종횡비(30~40:1) 급상승 및 HBM 에지 수율 사수를 위한 Si 링 ➔ SiC 링 교체 가속화로 신규 TAM 확장 및 밸류에이션 2차 리레이팅 트리거 확보.</li>
+<li><strong>[공격수] 병목 밸류체인 역추론 판정:</strong> 3D NAND 고단화 및 선단 DRAM 미세화에 따른 식각 공정의 극한 플라즈마 마모 병목을 유일하게 해결하는 핵심 소재이므로, 동사는 반도체 제조 병목을 해결하는 <strong><code>[💎 식각 공정 병목 밸류체인 히든 챔피언]</code></strong>으로 공식 인증됩니다.</li>
+</ul>
+<hr />
 <h2>3. 전사 영업이익률 및 FCF 추이</h2>
 <p>[공시 팩트] 
-티씨케이는 과거 2021~2022년 독점적 프리미엄 시절 38~40%에 달하는 초고마진을 누렸으며, 2023년 메모리 다운사이클 및 감산 충격 속에서도 OPM <strong>29.4%</strong>를 수성하여 견고한 이익 하방 경직성을 입증했습니다 <code>[[티씨케이]사업보고서(2026.03.10), p.38]</code>. 2026년 상반기 누적 기준 영업이익 <strong>554.0억 원(OPM 29.12%)</strong>, 2분기 단일 OPM <strong>28.30%</strong>를 기록하며 안정적인 30% 내외 마진 체질을 유지하고 있습니다 <code>[[티씨케이]반기보고서(2026.08.14), p.123]</code>. </p>
+티씨케이는 과거 2021~2022년 독점적 프리미엄 시절 38~40%에 달하는 초고마진을 누렸으며, 2023년 메모리 다운사이클 및 감산 충격 속에서도 OPM <strong>29.4%</strong>를 수성하여 견고한 이익 하방 경직성을 입증했습니다 <code>[[티씨케이]사업보고서(2026.03.10), p.38]</code>. 2026년 상반기 누적 기준 영업이익 <strong>554.0억 원(OPM 29.12%)</strong>, 2분기 단일 영업이익 <strong>268.5억 원(YoY +37.7%, OPM 28.30%)</strong>을 기록하며 안정적인 30% 내외 마진 체질을 유지하고 있습니다 <code>[[티씨케이]반기보고서(2026.08.14), p.123]</code>. </p>
 <p>현금흐름 측면에서는 2022~2023년 선제적 대규모 설비 증설(기계장치 243억 원 등) 완료 후 CapEx가 대폭 안정화(반기 29.8억 원 집행)되면서, 2026년 상반기 잉여현금흐름(FCF) <strong>168.1억 원</strong>을 기록하여 전년 동기(41.5억 원) 대비 <strong>+304.8%</strong> 급증하는 순수 현금 수확 국면에 진입했습니다 <code>[[티씨케이]반기보고서(2026.08.14), p.128-129]</code>.</p>
 <table>
 <thead>
@@ -493,7 +642,7 @@ p > em {
 <td style="text-align: center;">107억</td>
 <td style="text-align: center;">-68억(조정)</td>
 <td style="text-align: center;"><strong>+175억</strong></td>
-<td style="text-align: left;">2분기 영업이익률 28.3% 수성 <code>[[티씨케이]반기보고서(2026.08.14), p.123]</code></td>
+<td style="text-align: left;">2분기 OP YoY +37.7% 성장 및 OPM 28.3% 수성 <code>[[티씨케이]반기보고서(2026.08.14), p.123]</code></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026.반기(누적)</strong></td>
@@ -507,6 +656,7 @@ p > em {
 </tr>
 </tbody>
 </table>
+<hr />
 <h2>4. 핵심 KPI 추이 (가동률, 수주잔고, ASP 등)</h2>
 <p>[공시 팩트] 
 티씨케이는 고정비 비중이 높은 연속공정 세라믹 제조업 특성상 <strong>공장 가동률</strong>과 <strong>수주잔고</strong>가 전사 영업레버리지와 이익 창출을 결정짓는 핵심 KPI입니다 <code>[[티씨케이]반기보고서(2026.08.14), p.15-16]</code>:</p>
@@ -517,6 +667,7 @@ p > em {
 <li>2025년: <strong>96.0%</strong> (정상화 달성) <code>[[티씨케이]사업보고서(2026.03.10), p.15]</code></li>
 <li>2026년 1분기: <strong>95.8%</strong> (가동가능 504시간 중 실제가동 483시간) <code>[[티씨케이]분기보고서(2026.05.15), p.16]</code></li>
 <li><strong>2026년 상반기</strong>: <strong>96.2%</strong> (가동가능 1,008시간 중 실제가동 970시간) <code>[[티씨케이]반기보고서(2026.08.14), p.16]</code> ➔ <strong>과거 2021~2022년 호황기 정점 수준(98%)에 사실상 도달한 풀가동 체제 확립</strong>.</li>
+<li><strong>단일 사업장 구조 검증</strong>: 동사는 종속회사 없는 개별(단일) 법인 체제로 경기도 안성공장 1개 핵심 생산기지에서 전 제품(Ceramic 및 Graphite)을 일괄 생산하므로, 법인별/사업장별 가동률 괴리나 해외 법인 적자 왜곡이 일체 존재하지 않습니다 <code>[[티씨케이]반기보고서(2026.08.14), p.14-16]</code>.</li>
 <li><strong>수주잔고 현황 (2026.06.30 기준)</strong>:</li>
 <li><strong>Solid SiC류 수주잔고</strong>: <strong>1,763.0억 원</strong> <code>[[티씨케이]반기보고서(2026.08.14), p.16]</code></li>
 <li>Graphite류 수주잔고: 192.9억 원 <code>[[티씨케이]반기보고서(2026.08.14), p.16]</code></li>
@@ -527,6 +678,7 @@ p > em {
 <li>2025년: 수출 64.4%(1,940억) / 내수 35.6%(1,073억) <code>[[티씨케이]사업보고서(2026.03.10), p.104]</code></li>
 <li><strong>2026년 상반기</strong>: <strong>수출 61.6%(1,173억 원) / 내수 38.4%(730억 원)</strong> <code>[[티씨케이]반기보고서(2026.08.14), p.16]</code> ➔ 글로벌 고객사 직납 비중 60% 이상 지속 유지.</li>
 </ol>
+<hr />
 <h2>5. 경영진 및 주주환원 이력</h2>
 <p>[공시 팩트] 
 티씨케이는 삼성전자재팬 대표이사 출신 오창민 대표이사 사장(전문경영인)과 일본 도카이카본 세라믹 사업부장 출신 카나이 켄이치 대표이사 회장의 공동 각자 대표이사 체제로 안정적인 글로벌 기술 및 영업망을 이끌고 있습니다 <code>[[티씨케이]사업보고서(2026.03.10), p.94], [[티씨케이]반기보고서(2026.08.14), p.1]</code>.</p>
@@ -547,11 +699,12 @@ p > em {
 </tr>
 <tr>
 <td style="text-align: left;"><strong>대규모 자기주식 영구 이익소각</strong></td>
-<td style="text-align: left;">• 2025년 12월 19일 자로 취득가 <strong>49,999,988,600원(약 500억 원) 상당의 자기주식 495,584주 전량 이익소각 완료</strong><br>• 총 발행주식수: 11,675,000주 ➔ <strong>11,179,416주</strong>로 <strong>4.24% 영구 감소</strong><br>• 2026년 6월 말 현재 자기주식수 <strong>0주</strong>, 총 발행주식수 = 공식 실질 유통주식수 = <strong>11,179,416주</strong> 확정</td>
+<td style="text-align: left;">• 2025년 12월 19일 자로 취득가 <strong>49,999,988,600원(약 500억 원) 상당의 자기주식 495,584주 전량 이익소각 완료</strong><br>• 총 발행주식수: 11,675,000주 ➔ <strong>11,179,416주</strong>로 <strong>4.24% 영구 감소</strong><br>• 2026년 6월 말 및 현재 자기주식수 <strong>0주</strong>, 총 발행주식수 = 공식 실질 유통주식수(<code>distb_stock_co</code>) = <strong>11,179,416주</strong> 확정</td>
 <td style="text-align: left;"><code>[[티씨케이]사업보고서(2026.03.10), p.55, p.110]</code>, <code>[[티씨케이]반기보고서(2026.08.14), p.11, p.14]</code></td>
 </tr>
 </tbody>
 </table>
+<hr />
 <h2>6. 공시 본문 기반 3대 핵심 리스크</h2>
 <p>[공시 팩트] 
 DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 중장기 사업성을 위협할 수 있는 3대 핵심 리스크를 정밀 평가합니다 <code>[[티씨케이]사업보고서(2026.03.10), p.15, p.92, p.100], [[티씨케이]반기보고서(2026.08.14), p.11, p.15]</code>:</p>
@@ -588,6 +741,7 @@ DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 �
 <blockquote>
 <p><strong>긍정적 비용 변동 공시 팩트</strong>: 2018년부터 (주)케이씨에 지급해 오던 Solid SiC Ring 판매지원 수수료 계약이 2026년 3월 31일 변경 계약 체결을 통해 <strong>2026년 12월 31일부로 추가 연장 없이 최종 종료</strong>됨 <code>[[티씨케이]반기보고서(2026.08.14), p.17]</code>. 2027년부터 연간 수수료 판관비 절감에 따른 OPM 추가 개선 효과 기대.</p>
 </blockquote>
+<hr />
 <h2>7. 비즈니스 모델 기반 표준 실적 산출 공식 (Phase 3 연계)</h2>
 <p>기업의 비즈니스 모델 특성과 Section 4(DART 공시 팩트)에 기반하여, 아래 <strong>3대 표준 공식 트리</strong> 중 <strong>유형 A [연속공정·장치산업]</strong>을 채택하고 영구 고정합니다:</p>
 <h3>[3대 업종별 표준 공식 트리 분기 검증]</h3>
@@ -601,78 +755,73 @@ DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 �
 <p>$$\text{[생산 Capa(원가 기준) } \times \text{공장 가동률(\%) } \times \text{원가율 역산 판가수준(ASP 배수)] } \rightarrow \text{매출액 } \rightarrow \text{영업이익(OPM) } \rightarrow \text{순이익 } \rightarrow \text{EPS}$$</p>
 <ul>
 <li><strong>채택 공식</strong>: <code>[생산 Capa × 공장 가동률 × ASP/믹스 계수] → 매출액 → 영업이익(OPM 28~32%) → 순이익(세율 20% 가정) → EPS(유통주식수 11,179,416주 기준)</code></li>
-<li><strong>선정 근거</strong>: 안성 Ceramic 공장의 CVD 코팅로 설비 Capa와 가동률이 공시 팩트로 실시간 추적 가능하며, 낸드 고단화에 따른 챔버 내 SiC 링 마모도 가속이 가동률 및 Q의 직접적 드라이버로 작동하기 때문입니다.</li>
+<li><strong>선정 근거</strong>: 안성 Ceramic 공장의 CVD 코팅로 설비 Capa와 가동률이 공시 팩트로 실시간 추적 가능하며, 낸드 고단화 및 선단 DRAM 침투에 따른 챔버 내 SiC 링 마모도 가속이 가동률 및 Q의 직접적 드라이버로 작동하기 때문입니다.</li>
 <li><strong>고정 규칙</strong>: 본 공식은 Phase 3 시나리오 분석(Bull/Base/Bear) 시 100% 동일하게 상속되며, 기업의 구조적 BM 격변(신사업 비중 30% 초과 등) 또는 사용자의 명시적 재검토 요청이 없는 한 영구 유지됩니다.</li>
 </ul>
+<hr />
 <h2>8. 최적 밸류에이션 지표 백테스트 (Phase 3 연계)</h2>
-<p>동사의 <strong>과거 10년 풀사이클(2016년 10월 ~ 2026년 10월 현재, 시클리컬 의무) 주봉(Weekly) 주가 시계열(521개 캔들)</strong>과 PER·PBR·배당수익률·EV/EBITDA 4개 밸류에이션 밴드의 상관관계를 분석하여, 주가 설명력이 가장 높은 최적 지표를 최초 1회 선정하고 영구 고정합니다.</p>
-<h3>[제도권 공식 벤치마크 및 Sanity Check 검증]</h3>
+<p>동사의 <strong>과거 10년 풀사이클(2016년 10월 ~ 2026년 10월 현재, 시클리컬 의무) 주봉(Weekly) 주가 시계열(522개 캔들)</strong>과 <code>Data.xlsx</code> 및 DART 정기보고서에서 추출한 <strong>PER·PBR·배당수익률·EV/EBITDA 4개 밸류에이션 밴드</strong>의 상관관계를 내장 백테스트 엔진(<code>backtest_valuation.py --code 064760 --years 10 --corp-name 티씨케이</code>)으로 정밀 분석하여, 주가 설명력이 가장 높은 최적 지표를 선정하고 영구 고정합니다.</p>
+<h3>[제도권 공식 벤치마크 및 Sanity Check 검증 (<code>backtest_valuation.py</code> 2026.10.12 실측)]</h3>
 <ul>
-<li><strong>분석 기준일 종가</strong>: <strong>314,000원</strong> (최신 주봉 종가: 293,000원)</li>
-<li><strong>공식 실질 BPS</strong>: <strong>49,328원</strong> (자사주 495,584주 소각 완료 실질 유통주식수 11,179,416주 기준)</li>
-<li><strong>공식 PBR</strong>: <strong>5.94배</strong></li>
-<li><strong>공식 EPS</strong>: <strong>7,287원</strong> (기본 주당순이익 기준, 2026년 반기 연환산 EPS 기준 8,724원)</li>
-<li><strong>공식 PER</strong>: <strong>40.21배</strong> (연환산 EPS 기준 33.6배~35.9배)</li>
-<li><strong>공식 배당수익률</strong>: <strong>0.49%</strong> (DPS 1,430원 기준)</li>
-<li>🛡️ <strong>Sanity Check</strong>: 주봉 종가(293,000원) ÷ 공식 BPS(49,328원) = PBR <strong>5.94배</strong> ➔ 제도권 네이버 금융/FnGuide 공식 PBR(5.94배)과 <strong>오차율 0.0%로 완벽 일치 통과 ✅</strong>.</li>
+<li><strong>분석 기준일(2026.10.12) 최신 주봉 종가</strong>: <strong>287,000원</strong> (장중 실시간 현재가: <strong>298,000원</strong>)</li>
+<li>10년 역사적 최저가(Trough): <strong>29,350원</strong> (2016-12-02)</li>
+<li>10년 역사적 최고가(Peak): <strong>308,000원</strong> (2026-04-24 주봉 종가 기준 / 장중 최고 348,500원)</li>
+<li><strong>공식 실질 BPS</strong>: <strong>49,328원</strong> (자사주 495,584주 소각 완료 실질 유통주식수 <code>11,179,416주</code> 기준)</li>
+<li><strong>공식 PBR</strong>: <strong>5.82배</strong> (최신 주봉 종가 287,000원 ÷ 49,328원 = 5.82배 / 실시간 298,000원 기준 시 6.04배)</li>
+<li><strong>공식 EPS</strong>: <strong>7,287원</strong> (TTM 기본 주당순이익 기준 / 2026년 반기 연환산 EPS <strong>8,724원</strong>)</li>
+<li><strong>공식 PER</strong>: <strong>39.39배</strong> (TTM EPS 7,287원 기준 / 연환산 EPS 8,724원 기준 시 <strong>32.90배</strong>)</li>
+<li><strong>공식 배당수익률</strong>: <strong>0.50%</strong> (2025 결산 DPS 1,430원 기준)</li>
+<li>🛡️ <strong>Sanity Check</strong>: 최신 주봉 종가(287,000원) ÷ 공식 유통 BPS(49,328원) = <strong>PBR 5.82배</strong> ➔ 제도권 네이버 금융/FnGuide 공식 PBR(5.82배)과 <strong>오차율 0.0%로 100% 완벽 일치 통과 ✅</strong>.</li>
 </ul>
-<h3>[10년 풀사이클 백테스트 결과표 (2016~2026)]</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">밸류에이션 지표</th>
-<th style="text-align: center;">10년 밴드 (MIN ~ MAX)</th>
-<th style="text-align: center;">현재 위치 (공식 PBR/PER 정합)</th>
-<th style="text-align: center;">주봉 주가 상관계수 (R²)</th>
-<th style="text-align: center;">방향 일치율</th>
-<th style="text-align: center;"><strong>순위</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>PBR (유통 BPS 기준)</strong></td>
-<td style="text-align: center;"><strong>1.46배 ~ 6.63배</strong></td>
-<td style="text-align: center;"><strong>5.94배</strong> (역사적 상단 근접)</td>
-<td style="text-align: center;"><strong>0.34</strong></td>
-<td style="text-align: center;"><strong>--</strong></td>
-<td style="text-align: center;"><strong>2위</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>PER (수정 EPS 기준)</strong></td>
-<td style="text-align: center;"><strong>5.93배 ~ 50.18배</strong></td>
-<td style="text-align: center;"><strong>40.21배</strong> (호황기 Peak 레짐)</td>
-<td style="text-align: center;"><strong>0.17</strong></td>
-<td style="text-align: center;"><strong>--</strong></td>
-<td style="text-align: center;"><strong>4위</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>배당수익률 (DPS 기준)</strong></td>
-<td style="text-align: center;"><strong>0.46% ~ 2.94%</strong></td>
-<td style="text-align: center;"><strong>0.49%</strong> (초저수익률 밴드 하단)</td>
-<td style="text-align: center;"><strong>0.86</strong></td>
-<td style="text-align: center;"><strong>--</strong></td>
-<td style="text-align: center;"><strong>1위</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>EV/EBITDA (동적 순현금)</strong></td>
-<td style="text-align: center;"><strong>3.82배 ~ 25.25배</strong></td>
-<td style="text-align: center;"><strong>18.41배</strong> (상단 밴드)</td>
-<td style="text-align: center;"><strong>0.30</strong></td>
-<td style="text-align: center;"><strong>--</strong></td>
-<td style="text-align: center;"><strong>3위</strong></td>
-</tr>
-</tbody>
-</table>
+<h3>[10년 풀사이클 &amp; 최근 3년 분위수 백테스트 결과표 (2016.10 ~ 2026.10, 522개 주봉)]</h3>
+<p>| 밸류에이션 지표 | 10년 풀사이클 밴드<br>(MIN ~ MAX / 중앙값) | 최근 3년(3Y) 실전 분위수 밴드<br>(하위20% / 평균 / 상위65% / 상위90%) | 현재 위치<br>(주봉 287,000원 기준) | 주봉 주가 상관계수 ($R^2$) | 연간 방향 일치율 | <strong>순위</strong> |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| <strong>배당수익률</strong><br>(DPS 기준) | <strong>0.46% ~ 2.94%</strong><br>(10년 중앙값 1.12%) | • DPS 1,200원 ~ 1,700원 구간<br>• 배당성향 3개년 <strong>22.9% 고정</strong> | <strong>0.50%</strong><br>(DPS 1,430원) | <strong>0.86</strong> | <strong>40.0%</strong><br>(4/10년) | <strong>1위 (결정계수 1위)</strong> |
+| <strong>PBR</strong><br>(유통 BPS 기준) | <strong>1.53배 ~ 9.63배</strong><br>(10년 중앙값 3.60배) | • 하위20%: <strong>2.01배</strong> | 평균: <strong>3.10배</strong><br>• 상위65%: <strong>3.21배</strong> | 상위90%: <strong>5.21배</strong><br>• 3Y 최고: <strong>6.63배</strong> | <strong>5.82배</strong><br>(BPS 49,328원) | <strong>0.38</strong> | <strong>70.0%</strong><br>(7/10년) | <strong>2위 (순자산 성장)</strong> |
+| <strong>EV/EBITDA</strong><br>(동적 순현금) | <strong>3.82배 ~ 25.25배</strong><br>(10년 중앙값 11.40배) | • 순현금 약 2,217억~2,500억 보유<br>• 무차입 현금 수확 구조 | <strong>18.03배</strong><br>(동적 순현금 차감) | <strong>0.30</strong> | <strong>80.0%</strong><br>(8/10년) | <strong>3위 (방향일치 우수)</strong> |
+| <strong>PER</strong><br>(수정 EPS 기준) | <strong>9.29배 ~ 51.96배</strong><br>(10년 중앙값 18.31배) | • 하위20%: <strong>15.00배</strong> | 평균: <strong>23.68배</strong><br>• 상위65%: <strong>25.96배</strong> | 상위90%: <strong>39.30배</strong><br>• 3Y 최고: <strong>51.96배</strong> | <strong>39.39배</strong><br>(26E 연환산 <strong>32.90배</strong>) | <strong>0.20</strong> | <strong>80.0%</strong><br>(8/10년) | <strong>4위 (방향일치 1위)</strong> |</p>
 <ul>
-<li><strong>채택 지표</strong>: <strong>1순위 배당수익률 모형 (R² = 0.86)</strong> 및 <strong>2순위 유통 BPS 기준 PBR 밴드 (R² = 0.34)</strong></li>
+<li><strong>채택 지표</strong>: <strong>1순위 <code>배당수익률 모형 (R² = 0.86)</code></strong> 및 <strong>2순위 <code>유통 BPS 기준 PBR 밴드 (R² = 0.38, 방향 일치율 70.0%)</code> + <code>수정 EPS 기준 PER 밴드 (방향 일치율 80.0%, 3Y 분위수 15.0~39.3배)</code></strong> 결합 채택.</li>
 <li><strong>선정 근거</strong>: </li>
-<li>티씨케이는 3개년 연속 배당성향 22.9%를 엄격히 고정하는 정책적 일관성으로 인해, 배당수익률의 역수(주가/DPS)가 주봉 주가 궤적과 가장 강력한 통계적 설명력($R^2 = 0.86$)을 기록하며 주가 하방 지지선의 핵심 잣대로 입증되었습니다.</li>
-<li>순자산 측면에서는 500억 원 상당의 자사주 영구 소각으로 BPS가 구조적으로 레벨업(49,328원)되었으며, 10년 PBR 밴드(1.46배 ~ 6.63배) 내에서 현재 5.94배 수준으로 역사적 상단 부근에 위치하여 호황기 진입을 선반영하고 있습니다.</li>
-<li>실적 기반 적정가 평가 시에는 PER 밴드의 10년 역사적 호황 Peak PER(50.18배) 및 다운사이클 중간값(20~25배)을 상한선(Cap)으로 상속 적용합니다.</li>
-<li><strong>Phase 3 연계</strong>: 이 결과는 Phase 3 시나리오 표의 적정주가 산출 시 <strong>배당수익률 하방 지지선(Floor)</strong>과 <strong>PBR 밴드 및 호황기 Peak PER 상한선(Cap)</strong> 교차 검증의 주 잣대로 직접 상속됩니다.</li>
-<li><strong>고정 규칙</strong>: 본 채택 지표는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 사용자 명시적 요청 또는 공시 기반 BM 구조적 격변 감지 시에만 재검토됩니다.</li>
-<li><strong>전환 시 근거 명시 의무</strong>: 향후 채택 지표 변경 시 <code>[전환 트리거]</code>, <code>[기존 지표 → 신규 지표]</code>, <code>[Peer 그룹 참조 및 PEG 검증]</code> 항목을 필수 기록합니다.</li>
+<li>티씨케이는 당기순이익의 20% 이상을 배당하는 정책 하에 최근 3개년 연속 현금배당성향 <strong>22.9%</strong>를 엄격히 고정해 왔으며, DPS 우상향(240원 ➔ 1,430원)과 주봉 주가 간 선형 결정계수가 <strong>$R^2 = 0.86$</strong>으로 가장 높게 나타납니다.</li>
+<li>또한 무차입 순현금 축적과 2025년 말 <strong>500억 원 규모 자사주 영구 이익소각(4.24% 주식수 감축)</strong>으로 실질 유통 BPS가 2016년 10,197원에서 2026년 반기 <strong>49,328원</strong>으로 단 한 번의 역성장 없이 우상향(최근 2년 누적 BPS 증감률 <strong>+15.15%</strong>)했습니다.</li>
+<li>연간 주가 방향성은 <strong>EPS 및 EBITDA 증감 방향과 80.0%(8/10년) 일치</strong>하므로, Phase 3 목표주가 산출 시 <code>max(EPS × 과거 3년 PER 분위수, BPS × 과거 3년 PBR 분위수)</code> 공식과 바텀업 실적 체인을 결합하여 적용합니다.</li>
 </ul>
+<h3>[Phase 3 마스터 SOP 사전 연동 진단 (<code>backtest_valuation.py</code> 자동 연산 결과)]</h3>
+<ol>
+<li><strong>Section 2 가치함정 이원화 판정</strong>: <strong><code>🟢 [유형 A: 일시적 사이클 저점 / 정상 성장 (Cyclical Trough)]</code></strong></li>
+<li>최근 2년 누적 BPS 증감률 <strong>+15.15%</strong> ($\ge +15\%$), 현재 연환산 ROE <strong>15.08%</strong> ($\ge 8.5\%$), 최근 2년 누적 EPS 증감률 <strong>+35.35%</strong> ($&gt; -30\%$), 주봉 정배열(20주선 246,050원 $\ge$ 60주선 215,377원)로 구조적 가치함정(유형 B) 요인이 전무합니다.</li>
+<li><strong>Section 3 종목 체질 판정</strong>: <strong><code>🚀 [성장·사이클 추세주 (유효 52주 등락폭 118.8% ≥ 36%)]</code></strong></li>
+<li>최근 52주 주봉 종가 범위 <code>140,800원 ~ 308,000원</code> (등락폭 <strong>118.8%</strong>), PBR <strong>5.82배</strong>로 전형적인 반도체 사이클 추세주에 해당합니다.</li>
+<li><strong><code>🛡️ 대안 B (보수적 순수 DART)</code> vs <code>🚀 대안 A (업황 모멘텀 · S-Curve 할증)</code> 가중 계수 확정</strong>:</li>
+<li><strong>① DART 영업이익 모멘텀 계수 (<code>op_mult = ×1.08</code>)</strong>: 최근 분기(2026.2Q) 영업이익 YoY <strong>+37.7%</strong> ($\ge +20\%$) 및 ROE <strong>15.08%</strong> ($\ge 12\%$) 동시 충족 ➔ <strong><code>+8.0% 할증</code></strong></li>
+<li><strong>② S-Curve Phase 2 스위트스팟 계수 (<code>sc_mult</code>)</strong>: Solid SiC 매출 익스포저 <strong>89.8%</strong> ($\ge 30\%$) 및 더블 S-Curve 복합 침투율 <strong>28.5%</strong> (<code>Phase 2: 골든 스위트스팟</code>, 검증 출처: <code>26.09.29.LS증권.AI병목의 전이.pdf p.13</code>) ➔ <strong><code>Base ×1.10 (+10.0%) / Bull ×1.12 (+12.0%) 할증</code></strong></li>
+<li><strong>③ 최종 대안 A 멀티플 가중치</strong>: <strong><code>Base ×1.1880 (+18.8% 할증)</code> | <code>Bull ×1.2096 (+21.0% 할증)</code> | <code>Bear ×1.0000 (하방 지지선 고정)</code></strong></li>
+<li><strong>3Y 밴드 가이드라인 가격 (TTM 기준)</strong>:</li>
+<li>Bull: <code>🛡️ 대안 B 286,350원 (-0.2%) | 🚀 대안 A 346,370원 (+20.7%)</code></li>
+<li>Base: <code>🛡️ 대안 B 189,180원 (-34.1%) | 🚀 대안 A 224,750원 (-21.7%)</code></li>
+<li>TP1: <code>🛡️ 대안 B 304,220원 (+6.0%) | 🚀 대안 A 328,560원 (+14.5%)</code></li>
+<li>Bear: <code>🛡️ 대안 B·A 공통 109,300원 (-61.9%)</code></li>
+<li><strong>마스터 SOP 핵심 보조지표 실측치 (2026.10.12 기준)</strong>:</li>
+<li>일봉 POC (5-bin): <strong><code>256,400원 ~ 271,300원</code></strong> (거래비중 <strong>47.8%</strong>) | 고정 바닥 안전핀: <strong><code>248,708원</code></strong></li>
+<li>주봉 MAs: 10주선 <strong><code>264,800원</code></strong> | 20주선 <strong><code>246,050원</code></strong> | 60주선 <strong><code>215,377원</code></strong> (정배열)</li>
+<li>주봉 볼린저밴드(20, 2): 상단 <strong><code>324,522원</code></strong> | 중심 <strong><code>246,050원</code></strong> | 하단 <strong><code>167,578원</code></strong></li>
+<li>주봉 MACD: MACD <strong><code>14,690.0</code></strong> / Signal <strong><code>8,739.1</code></strong> / Histogram <strong><code>+5,950.9</code></strong> (양(+) 추세)</li>
+<li>
+<p>주봉 MFI(14) <strong><code>64.4</code></strong> | 주봉 RSI(14) <strong><code>59.3</code></strong> | Top Alert 1·2호 <strong>정상 ✅</strong></p>
+</li>
+<li>
+<p><strong>고정 규칙</strong>: 본 채택 지표와 가중 계수 체계는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 사용자 명시적 요청 또는 공시 기반 BM 구조적 격변 감지 시에만 재검토됩니다.</p>
+</li>
+<li><strong>전환 시 근거 명시 의무</strong>: 향후 채택 지표 변경 시 <code>[전환 트리거]</code>, <code>[기존 지표 → 신규 지표]</code>, <code>[Peer 그룹 참조 및 PEG 검증]</code> 항목을 필수 기록합니다.</li>
+</ol>
+<hr />
+<h3>✅ [핀셋 Boost 게이트 — Phase 1 출력 직전 3대 급소 자가 검증 완료]</h3>
+<ol>
+<li><strong>KPI ↔ 실적 공식 무모순 검증</strong>: <code>## 4(핵심 KPI)</code>에 DART 공식 생산능력(반기 1,210억 원 원가 기준)과 안성 Ceramic 공장 가동률(96.2%)이 명확히 공시되어 있으며, <code>## 7(표준 실적 산출 공식)</code>에서 <strong>유형 A [연속공정·장치산업] (<code>Capa × 가동률 × ASP</code>)</strong>을 일관되게 채택하여 논리적 모순이 0건임을 검증했습니다.</li>
+<li><strong>사업장/법인별 수치 편차 근거 검증</strong>: 티씨케이는 종속회사가 없는 단일 법인·단일 핵심 생산기지(경기도 안성공장) 체제로 운영되어 본사-해외법인 간 가동률/마진율 상충 이슈가 없음을 DART 공시로 확인했습니다.</li>
+<li><strong>밸류에이션 시계열 정합성 검증</strong>: 2025.12 자사주 495,584주 영구 소각이 반영된 실질 유통주식수(<code>11,179,416주</code>) 기준 BPS(<code>49,328원</code>)를 적용하였으며, 최신 주봉 종가(<code>287,000원</code>) 기준 산출 PBR(<code>5.82배</code>)이 제도권 공식 벤치마크와 <strong>오차율 0.0%로 일치</strong>함을 확인했습니다.</li>
+</ol>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -698,14 +847,85 @@ DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 �
                 }
             });
             
-            // DCF Calculator
+            // DCF Calculator & Master SOP Calculator
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
-                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
+                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
+                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
+                const initWacc = rawWacc.toFixed(1);
+                const initTerminal = rawTerm.toFixed(1);
+
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
+                    const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
+                }
+
+                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
+                    const rows = document.querySelectorAll('table tr');
+                    rows.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 5) {
+                            const label = tds[0].innerText.trim();
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
+                            }
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
+                            }
+                        }
+                    });
+                }
+
+                if (!autoPocLow) {
+                    const bodyTxt = document.body.innerText;
+                    const mPoc = bodyTxt.match(/20일\s*매물대[^\n]*?([0-9]{1,3}(?:,[0-9]{3})+)\s*원\s*~/);
+                    if (mPoc) autoPocLow = parseFloat(mPoc[1].replace(/,/g, ''));
+                }
+
+                if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
+                if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
+                if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
+                if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
+
+                const initBuy1 = autoBear;
+                const initBuy2 = rawPrice;
+                const initBuy3 = Math.round(rawPrice * 1.03);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -735,6 +955,48 @@ DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 �
                         '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
                         '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
                         '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sop-calc-container" id="sop-calc-container">' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>총 투자예산 (원)</label>' +
+                            '<input type="text" id="sop-input-budget" value="10,000,000">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 정찰병 매수가 (30% · Bear/눌림목)</label>' +
+                            '<input type="text" id="sop-input-buy1" value="' + initBuy1.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 본대 매수가 (40% · 매물대+20일선 돌파)</label>' +
+                            '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
+                            '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
+                            '<input type="text" id="sop-input-base" value="' + autoBase.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 목표가 (Bull 호황 상단, 원)</label>' +
+                            '<input type="text" id="sop-input-bull" value="' + autoBull.toLocaleString() + '">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="sop-grid-3">' +
+                        '<div class="sop-card buy-card" id="sop-buy-summary"></div>' +
+                        '<div class="sop-card stop-card" id="sop-stop-summary"></div>' +
+                        '<div class="sop-card sell-card" id="sop-sell-summary"></div>' +
                     '</div>' +
                 '</div>';
 
@@ -867,6 +1129,128 @@ DART 정기보고서 본문 및 주석 공시를 기반으로 티씨케이의 �
                 });
 
                 calculateImpliedGrowth();
+
+                // Master SOP Calculator Logic
+                const elBudget = document.getElementById('sop-input-budget');
+                const elBuy1 = document.getElementById('sop-input-buy1');
+                const elBuy2 = document.getElementById('sop-input-buy2');
+                const elPocLow = document.getElementById('sop-input-poc-low');
+                const elBuy3 = document.getElementById('sop-input-buy3');
+                const elBase = document.getElementById('sop-input-base');
+                const elBull = document.getElementById('sop-input-bull');
+
+                const elBuySummary = document.getElementById('sop-buy-summary');
+                const elStopSummary = document.getElementById('sop-stop-summary');
+                const elSellSummary = document.getElementById('sop-sell-summary');
+
+                function calculateSopPlan() {
+                    const budget = parseFormattedNum(elBudget.value) || 0;
+                    const b1 = parseFormattedNum(elBuy1.value) || 1;
+                    const b2 = parseFormattedNum(elBuy2.value) || 1;
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
+                    const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const tBase = parseFormattedNum(elBase.value) || b2;
+                    const tBull = parseFormattedNum(elBull.value) || b2;
+
+                    const alloc1 = budget * 0.30;
+                    const alloc2 = budget * 0.40;
+                    const alloc3 = budget * 0.30;
+
+                    const qty1 = Math.floor(alloc1 / b1);
+                    const qty2 = Math.floor(alloc2 / b2);
+                    const qty3 = Math.floor(alloc3 / b3);
+                    const totalQty = qty1 + qty2 + qty3;
+                    const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
+                    const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
+
+                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
+                    const safetyPin = Math.round(pocLow * 0.97);
+                    const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
+                    const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
+                    const sellQty1 = Math.floor(totalQty * 0.50);
+                    const sellQty2 = totalQty - sellQty1;
+                    const profit1 = sellQty1 * (tBase - avgPrice);
+                    const profit2 = sellQty2 * (tBull - avgPrice);
+                    const totalProfit = profit1 + profit2;
+                    const totalRoiNum = totalInvested > 0 ? ((totalProfit / totalInvested) * 100) : 0;
+                    const baseUpsideNum = avgPrice > 0 ? ((tBase / avgPrice - 1) * 100) : 0;
+                    const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
+                    const trailingStop3 = Math.round(tBull * 0.92);
+
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
+                    function fmtSignedKrw(v) {
+                        const r = Math.round(v);
+                        return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
+                    }
+                    function fmtSignedPct(v) {
+                        return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+                    }
+
+                    const riskAmt = Math.max(1, avgPrice - safetyPin);
+                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
+                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+
+                    elBuySummary.innerHTML =
+                        '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
+                        '<div class="sop-stat-line">• <strong>1차 정찰병(30%):</strong> ' + b1.toLocaleString() + '원 × <strong>' + qty1.toLocaleString() + '주</strong> (' + Math.round(qty1 * b1).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>2차 본대(40%):</strong> ' + b2.toLocaleString() + '원 × <strong>' + qty2.toLocaleString() + '주</strong> (' + Math.round(qty2 * b2).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+
+                    elStopSummary.innerHTML =
+                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
+                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
+                        '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
+                        '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
+
+                    elSellSummary.innerHTML =
+                        '<h4>🟢 ③ 2단계 분할 익절 & 고점경보</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 반타작(50%, ' + sellQty1.toLocaleString() + '주 @ ' + tBase.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit1) + '</strong> (' + fmtSignedPct(baseUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+
+                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                sopInputs.forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateSopPlan();
+                    });
+                });
+
+                calculateSopPlan();
             }
         });
     </script>

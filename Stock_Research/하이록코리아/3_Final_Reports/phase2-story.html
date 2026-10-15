@@ -1,113 +1,740 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>하이록코리아 Phase 2: 스토리 리더</title>
-<style>
-:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--heading:#f0f6fc;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#d18616;--purple:#bc8cff}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,sans-serif;line-height:1.7;padding:20px}
-.container{max-width:1100px;margin:0 auto}
-h1{color:var(--heading);font-size:1.8em;border-bottom:2px solid var(--purple);padding-bottom:12px;margin-bottom:24px}
-h2{color:var(--purple);font-size:1.3em;margin:28px 0 14px;padding:8px 12px;background:rgba(188,140,255,.08);border-left:3px solid var(--purple);border-radius:0 6px 6px 0}
-h3{color:var(--heading);font-size:1.05em;margin:18px 0 10px}
-p{margin:8px 0}
-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88em}
-th{background:var(--card);color:var(--purple);padding:10px 8px;text-align:left;border:1px solid var(--border);font-weight:600}
-td{padding:8px;border:1px solid var(--border);vertical-align:top}
-tr:nth-child(even){background:rgba(22,27,34,.6)}
-.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.75em;font-weight:600;margin:0 2px}
-.narrative{background:rgba(188,140,255,.15);color:var(--purple);border:1px solid rgba(188,140,255,.3)}
-.fact{background:rgba(63,185,80,.15);color:var(--green);border:1px solid rgba(63,185,80,.3)}
-.trend{background:rgba(88,166,255,.15);color:var(--accent);border:1px solid rgba(88,166,255,.3)}
-.hypothesis{background:rgba(210,134,22,.15);color:var(--orange);border:1px solid rgba(210,134,22,.3)}
-.verdict{padding:12px 16px;border-radius:8px;margin:12px 0;font-weight:700;font-size:1em}
-.verdict-true{background:rgba(63,185,80,.12);border:1px solid rgba(63,185,80,.3);color:var(--green)}
-.verdict-partial{background:rgba(210,150,22,.12);border:1px solid rgba(210,150,22,.3);color:var(--yellow)}
-.verdict-exag{background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.3);color:var(--red)}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
-.summary-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
-.summary-value{font-size:1.4em;font-weight:700}
-.summary-label{font-size:.78em;color:#8b949e;margin-top:4px}
-.peer-highlight{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2)}
-.meta{font-size:.8em;color:#8b949e;text-align:right;margin-top:30px;padding-top:12px;border-top:1px solid var(--border)}
-ol,ul{margin:8px 0 8px 20px}li{margin:4px 0}
-strong{color:var(--heading)}
-.warning{background:rgba(210,150,22,.1);border:1px solid rgba(210,150,22,.3);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.9em}
-</style>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 </head>
 <body>
-<div class="container">
-<h1>📖 하이록코리아 Phase 2: 스토리 리더 (Global & Weekly 팩트체크)</h1>
-<p style="color:#8b949e;font-size:.9em;">분석 기준일: 2026.09.30 | Global Trend: 26.09.16~30 (최신) | Weekly Trend: thesis_log, 조선섹터, IR_26년</p>
-
-<h2>1. Global 산업 사이클 테마 검증</h2>
-
-<h3>테마 1-A: 상선 엔진 쇼티지 심화 → 피팅 수주 폭발</h3>
-<p><span class="badge narrative">시장 내러티브</span> "한·중 신조 2.6억DWT 역대 최대, 엔진 3사 수주잔고 합산 20.4조원 역대 최대, 가동률 100% 상회. 중국 민영 조선소의 한국 엔진 발주 폭주." <em>— DS투자증권 p.3, 5, 11, 13</em></p>
-<p><span class="badge fact">공시 팩트 대조</span> Fitting 가동률 <strong>95%</strong> 풀가동, B/B <strong>1.13배</strong> 초과수주. 피팅 섹터 OPM <strong>27.5%로 압도적 1위</strong> (태광 13.0%, 성광벤드 17.1%).</p>
-<div class="verdict verdict-true">✅ True — 엔진 쇼티지는 피팅 밸류체인 풀가동·초과수주로 100% 실적화 완료</div>
-
-<h3>테마 1-B: 이란전쟁 → 에너지 인프라 재편</h3>
-<p><span class="badge narrative">시장 내러티브</span> "브렌트유 107$ 고착화, 미국·중동 LNG EPC 투자 폭발. 삼성E&A 사우디 San 7(4.7조원) 수주. LNG 배관/피팅 수혜." <em>— iM증권 p.85, 113</em></p>
-<p><span class="badge fact">공시 팩트 대조</span> 석유화학 매출 5년 CAGR +10.6%, 내수 매출 YoY +23.9%. 단, iM증권 LNG 배관 밸류체인에 하이록 미기재(대구경 vs 소구경 차이).</p>
-<div class="verdict verdict-partial">⚠️ 부분 사실 — 석유화학/EPC 성장 확인. 대형 배관보다 소구경 계장용 피팅 간접 수혜</div>
-
-<h3>테마 1-C: DC향 발전엔진 증설 → 피팅 신규 수요</h3>
-<p><span class="badge narrative">시장 내러티브</span> "HD현대 4.2GW 증설, 한화엔진 900MW 완공. 28년부터 DC향 엔진 본격 납품." <em>— DS투자증권 p.3, SK증권 p.119, 131</em></p>
-<p><span class="badge fact">공시 팩트 대조</span> 발전 매출 2025년 93억(전사 4.8%) 정체. 두산·GE Vernova 납품 관계 보유. 2028~30년 구조적 수혜 예상.</p>
-<div class="verdict verdict-partial">⚠️ 부분 사실 — 장기 옵션으로 타당하나, 실적 반영은 2028년 이후</div>
-
-<h2>2. Weekly 리포트 검증</h2>
-
-<h3>연간 실적 가이던스 (매출 2,410억, OP 670억)</h3>
-<p><span class="badge fact">공시 팩트</span> H1 매출 달성률 47.1%, OP 달성률 48.8%. <strong>OPM 28.82%</strong>로 컨센서스 27.8%를 +1.02%p 초과.</p>
-<div class="verdict verdict-true">✅ True — 어닝 서프라이즈 확인, 연간 초과 달성 확실시</div>
-
-<h3>멀티플 리레이팅 (PER 7→10배+)</h3>
-<p><span class="badge fact">공시 팩트</span> Phase 1 §8 백테스트: 5년 Peak PER 11.2배, 호황기 상한 9.0배. 신규사업 매출 30% 미달로 리레이팅 트리거 미충족.</p>
-<div class="verdict verdict-exag">⚠️ 과장됨 — OPM 1위이나 PER 리레이팅 트리거 미충족. 기존 밴드 상단(9배)이 합리적 상한</div>
-
-<h2>3. 투자 가설 검증</h2>
-<h3>환율 하락(원화 강세) 수혜 가설 <span class="badge hypothesis">[진행 중]</span></h3>
-<p>직수출 40.5%, 환율 10%↓ 시 세전이익 43.6억 순감소 (Net Negative). 현 시점에서는 환율보다 <strong>초고유가(107$)→비철금속 원가</strong>가 더 우선 모니터링 대상.</p>
-<div class="verdict verdict-partial">⚠️ 부분 유효 — 원가 절감 실재하나 순손익 기준 악재. OPM 28.8% 마진 쿠션으로 흡수 가능</div>
-
-<h2>4. 피팅 Peer 밸류에이션 Gap (신규)</h2>
+    <h1>📖 Phase 2: 스토리 리더 (Global &amp; Weekly 트렌드 공시 팩트체크) — 하이록코리아 (013030)</h1>
+<blockquote>
+<p><strong>분석 기준일</strong>: 2026.10.06 | <strong>Global Trend 반영</strong>: <code>26.09.16~30</code> (최신) + <code>26.09.01~15</code> | <strong>Weekly Trend 반영</strong>: <code>thesis_log.md</code>, <code>조선섹터(26.08.01~15).md</code>, <code>IR_26년.md</code></p>
+</blockquote>
+<hr />
+<h2>1. Global 산업 사이클 및 테마 검증</h2>
+<h3>테마 1-A: 글로벌 상선 엔진 공급 쇼티지 심화 &amp; DF(이중연료) 채택 확산 ➔ 피팅·밸브 풀가동</h3>
+<p>[시장 내러티브] 
+"2026년 한·중 신조 계약이 2.6억 DWT로 역대 최대치를 기록할 전망인 가운데, 중국 자국 엔진이 도크 증설 속도(2027~2029년 누적 8~10m CGT 증설)를 따라가지 못해 민영 조선소의 한국 엔진 발주 문의가 폭주하고 있다. 국내 엔진 3사의 2Q26 수주잔고는 합산 <strong>20.4조 원으로 역대 최대</strong>이며 가동률은 <strong>100%를 상회</strong>한다. IMO 탄소 규제 강화로 VLCC와 중소형 컨테이너선까지 DF(이중연료) 엔진 채택이 확산되면서 선박·엔진용 고압 유체제어 기자재 수요가 구조적으로 폭증하고 있다." <code>[시장 내러티브: 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.3, p.5, p.11, p.13]</code></p>
+<ul>
+<li><strong>핵심 전제(Key Assumption)</strong>: 전방 조선소 및 선박 엔진사의 수주 호황과 DF엔진 비중 확대가 하이록코리아의 공장 가동률 상승, 초과 수주(Book-to-Bill &gt; 1.0배), 그리고 고마진 밸브 믹스 개선으로 실제 DART 재무제표에 찍혀야 함.</li>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>주력 Hy-Lok Fitting 가동률 95.0% 풀가동 도달</strong>: 2024년 75% ➔ 2025년 89% ➔ <strong>2026년 상반기 95.0%</strong>(반기 생산능력 5,712천 개 중 5,426천 개 생산)로 수직 상승하여 사실상 완전 가동 체제에 돌입했습니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.11]</code>.</li>
+<li><strong>Book-to-Bill 1.13배 초과 수주 확인</strong>: 2026년 상반기 신규 수주총액은 <strong>1,125.4억 원</strong>으로 별도 매출액(<strong>992.1억 원</strong>)을 <strong>+13.4% 상회</strong>했으며, 특히 LNG·DF엔진 연료공급시스템(FGSS)에 투입되는 고부가 <strong>Hy-Lok Valve의 B/B 비율은 1.14배</strong>(수주 404.9억 vs 매출 356.1억)를 기록했습니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.14]</code>.</li>
+<li><strong>조선·해양 매출 5년 CAGR +16.1% 고성장</strong>: 별도 기준 조선+해양 매출액은 2021년 267억 원(비중 19.2%)에서 2025년 <strong>484.2억 원(비중 25.0%)</strong>으로 4년 만에 <strong>+81.4% 급증</strong>했습니다 <code>[팩트: IR_26년.md]</code>.</li>
+<li><strong>피팅 섹터 내 압도적 1위 OPM(28.82%) 입증</strong>: DS투자증권 조선 밸류체인 비교표에서 하이록코리아는 2025년 OPM <strong>27.5%</strong>(2026년 상반기 <strong>28.82%</strong>)로 경쟁 피팅사 태광(13.0%), 성광벤드(17.1%)를 약 2배 격차로 압도하고 있습니다 <code>[글로벌 트렌드: 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.7]</code>, <code>[[하이록코리아]반기보고서(2026.08.14), p.24]</code>.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ True — 상선·친환경 엔진 쇼티지와 조선 슈퍼사이클은 하이록코리아의 피팅 가동률 95% 및 B/B 1.13배, 반기 사상 최고 OPM 28.82%로 100% 실적화 입증 완료 ]</strong></li>
+</ul>
+<hr />
+<h3>테마 1-B: 이란전쟁 장기화(호르무즈 봉쇄) ➔ 미국·중동 에너지 인프라 재편 및 EPC 수주 수혜</h3>
+<p>[시장 내러티브] 
+"이란전쟁 장기화와 호르무즈 해협 봉쇄로 국제유가(브렌트유 107$)와 가스 가격 강세가 고착화되면서 미국과 중동의 에너지 안보 인프라 투자가 폭발하고 있다. 삼성E&amp;A가 사우디 San 7 가스 플랜트(4.7조 원)를 수주하여 3Q26 누적 수주 14조 원을 돌파하는 등 한국 EPC와 배관·피팅 밸류체인의 구조적 수혜가 이어지고 있다." <code>[시장 내러티브: 26.09.16.IM증권.이란전쟁 이후의 산업 재편.pdf p.85, p.113-114]</code>, <code>[글로벌 트렌드: cycle_timeline.md 2026.09 하반기]</code></p>
+<ul>
+<li><strong>핵심 전제(Key Assumption)</strong>: 글로벌 정유·가스·LNG 플랜트 EPC 발주 확대가 하이록코리아의 최대 매출원인 석유화학 부문(전사 비중 41.6%)과 내수·직수출 실적으로 연결되어야 함.</li>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>석유화학 부문 803.2억 원(전사 1위 41.6%) 견조한 성장</strong>: 석유화학 플랜트향 매출은 2021년 536억 원 ➔ 2023년 665억 원 ➔ 2025년 <strong>803.2억 원(5년 CAGR +10.6%)</strong>으로 흔들림 없는 캐시카우 역할을 수행 중입니다 <code>[팩트: IR_26년.md]</code>.</li>
+<li><strong>국내 EPC 및 글로벌 오일메이저 직납 네트워크</strong>: 동사는 삼성E&amp;A, 현대엔지니어링, SK에코플랜트 등 국내 대형 EPC는 물론 사우디 아람코(Aramco), ADNOC, 카타르에너지 및 해외 EPC(Bechtel, JGC, Saipem, Technip Energies)의 공인 벤더(GVL)로서 중동·북미 플랜트 프로젝트에 계장용 피팅·밸브를 공급하고 있습니다 <code>[팩트: IR_26년.md]</code>.</li>
+<li><strong>핀포인트 구분 (대구경 배관재 vs 소구경 계장재)</strong>: 다만 iM증권 리포트(<code>p.85</code>)의 미국 LNG EPC 밸류체인 도표에 성광벤드·태광이 명시된 것은 해당 도표가 대구경 용접용 관이음쇠(Butt-Welding Pipe Fitting) 위주로 작성되었기 때문입니다. 하이록코리아는 Pipe Fitting 비중이 2.08%(20.7억 원)로 낮고 <strong>고부가 소구경 계장용 튜브 피팅(45.7%) 및 정밀 밸브(35.9%)</strong>에 특화되어 있어, 단순 철강 배관재보다 훨씬 높은 영업이익률(OPM 28.8% vs 태광 13.0%)을 창출합니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.9, p.24]</code>.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ True (부분 구분 필요) — 중동·북미 에너지 EPC 투자 확대에 따른 석유화학 매출 성장(+10.6% CAGR)은 팩트로 확인됨. 단, 저마진 대구경 배관재가 아닌 고마진 계장용 정밀 피팅·밸브로 수혜를 흡수하는 구조 ]</strong></li>
+</ul>
+<hr />
+<h3>테마 1-C: AIDC 전력 병목 타개용 온사이트 발전엔진 증설 &amp; 해상 부유식 데이터센터(FDC) 개화</h3>
+<p>[시장 내러티브] 
+"글로벌 빅테크 5사의 2026년 CAPEX가 8,000억 달러를 돌파했으나, 미국 전력망 계통 연결에 4~5년 이상, 대형 가스터빈 납기에 5~7년이 소요되면서 12~30개월 내 전력 확보가 가능한 <strong>4행정 중속엔진(On-site 발전)</strong>과 <strong>해상부유식 데이터센터(FDC)</strong>가 급부상하고 있다. HD현대중공업은 8,336억 원을 투자해 중속엔진 Capa를 3.0GW에서 7.2GW로 증설(28년 5월 준공)하고 한화엔진도 900MW 라인을 완공하여, 발전엔진·가스터빈용 피팅·밸브 수요가 구조적으로 열리고 있다." <code>[시장 내러티브: 26.09.08.LS증권.[DCInside] AI시대 조선 산업의 변화와 투자전략.pdf p.3-6, 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.3, p.48, 26.09.17.SK증권.리레이팅의 조건(데이터센터&amp;함정).pdf p.119, p.131]</code></p>
+<ul>
+<li><strong>핵심 전제(Key Assumption)</strong>: 발전엔진 증설 및 FDC 상용화가 하이록코리아의 발전 부문 매출 비중을 전사 30% 이상으로 끌어올려 즉각적인 멀티플 리레이팅을 정당화할 수 있는가?</li>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>핵심 고객사 캡티브 레퍼런스 보유</strong>: 하이록코리아는 HD현대중공업(힘센엔진 제조사), 한화오션/한화엔진, 삼성중공업(200MW급 FDC AiP 취득), 두산에너빌리티, <strong>GE Vernova</strong>(글로벌 가스터빈 1위)를 모두 공식 주요 거래처로 확보하고 있습니다 <code>[팩트: IR_26년.md]</code>.</li>
+<li><strong>현재 발전 부문 매출 비중은 4.8%(93.3억 원)</strong>: 그러나 DART 및 IR 확정 수치 기준 발전 부문 매출은 2023년 86억 원 ➔ 2024년 94억 원 ➔ 2025년 <strong>93.3억 원(비중 4.8%)</strong>으로 아직 전사 매출의 5% 미만입니다 <code>[팩트: IR_26년.md]</code>. HD현대중공업의 울산 신공장(3GW) 본격 납품 시점도 2028년 하반기 이후로 예정되어 있습니다 <code>[글로벌 트렌드: 26.09.17.SK증권.리레이팅의 조건(데이터센터&amp;함정).pdf p.131]</code>.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ 부분 사실 (장기 콜옵션) — GE Vernova·HD현대 등 캡티브 고객사향 중장기 수혜 논리는 100% 타당하나, 현재 발전 매출 비중이 4.8%에 불과하여 단기 멀티플 리레이팅 근거로 삼는 것은 과장됨 ]</strong></li>
+</ul>
+<hr />
+<h2>1.1 S-Curve 침투율 &amp; 매매 타이밍 진단 매트릭스 (Global S-Curve 레이더 연동)</h2>
+<p>[검증 나침반] 
+<code>korean cycle/00_megatrend/docs/s_curve_registry.json</code>에 등재된 글로벌 메가트렌드 테마(<code>th_hbm_advanced_packaging</code>, <code>th_immersion_cooling</code>) 및 <code>s_curve_spec.md</code>의 <strong>제2원칙(적합성 게이트 &amp; N/A 우회 규정)</strong>, <strong>Section 2.3(다중 전방 확장 모델)</strong>을 적용하여 하이록코리아의 S-Curve 포지셔닝을 공식 진단합니다:</p>
 <table>
-<tr><th>기업</th><th>시총</th><th>OPM</th><th>PER</th><th>PBR</th><th>비고</th></tr>
-<tr><td>태광</td><td>660억</td><td>13.0%</td><td>9.0배</td><td>0.9배</td><td>대구경 배관</td></tr>
-<tr><td>성광벤드</td><td>850억</td><td>17.1%</td><td>20.3배</td><td>1.2배</td><td>고PER</td></tr>
-<tr class="peer-highlight"><td><strong>하이록코리아</strong></td><td><strong>4,010억</strong></td><td><strong>27.5%</strong></td><td><strong>7.4배</strong></td><td><strong>0.8배</strong></td><td><strong>OPM 1위인데 PER 최저!</strong></td></tr>
+<thead>
+<tr>
+<th style="text-align: left;">진단 항목</th>
+<th style="text-align: left;">정량 수치 및 상태</th>
+<th style="text-align: left;">출처 및 근거 (No-Blind-Citation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>전사 기본 BM 분류</strong></td>
+<td style="text-align: left;"><strong><code>[⚪ S-Curve 기본 N/A: 전통 에너지·조선 시클리컬 필수재]</code></strong><br>➔ 공장 가동률(Fitting <strong>95%</strong>)·북투빌(<strong>1.13배</strong>)·PER/PBR 밴드 모델 적용</td>
+<td style="text-align: left;">• 석유화학(41.6%) + 조선·해양(25.0%) = <strong>66.6%</strong> <code>[팩트: IR_26년.md]</code><br>• <code>[[하이록코리아]반기보고서(2026.08.14), p.11, p.14]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>연관 2차 S-Curve 테마</strong></td>
+<td style="text-align: left;"><strong>① 반도체 선단 Fab(HBM/DRAM) 클린룸 유틸리티</strong> (<code>th_hbm_advanced_packaging</code>)<br><strong>② AIDC 온사이트 중속엔진 &amp; FDC 인프라</strong> (<code>th_immersion_cooling</code> 연계)</td>
+<td style="text-align: left;">• <code>s_curve_registry.json</code> 연동<br>• 반도체 매출 <strong>10.0%(193.2억)</strong> + 발전 <strong>4.8%(93.3억)</strong> = <strong>14.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>현재 산업 침투율 / 국면</strong></td>
+<td style="text-align: left;">• <strong>주력 시클리컬(조선·DF엔진·LNG)</strong>: <strong>호황기 중반 (Fitting 가동률 95.0%)</strong><br>• <strong>2차 신성장(AIDC 발전엔진·FDC)</strong>: <strong>Phase 1 태동기 (<code>[정성적 밴드 추정: 도입기 5% 미만]</code>)</strong><br>• <strong>2차 신성장(AI 반도체 팹 인프라)</strong>: <strong>Phase 2 스위트스팟 후반 (HBM 웨이퍼 잠식 36.5%)</strong></td>
+<td style="text-align: left;">• <code>[글로벌 트렌드: 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.3, p.7]</code><br>• <code>[글로벌 트렌드: 26.09.08.LS증권.[DCInside] AI시대 조선 산업의 변화와 투자전략.pdf p.3-6]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>공식 투자 액션 시그널</strong></td>
+<td style="text-align: left;"><strong><code>[적극 매수 (시클리컬 호황 &amp; 밸류에이션 역전 해소)]</code></strong><br>(Cyclical Boom + Deep Value Re-rating)</td>
+<td style="text-align: left;">• 피팅 가동률 95% + B/B 1.13배 + OPM 28.82% 사상 최고<br>• Post-Rerating PER 7.0~7.4배 (Peer 최저 저평가)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>하이브리드 밸류체인 지위</strong></td>
+<td style="text-align: left;"><strong><code>[🟢 유체제어 계장기자재 본업 순수 주도주 (익스포저 100.0%)]</code></strong><br><strong><code>[💎 친환경 엔진·FLNG·반도체 유틸리티 병목 히든 챔피언]</code></strong><br><em>(단, AI·AIDC 단일 테마 기준은 14.8% &lt; 30%로 무리한 플랫폼 멀티플 배제)</em></td>
+<td style="text-align: left;">• Phase 1 Section 2.1 하이브리드 수비 30% 컷오프 검증 연계</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>차기 변곡점 모니터링</strong></td>
+<td style="text-align: left;">• <strong>단기</strong>: Valve 가동률 73% ➔ <strong>80%+ 돌파</strong> 및 B/B <strong>1.1배 이상 유지</strong> 여부<br>• <strong>중기</strong>: 반도체+발전 합산 매출 비중 <strong>14.8% ➔ 20~30% 확대</strong> 여부</td>
+<td style="text-align: left;">분기별 DART 정기보고서 가동률·수주잔고 추적</td>
+</tr>
+</tbody>
 </table>
-<div class="warning">⚠️ <strong>밸류에이션 역전 현상:</strong> OPM이 Peer 대비 2.1배인데 PER은 최하위. 증권사 커버리지 부재에 따른 정보 비대칭이 원인 → Phase 3 핵심 투자 논거</div>
-
-<h2>💡 종합 결론</h2>
+<ul>
+<li><strong><code>Weekly_Trend/thesis_log.md</code> 자동 연동</strong>: 본 진단 결과는 사용자 핵심 가설(<code>[진행 중] 피팅 가동률 95% 시클리컬 대호황 &amp; Peer 밸류에이션 역전 해소 매수 유효 + 2차 S-Curve(반도체·AIDC 발전 14.8%) 중장기 콜옵션</code>)로 <code>thesis_log.md</code>에 공식 기록되어 Phase 3 목표주가 산정에 반영됩니다.</li>
+</ul>
+<hr />
+<h2>2. Weekly 개별 리포트 및 시장 내러티브 검증</h2>
+<h3>검증 2-A: 2026년 연간 사상 최대 실적 가이던스(매출 2,410억, 영업이익 670억) 달성 여부</h3>
+<p>[시장 내러티브] 
+"하이록코리아는 고부가 LNG·해양플랜트 수주잔고의 본격적인 매출 인식을 통해 2026년 연결 매출액 2,410억 원(YoY +12.3%), 영업이익 670억 원(OPM 27.8%)이라는 사상 최대 실적을 달성할 것이다." <code>[시장 내러티브: Weekly_Trend 조선섹터(26.08.01~15).md 및 26.06.01 신성장산업 TOP PICK 리포트]</code></p>
+<ul>
+<li><strong>핵심 전제</strong>: 상반기 누적 실적이 연간 가이던스의 약 47~50%에 도달하고, 영업이익률이 27.8% 이상을 기록해야 함.</li>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>상반기 영업이익 326.8억 원 (가이던스 달성률 48.8%)</strong>: 2026년 상반기 연결 매출액은 <strong>1,134.0억 원</strong>(1Q 541.5억 + 2Q 592.5억, 가이던스의 47.1%), 영업이익은 <strong>326.8억 원</strong>(1Q 156.9억 + 2Q 169.9억, 가이던스의 48.8%)을 기록했습니다 <code>[[하이록코리아]분기보고서(2026.05.15), p.24], [[하이록코리아]반기보고서(2026.08.14), p.24]</code>.</li>
+<li><strong>OPM 28.82% 어닝 서프라이즈</strong>: 상반기 연결 영업이익률은 <strong>28.82%</strong>(1Q 28.97%, 2Q 28.68%)로 시장 기대치(27.8%)를 <strong>+1.02%p 초과 달성</strong>했습니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.24]</code>.</li>
+<li><strong>하반기 실적 가시성 확보</strong>: 상반기 말 기준 Book-to-Bill 비율이 <strong>1.13배</strong>에 달하고 2분기 매출(592.5억)이 1분기(541.5억) 대비 +9.4% 증가하는 우상향 궤적을 보이고 있어, 2026년 연간 연결 매출 <strong>2,320억~2,420억 원</strong>, 영업이익 <strong>665억~695억 원</strong>, 지배주주순이익 <strong>598억~620억 원(EPS 5,080원~5,270원)</strong> 달성이 유력합니다.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ True — 상반기 OPM 28.82% 어닝 서프라이즈로 연간 사상 최대 실적 가이던스 달성 가시성 입증 ]</strong></li>
+</ul>
+<hr />
+<h3>검증 2-B: "전통 굴뚝주(PER 7~8배)를 넘어 성장 플랫폼(PER 15배+)으로 리레이팅될 것"이라는 주장</h3>
+<p>[시장 내러티브] 
+"하이록코리아는 단순 피팅 제조사를 넘어 AI 데이터센터 발전, 수소, 반도체 유틸리티 플랫폼 기업으로 탈바꿈하고 있으므로 과거 PER 7~8배 밴드를 뚫고 PER 15배 이상으로 구조적 멀티플 리레이팅을 받을 것이다." <code>[시장 내러티브: Weekly_Trend 조선섹터(26.08.01~15).md]</code></p>
+<ul>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>PER 리레이팅 게이트키퍼 점검</strong>: Phase 1 Section 2.1에서 검증한 바와 같이, 신성장 섹터(반도체 10.0% + 발전 4.8%) 합산 매출 비중은 <strong>14.8%</strong>로 <code>SKILL.md</code>의 <strong>신규 사업 30% 초과 컷오프를 아직 충족하지 못했습니다</strong>.</li>
+<li><strong>레짐 시프트(Post-Rerating) 실제 PER 밴드 확인</strong>: Phase 1 Section 8의 10년 주봉 백테스트 결과, OPM이 22~28%로 구조적 레벨업된 <strong>Post-Rerating 구간(2022~2026년)의 실제 주봉 PER 밴드는 <code>5.22배 ~ 9.76배 (중앙값 6.85배)</code></strong>로 나타났습니다. 즉, 이익이 3배 이상 급증했음에도 중소형 기자재주 특성상 PER 10배 이상 할증은 아직 시장에서 부여받지 못했습니다.</li>
+<li><strong>그러나 '피팅 Peer 대비 밸류에이션 역전 해소(PER 7.4배 ➔ 9.0~9.8배)'는 100% 정당화됨</strong>: DS투자증권(<code>26.09.29 p.7</code>) 공식 집계 기준, 하이록코리아는 OPM <strong>27.5%</strong>로 태광(<strong>OPM 13.0%, PER 9.0배</strong>), 성광벤드(<strong>OPM 17.1%, PER 20.3배</strong>) 대비 압도적 마진 1위임에도 <strong>PER 7.4배(26F 연환산 기준 7.02배)</strong>로 피팅 3사 중 가장 낮은 멀티플에 방치되어 있습니다 <code>[글로벌 트렌드: 26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.7]</code>.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ 과장됨 (절반의 진실) — 신사업 비중(14.8%)이 30% 미만이므로 PER 15배+ 플랫폼 리레이팅 주장은 과장되었으나, 피팅 Peer(태광 9.0배) 및 동사 Post-Rerating 상단(PER 9.76배, PBR 1.15배)까지의 저평가 해소 리레이팅은 완벽히 정당화됨 ]</strong></li>
+</ul>
+<hr />
+<h2>3. 사용자 투자 가설 검증 (<code>Weekly_Trend/thesis_log.md</code> 기반)</h2>
+<h3>[가설 1 검증: 원화 강세(환율 하락)는 하이록코리아에게 우호적인가?] — <code>[진행 중]</code></h3>
+<p>[투자자 핵심 가설] 
+"원화가 강세가 되면 원재료 수입 단가 부담이 감소하고, 주요 납품처인 국내 조선 3사 및 반도체 회사에는 원화로 결제받기 때문에 원화 강세는 오히려 하이록코리아에게 실적상 우호적인 환경이 아닌가?" <code>[투자자 핵심 가설: thesis_log.md (2026.09.01)]</code></p>
+<ul>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>원재료 국내 조달 비중 98.7%로 수입 단가 하락 혜택 미미</strong>: 2026년 반기보고서 원재료 매입 현황(<code>p.10</code>)을 보면, 전체 원재료 매입액 <strong>282.5억 원 중 국내 매입이 278.7억 원(98.7%)</strong>이고 직접 수입은 3.8억 원(1.3%)에 불과합니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.10]</code>. 따라서 원화 강세에 따른 직접적인 수입 원가 절감 폭은 제한적입니다.</li>
+<li><strong>수출 비중 40.5%(연결 ~49%) 및 외화자산 보유로 환율 하락 시 Net Negative</strong>: 반기보고서 외환위험 민감도 분석(<code>p.16</code>)에 따르면, <strong>원화 가치가 10% 상승(환율 10% 하락)할 경우 외화자산 환산손실 등으로 법인세차감전순이익 이후 세후손익이 43.60억 원 순감소</strong>(USD -31.76억, EUR -10.85억 등)합니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.16]</code>.</li>
+<li><strong>최신 거시 환경(26.09 하반기) 결합</strong>: 다만 중동 이란전쟁 장기화와 호르무즈 봉쇄로 인해 원/달러 환율이 <strong>1,300원대에 견고히 안착</strong>하면서 급격한 원화 강세 시나리오의 발생 확률은 낮아졌으며 <code>[글로벌 트렌드: cycle_timeline.md 2026.09 하반기]</code>, 설령 환율이 일부 하락하더라도 동사의 <strong>OPM 28.82%(반기 영업이익 326.8억 원)</strong> 마진 쿠션과 순현금 이자수익(반기 27.9억 원 <code>p.26</code>)이 환율 노이즈를 완전히 압도합니다.</li>
+<li>✅ <strong>가설 1 타격 결과: [ 부분 유효 (단기 손익 기준 Net Negative이나 펀더멘털 훼손 없음) — 원재료 국내 조달이 98.7%이고 수출·외화자산 비중이 높아 환율 하락은 회계상 감익 요인(-43.6억/10%)이나, OPM 28.8%의 초고마진 체력과 1,300원대 환율 안착으로 실적 훼손 리스크는 극히 제한적임 ]</strong></li>
+</ul>
+<hr />
+<h3>[가설 2 검증: 피팅 섹터 내 'OPM 1위 vs PER 최하위' 밸류에이션 역전 해소 가설] — <code>[신규 등록 / 진행 중]</code></h3>
+<p>[투자자 핵심 가설] 
+"하이록코리아는 피팅 3사 중 OPM(28.8%)과 주주환원(3년간 자사주 13.55% 영구 소각 + 배당성향 30.7%)이 압도적 1위임에도 PER 7.0~7.4배(PBR 0.89배)로 태광(PER 9.0배)·성광벤드(PER 20.3배) 대비 극심한 밸류에이션 역전을 겪고 있다. 호황기 실적 확인과 함께 최소 Post-Rerating 상단(PER 9.8배 / PBR 1.15배)까지 밸류에이션 갭 메우기가 나타날 것이다." <code>[투자자 핵심 가설: thesis_log.md (2026.10.06)]</code></p>
+<ul>
+<li><strong>공시 팩트 대조</strong>: [공시 팩트] </li>
+<li><strong>피팅 3사 수익성 및 멀티플 비교 (<code>26.09.29.DS투자증권.엔진(바다 위의 반도체).pdf p.7</code>)</strong>:</li>
+</ul>
 <table>
-<tr><th>테마</th><th>시장 주장</th><th>결과</th><th>Phase 3 시사점</th></tr>
-<tr><td>엔진 쇼티지</td><td>기자재 슈퍼사이클</td><td style="color:var(--green);font-weight:700">✅ True</td><td>가동률 95%, B/B 1.13x</td></tr>
-<tr><td>에너지 인프라</td><td>LNG 피팅 수혜</td><td style="color:var(--yellow);font-weight:700">⚠️ 부분</td><td>석유화학 성장, 대형 배관 간접</td></tr>
-<tr><td>DC 엔진</td><td>28년 신규 수요원</td><td style="color:var(--yellow);font-weight:700">⚠️ 부분</td><td>장기 옵션, 현재 초기 단계</td></tr>
-<tr><td>리레이팅</td><td>PER 7→10+</td><td style="color:var(--red);font-weight:700">⚠️ 과장</td><td>9.0배 상한 내 적용</td></tr>
-<tr><td>연간 실적</td><td>매출 2,410억</td><td style="color:var(--green);font-weight:700">✅ True</td><td>초과 달성 확실시</td></tr>
+<thead>
+<tr>
+<th style="text-align: left;">피팅 3사 비교</th>
+<th style="text-align: center;">시가총액</th>
+<th style="text-align: center;">2025 OPM</th>
+<th style="text-align: center;"><strong>2026.1H OPM</strong></th>
+<th style="text-align: center;">2025 PER</th>
+<th style="text-align: center;">2025 PBR</th>
+<th style="text-align: left;">주주환원 및 재무 특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>성광벤드</strong></td>
+<td style="text-align: center;">8,500억</td>
+<td style="text-align: center;">17.1%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>20.3배</strong></td>
+<td style="text-align: center;">1.2배</td>
+<td style="text-align: left;">대구경 용접용 관이음쇠 (조선/LNG 배관)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>태광</strong></td>
+<td style="text-align: center;">6,600억</td>
+<td style="text-align: center;">13.0%</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>9.0배</strong></td>
+<td style="text-align: center;">0.9배</td>
+<td style="text-align: left;">대구경 용접용 관이음쇠 (석유화학/플랜트)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>하이록코리아</strong></td>
+<td style="text-align: center;"><strong>4,195억</strong></td>
+<td style="text-align: center;"><strong>27.5%</strong></td>
+<td style="text-align: center;"><strong>28.82%</strong></td>
+<td style="text-align: center;"><strong>7.4배</strong><br>(26F <strong>7.02배</strong>)</td>
+<td style="text-align: center;"><strong>0.89배</strong></td>
+<td style="text-align: left;"><strong>소구경 계장용 피팅·밸브 / 자사주 13.55% 소각 / 순현금 2,231억</strong></td>
+</tr>
+</tbody>
 </table>
+<ol>
+<li><strong>역전 원인과 해소 동력</strong>: 대구경 배관 피팅사(성광벤드·태광)가 LNG 터미널 배관 내러티브로 먼저 부각되는 동안, 증권사 컨센서스 커버리지가 비어 있던 하이록코리아는 사상 최대 OPM(28.82%)과 FCF(+53.5% YoY)에도 불구하고 소외되었습니다. 그러나 이미 2026년 4월 주가가 <strong>46,000원(PBR 1.15배, PER 9.76배)</strong>까지 도달했던 바 있어, 3~4분기 호실적 확인 시 Post-Rerating 밴드 상단으로의 재진입 개연성이 매우 높습니다.</li>
+<li>✅ <strong>가설 2 타격 결과: [ 강력 유효(Confirmed) — OPM 28.8%·무차입 순현금 2,231억·자사주 13.55% 소각 기업이 PER 7.0배(PBR 0.89배)에 거래되는 것은 명백한 시장 비효율이며, Phase 3 핵심 안전마진 논거로 채택함 ]</strong></li>
+</ol>
+<hr />
+<h2>4. 심화 분석 및 대화 피드백: 왜 하이록코리아의 OPM(28.8%)은 피팅 경쟁사(13~17%)의 2배인가?</h2>
+<ol>
+<li><strong>제품 기술적 해자 (대구경 Butt-Welding Fitting vs 소구경 Instrument Tube Fitting &amp; Valve)</strong>:</li>
+<li>태광·성광벤드가 주력하는 대구경 파이프 피팅은 강관을 절단·성형하여 용접 연결하는 구조로 원재료(후판·강관) 비중이 높고 대형 EPC 프로젝트 발주 사이클에 따른 마진 변동성이 큽니다.</li>
+<li>반면 하이록코리아의 <strong>계장용 더블 페룰(Twin Ferrule) 튜브 피팅과 초저온·고압 밸브</strong>는 용접 없이 미세한 나사산과 페룰의 기계적 물림만으로 60,000 psi의 초고압과 -196℃ 극저온 가스를 완벽히 밀폐해야 하는 초정밀 가공 부품입니다.</li>
+<li><strong>다품종 소량·MRO 교체 수요와 12단계 공정 내재화</strong>:</li>
+<li>석유화학 플랜트, 선박 엔진(FGSS), 반도체 클린룸은 건설 시 초도 장착(First Install)뿐만 아니라 가동 중 정기 보수(Turnaround / MRO)를 위한 고마진 단납기 교체 주문이 상시 발생합니다.</li>
+<li>하이록코리아는 단조부터 열처리·CNC 가공·부동태 처리·압력검사까지 12단계 공정을 내재화하여, 원재료(황동·단조품) 단가 상승기에도 <strong>매출총이익률(GPM) 41.08%, 영업이익률(OPM) 28.82%</strong>라는 독보적 수익성을 유지하고 있습니다 <code>[[하이록코리아]반기보고서(2026.08.14), p.11, p.24]</code>.</li>
+</ol>
+<hr />
+<h2>💡 종합 결론 (내러티브의 실적화 판단)</h2>
+<p>[시장 내러티브] 
+시장은 하이록코리아를 한편으로는 <em>"성장이 멈춘 전통 굴뚝 가치주(PER 7배)"</em>로 과소평가하거나, 다른 한편으로는 <em>"AI 데이터센터·수소 신사업으로 PER 15배 이상 리레이팅될 테마주"</em>로 과대포장하는 양극단의 오류를 범하고 있습니다.</p>
+<p>[공시 팩트] 
+DART 2026년 반기보고서와 최신 Global Trend 딥리서치를 교차 검증한 최종 결론은 다음과 같습니다:
+1. <strong>본업의 Q·P·C 트리플 골디락스 입증</strong>:
+   - <strong>Q (물량)</strong>: 상선 엔진 쇼티지 및 에너지 인프라 투자로 <strong>Hy-Lok Fitting 가동률 95% 풀가동</strong>, <strong>Book-to-Bill 1.13배</strong> 초과 수주 달성 <code>[[하이록코리아]반기보고서(2026.08.14), p.11, p.14]</code>.
+   - <strong>P (가격/마진)</strong>: 고부가 밸브 비중 확대 및 내수 Valve ASP 인상(121,366원)으로 반기 사상 최고 <strong>OPM 28.82%</strong> 달성 <code>[[하이록코리아]반기보고서(2026.08.14), p.10, p.24]</code>.
+   - <strong>C (현금흐름/자본배치)</strong>: 상반기 <strong>FCF 240.0억 원(YoY +53.5%)</strong>, 금융성 순현금 <strong>2,230.8억 원</strong>, 3개년 <strong>자사주 13.55% 영구 소각</strong> 완료 <code>[[하이록코리아]반기보고서(2026.08.14), p.6-7, p.26, p.47]</code>.
+2. <strong>냉정한 밸류에이션 잣대 확립</strong>:
+   - 신성장 전방(반도체 10.0% + 발전 4.8% = 14.8%) 비중이 30% 미만이므로 허황된 테마 멀티플(PER 15배+)은 배제합니다.
+   - 대신 동사의 <strong>Post-Rerating 역사적 검증 밴드(Base PER 8.5배 ~ Bull Peak PER 9.8배, PBR 1.00~1.18배)</strong>만 적용하더라도, 현재 주가(35,650원, 26F PER 7.02배, PBR 0.89배)는 피팅 섹터 내 가장 확실한 비대칭적 안전마진 구간에 위치해 있습니다.</p>
+    <script>
+        // Replace mermaid code blocks with div class="mermaid"
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            // Highlight Fact vs Narrative
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
+                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
+                
+                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주 - 자사주 제외)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>기준 FCF (억 원)</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="' + initWacc + '" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="' + initTerminal + '" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>';
 
-<div class="summary-grid">
-<div class="summary-card"><div class="summary-value" style="color:var(--green)">95%</div><div class="summary-label">Fitting 풀가동 → Q 확인</div></div>
-<div class="summary-card"><div class="summary-value" style="color:var(--green)">28.82%</div><div class="summary-label">사상최고 OPM → P 확인</div></div>
-<div class="summary-card"><div class="summary-value" style="color:var(--green)">240억</div><div class="summary-label">H1 FCF(+53.5%) → C 확인</div></div>
-<div class="summary-card"><div class="summary-value" style="color:var(--red)">7.4배</div><div class="summary-label">PER 최저 → 밸류에이션 역전</div></div>
-</div>
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    return parseFloat(val.toString().replace(/,/g, ''));
+                }
 
-<p style="margin-top:20px;padding:14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:8px;">
-<strong>결론:</strong> Q·P·C 3대 축 역사적 최고치가 DART로 100% 입증. 시장의 리레이팅 기대는 과장이나, <strong>OPM 1위인데 PER 최하위인 밸류에이션 역전은 Phase 3에서 핵심 안전마진 논거</strong>로 활용됩니다.
-</p>
+                function formatNumberInput(e) {
+                    // Skip for number types
+                    if (e.target.type === 'number') return;
+                    
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    
+                    // Allow minus sign at the beginning for FCF
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
 
-<div class="meta">
-Phase 2 Story — 하이록코리아(013030) | Generated: 2026.09.30<br>
-No-Blind-Citation 검증: DS투자증권 p.3,5,7,11,13 | iM증권 p.85,113 | SK증권 p.119,131
-</div>
-</div>
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const targetValue = price * shares;
+                    
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    
+                    let low = -0.99;
+                    let high = 10.0; // max 1000% — unified with Python
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 200; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetValue) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+
+                    if (found || Math.abs(high - low) < 0.00001) {
+                        const growthPercent = (g * 100).toFixed(2);
+                        elResultValue.textContent = growthPercent + "%";
+                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
+                        if (g < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (g > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+            }
+        });
+    </script>
 </body>
 </html>

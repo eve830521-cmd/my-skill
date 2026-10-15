@@ -16,7 +16,7 @@
 
 ## 5. GitHub 커밋 & 푸시 시 히스토리.md 자동 업데이트 및 덮어쓰기 업로드 규칙
 사용자가 **GitHub에 커밋 후 푸시(Commit & Push)**를 요청할 때마다 에이전트는 반드시 아래 3단계를 의무적으로 수행해야 합니다:
-1. **히스토리.md 최신 내역 추가**: e:\antigravity-work\히스토리.md 파일의 상단 요약표 및 날짜별 상세 내역에 [업데이트 날짜 | 관련 프로젝트(커밋 해시) | 업데이트 파일 | 업데이트 내용 요약]을 새로 추가합니다.
-2. **안티그래비티 루트 및 각 GitHub 폴더에 덮어쓰기 동기화**: 업데이트된 히스토리.md를 e:\antigravity-work\히스토리.md, e:\antigravity-work\Q&A\히스토리.md, e:\antigravity-work\my-skill\히스토리.md, e:\antigravity-work\my-stock\히스토리.md, e:\antigravity-work\korean cycle\히스토리.md에 동일하게 덮어쓰기 복사합니다.
-3. **GitHub에 히스토리.md 포함하여 커밋 & 푸시**: 대상 GitHub 저장소에서 새로 덮어쓴 히스토리.md 파일까지 함께 git add 히스토리.md → git commit → git push origin main 하여 GitHub 원격 저장소에도 항상 최신 히스토리.md가 올라가도록 유지합니다.
+1. **히스토리.md 최신 내역 추가**: `e:\antigravity-work\히스토리.md` 파일의 상단 요약표 및 날짜별 상세 내역에 `[업데이트 날짜 | 관련 프로젝트(커밋 해시) | 업데이트 파일 | 업데이트 내용 요약]`을 새로 추가합니다.
+2. **원클릭 자동 동기화 도구 실행**: 터미널에서 `python e:\antigravity-work\sync_history.py`를 1회 실행하여 5대 워크스페이스 폴더(`antigravity-work`, `Q&A`, `my-skill`, `my-stock`, `korean cycle`)의 `히스토리.md`를 1초 만에 100% 일괄 덮어쓰기 동기화합니다.
+3. **GitHub에 히스토리.md 포함하여 커밋 & 푸시**: 대상 GitHub 저장소에서 새로 덮어쓴 `히스토리.md` 파일까지 함께 `git add 히스토리.md` → `git commit` → `git push origin main` 하여 GitHub 원격 저장소에도 항상 최신 `히스토리.md`가 올라가도록 유지합니다.
 

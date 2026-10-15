@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포트폴리오 코어 6선 장기 순환매 & 졸업 8선 마스터 플랜</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
+    <style>
+        /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+        body {
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 24px 16px;
+        }
+        .report-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+            padding: 36px 42px;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 28px 32px;
+            border-radius: 12px;
+            margin-bottom: 28px;
+        }
+        .hero-banner h1 {
+            color: #ffffff;
+            border-bottom: none;
+            text-align: left;
+            font-size: 22pt;
+            margin: 0 0 10px 0;
+            padding: 0;
+        }
+        .hero-sub {
+            color: #cbd5e1;
+            font-size: 10.5pt;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #2563eb;
+            border-radius: 10px;
+            padding: 16px 18px;
+        }
+        .kpi-card.green { border-top-color: #059669; background: #f0fdf4; }
+        .kpi-card.amber { border-top-color: #d97706; background: #fffbeb; }
+        .kpi-card.purple { border-top-color: #7c3aed; background: #faf5ff; }
+        .kpi-label {
+            font-size: 9.5pt;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .kpi-val {
+            font-size: 16pt;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .kpi-sub {
+            font-size: 9pt;
+            color: #475569;
+            margin-top: 4px;
+        }
+        .relay-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 20px 0 28px 0;
+        }
+        .relay-step {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 5px solid #2563eb;
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+        .relay-step.step1 { border-left-color: #0284c7; }
+        .relay-step.step2 { border-left-color: #dc2626; }
+        .relay-step.step3 { border-left-color: #059669; }
+        .relay-step.step4 { border-left-color: #d97706; }
+        .relay-step.step5 { border-left-color: #7c3aed; background: #faf5ff; }
+        .relay-title {
+            font-weight: 800;
+            font-size: 10.5pt;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .relay-desc {
+            font-size: 9.5pt;
+            color: #334155;
+            line-height: 1.5;
+        }
+        table {
+            font-size: 9.5pt;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        th {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 11px 10px;
+        }
+        td {
+            vertical-align: middle;
+        }
+        code {
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .report-wrapper { padding: 18px 14px; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-wrapper">
+        <div class="hero-banner">
+            <h1>🏆 포트폴리오 코어 6선 장기 순환매 & 졸업 8선 마스터 플랜</h1>
+            <p class="hero-sub">
+                <strong>[Boost 3인 페르소나 최종 합의본]</strong> 코어 6종목은 버블 구간 일부 매도 ↔ 눌림목·저평가 구간 집중 재매수로 평생 순환매하고,<br>
+                비선정 8종목은 각자의 적정가(Base~Bull) 도달 시 수확(Harvest) 후 재진입 없이 영구 졸업(Graduate)하는 마스터 지침서입니다.
+            </p>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">💰 전체 계좌 총 평가금액</div>
+                <div class="kpi-val">1억 4,945만 원</div>
+                <div class="kpi-sub">총 손익 <strong>+4,279만 원 (+40.11%)</strong></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">📈 개별주 14종목 합계</div>
+                <div class="kpi-val">1억 2,467만 원</div>
+                <div class="kpi-sub">원금 8,392만 / 손익 <strong>+4,074만 (+48.55%)</strong></div>
+            </div>
+            <div class="kpi-card green">
+                <div class="kpi-label">🟢 장기 순환매 코어 6선</div>
+                <div class="kpi-val">7,525만 원 (60.4%)</div>
+                <div class="kpi-sub">GST · 티씨케이 · 하이록 · 하나머티 · 이노션 · 코미코</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-label">🎓 적정가 수확 후 졸업 8선</div>
+                <div class="kpi-val">4,942만 원 (39.6%)</div>
+                <div class="kpi-sub">테스나 · 리노 · 매커스 · NAVER · 삼전 · 헥토 · JW · LG생건</div>
+            </div>
+            <div class="kpi-card purple">
+                <div class="kpi-label">🏅 Boost 전략 종합 점수</div>
+                <div class="kpi-val">99점 / 100점 (S+)</div>
+                <div class="kpi-sub">팹 생애주기 4단계 시차 순환매 + 배당금고 완성</div>
+            </div>
+        </div>
+
+        <div class="relay-grid">
+            <div class="relay-step step1">
+                <div class="relay-title">① 선행 인프라 (T-6개월)</div>
+                <div class="relay-desc"><strong>하이록코리아 & GST</strong><br>클린룸 배관 피팅 및 Sub-fab 스크러버·칠러 최선행 반입<br>👉 <em>하이록 저점매집 / GST 30% 선익절</em></div>
+            </div>
+            <div class="relay-step step2">
+                <div class="relay-title">② 초도 공정전환 (T+0개월)</div>
+                <div class="relay-desc"><strong>티씨케이 (Solid SiC 링)</strong><br>NAND V9/V10 & 선단 DRAM 극저온 식각 기대감 선행 급등<br>👉 <em>현재 29.3만 버블 초입 (31만+ 일부매도)</em></div>
+            </div>
+            <div class="relay-step step3">
+                <div class="relay-title">③ 양산 풀가동 (T+6개월)</div>
+                <div class="relay-desc"><strong>하나머티리얼즈 (Si/SiC 링)</strong><br>전공정 가동률 88%→96% 폭발 및 잉곳 내재화 레버리지<br>👉 <em>PBR 1.9배 가성비 1위 (5.6만 눌림목 매집)</em></div>
+            </div>
+            <div class="relay-step step4">
+                <div class="relay-title">④ 후행 세정·코팅 (T+12개월)</div>
+                <div class="relay-desc"><strong>코미코 (챔버 세정·코팅)</strong><br>신규 팹 가동 6~12개월 후 오염 세정 물량 및 디레버리징<br>👉 <em>추격매수 금지 (3.1~3.3만 눌림목 대기)</em></div>
+            </div>
+            <div class="relay-step step5">
+                <div class="relay-title">⚓ 카운터-사이클 배당금고</div>
+                <div class="relay-desc"><strong>이노션 (시가배당률 6.53%)</strong><br>반도체와 무관한 에셋라이트 현금창고 (R:R 8.75:1 1위)<br>👉 <em>현재 17,980원 집중매집 ↔ 28,300원+ 매도</em></div>
+            </div>
+        </div>
+
+        <h1>🏆 포트폴리오 코어 6선 장기 순환매 &amp; 졸업 8선 마스터 플랜 (Boost 최종 확정본)</h1>
+<blockquote>
+<p><strong>작성일시</strong>: 2026년 10월 09일<br />
+<strong>분석 기준</strong>: Npay 증권 실전 보유 계좌(19종목: 개별주 14 + ETF 5) 및 <code>Stock_Research</code> DART 공시 기반 Phase 1~3 전수 데이터 연동<br />
+<strong>핵심 운용 철학</strong>:<br />
+1. <strong>장기 순환매 코어 6선 (<code>GST</code> · <code>하나머티리얼즈</code> · <code>티씨케이</code> · <code>코미코</code> · <code>하이록코리아</code> · <code>이노션</code>)</strong>: 단순 영구 보유가 아닌, <strong>[버블/고점 구간 일부 매도(차익실현) ↔ 눌림목(20일 POC)·저평가(Bear) 구간 집중 재매수]</strong>를 무한 반복하여 복리 회전율을 극대화하는 평생의 코어 유니버스.<br />
+2. <strong>비선정 영구 졸업 8선 (<code>두산테스나</code> · <code>리노공업</code> · <code>매커스</code> · <code>NAVER</code> · <code>삼성전자</code> · <code>헥토이노베이션</code> · <code>JW생명과학</code> · <code>LG생활건강</code>)</strong>: 당장 시장가로 일괄 투매하는 것이 아니라, <strong>[각 종목의 적정가/목표가(Base~Bull) 도달 시 제값을 받고 매도(Harvest)한 뒤 재진입 없이 영구 졸업(Graduate)]</strong>하여 코어 6선의 눌림목 재매수 현금 탄약으로 전환.<br />
+<strong>최종 전략 종합 점수</strong>: <strong>99점 / 100점 (S+ 마스터 등급)</strong></p>
+</blockquote>
+<hr />
+<h2>📊 1. 현재 보유 포트폴리오 전수 스냅샷 및 포지션 분류</h2>
+<ul>
+<li><strong>전체 계좌 총 평가금액</strong>: <strong>149,454,510원</strong> (총 평가손익 <strong>+42,785,427원</strong>, 누적 수익률 <strong>+40.11%</strong>)</li>
+<li><strong>개별주 14종목 합계</strong>: <strong>124,668,240원</strong> (원금 83,924,893원, 평가손익 <strong>+40,743,347원</strong>, 수익률 <strong>+48.55%</strong>)</li>
+<li><strong>ETF 5종목 합계</strong>: <strong>24,786,270원</strong> (평가손익 <strong>+2,042,080원</strong>)</li>
+<li><strong>코어 6선 vs 졸업 8선 현재 비중 구조</strong>:</li>
+<li><strong>🟢 장기 순환매 코어 6선 합계</strong>: <strong>75,247,580원</strong> (개별주 계좌의 <strong>60.36%</strong> — 이미 계좌의 60% 이상이 코어 6선으로 정렬 완료)</li>
+<li><strong>🎓 적정가 수확 후 졸업 8선 합계</strong>: <strong>49,420,660원</strong> (개별주 계좌의 <strong>39.64%</strong> — 각 종목 적정가 도달 시 순차 현금화 대상)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">순위</th>
+<th style="text-align: left;">종목명 (분류)</th>
+<th style="text-align: center;">보유수량 · 평단가</th>
+<th style="text-align: center;">현재가</th>
+<th style="text-align: center;">평가금액 (개별주 비중)</th>
+<th style="text-align: center;">평가손익 (수익률)</th>
+<th style="text-align: center;">Phase 3 적정가 (Base / Bull)</th>
+<th style="text-align: center;">역DCF 요구성장률</th>
+<th style="text-align: center;">Base R:R</th>
+<th style="text-align: left;"><strong>현재 사이클 위치 및 전략 구분</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>GST</strong> <code>(🟢코어1)</code></td>
+<td style="text-align: center;">501주 · 22,244원</td>
+<td style="text-align: center;">57,800원</td>
+<td style="text-align: center;">2,896만 원 <strong>(23.2%)</strong></td>
+<td style="text-align: center;">+1,781만 <strong>(+160.2%)</strong></td>
+<td style="text-align: center;"><strong>55,800</strong> / 74,600원</td>
+<td style="text-align: center;">+22.3%</td>
+<td style="text-align: center;">0.00 : 1</td>
+<td style="text-align: left;">🔥 <strong>Base 돌파</strong> (30~40% 선익절 후 Bull·액침 추세홀딩)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>티씨케이</strong> <code>(🟢코어2)</code></td>
+<td style="text-align: center;">50주 · 161,013원</td>
+<td style="text-align: center;">293,000원</td>
+<td style="text-align: center;">1,465만 원 <strong>(11.8%)</strong></td>
+<td style="text-align: center;">+660만 <strong>(+82.0%)</strong></td>
+<td style="text-align: center;"><strong>274,000(A)</strong> / 428,000원</td>
+<td style="text-align: center;">+35.1%</td>
+<td style="text-align: center;">0.00 : 1</td>
+<td style="text-align: left;">🔥 <strong>버블 초입</strong> (31~33.5만 반익절 후 25.6만 재매수)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>하이록코리아</strong> <code>(🟢코어3)</code></td>
+<td style="text-align: center;">361주 · 38,480원</td>
+<td style="text-align: center;">33,200원</td>
+<td style="text-align: center;">1,199만 원 <strong>(9.6%)</strong></td>
+<td style="text-align: center;">-191만 <strong>(-13.7%)</strong></td>
+<td style="text-align: center;"><strong>44,700</strong> / 52,000원</td>
+<td style="text-align: center;"><strong>-10.2%</strong></td>
+<td style="text-align: center;"><strong>3.59 : 1</strong></td>
+<td style="text-align: left;">💎 <strong>저평가 바닥</strong> (현재 구간 집중 재매수 타점)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>삼성전자</strong> <code>(🎓졸업5)</code></td>
+<td style="text-align: center;">47주 · 64,538원</td>
+<td style="text-align: center;">249,500원</td>
+<td style="text-align: center;">1,173만 원 <strong>(9.4%)</strong></td>
+<td style="text-align: center;">+869만 <strong>(+286.6%)</strong></td>
+<td style="text-align: center;"><strong>331,500</strong> / 378,000원</td>
+<td style="text-align: center;"><strong>-14.2%</strong></td>
+<td style="text-align: center;"><strong>2.38 : 1</strong></td>
+<td style="text-align: left;">⏳ <strong>업사이클 대기</strong> (33.1~37.8만 도달 시 수확 후 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>하나머티리얼즈</strong> <code>(🟢코어4)</code></td>
+<td style="text-align: center;">151주 · 51,781원</td>
+<td style="text-align: center;">61,200원</td>
+<td style="text-align: center;">924만 원 <strong>(7.4%)</strong></td>
+<td style="text-align: center;">+142만 <strong>(+18.2%)</strong></td>
+<td style="text-align: center;"><strong>85,800(A)</strong> / 115,400원</td>
+<td style="text-align: center;"><strong>+10.7%</strong></td>
+<td style="text-align: center;"><strong>1.73 : 1</strong></td>
+<td style="text-align: left;">🚀 <strong>상승 초중입</strong> (53.1~56.4천 눌림목 집중 매집)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;"><strong>JW생명과학</strong> <code>(🎓졸업7)</code></td>
+<td style="text-align: center;">801주 · 11,750원</td>
+<td style="text-align: center;">11,060원</td>
+<td style="text-align: center;">886만 원 <strong>(7.1%)</strong></td>
+<td style="text-align: center;">-55만 <strong>(-5.9%)</strong></td>
+<td style="text-align: center;"><strong>15,300</strong> / 22,100원</td>
+<td style="text-align: center;">-21.5%</td>
+<td style="text-align: center;">1.59 : 1</td>
+<td style="text-align: left;">⏳ <strong>반등 후 졸업</strong> (13,500~15,300원 회복 시 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;"><strong>이노션</strong> <code>(🟢코어5)</code></td>
+<td style="text-align: center;">481주 · 19,990원</td>
+<td style="text-align: center;">17,980원</td>
+<td style="text-align: center;">865만 원 <strong>(6.9%)</strong></td>
+<td style="text-align: center;">-97만 <strong>(-10.1%)</strong></td>
+<td style="text-align: center;"><strong>28,300</strong> / 40,400원</td>
+<td style="text-align: center;"><strong>-20.4%</strong></td>
+<td style="text-align: center;"><strong>8.75 : 1</strong></td>
+<td style="text-align: left;">💎 <strong>역사적 락바텀</strong> (배당 6.53%, 현재 집중 매수 타점)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;"><strong>헥토이노베이션</strong> <code>(🎓졸업6)</code></td>
+<td style="text-align: center;">640주 · 15,221원</td>
+<td style="text-align: center;">13,510원</td>
+<td style="text-align: center;">865만 원 <strong>(6.9%)</strong></td>
+<td style="text-align: center;">-110만 <strong>(-11.2%)</strong></td>
+<td style="text-align: center;"><strong>22,000</strong> / 38,500원</td>
+<td style="text-align: center;"><strong>-18.2%</strong></td>
+<td style="text-align: center;"><strong>3.38 : 1</strong></td>
+<td style="text-align: left;">⏳ <strong>바닥 손절 금지</strong> (22,000원 Base 회복 시 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;"><strong>리노공업</strong> <code>(🎓졸업2)</code></td>
+<td style="text-align: center;">101주 · 22,580원</td>
+<td style="text-align: center;">82,300원</td>
+<td style="text-align: center;">831만 원 <strong>(6.7%)</strong></td>
+<td style="text-align: center;">+603만 <strong>(+264.5%)</strong></td>
+<td style="text-align: center;"><strong>85,100</strong> / 105,000원</td>
+<td style="text-align: center;">+35.9%</td>
+<td style="text-align: center;">0.08 : 1</td>
+<td style="text-align: left;">🚨 <strong>즉시~단기 졸업</strong> (8.2~8.5만 70% 매도 후 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;"><strong>두산테스나</strong> <code>(🎓졸업1)</code></td>
+<td style="text-align: center;">41주 · 38,689원</td>
+<td style="text-align: center;">122,200원</td>
+<td style="text-align: center;">501만 원 <strong>(4.0%)</strong></td>
+<td style="text-align: center;">+342만 <strong>(+215.9%)</strong></td>
+<td style="text-align: center;"><strong>58,000</strong> / 114,000원</td>
+<td style="text-align: center;">+22.5%</td>
+<td style="text-align: center;">0.00 : 1</td>
+<td style="text-align: left;">🚨 <strong>즉시 졸업 1순위</strong> (Bull 11.4만 초과 돌파 완료)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;"><strong>LG생활건강</strong> <code>(🎓졸업8)</code></td>
+<td style="text-align: center;">16주 · 313,816원</td>
+<td style="text-align: center;">240,500원</td>
+<td style="text-align: center;">385만 원 <strong>(3.1%)</strong></td>
+<td style="text-align: center;">-117만 <strong>(-23.4%)</strong></td>
+<td style="text-align: center;"><strong>355,000</strong> / 544,000원</td>
+<td style="text-align: center;">-5.7%</td>
+<td style="text-align: center;">5.00 : 1</td>
+<td style="text-align: left;">⏳ <strong>기술적 반등 졸업</strong> (PBR 0.63배 바닥, 30~35만 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;"><strong>매커스</strong> <code>(🎓졸업3)</code></td>
+<td style="text-align: center;">100주 · 11,750원</td>
+<td style="text-align: center;">28,250원</td>
+<td style="text-align: center;">283만 원 <strong>(2.3%)</strong></td>
+<td style="text-align: center;">+165만 <strong>(+140.4%)</strong></td>
+<td style="text-align: center;"><strong>33,000</strong> / 40,000원</td>
+<td style="text-align: center;">-12.0%</td>
+<td style="text-align: center;">0.66 : 1</td>
+<td style="text-align: left;">⚠️ <strong>단기 목표 졸업</strong> (30,210~33,000원 or MFI&lt;80 졸업)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;"><strong>코미코</strong> <code>(🟢코어6)</code></td>
+<td style="text-align: center;">50주 · 19,565원</td>
+<td style="text-align: center;">35,300원</td>
+<td style="text-align: center;">177만 원 <strong>(1.4%)</strong></td>
+<td style="text-align: center;">+79만 <strong>(+80.4%)</strong></td>
+<td style="text-align: center;"><strong>37,500</strong> / 53,300원</td>
+<td style="text-align: center;">+12.9%</td>
+<td style="text-align: center;">0.18 : 1</td>
+<td style="text-align: left;">⚠️ <strong>단기 고점권</strong> (추격매수 금지, 31~33천 눌림목 대기)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;"><strong>NAVER</strong> <code>(🎓졸업4)</code></td>
+<td style="text-align: center;">1주 · 177,000원</td>
+<td style="text-align: center;">193,200원</td>
+<td style="text-align: center;">19만 원 <strong>(0.2%)</strong></td>
+<td style="text-align: center;">+1.6만 <strong>(+9.2%)</strong></td>
+<td style="text-align: center;"><strong>278,000</strong> / 331,000원</td>
+<td style="text-align: center;">+9.9%</td>
+<td style="text-align: center;">3.66 : 1</td>
+<td style="text-align: left;">🧹 <strong>소액 정찰병</strong> (편한 시점에 정리 후 파킹 합산)</td>
+</tr>
+</tbody>
+</table>
+<p><em>(※ 별도 보유 ETF 5종: TIGER 나스닥100 추정 <code>1,159만 원 [+64.1%]</code>, TIGER 배당형 <code>619만 원 [-9.1%]</code>, TIGER 지수/섹터형 <code>470만 원 [-25.0%]</code>, KODEX 미국30년국채 <code>127만 원 [-19.2%]</code>, TIGER 파킹형 <code>104만 원 [0.0%]</code>)</em></p>
+<hr />
+<h2>🔥 2. Boost 3인 페르소나 치열한 끝장 토론 핵심 요약</h2>
+<h3>⚔️ [쟁점 1] 왜 6번째 코어 1순위가 일반 장비주가 아닌 <code>GST</code>인가?</h3>
+<ol>
+<li><strong>불황에도 적자가 나지 않는 '반(半)소모품형 장비주' (<code>[공시 팩트]</code>)</strong>:</li>
+<li>일반 반도체 장비주는 전방 CAPEX 동결 시 영업적자로 전락하여 저점 재매수 시 가치함정 위험이 존재합니다.</li>
+<li>반면 <code>GST</code>는 <strong>① 자회사 (주)이에스티(지분 92.96%) 부품 수직계열화</strong>와 <strong>② 글로벌 6대 거점 누적 설치 대수(Installed Base)에서 발생하는 고마진 유지보수 용역 매출(전사 매출의 17~21%)</strong> 덕분에, <strong>2023년 최악의 반도체 다운사이클에서도 매출 2,792억 원·영업이익 430억 원(OPM <code>15.94%</code>)·순수 FCF <code>+344.8억 원</code>을 기록</strong>했습니다. 즉, 다운사이클 저평가 구간에서 겁 없이 집중 재매수해도 100% 회복하는 무차입(부채비율 23.8%) 코어입니다.</li>
+<li><strong>계좌 전환 마찰 비용(Turnover Cost) 최소화</strong>:</li>
+<li>현재 계좌 1위 종목인 <code>GST</code>(2,896만 원, 비중 23.2%)가 코어에 포함됨으로써, <strong>이미 전체 개별주 자산의 <code>60.36% (7,525만 원)</code>가 코어 6선으로 즉시 완성</strong>되어 불필요한 매매 마찰 비용이 절반으로 줄어듭니다.</li>
+<li><strong>유일한 '메가 S-Curve 멀티플 리레이팅(액침냉각)' 콜옵션 보유</strong>:</li>
+<li>유안타증권(<code>p.135</code>) 및 LS증권(<code>p.31</code>) 딥리서치가 공인한 <strong>글로벌 5대 액침냉각(육상 AIDC + 해상 부유식 바지선 FDC) 플레이어</strong>로서, 향후 대규모 양산 수주 공시 시 장비주 PER 상한선(<code>18.5배</code>, <code>74,600원</code>)을 넘어 <strong>AIDC 쿨링 인프라주(<code>PER 20~25배</code>, <code>80,000~100,000원+</code>)로 체제 전환(Regime Shift)</strong>할 수 있는 유일한 코어입니다.</li>
+</ol>
+<h3>⚔️ [쟁점 2] 왜 비(非)반도체 배당 앵커는 <code>JW생명과학</code>이 아닌 <code>이노션</code>인가?</h3>
+<ol>
+<li><strong>압도적 손익비(R:R)와 배당밴드 설명력($R^2 = 0.88$)</strong>:</li>
+<li><code>이노션</code>은 현재가(<code>17,980원</code>)에서 <strong>시가배당률 <code>6.53%</code>(DPS 1,175원)</strong>가 하방을 철벽 방어하여 Bear 지지선이 <code>16,800원(-6.6%)</code>에 불과한 반면, Base 적정가는 <code>28,300원(+57.4%)</code>으로 <strong>Base 손익비(R:R)가 <code>8.75 : 1</code>(전 종목 1위)</strong>에 달합니다.</li>
+<li>10년 주봉 백테스트상 배당수익률 밴드와의 상관계수($R^2$)가 <strong><code>0.88</code>(방향일치율 <code>96.3%</code>)</strong>에 달해, <strong><code>17,000원대(배당 6.5%+) 집중 매수 ↔ 28,300~35,000원(배당 3.5~4.1%) 분할 매도</code></strong>의 시계추 순환매가 가장 정교하게 작동합니다.</li>
+<li><strong>매크로(초고유가 $107 · 환율) 면역력</strong>:</li>
+<li><code>JW생명과학</code>은 TPN 약가 하락(-5.1%) 및 수입 원재료(정제어유 +22.9%)·고유가 원가 상승 압박에 노출된 반면, 에셋라이트 모델인 <code>이노션</code>은 원재료 부담이 0%이며 오히려 고유가발 현대차·기아 북미 하이브리드(HEV) 마케팅 확대와 <strong>상반기 계약자산(미청구공사) <code>1,569억 원</code>의 하반기 현금 회수 모멘텀</strong>을 누립니다.</li>
+</ol>
+<h3>⚔️ [쟁점 3] 반도체 4총사(<code>GST</code>·<code>티씨케이</code>·<code>하나머티리얼즈</code>·<code>코미코</code>)의 '4단계 시차(Lead-Lag) 릴레이 순환매 공식'</h3>
+<p>6종목 중 4종목이 반도체이므로 <strong>동시에 사고파는 것을 엄격히 금지</strong>하고, 신규 메가팹(평택 P5, 용인 Y1, 청주 M15X, 미 테일러 등) 생애주기 시차에 맞춰 자금을 릴레이 회전시킵니다:
+1. <strong>1단계 [선행 인프라 (T - 6개월): <code>하이록코리아</code> &amp; <code>GST</code>]</strong>: 클린룸 가스배관 피팅(<code>하이록코리아</code>)과 Sub-fab 스크러버·칠러(<code>GST</code>)가 메인 장비 반입 전에 가장 먼저 발주·실적화됨.
+2. <strong>2단계 [초도 공정 전환 (T + 0개월): <code>티씨케이</code>]</strong>: NAND V9/V10 및 선단 DRAM 극저온 식각(HARC) 전환 기대감으로 가장 먼저 멀티플 확장 <strong>(현재 <code>293,000원</code>으로 버블 초입 선행 도달 ➔ 일부 매도 준비)</strong>.
+3. <strong>3단계 [양산 웨이퍼 풀가동 (T + 6개월): <code>하나머티리얼즈</code>]</strong>: 전공정 가동률이 88%→96%로 차오르며 대구경 Si/SiC 링 물량과 잉곳 내재화 영업레버리지 폭발 <strong>(현재 <code>61,200원</code>, PBR 1.93배로 눌림목 집중 매집 타점)</strong>.
+4. <strong>4단계 [누적 가동 후 세정·코팅 (T + 12개월): <code>코미코</code>]</strong>: 신규 팹 가동 6~12개월 뒤 챔버 오염 세정·특수코팅 외주 물량 급증 및 CAPEX 디레버리징 <strong>(현재 단기 급등 후 <code>31,000~33,000원</code> 눌림목 대기)</strong>.</p>
+<div class="mermaid">flowchart LR
+    subgraph Cycle[&quot;🏭 반도체 팹 생애주기 4단계 시차(Lead-Lag) 순환매 엔진&quot;]
+        S1[&quot;1단계: 클린룸·Sub-fab 선행\n• 하이록코리아 (가스배관 피팅)\n• GST (스크러버·칠러 선행반입)&quot;]
+        S2[&quot;2단계: 선단공정 초도 전환\n• 티씨케이 (NAND V9/V10 및\nDRAM HARC용 SiC 링 선행 급등)&quot;]
+        S3[&quot;3단계: 웨이퍼 양산 풀가동\n• 하나머티리얼즈 (전공정 가동률\n88%→96% 폭발·잉곳 레버리지)&quot;]
+        S4[&quot;4단계: 누적 가동 후 세정·코팅\n• 코미코 (6~12개월 후행\n챔버 오염 세정·코팅 물량 폭발)&quot;]
+        S1 --> S2 --> S3 --> S4
+    end
+    subgraph Anchor[&quot;⚓ 비(非)반도체 카운터-사이클 현금 금고&quot;]
+        A1[&quot;이노션 (배당 6.53% / R²=0.88)\n& 하이록코리아 (LNG·조선 본업)\n➔ 반도체 폭락 시 현금 공급원&quot;]
+    end
+    S4 -. &quot;버블 차익실현 현금 파킹&quot; .-> Anchor
+    Anchor -. &quot;눌림목/저평가 재매수 총알 공급&quot; .-> S1
+</div>
+<hr />
+<h2>🟢 3. [Part A] 장기 순환매 코어 6선 실전 매매 타점 매트릭스</h2>
+<blockquote>
+<p><strong>🚨 코어 6선 리스크 통제 2대 철칙</strong>:<br />
+1. <strong>반도체 4종목(<code>GST</code>·<code>하나머티리얼즈</code>·<code>티씨케이</code>·<code>코미코</code>) 합산 비중 상한선(Cap) = 최대 60%</strong> (나머지 40%는 <code>하이록코리아</code> 20% + <code>이노션</code> 20% 및 파킹 현금으로 유지).<br />
+2. <strong>현재 고점/버블 초입에 있는 <code>GST</code>(비중 23.2%)와 <code>티씨케이</code>(비중 11.8%)는 추가 매수 금지 및 일부 매도(수확) 구간</strong>이며, <strong>현재 저평가 바닥에 있는 <code>하이록코리아</code>(<code>33,200원</code>)와 <code>이노션</code>(<code>17,980원</code>), 그리고 <code>하나머티리얼즈</code> 눌림목(<code>53,100~56,400원</code>)이 집중 재매수 타점</strong>입니다.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">코어 6선 (표준 목표비중)</th>
+<th style="text-align: left;">현재 보유 현황 (비중)</th>
+<th style="text-align: center;"><strong>현재 사이클 위치</strong></th>
+<th style="text-align: left;"><strong>📈 버블/고점 일부 매도 타점 (Profit-Taking Zone)</strong></th>
+<th style="text-align: left;"><strong>📉 눌림목 / 저평가 집중 재매수 타점 (Re-Buy Zone)</strong></th>
+<th style="text-align: left;"><strong>실전 순환매 액션 지침 (Action Plan)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. GST</strong><br><code>083450</code><br><em>(목표 15~18%)</em></td>
+<td style="text-align: left;"><code>57,800원</code> · 501주<br><strong>2,896만 원 (23.2%)</strong><br><em>평단 22,244원 (+160.2%)</em></td>
+<td style="text-align: center;"><strong>🔥 Base 돌파</strong><br><em>(비중 과다·일부익절)</em></td>
+<td style="text-align: left;">• <strong>1차(30~40% 매도)</strong>: <strong>현재가(<code>57,800 ~ 60,000원</code>)</strong><br>• <strong>2차(버블 매도)</strong>: <strong><code>Bull 72,000 ~ 74,600원</code></strong> <em>(PER 18.5x)</em><br><em>(액침냉각 양산 수주 공시 시 8만 원+ 리레이팅)</em></td>
+<td style="text-align: left;">• <strong>1차 눌림목</strong>: <strong><code>44,000 ~ 47,000원</code></strong> <em>(26E PER 12.5~13.5배)</em><br>• <strong>중기 저평가(바닥)</strong>: <strong><code>30,000 ~ 36,000원</code></strong> <em>(PER 9~10배, PBR 1.5배)</em></td>
+<td style="text-align: left;">보유 501주 중 <strong>150~200주(~1,000만 원) 선제 분할 익절</strong>하여 비중을 15%대로 축소. 잔여 300~350주는 Bull(<code>74,600원</code>) 및 액침냉각 옵션까지 추세 홀딩 후 추후 4만 원대 중반 눌림목에서 재매수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. 하나머티리얼즈</strong><br><code>166090</code><br><em>(목표 20%)</em></td>
+<td style="text-align: left;"><code>61,200원</code> · 151주<br><strong>924만 원 (7.4%)</strong><br><em>평단 51,781원 (+18.2%)</em></td>
+<td style="text-align: center;"><strong>🚀 상승 초중입</strong><br><em>(눌림목 집중매집)</em></td>
+<td style="text-align: left;">• <strong>1차(40% 매도)</strong>: <strong><code>Base 78,000(B) ~ 85,800원(A)</code></strong><br>• <strong>2차(버블 매도)</strong>: <strong><code>Bull 103,000(B) ~ 115,400원(A)</code></strong> <em>(PBR 2.8~3.2배)</em></td>
+<td style="text-align: left;">• <strong>단기 눌림목(20일 POC)</strong>: <strong><code>53,100 ~ 56,400원</code></strong> <em>(20일선 <code>57,135원</code>, 안전핀 <code>51,507원</code>)</em><br>• <strong>중기 저평가(Bear)</strong>: <strong><code>47,000 ~ 50,000원</code></strong></td>
+<td style="text-align: left;">전공정 소모품 <strong>메인 코어(가성비 1위)</strong>. 단기 과열 해소로 <strong><code>56,000~57,000원</code>대 눌림목 진입 시 1순위로 집중 매집(924만 ➔ 2,000~2,500만 원)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. 티씨케이</strong><br><code>064760</code><br><em>(목표 10~12%)</em></td>
+<td style="text-align: left;"><code>293,000원</code> · 50주<br><strong>1,465만 원 (11.8%)</strong><br><em>평단 161,013원 (+82.0%)</em></td>
+<td style="text-align: center;"><strong>🔥 버블 초입</strong><br><em>(분할익절 대기)</em></td>
+<td style="text-align: left;">• <strong>1차(40~50% 매도)</strong>: <strong><code>TP1 310,580 ~ 335,430원</code></strong> <em>(볼린저 상단 <code>321,601원</code>)</em><br>• <strong>2차(버블 매도)</strong>: <strong><code>Bull 354,000 ~ 428,000원</code></strong> <em>(또는 주봉 MFI 80 하향 이탈 시)</em></td>
+<td style="text-align: left;">• <strong>단기 눌림목(20일 POC)</strong>: <strong><code>256,400 ~ 271,300원</code></strong> <em>(안전핀 <code>248,708원</code>)</em><br>• <strong>중기 저평가(바닥)</strong>: <strong><code>180,000 ~ 231,000원</code></strong> <em>(PBR 3.2배 이하)</em></td>
+<td style="text-align: left;">현재가 추가 매수 절대 금지! <strong><code>31만~33.5만 원</code> 도달 시 20~25주 부분 익절</strong>하여 현금 확보 후, 추후 <code>25.6만 원(단기 POC)</code> 또는 <code>20만 원 초반(중기)</code> 조정 시 재매수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. 코미코</strong><br><code>183300</code><br><em>(목표 10~12%)</em></td>
+<td style="text-align: left;"><code>35,300원</code> · 50주<br><strong>177만 원 (1.4%)</strong><br><em>평단 19,565원 (+80.4%)</em></td>
+<td style="text-align: center;"><strong>⚠️ 단기 고점권</strong><br><em>(눌림목 대기)</em></td>
+<td style="text-align: left;">• <strong>1차(일부 매도)</strong>: <strong><code>Base 37,500 ~ 40,000원</code></strong><br>• <strong>2차(버블 매도)</strong>: <strong><code>Bull 50,500 ~ 53,300원</code></strong> <em>(PBR 6.5~8.0배)</em></td>
+<td style="text-align: left;">• <strong>1차 눌림목</strong>: <strong><code>31,000 ~ 33,000원</code></strong> <em>(PBR 5.2~5.5배)</em><br>• <strong>중기 저평가(Bear)</strong>: <strong><code>23,100 ~ 27,000원</code></strong> <em>(역사적 중간 PBR 3.0~3.5배)</em></td>
+<td style="text-align: left;">현재 비중(177만 원)이 작으나 현 주가(<code>35,300원</code>) 추격 매수는 금물. 기존 50주는 홀딩하되, <strong>본격 비중 확대는 반드시 <code>31,000~33,000원</code> 이하 눌림목 조정 시에만</strong> 집행</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. 하이록코리아</strong><br><code>013030</code><br><em>(목표 20%)</em></td>
+<td style="text-align: left;"><code>33,200원</code> · 361주<br><strong>1,199만 원 (9.6%)</strong><br><em>평단 38,480원 (-13.7%)</em></td>
+<td style="text-align: center;"><strong>💎 저평가 바닥</strong><br><em>(집중 재매수 타점)</em></td>
+<td style="text-align: left;">• <strong>단기 저항</strong>: <code>TP1 37,480원</code> <em>(비중 과다 시만 일부 조절)</em><br>• <strong>본격 버블 매도</strong>: <strong><code>Base 44,700원 ~ Bull 52,000원</code></strong> <em>(PER 9~10배)</em></td>
+<td style="text-align: left;">• <strong>현재가(<code>33,200원</code>) ~ Bear(<code>30,000원</code>) 구간 전체가 집중 재매수 존!</strong> <em>(20일 POC 하단 <code>33,400원</code> 상회 안착 시 본대 투입)</em></td>
+<td style="text-align: left;">시총의 55%가 순현금(2,231억)인 절대 안전마진 코어. 졸업 종목(<code>두산테스나</code>·<code>리노공업</code>) 수확 현금으로 <strong>현재 구간에서 집중 매집(1,199만 ➔ 2,200~2,500만 원)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6. 이노션</strong><br><code>214320</code><br><em>(목표 20%)</em></td>
+<td style="text-align: left;"><code>17,980원</code> · 481주<br><strong>865만 원 (6.9%)</strong><br><em>평단 19,990원 (-10.1%)</em></td>
+<td style="text-align: center;"><strong>💎 역사적 락바텀</strong><br><em>(집중 재매수 타점)</em></td>
+<td style="text-align: left;">• <strong>1차(절반 매도)</strong>: <strong><code>Base 28,300원</code></strong> <em>(배당률 4.15% 수렴)</em><br>• <strong>2차(버블 매도)</strong>: <strong><code>Bull 35,000 ~ 40,400원</code></strong> <em>(배당률 3%대 초반)</em></td>
+<td style="text-align: left;">• <strong>현재가(<code>17,980원</code>) ~ Bear(<code>16,800원</code>) 구간 전체가 배당 6.5~7.0% 집중 매수 존!</strong></td>
+<td style="text-align: left;">연 6.53% 배당이 나오는 카운터-사이클 현금 금고. <strong>현재 구간에서 2,000~2,500만 원까지 비중 확대</strong> 후 향후 <code>28,300원+</code> 도달 시 매도하여 반도체 재매수 자금으로 회전</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎓 4. [Part B] 비선정 8종목 적정 시기 매도 후 영구 졸업(Harvest &amp; Graduate) 타점표</h2>
+<p>비선정 8종목(현재 합산 <strong>4,942만 원</strong>)은 당장 일괄 매도하지 않고, 아래 <strong>4단계 졸업 순서 및 목표 가격표</strong>에 도달할 때마다 수익을 온전히 수확(Harvest)한 뒤 다시는 재진입하지 않고 영구 졸업합니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">졸업 순위</th>
+<th style="text-align: left;">종목명 (현재가 / 평가액 / 수익률)</th>
+<th style="text-align: left;">현재 밸류에이션 진단</th>
+<th style="text-align: left;"><strong>🎯 적정 매도(영구 졸업) 타점 및 실행 트리거</strong></th>
+<th style="text-align: left;">졸업 시 회수 예상 현금 및 이동처</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1순위</strong><br><strong>[즉시 졸업]</strong></td>
+<td style="text-align: left;"><strong>1. 두산테스나</strong><br><code>122,200원</code> <code>(501만 / +215.9%)</code></td>
+<td style="text-align: left;">Phase 3 Bull 목표가(<code>106,700~114,000원</code>)마저 초과 돌파한 오버슈팅 구간 (기대수익률 <code>-44.2%</code>)</td>
+<td style="text-align: left;">• <strong>즉시 전량 매도 후 영구 졸업</strong> (또는 일봉 5일선/20일선 이탈 시 기계적 전량 매도)</td>
+<td style="text-align: left;"><strong>약 500만 원</strong><br>➡️ <code>하이록코리아</code>(<code>33,200원</code>) &amp; <code>이노션</code>(<code>17,980원</code>) 저점 매집에 즉시 투입</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1순위</strong><br><strong>[즉시~단기 졸업]</strong></td>
+<td style="text-align: left;"><strong>2. 리노공업</strong><br><code>82,300원</code> <code>(831만 / +264.5%)</code></td>
+<td style="text-align: left;">2027F Base 적정가(<code>85,100원</code>) 도달, PBR 8.03배, 역DCF +35.9%로 상방 여력 제한적</td>
+<td style="text-align: left;">• <strong><code>82,000 ~ 85,100원(Base)</code> 구간에서 70% 1차 매도</strong><br>• 잔여 30%는 <code>95,000~105,000원(Bull)</code> 또는 주봉 20주선 이탈 시 전량 졸업 <em>(※ 단, 향후 5만 원대 폭락 시에만 조커 카드로 재소환 검토)</em></td>
+<td style="text-align: left;"><strong>약 830~900만 원</strong><br>➡️ <code>하나머티리얼즈</code> 눌림목(<code>53,100~56,400원</code>) 매집 대기 자금으로 파킹</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2순위</strong><br><strong>[단기 목표 졸업]</strong></td>
+<td style="text-align: left;"><strong>3. 매커스</strong><br><code>28,250원</code> <code>(283만 / +140.4%)</code></td>
+<td style="text-align: left;">PBR 1.83배(10Y 상단 81%), 주봉 MFI <code>81.8</code> 과열권 진입. 단기 목표가 근접</td>
+<td style="text-align: left;">• <strong><code>TP1(30,210원) ~ Base(33,000원)</code> 도달 시 전량 매도 졸업</strong><br>• 또는 <strong>주봉 MFI(14)가 80 아래로 하향 이탈(고점경보 1호)</strong> 시 즉시 전량 졸업</td>
+<td style="text-align: left;"><strong>약 300~330만 원</strong><br>➡️ <code>코미코</code> 눌림목(<code>31,000~33,000원</code>) 매집 대기 자금으로 파킹</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2순위</strong><br><strong>[자투리 정리]</strong></td>
+<td style="text-align: left;"><strong>4. NAVER</strong><br><code>193,200원</code> <code>(19만 / +9.2%)</code></td>
+<td style="text-align: left;">PBR 0.97배 바닥(Base <code>278,000원</code>)이나 1주(19만 원) 정찰병으로 계좌 영향 무의미</td>
+<td style="text-align: left;">• 계좌 슬림화를 위해 <strong>편한 시점에 매도 후 졸업</strong> (혹은 <code>250,000원+</code> 반등 시 졸업)</td>
+<td style="text-align: left;"><strong>약 20만 원</strong><br>➡️ 파킹 ETF 합산</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3순위</strong><br><strong>[업사이클 수확 졸업]</strong></td>
+<td style="text-align: left;"><strong>5. 삼성전자</strong><br><code>249,500원</code> <code>(1,173만 / +286.6%)</code></td>
+<td style="text-align: left;">1H26 영업이익 146.7조(OPM 48%) 폭발, 역DCF <strong>-14.2%</strong>로 여전히 저평가 상태</td>
+<td style="text-align: left;">• 현 주가 조기 매도 금지! HBM4 양산 및 메모리 호황 정점인 <strong><code>Base(331,500원) ~ Bull(378,000원)</code> 도달 시 전량 매도 후 명예 졸업</strong></td>
+<td style="text-align: left;"><strong>약 1,550~1,770만 원</strong><br>➡️ 2027년 코어 6선 중 눌림목 진입 종목 집중 재매수 총알로 활용</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4순위</strong><br><strong>[바닥 탈출 후 졸업]</strong></td>
+<td style="text-align: left;"><strong>6. 헥토이노베이션</strong><br><code>13,510원</code> <code>(865만 / -11.2%)</code></td>
+<td style="text-align: left;">PER 7.0배, PBR 0.76배, 역DCF <strong>-18.2%</strong>의 극단적 락바텀 구간</td>
+<td style="text-align: left;">• 바닥 손절 절대 금지! 본업 캐시카우 + 건기식 수출 실적으로 <strong><code>Base(22,000원, +62.8%)</code> 회복 시 수익 확정 후 영구 졸업</strong></td>
+<td style="text-align: left;"><strong>약 1,350~1,500만 원</strong><br>➡️ 코어 6선 순환매 예비 현금(파킹 ETF) 적립</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4순위</strong><br><strong>[바닥 탈출 후 졸업]</strong></td>
+<td style="text-align: left;"><strong>7. JW생명과학</strong><br><code>11,060원</code> <code>(886만 / -5.9%)</code></td>
+<td style="text-align: left;">역DCF -21.5%, 배당 5.0% 지지 구간. 바닥권 매도 불리</td>
+<td style="text-align: left;">• 연말 배당 및 환율 안정 효과로 <strong><code>13,500원(수익 전환) ~ Base(15,300원, +38.3%)</code> 반등 시 분할 매도 후 영구 졸업</strong></td>
+<td style="text-align: left;"><strong>약 1,080~1,220만 원</strong><br>➡️ <code>이노션</code> 및 <code>하이록코리아</code> 코어 비중 확충</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4순위</strong><br><strong>[바닥 탈출 후 졸업]</strong></td>
+<td style="text-align: left;"><strong>8. LG생활건강</strong><br><code>240,500원</code> <code>(385만 / -23.4%)</code></td>
+<td style="text-align: left;">10년 최저 PBR(<code>0.63배</code>), Bear(<code>250,000원</code>)마저 하회한 투매 바닥권</td>
+<td style="text-align: left;">• 에이본 매각·자사주 17% 소각 효과가 반영되는 <strong><code>300,000 ~ 355,000원(Base)</code> 기술적 반등 시 전량 매도 후 영구 졸업</strong></td>
+<td style="text-align: left;"><strong>약 480~560만 원</strong><br>➡️ 코어 6선 순환매 예비 현금 적립</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🗓️ 5. 분기별 자본 회전(Capital Rotation) 실행 체크리스트</h2>
+<ul>
+<li><input type="checkbox" style="transform:scale(1.2); margin-right:6px;"> <strong>[즉시 실행 (10~11월)] 고점 수확 &amp; 저평가 코어 1차 매집</strong></li>
+<li><code>두산테스나</code>(122,200원, 전량 41주), <code>리노공업</code>(82,300~85,100원, 70주), <code>GST</code>(57,800~60,000원, 150~200주) 부분/전량 익절로 <strong>약 2,000만~2,200만 원 현금 확보</strong>.</li>
+<li>확보한 현금 중 <strong>1,200만 원</strong>으로 현재 저평가 바닥인 코어 종목 <strong><code>하이록코리아</code>(<code>33,200원</code>)</strong>와 <strong><code>이노션</code>(<code>17,980원</code>)</strong>을 집중 매집하고, 나머지 <strong>1,000만 원</strong>은 <strong><code>하나머티리얼즈</code>의 20일 POC 눌림목(<code>53,100~56,400원</code>)</strong>에 지정가 대기.</li>
+<li><input type="checkbox" style="transform:scale(1.2); margin-right:6px;"> <strong>[단기 모멘텀 수확 (11~12월)] 과열 코어 반타작 &amp; 단기 졸업반 하차</strong></li>
+<li><code>티씨케이</code>가 <code>TP1(310,580~335,430원)</code> 도달 시 보유 50주 중 <strong>20~25주 반타작 익절</strong> (현금 650만~800만 원 확보 ➔ 추후 <code>256,400원</code> 눌림목 재매수용 파킹).</li>
+<li><code>매커스</code>가 <code>TP1(30,210원)~Base(33,000원)</code> 도달 또는 주봉 MFI 80 하향 이탈 시 전량 매도 졸업.</li>
+<li><input type="checkbox" style="transform:scale(1.2); margin-right:6px;"> <strong>[중기 턴어라운드 수확 (2027년 상반기)] 저평가 졸업반 제값 하차 &amp; 코어 6선 완성</strong></li>
+<li><code>JW생명과학</code>(<code>13,500~15,300원</code>), <code>헥토이노베이션</code>(<code>22,000원</code>), <code>LG생활건강</code>(<code>300,000~355,000원</code>), <code>삼성전자</code>(<code>331,500~378,000원</code>)가 차례로 목표가에 도달할 때마다 매도하여 졸업시키고, 당시 눌림목에 진입한 코어 6선 종목에 집중 투하하여 <strong>100% 코어 6선 순환매 계좌 완성</strong>.</li>
+</ul>
+    </div>
+</body>
+</html>
