@@ -294,6 +294,95 @@ p > em {
     color: #d97706;
 }
 
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    .sop-calc-container {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0 35px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    }
+    .sop-calc-container h3 {
+        margin-top: 0;
+        color: #0f172a;
+        border-bottom: 2px solid #94a3b8;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+    .sop-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+    .sop-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+    .sop-card.buy-card { border-left: 4px solid #2563eb; }
+    .sop-card.stop-card { border-left: 4px solid #dc2626; background: #fff5f5; }
+    .sop-card.sell-card { border-left: 4px solid #059669; }
+    .sop-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 10.5pt;
+        color: #1e293b;
+    }
+    .sop-stat-line {
+        font-size: 9.8pt;
+        margin: 4px 0;
+        color: #334155;
+    }
+    .sop-highlight {
+        font-weight: 800;
+        color: #0f172a;
+    }
+    .sop-pin-badge {
+        display: inline-block;
+        background: #dc2626;
+        color: #fff;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 9.5pt;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -303,14 +392,63 @@ p > em {
 <body>
     <h1>📖 Phase 2: 스토리 리더 (Global &amp; Weekly 트렌드 공시 팩트체크)</h1>
 <h2>1. Global 산업 사이클 및 테마 검증</h2>
-<p>[시장 내러티브] 최신 Global Trend <code>[글로벌 트렌드: 26.09.22.LS증권.에이전틱 커머스의 시대.pdf p.3, p.5, p.6]</code> 및 대신증권 26.08 리포트(<em>AI 에이전트의 개화기, 인터넷 산업은 격동기</em>, p.4) 발췌:</p>
+<p>[시장 내러티브] 최신 Global Trend <code>[글로벌 트렌드: 26.09.22.LS증권.에이전틱 커머스의 시대.pdf p.3, p.5, p.6]</code> 및 LS증권 83페이지 딥리서치 <code>[글로벌 트렌드: 26.09.01.LS증권.AI 투자 프레임의 변화.pdf p.72]</code>, 그리고 최신 거시 아카이브 <code>[글로벌 거시 사이클: cycle_timeline.md 2026.10 상반기 #배당 #지배구조]</code> 종합 발췌:</p>
 <blockquote>
-<p>"생성형 AI의 확산으로 온라인 쇼핑의 구매 여정은 기존 '검색→탐색→비교→구매'에서 'AI 검색→검증→구매'로 압축되며 소비자의 탐색 비용과 구매 과정의 마찰이 낮아지고 있다 <code>[글로벌 트렌드: 26.09.22.LS증권 p.3]</code>. 향후 경쟁력은 AI 모델 자체보다 <strong>상품과 고객 데이터, 결제, 재고, 물류 등 실제 거래 인프라를 얼마나 유기적으로 연결할 수 있는가</strong>에서 갈릴 가능성이 높다 <code>[글로벌 트렌드: 26.09.22.LS증권 p.3]</code>. 거대 자본투자를 감당하지 못하는 단순 앱은 도태될 것이나, <strong>로컬 결제·정산·인증 등 '로컬 실행(Execution) 능력'을 쥔 인프라 사업자의 해자는 독점적 가치로 재평가</strong>될 것이다."</p>
+<ol>
+<li>"생성형 AI의 확산으로 온라인 쇼핑의 구매 여정은 기존 '검색→탐색→비교→구매'에서 'AI 검색→검증→구매'로 압축되며 소비자의 탐색 비용과 구매 마찰이 급격히 낮아지고 있다 <code>[글로벌 트렌드: 26.09.22.LS증권 p.3]</code>. 향후 경쟁력은 AI 모델 자체보다 <strong>상품과 고객 데이터, 결제, 재고, 물류 등 실제 거래 인프라를 얼마나 유기적으로 연결할 수 있는가</strong>에서 갈린다 <code>[글로벌 트렌드: 26.09.22.LS증권 p.3]</code>. 거대 인프라 투자를 감당하지 못하는 단순 앱은 도태되나, <strong>로컬 결제·정산·인증 등 '로컬 실행(Execution) 능력'을 쥔 인프라 사업자의 해자는 독점적 가치로 재평가</strong>될 것이다."</li>
+<li>"2026년 하반기 이후 AI 설비투자 피로감과 미국 대선, 중동 지정학 긴장 속에서 시장의 관심은 단순 성장 스토리에서 <strong>'확실한 잉여현금흐름(FCF) 기반의 주주환원 확대 기업'</strong>으로 급격히 이동하고 있다. 주주환원율 20% 이상, PBR 1배 미만, 우량 ROE를 유지하는 <strong>주주환원확대 10선 기업(헥토이노베이션 9위 실명 등재)</strong>은 하방 경직성과 리레이팅 잠재력을 동시에 갖추고 있다 <code>[글로벌 트렌드: 26.09.01.LS증권 p.72]</code>."</li>
+</ol>
 </blockquote>
 <ul>
-<li><strong>핵심 전제(Key Assumption):</strong> 에이전틱 커머스 개화로 온라인 쇼핑 장바구니 이탈율(70%)이 낮아지고 AI 에이전트의 구매 실행이 급증할 때, 당사가 거대 빅테크에 흡수·도태되지 않고 AI가 반드시 거쳐야 하는 '로컬 결제·정산·인증 관문망'을 독점 장악하여 거래량 레버리지를 누릴 수 있어야 합니다.</li>
-<li><strong>공시 팩트 대조:</strong> [공시 팩트] 당사는 지배회사(로그인플러스, 휴대폰간편로그인)를 통해 이동통신 3사의 본인인증 및 합산과금망을 과점하고 있으며, 종속회사 헥토파이낸셜을 통해 전 시중은행과 직결된 가상계좌 중계, 간편현금결제, PG 펌뱅킹 결제망을 보유하고 있습니다 [팩트: 24.03 사업보고서, 20-가; 26.05 분기보고서, 18-바]. 네이버·쿠팡 등 국내 주요 커머스 플랫폼들이 쇼핑 AI 에이전트를 도입하여 결제까지 구매 전 과정으로 서비스를 확대함에 따라 <code>[글로벌 트렌드: 26.09.22.LS증권 p.6]</code>, 최종 결제와 계좌 정산은 전자금융거래법 및 실명 확인 원칙 상 제도권 펌뱅킹망을 반드시 통과해야만 합니다. 또한 당사는 대규모 GPU 인프라 CapEx 부담이 전무한 에셋라이트 모델로, [팩트: 26.08 반기보고서, 266] 2026년 상반기에만 154.8억 원의 연결 영업현금흐름을 창출하며 마진율(조정 EBITDA 마진율 17.4%)을 완벽히 방어하고 있습니다.</li>
-<li>✅ <strong>팩트체크 타격 결과: [ True - 에이전틱 커머스 시대 '결제·인증 실행(Execution) 인프라 해자' 100% 부합 ]</strong></li>
+<li><strong>핵심 전제(Key Assumption):</strong> 에이전틱 커머스 개화로 온라인 쇼핑 장바구니 이탈률(70%)이 낮아지고 AI 에이전트의 구매 실행이 급증할 때, 당사가 거대 빅테크에 도태되지 않고 AI가 반드시 거쳐야 하는 '로컬 결제·정산·인증 관문망'을 독점 장악하여 거래량 레버리지를 누릴 수 있어야 하며, 동시에 10년 락바텀 PBR(0.71배)과 배당성향 20%+ 정책이 거시 불확실성 속에서 강력한 안전마진으로 작동해야 합니다.</li>
+<li><strong>공시 팩트 대조:</strong> [공시 팩트] 당사는 지배회사(로그인플러스, 휴대폰간편로그인)를 통해 이동통신 3사의 본인인증 및 합산과금망을 과점하고 있으며, 종속회사 헥토파이낸셜(지분율 41.0%)을 통해 전 시중은행과 직결된 가상계좌 중계, 간편현금결제, PG 펌뱅킹 결제망을 보유하고 있습니다 [팩트: 24.03 사업보고서, 20-가; 26.05 분기보고서, 18-바; 글로벌 트렌드: 26.07.27.LS증권 p.40, p.43]. 네이버·쿠팡 등 국내 주요 커머스 플랫폼들이 쇼핑 AI 에이전트를 도입하여 결제까지 구매 전 과정으로 서비스를 확대함에 따라 <code>[글로벌 트렌드: 26.09.22.LS증권 p.6]</code>, 최종 결제와 계좌 정산은 전자금융거래법 및 실명 확인 원칙 상 제도권 펌뱅킹망을 반드시 통과해야만 합니다. 또한 당사는 대규모 GPU 인프라 CapEx 부담이 전무한 에셋라이트 모델로, [팩트: 26.08 반기보고서, 266] 2026년 상반기에만 154.8억 원의 연결 영업현금흐름을 창출하며 마진율(조정 EBITDA 마진율 17.4%)을 완벽히 방어하고 있습니다.</li>
+<li>✅ <strong>팩트체크 타격 결과: [ True — 에이전틱 커머스 시대 '결제·인증 실행 인프라 해자' 및 '주주환원확대 10선' 안전마진 100% 부합 ]</strong></li>
+</ul>
+<h2>1.1 S-Curve 침투율 &amp; 매매 타이밍 진단 매트릭스 (Global S-Curve 레이더 연동)</h2>
+<p>([검증 나침반] <code>korean cycle/00_megatrend/docs/s_curve_registry.json</code> 참조 후, 실측 데이터 및 BM 연동 진단 수행)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">진단 항목</th>
+<th style="text-align: left;">정량 수치 및 상태</th>
+<th style="text-align: left;">출처 및 근거 (No-Blind-Citation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>소속 신기술 테마</strong></td>
+<td style="text-align: left;">해당 없음 (N/A: 플랫폼·지식서비스 / 안정적 B2C 부가서비스 및 B2B 결제 인프라)</td>
+<td style="text-align: left;"><code>s_curve_registry.json</code> 검증</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>현재 산업 침투율</strong></td>
+<td style="text-align: left;"><strong>해당 없음 (N/A: 전통 캐시카우 Recurring BM)</strong></td>
+<td style="text-align: left;"><code>[공시 팩트: DART 정기보고서]</code> 과점 인프라</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S-Curve 국면 판정</strong></td>
+<td style="text-align: left;"><strong><code>[⚪ S-Curve N/A (성숙기 독점 캐시카우 BM / 신기술 직접 익스포저 &lt; 1% 미달)]</code></strong></td>
+<td style="text-align: left;">침투율 임계치 분류 공식 비적용</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>공식 투자 액션 시그널</strong></td>
+<td style="text-align: left;"><strong><code>[사이클 우회 (본업 BPS 및 배당 안전마진 가치투자 밴드 접근)]</code></strong></td>
+<td style="text-align: left;">S-Curve 할증 배제, 본업 안전마진 집중</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>하이브리드 밸류체인 지위</strong></td>
+<td style="text-align: left;"><strong><code>[❌ 제외 종목 (단순 테마 편승 탈락 / 실질 P&amp;L 익스포저 30% 미달)]</code></strong></td>
+<td style="text-align: left;">Phase 1 Section 2.1 매출 익스포저 &lt; 1.0% 연동</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>차기 변곡점 모니터링</strong></td>
+<td style="text-align: left;">AI 에이전틱 커머스 결제 트래픽 및 중국 드시모네 수출(5년 1,550억 원) 선적 가속 여부</td>
+<td style="text-align: left;">분기별 실적 공시 추적</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>Weekly_Trend/thesis_log.md</code> 자동 연동:</strong> 본 진단 결과에 따라 무리한 S-Curve 신기술 테마 할증을 배제하고, 사용자 핵심 가설(<code>[진행 중] 가상자산/스테이블코인 테마성 변동성과 본업 펀더멘털의 비대칭적 괴리 (무료 콜옵션 가설)</code>)을 유지하여 Phase 3 밸류에이션에서 순수 본업 가치(PBR 0.71배 락바텀, 배당수익률 3.87%)를 기준점으로 적용합니다.</li>
 </ul>
 <h2>2. Weekly 개별 리포트 및 시장 내러티브 검증</h2>
 <p>[시장 내러티브] 2Q26 실적 공시 직후 시장 일각의 어닝 쇼크 및 마진 훼손 우려 내러티브:</p>
@@ -320,16 +458,16 @@ p > em {
 <ul>
 <li><strong>핵심 전제:</strong> 2분기 순이익 급감이 실제 본업의 영업활동 경쟁력 약화, 판매 마진의 구조적 붕괴, 혹은 현금유출을 수반하는 사업 실패에 기인해야 이 주장이 성립합니다.</li>
 <li><strong>공시 팩트 대조:</strong> [공시 팩트] 공시된 세부 재무제표를 뜯어보면 철저한 '회계적 착시'입니다 [팩트: 26.2Q 실적발표]. 순이익 감소(-33.0%)의 결정적 원인은 '사채상환에 따른 일회성 회계비용' 및 '회계상 금융부채 상각이자 일시 소급 반영'이라는 비경상적·일회성 장부상 비용입니다. 실제 본업의 현금창출력을 대변하는 2분기 '조정 EBITDA'는 <strong>179억 원</strong>으로 전년 동기 대비 오히려 +1.3% 성장했으며, 조정 EBITDA 마진율은 <strong>17.4%</strong>라는 압도적인 수익성을 입증했습니다 [팩트: 26.2Q 실적발표]. 나아가 [팩트: 26.2Q 실적발표] 헥토헬스케어의 상반기 매출은 476억 원으로 전년비 17.3% 고성장세를 이어갔습니다. 회사는 이 현금으로 <strong>헬스케어 RCPS 132억 원을 조기 상환해 금융부채를 대폭 축소</strong>했고, <strong>81억 원의 현금배당을 차질 없이 집행</strong> 완료했습니다 [팩트: 26.2Q 실적발표; 26.08 반기보고서, 3].</li>
-<li>✅ <strong>팩트체크 타격 결과: [ False - 일회성 비경상 회계비용에 따른 착시, 본업 현금창출력(조정 EBITDA 179억) 및 재무 건전성은 사상 최고 ]</strong></li>
+<li>✅ <strong>팩트체크 타격 결과: [ False — 일회성 비경상 회계비용에 따른 착시, 본업 현금창출력(조정 EBITDA 179억) 및 재무 건전성은 사상 최고 ]</strong></li>
 </ul>
 <h2>3. 사용자 투자 가설 검증 (Weekly_Trend thesis_log 기반)</h2>
-<p>[투자자 핵심 가설] [26.09.16 thesis_log] 가상자산/스테이블코인 테마성 변동성과 본업 펀더멘털의 비대칭적 괴리 (무료 콜옵션 가설) [진행 중]:</p>
+<p>[투자자 핵심 가설] <code>[26.09.16 thesis_log]</code> 가상자산/스테이블코인 테마성 변동성과 본업 펀더멘털의 비대칭적 괴리 (무료 콜옵션 가설) <code>[진행 중]</code>:</p>
 <blockquote>
-<p>"시장은 헥토그룹을 '가상자산/스테이블코인 테마주'로 분류하여 미국 클래리티법 부결 등 관련 규제 악재가 터질 때마다 과도한 패닉셀을 보이고 있다. 그러나 실제 손익계산서(P&amp;L) 상 가상자산 관련 직접 매출 비중은 현재 0%에 수렴하며 본업 실적 타격은 전무하다. 회사의 본체는 연 500억 영업이익과 300억 FCF를 창출하는 독점적 결제·보안 인프라이며, 스테이블코인은 손실 위험이 없는 '무료 콜옵션(Free Call Option)'이다. 따라서 테마 악재로 인한 주가 급락은 PER 5~7배 락바텀에서 본업의 안전마진을 확보할 수 있는 강력한 '역발상 매수 기회'이다."</p>
+<p>"시장은 헥토그룹을 '가상자산/스테이블코인 테마주'로 분류하여 미국 클래리티법(Clarity Act) 부결 등 관련 규제 악재가 터질 때마다 과도한 패닉셀을 보이고 있다. 그러나 실제 손익계산서(P&amp;L) 상 가상자산 관련 직접 매출 비중은 현재 0%에 수렴하며 본업 실적 타격은 전무하다. 회사의 본체는 연 500억 영업이익과 300억 FCF를 창출하는 독점적 결제·보안 인프라이며, 스테이블코인은 손실 위험이 없는 '무료 콜옵션(Free Call Option)'이다. 따라서 테마 악재로 인한 주가 급락은 PER 6~7배, PBR 0.71배 락바텀에서 본업의 안전마진을 확보할 수 있는 강력한 '역발상 매수 기회'이다."</p>
 </blockquote>
 <ul>
 <li><strong>공시 팩트 대조:</strong> [공시 팩트] 헥토파이낸셜의 2026년 상반기 연결 매출 1,076억 원(YoY +18.9%), 영업이익 137억 원(YoY +83.5%)의 폭발적 성장은 간편현금결제(YoY +29.8%)와 해외 이커머스(알리/테무 등) 크로스보더 원화정산 대행이 견인했습니다 [팩트: 26.2Q 실적발표]. 서클(Circle) CPN 파트너십 및 계열사 헥토월렛원의 가상자산 지갑(옥텟) 사업은 현재 인프라 연동 및 온체인 개념검증(PoC) 단계로, 아직 P&amp;L에 계상되는 직접 매출 기여분은 0%에 수렴합니다. 따라서 스테이블코인 법제화가 지연되거나 테마가 소멸하더라도 본업의 연결 영업이익 500억 원대, 연간 FCF 300억 원 이상, 배당성향 25% 이상의 펀더멘털에는 단 1원의 타격도 없습니다.</li>
-<li>✅ <strong>가설 타격 결과: [ 유효함 - 공시 데이터와 P&amp;L 구조로 완벽히 입증된 안전마진 가설 ]</strong></li>
+<li>✅ <strong>가설 타격 결과: [ 유효함 — 공시 데이터와 P&amp;L 구조로 완벽히 입증된 안전마진 가설 ]</strong></li>
 </ul>
 <h2>4. 심화 분석 및 대화 피드백 (대화 발생 시 추가)</h2>
 <p>사용자와의 대화에서 좁혀진 핵심 쟁점: <strong>"미 상원 클래리티법(Clarity Act) 표결 부결 사태와 에이전틱 커머스 환경 내 헥토의 실체적 영향"</strong></p>
@@ -340,14 +478,14 @@ p > em {
 <li><strong>VASP 인가 선점 효과</strong>: 계열사 헥토월렛원은 이미 국내 금융정보분석원(FIU) 정식 가상자산사업자(VASP) 자격을 보유하고 기업용 인프라 '옥텟'을 운영하고 있어, 법제화가 늦어질수록 후발주자의 진입장벽이 높아지는 반사이익을 누립니다.</li>
 <li><strong>서클(USDC) CPN 지위 유지</strong>: 법안 표결과 무관하게 서클의 크로스보더 결제 파트너십은 유효하며, 글로벌 가맹점 대상의 정산 인프라 PoC는 차질 없이 진행 중입니다.</li>
 <li><strong>비대칭적 보상 구조(Asymmetric Payoff)</strong>: 
-     스테이블코인 법제화가 지연되어 관련 사업 가치가 '0'이 되어도 회사의 적정주가는 본업만으로 22,000원(Base Case)에 도달합니다. 반면, 향후 원화 스테이블코인 발행 및 외환 정산이 허용될 경우 크로스보더 정산 수수료가 추가되는 '업사이드 폭발력'은 그대로 열려 있는 전형적인 무료 콜옵션입니다.</li>
+     스테이블코인 법제화가 지연되어 관련 사업 가치가 '0'이 되어도 회사의 적정주가는 본업만으로 20,880원(Base Case)에 도달합니다. 반면, 향후 원화 스테이블코인 발행 및 외환 정산이 허용될 경우 크로스보더 정산 수수료가 추가되는 '업사이드 폭발력'은 그대로 열려 있는 전형적인 무료 콜옵션입니다.</li>
 </ul>
 <h2>💡 종합 결론 (내러티브의 실적화 판단)</h2>
-<p>[시장 내러티브] 헥토이노베이션은 2분기 순이익이 급감한 저성장 가치주이며, 가상자산 규제 악재에 취약한 테마주에 불과하다.
-[공시 팩트] 철저한 시장의 오독과 가격 오류(Mispricing)입니다.
+<p>[시장 내러티브] 헥토이노베이션은 2분기 순이익이 급감한 저성장 가치주이며, 가상자산 규제 악재에 취약한 테마주에 불과하다.</p>
+<p>[공시 팩트] 철저한 시장의 오독과 가격 오류(Mispricing)입니다.
 1. <strong>AI 에이전트 로컬 실행 해자</strong>: AI 에이전틱 커머스 시대에도 최종 결제와 인증을 반드시 통과시켜야 하는 독점적 통행세 비즈니스를 완벽히 방어하고 있습니다 <code>[글로벌 트렌드: 26.09.22.LS증권.에이전틱 커머스의 시대.pdf p.3, p.5]</code>.
 2. <strong>회계적 착시 뒤에 가려진 현금 폭포</strong>: 2분기 순익 감소는 사채상환 회계비용일 뿐, 실제 현금창출력(조정 EBITDA 179억, 마진율 17.4%)은 사상 최고 수준이며 132억 부채 조기상환과 81억 배당 집행으로 재무 건전성은 극도로 강화되었습니다 [팩트: 26.2Q 실적발표].
-3. <strong>무료 콜옵션의 안전마진</strong>: 가상자산/스테이블코인은 본업에 악영향을 주지 않는 무료 콜옵션입니다. 테마 악재로 주가가 급락하는 국면은 PER 7.08배, PBR 0.77배, 배당수익률 3.6%~5.0% 수준에서 안전마진을 확보하고 매집할 수 있는 <strong>역사적인 역발상 매수 기회</strong>입니다.</p>
+3. <strong>무료 콜옵션과 압도적 안전마진</strong>: 가상자산/스테이블코인은 본업에 악영향을 주지 않는 무료 콜옵션입니다. 테마 악재로 주가가 급락한 현재 국면은 제도권 딥리서치 공인 <strong>주주환원확대 10선(PBR 0.71배, 공식 PER 6.52배, 배당수익률 3.87%, 3개년 1% 자사주 소각 이행)</strong>의 초강력 안전마진을 확보할 수 있는 <strong>역사적인 역발상 매수 기회</strong>입니다 <code>[글로벌 트렌드: 26.09.01.LS증권.pdf p.72]</code>.</p>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -373,14 +511,85 @@ p > em {
                 }
             });
             
-            // DCF Calculator
+            // DCF Calculator & Master SOP Calculator
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const initPrice = Number(dcfRoot.getAttribute('data-price') || 100000).toLocaleString();
+                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const initWacc = dcfRoot.getAttribute('data-wacc') || '9.0';
-                const initTerminal = dcfRoot.getAttribute('data-terminal') || '2.0';
+                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
+                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
+                const initWacc = rawWacc.toFixed(1);
+                const initTerminal = rawTerm.toFixed(1);
+
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
+                    const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
+                }
+
+                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
+                    const rows = document.querySelectorAll('table tr');
+                    rows.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 5) {
+                            const label = tds[0].innerText.trim();
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
+                            }
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
+                            }
+                        }
+                    });
+                }
+
+                if (!autoPocLow) {
+                    const bodyTxt = document.body.innerText;
+                    const mPoc = bodyTxt.match(/20일\s*매물대[^\n]*?([0-9]{1,3}(?:,[0-9]{3})+)\s*원\s*~/);
+                    if (mPoc) autoPocLow = parseFloat(mPoc[1].replace(/,/g, ''));
+                }
+
+                if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
+                if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
+                if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
+                if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
+
+                const initBuy1 = autoBear;
+                const initBuy2 = rawPrice;
+                const initBuy3 = Math.round(rawPrice * 1.03);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
                     '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
@@ -410,6 +619,48 @@ p > em {
                         '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
                         '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
                         '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sop-calc-container" id="sop-calc-container">' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>총 투자예산 (원)</label>' +
+                            '<input type="text" id="sop-input-budget" value="10,000,000">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 정찰병 매수가 (30% · Bear/눌림목)</label>' +
+                            '<input type="text" id="sop-input-buy1" value="' + initBuy1.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 본대 매수가 (40% · 매물대+20일선 돌파)</label>' +
+                            '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
+                            '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
+                            '<input type="text" id="sop-input-base" value="' + autoBase.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 목표가 (Bull 호황 상단, 원)</label>' +
+                            '<input type="text" id="sop-input-bull" value="' + autoBull.toLocaleString() + '">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="sop-grid-3">' +
+                        '<div class="sop-card buy-card" id="sop-buy-summary"></div>' +
+                        '<div class="sop-card stop-card" id="sop-stop-summary"></div>' +
+                        '<div class="sop-card sell-card" id="sop-sell-summary"></div>' +
                     '</div>' +
                 '</div>';
 
@@ -542,6 +793,128 @@ p > em {
                 });
 
                 calculateImpliedGrowth();
+
+                // Master SOP Calculator Logic
+                const elBudget = document.getElementById('sop-input-budget');
+                const elBuy1 = document.getElementById('sop-input-buy1');
+                const elBuy2 = document.getElementById('sop-input-buy2');
+                const elPocLow = document.getElementById('sop-input-poc-low');
+                const elBuy3 = document.getElementById('sop-input-buy3');
+                const elBase = document.getElementById('sop-input-base');
+                const elBull = document.getElementById('sop-input-bull');
+
+                const elBuySummary = document.getElementById('sop-buy-summary');
+                const elStopSummary = document.getElementById('sop-stop-summary');
+                const elSellSummary = document.getElementById('sop-sell-summary');
+
+                function calculateSopPlan() {
+                    const budget = parseFormattedNum(elBudget.value) || 0;
+                    const b1 = parseFormattedNum(elBuy1.value) || 1;
+                    const b2 = parseFormattedNum(elBuy2.value) || 1;
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
+                    const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const tBase = parseFormattedNum(elBase.value) || b2;
+                    const tBull = parseFormattedNum(elBull.value) || b2;
+
+                    const alloc1 = budget * 0.30;
+                    const alloc2 = budget * 0.40;
+                    const alloc3 = budget * 0.30;
+
+                    const qty1 = Math.floor(alloc1 / b1);
+                    const qty2 = Math.floor(alloc2 / b2);
+                    const qty3 = Math.floor(alloc3 / b3);
+                    const totalQty = qty1 + qty2 + qty3;
+                    const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
+                    const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
+
+                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
+                    const safetyPin = Math.round(pocLow * 0.97);
+                    const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
+                    const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
+                    const sellQty1 = Math.floor(totalQty * 0.50);
+                    const sellQty2 = totalQty - sellQty1;
+                    const profit1 = sellQty1 * (tBase - avgPrice);
+                    const profit2 = sellQty2 * (tBull - avgPrice);
+                    const totalProfit = profit1 + profit2;
+                    const totalRoiNum = totalInvested > 0 ? ((totalProfit / totalInvested) * 100) : 0;
+                    const baseUpsideNum = avgPrice > 0 ? ((tBase / avgPrice - 1) * 100) : 0;
+                    const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
+                    const trailingStop3 = Math.round(tBull * 0.92);
+
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
+                    function fmtSignedKrw(v) {
+                        const r = Math.round(v);
+                        return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
+                    }
+                    function fmtSignedPct(v) {
+                        return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+                    }
+
+                    const riskAmt = Math.max(1, avgPrice - safetyPin);
+                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
+                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+
+                    elBuySummary.innerHTML =
+                        '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
+                        '<div class="sop-stat-line">• <strong>1차 정찰병(30%):</strong> ' + b1.toLocaleString() + '원 × <strong>' + qty1.toLocaleString() + '주</strong> (' + Math.round(qty1 * b1).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>2차 본대(40%):</strong> ' + b2.toLocaleString() + '원 × <strong>' + qty2.toLocaleString() + '주</strong> (' + Math.round(qty2 * b2).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+
+                    elStopSummary.innerHTML =
+                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
+                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
+                        '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
+                        '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
+
+                    elSellSummary.innerHTML =
+                        '<h4>🟢 ③ 2단계 분할 익절 & 고점경보</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 반타작(50%, ' + sellQty1.toLocaleString() + '주 @ ' + tBase.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit1) + '</strong> (' + fmtSignedPct(baseUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+
+                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                sopInputs.forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateSopPlan();
+                    });
+                });
+
+                calculateSopPlan();
             }
         });
     </script>
