@@ -756,50 +756,29 @@ DART 2026년 반기보고서(<code>2026.08.13, p.40-43</code>) 및 2025년 사�
 </table>
 <p><em>(※ 참고: 과거 확정 TTM EPS <code>3,246원</code> 및 BPS <code>31,788원</code>만을 고정 대입한 <code>backtest_valuation.py</code> 정적 3Y 밴드 가이드라인 가격은 <code>Bull: 🛡️B 114,100원(+120.3%) / 🚀A 127,790원(+146.7%)</code>, <code>Base: 🛡️B 80,940원(+56.3%) / 🚀A 89,030원(+71.9%)</code>, <code>TP1: 63,320원(+22.2%)</code>, <code>Bear: 54,450원(+5.1%)</code>이며, 위 시나리오 표는 2026~2027년 포워드 표준 실적 산출 체인과 보수적 멀티플 상한을 결합한 최종 적정주가입니다.)</em></p>
 <hr />
-<h3>[손익비(Risk/Reward) 정량 산출 (<code>🛡️대안 B</code> vs <code>🚀대안 A</code> 나란히 비교)]</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">등락률 (🛡️대안 B | 🚀대안 A)</th>
-<th style="text-align: center;">확률 가중치</th>
-<th style="text-align: center;">가중 기대값 (🛡️대안 B | 🚀대안 A)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: center;"><strong>+98.8% (B)</strong> / <strong>+122.8% (A)</strong></td>
-<td style="text-align: center;">25%</td>
-<td style="text-align: center;">+24.70% (B) / +30.70% (A)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: center;"><strong>+50.6% (B)</strong> / <strong>+65.6% (A)</strong></td>
-<td style="text-align: center;">50%</td>
-<td style="text-align: center;">+25.30% (B) / +32.80% (A)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: center;"><strong>-9.3% (공통)</strong></td>
-<td style="text-align: center;">25%</td>
-<td style="text-align: center;">-2.33% (공통)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
-<td style="text-align: center;">—</td>
-<td style="text-align: center;"><strong>100%</strong></td>
-<td style="text-align: center;"><strong>+47.67% (대안B)</strong> / <strong>+61.17% (대안A)</strong></td>
-</tr>
-</tbody>
-</table>
 <ul>
-<li><strong>R:R Ratio (현재 주가 51,800원 기준, vs Bear <code>47,000원</code> 하방폭 <code>-9.3%</code>):</strong></li>
-<li><strong>Base 기준 R:R</strong> = Base 상승폭 ÷ Bear 하방폭 = <strong><code>5.44 : 1 (대안B)</code> / <code>7.05 : 1 (대안A)</code></strong> (<code>≥ 2.0 매수 절대 유리</code>)</li>
-<li><strong>Bull 기준 R:R</strong> = Bull 상승폭 ÷ Bear 하방폭 = <strong><code>10.62 : 1 (대안B)</code> / <code>13.20 : 1 (대안A)</code></strong></li>
-<li><strong>손익비 판정:</strong> 현재 주가(51,800원)는 Bear 하방 지지선(47,000원)까지의 하방 위험이 불과 <strong><code>-9.3%</code></strong>로 극도로 제한된 반면, Base 적정가까지 <strong><code>+50.6% ~ +65.6%</code></strong>, Bull 목표가까지 <strong><code>+98.8% ~ +122.8%</code></strong>의 폭발적인 업사이드를 열어두고 있습니다. 손익비가 <strong>5.4~7.1 : 1</strong>에 달하고 확률가중 기대수익률이 <strong><code>+47.67% ~ +61.17%</code></strong>에 달하므로, <strong>역사적으로 가장 안전하고 기대수익이 높은 강력 매수 구간</strong>으로 판정합니다.</li>
+<li><strong>손익비(Risk/Reward) 정량 산출 및 듀얼 게이트 판정 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교):</strong></li>
 </ul>
-<hr />
+<p>| 구분 | 등락률 (🛡️대안 B | 🚀대안 A) | 확률 가중치 (영구 고정) | 가중 기대값 (🛡️대안 B | 🚀대안 A) | 비고 |
+| :--- | :---: | :---: | :---: | :--- |
+| <strong>Bull (호황)</strong> | +98.8% (B) / +122.8% (A) | 25% | +24.70% (B) / +30.70% (A) | 익절 전용 트레일링 타겟 (진입 시 분자 제외) |
+| <strong>Base (기본)</strong> | +50.6% (B) / +65.6% (A) | 50% | +25.30% (B) / +32.80% (A) | 진입 판단 기준점 (정규분포 중심 닻) |
+| <strong>Bear (침체)</strong> | -9.3% (공통) | 25% | -2.33% (공통) | 과거 10년 역사적 지하실 펀더멘털 바닥 |
+| <strong>확률가중 기대수익률</strong> | — | <strong>100%</strong> | <strong>+47.67% (대안B) / +61.17% (대안A)</strong> | (25-50-25 대칭 정규분포 닻 고정 기준) |</p>
+<h3>[손익비 듀얼 게이트(Dual-Gate) 및 상방가중 꼼수 원천 금지 규칙 적용]</h3>
+<ol>
+<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>Base 상승폭 ÷ Bear 하방폭</code></li>
+<li><strong>🛡️ 대안 B</strong>: $+50.6\% \div 9.3\% = \mathbf{5.44 : 1}$ ($\ge 1.5 : 1$ 안전마진 압도적 우위 ✅)</li>
+<li><strong>🚀 대안 A</strong>: $+65.6\% \div 9.3\% = \mathbf{7.05 : 1}$ ($\ge 1.5 : 1$ 안전마진 압도적 우위 ✅)</li>
+<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>Base 상승폭 ÷ Bear 바닥 지지선(47,000원, -9.3%) 거리</code></li>
+<li><strong>🛡️ 대안 B</strong>: $+50.6\% \div 9.3\% = \mathbf{5.44 : 1}$ ($\ge 2.0 : 1$ 실전 손익비 압도적 우위 ✅)</li>
+<li><strong>🚀 대안 A</strong>: $+65.6\% \div 9.3\% = \mathbf{7.05 : 1}$ ($\ge 2.0 : 1$ 실전 손익비 압도적 우위 ✅)</li>
+<li><strong>4분면 투자의견 매트릭스 판정</strong>:</li>
+<li><strong>Gate 1 합격(≥1.5) &amp; Gate 2 합격(≥2.0)</strong> ➡️ <strong><code>[👑 적극 매수 (Strong Buy — 압도적 안전마진)]</code></strong></li>
+<li><strong>판정 근거</strong>: 현재 주가(51,800원)는 Bear 하방 지지선(47,000원)까지의 하방 위험이 불과 -9.3%로 극도로 제한된 반면, Base 적정가까지 +50.6% ~ +65.6%의 폭발적인 업사이드를 열어두고 있어 Gate 1과 Gate 2를 동시 압도 통과하는 역사상 가장 안전한 적극 매수 구간입니다.</li>
+</ol>
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
 <h3>[역DCF ↔ 시나리오 결론 동기화 검증 — 필수 체크]</h3>
 <ul>
@@ -811,7 +790,7 @@ DART 2026년 반기보고서(<code>2026.08.13, p.40-43</code>) 및 2025년 사�
 <hr />
 <h3>📋 실전 매매 액션 플랜 및 트리거 (마스터 SOP 4단계 차트 트리거 — <code>backtest_valuation.py</code> 2026.10.15 실측값 필수 기재)</h3>
 <ul>
-<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy) — 역사적 바닥 과매도 진입</strong> <em>(가치함정 경보 0개 &amp; 유형 A 사이클 업턴 확인)</em></li>
+<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진)</strong> <em>(가치함정 경보 0개 &amp; 유형 A 사이클 업턴 확인)</em></li>
 <li><strong>목표가 밴드 (🛡️대안 B / 🚀대안 A 병기):</strong> <strong>🛡️대안 B(보수적): 63,320원(TP1) ~ 78,000원(Base) ~ 103,000원(Bull) | 🚀대안 A(업황·S-Curve 할증): 63,320원(TP1) ~ 85,800원(Base) ~ 115,400원(Bull)</strong></li>
 <li><strong>매수 트리거 (Buy Trigger — 마스터 SOP 3분할 매수 전술):</strong></li>
 <li><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선 하회 과매도 진입):</strong> 현재 주가 <strong><code>51,800원</code></strong>은 과거 3년 PBR 하위 20% Bear 지지선(<code>54,450원</code>, PBR 1.49배)마저 하회하여 PBR <code>1.63배</code>에 진입한 상태이므로, <strong>현재가(51,800원 부근)에서 지체 없이 1차 30% 선진입</strong>합니다. 일봉 Slow Stochastic(12,5,5) <code>%K = 57.1% / %D = 74.8%</code> 조정 마무리 국면입니다.</li>

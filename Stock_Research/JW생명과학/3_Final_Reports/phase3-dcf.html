@@ -604,50 +604,29 @@ p > em {
 </tbody>
 </table>
 <ul>
-<li><strong>손익비(Risk/Reward) 정량 산출 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교):</strong></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">등락률 (🛡️대안 B | 🚀대안 A)</th>
-<th style="text-align: center;">확률 가중치</th>
-<th style="text-align: center;">가중 기대값 (🛡️대안 B | 🚀대안 A)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Bull</td>
-<td style="text-align: center;">+77.9% (B) / +77.9% (A)</td>
-<td style="text-align: center;">25%</td>
-<td style="text-align: center;">+19.48% (B) / +19.48% (A)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Base</td>
-<td style="text-align: center;">+44.9% (B) / +44.9% (A)</td>
-<td style="text-align: center;">50%</td>
-<td style="text-align: center;">+22.45% (B) / +22.45% (A)</td>
-</tr>
-<tr>
-<td style="text-align: left;">Bear</td>
-<td style="text-align: center;">−21.3% (공통)</td>
-<td style="text-align: center;">25%</td>
-<td style="text-align: center;">−5.33% (공통)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
-<td style="text-align: center;">—</td>
-<td style="text-align: center;"><strong>100%</strong></td>
-<td style="text-align: center;"><strong>+36.60% (대안B) / +36.60% (대안A)</strong></td>
-</tr>
-</tbody>
-</table>
+<li>
 <ul>
-<li><strong>R:R Ratio (Base 기준)</strong> = Base 상승폭(+44.9%) ÷ Bear 하방폭(21.3%) = <strong>2.11 : 1 (대안B·A 공통)</strong></li>
-<li><strong>R:R Ratio (TP1 단기 기준)</strong> = TP1 상승폭(+23.7%) ÷ Bear 하방폭(21.3%) = <strong>1.11 : 1</strong></li>
-<li><strong>판정</strong>: Base 기준 R:R = 2.11로 <strong>「매수 유리」</strong>. Phase 1 백테스트 1위인 5.27%의 확정 배당수익률과 2위인 PBR 0.71배(10년 최하단 바닥)가 하방을 철통 방어하여 손실 위험 대비 기대수익이 압도적인 비대칭적(Asymmetric) 매수 타점입니다.</li>
+<li><strong>손익비(Risk/Reward) 정량 산출 및 듀얼 게이트 판정 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교):</strong></li>
 </ul>
-<hr />
+</li>
+</ul>
+<p>| 구분 | 등락률 (🛡️대안 B | 🚀대안 A) | 확률 가중치 (영구 고정) | 가중 기대값 (🛡️대안 B | 🚀대안 A) | 비고 |
+| :--- | :---: | :---: | :---: | :--- |
+| <strong>Bull</strong> | +77.9% (B) / +77.9% (A) | 25% | +19.48% (B) / +19.48% (A) | 익절 전용 트레일링 타겟 |
+| <strong>Base</strong> | +44.9% (B) / +44.9% (A) | 50% | +22.45% (B) / +22.45% (A) | 진입 판단 기준점 (정규분포 중심 닻) |
+| <strong>TP1 (단기실전)</strong> | +23.7% (B/A) | — | — | 단기 52주 상단 회귀 목표가 |
+| <strong>Bear</strong> | -21.3% (공통) | 25% | -5.33% (공통) | 과거 10년 역사적 지하실 펀더멘털 바닥 |
+| <strong>확률가중 기대수익률</strong> | — | <strong>100%</strong> | <strong>+36.60% (대안B) / +36.60% (대안A)</strong> | (25-50-25 대칭 정규분포 닻 고정 기준) |</p>
+<h3>[손익비 듀얼 게이트(Dual-Gate) 및 상방가중 꼼수 원천 금지 규칙 적용]</h3>
+<ol>
+<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>Base 상승폭(+44.9%) ÷ Bear 하방폭(21.3%)</code> = <strong>2.11 : 1 (대안B·A 공통)</strong> <em>(TP1 기준 시 </em><em>1.11 : 1</em><em>)</em> ($\ge 1.5 : 1$ 안전마진 우수 ✅)</li>
+<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>TP1 상승폭(+23.7%) ÷ 안전핀(10,557원, -1.1% / 노이즈 5.0% 기준) 거리</code> = <strong>4.74 : 1</strong> <code>(⚠️ 일봉 변동성 노이즈 구간: 안전핀 휩소 주의)</code> ($\ge 2.0 : 1$ 실전 손익비 압도적 우위 ✅)</li>
+<li><strong>4분면 투자의견 매트릭스 판정</strong>:</li>
+<li><strong>Gate 1 합격(≥1.5) &amp; Gate 2 합격(≥2.0)</strong> ➡️ <strong><code>[🛡️ 박스권 하단 분할 매수 (Buy on Box-Bottom — TP1 50% 반타작)]</code></strong></li>
+<li><strong>판정 근거</strong>: 5.27%의 확정 배당수익률과 PBR 0.71배(10년 최하단 바닥)가 하방을 철통 방어하여 손실 위험 대비 기대수익이 압도적인 비대칭적 매수 타점입니다.</li>
+</ol>
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
 <h3>[역DCF ↔ 시나리오 결론 동기화 검증 — 필수 체크]</h3>
 <ul>
@@ -660,7 +639,7 @@ p > em {
 </ul>
 <h3>📋 실전 매매 액션 플랜 및 트리거 (마스터 SOP 4단계 차트 트리거 — <code>backtest_valuation.py</code> 실측값 100% 주입)</h3>
 <ul>
-<li><strong>투자의견:</strong> <strong>적극 매수 (Strong Buy &amp; 박스권 하단 매수)</strong></li>
+<li><strong>투자의견:</strong> <strong>박스권 하단 분할 매수 (Buy on Box-Bottom — TP1 50% 반타작)</strong> (확정 배당수익률 5.27% &amp; 10년 최저 PBR 0.71배 지지, 듀얼 R:R 게이트 동시 통과)</li>
 <li><strong>목표가 밴드 (🛡️대안 B / 🚀대안 A 병기):</strong> <strong>🛡️대안 B(보수적): 13,200원(TP1) ~ 15,460원(Base) | 🚀대안 A(동일): 13,200원(TP1) ~ 15,460원(Base) / Bull 18,980원</strong> (가치함정 0개로 정상 매수 유효)</li>
 <li><strong>매수 트리거 (Buy Trigger — 마스터 SOP 3분할 매수 전술):</strong></li>
 <li><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선):</strong> 주가 <strong>10,380원 ~ 10,700원</strong> (10년 역사적 최저가 10,380원 부근이자 배당수익률 5.27% 절대 바닥권에서 30% 선진입. 현재 일봉 Slow Stochastic(12,5,5) <code>%K=23.1% / %D=23.9%</code> 침체권 바닥 형성 중)</li>

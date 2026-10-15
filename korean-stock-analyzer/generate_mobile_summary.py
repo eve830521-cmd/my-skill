@@ -200,18 +200,26 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     if data["tp1_target"] != "-" and data["base_target"] != "-":
         data["base_target"] = f"{data['base_target']}<br><span class='rr-sub'>🎯 TP1(단기1차): {data['tp1_target']}</span>"
 
-    # 5. R:R Ratio (supports same-line, multi-line sub-bullet, and LaTeX \mathbf{X.XX : 1})
-    rr_patterns = [
-        r"Base\s*(?:기준\s*)?(?:R:R|손익비|상승폭)[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
-        r"순수\s*Base\s*대\s*Bear\s*손익비[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
-        r"R:R\s*Ratio[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
-        r"손익비[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
-    ]
-    for pat in rr_patterns:
-        m_rr = re.search(pat, sec3_text, re.IGNORECASE)
-        if m_rr:
-            data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
-            break
+    # 5. Dual-Gate R:R Ratio (supports Gate 1 & Gate 2 across lines, with fallback to single R:R)
+    m_g1 = re.search(r"Gate\s*1[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|바닥권)", sec3_text, re.IGNORECASE)
+    m_g2 = re.search(r"Gate\s*2[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|관망|차단|진입차단)", sec3_text, re.IGNORECASE)
+    if m_g1 and m_g2:
+        g1_str = re.sub(r"\s+", "", m_g1.group(1))
+        g2_str = re.sub(r"\s+", "", m_g2.group(1))
+        data["rr_ratio"] = f"G1 {g1_str} | G2 {g2_str}"
+    else:
+        rr_patterns = [
+            r"Base\s*(?:기준\s*)?(?:R:R|손익비|상승폭)[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
+            r"순수\s*Base\s*대\s*Bear\s*손익비[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
+            r"R:R\s*Ratio[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
+            r"손익비[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
+        ]
+        for pat in rr_patterns:
+            m_rr = re.search(pat, sec3_text, re.IGNORECASE)
+            if m_rr:
+                data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
+                break
+
 
     # 6. Opinion / Buy Trigger / Sell Trigger in Section 4
     sec4_match = re.search(r"##\s*4\..*", text, re.DOTALL)

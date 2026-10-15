@@ -731,63 +731,60 @@ p > em {
 </tbody>
 </table>
 <hr />
-<h3>[손익비(Risk/Reward) 정량 산출 (현재가 28,500원 기준)]</h3>
+<ul>
+<li><strong>손익비(Risk/Reward) 정량 산출 및 듀얼 게이트 판정 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교):</strong></li>
+</ul>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">구분</th>
-<th style="text-align: center;">적정주가</th>
-<th style="text-align: center;">현재가(28,500원) 대비 등락률</th>
-<th style="text-align: center;">확률 가중치</th>
-<th style="text-align: center;">가중 기대값</th>
-<th style="text-align: center;">눌림목 타점(25,000원) 진입 시 등락률</th>
+<th style="text-align: center;">등락률 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: center;">확률 가중치 (영구 고정)</th>
+<th style="text-align: center;">가중 기대값 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: left;">비고</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: center;"><strong>40,000원</strong></td>
-<td style="text-align: center;"><strong>+40.4%</strong></td>
+<td style="text-align: center;">+40.4% (B) / +40.4% (A)</td>
 <td style="text-align: center;">25%</td>
-<td style="text-align: center;">+10.10%</td>
-<td style="text-align: center;"><strong>+60.0%</strong></td>
+<td style="text-align: center;">+10.10% (B) / +10.10% (A)</td>
+<td style="text-align: left;">익절 전용 트레일링 타겟</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: center;"><strong>33,000원</strong></td>
-<td style="text-align: center;"><strong>+15.8%</strong></td>
+<td style="text-align: center;">+15.8% (B) / +15.8% (A)</td>
 <td style="text-align: center;">50%</td>
-<td style="text-align: center;">+7.90%</td>
-<td style="text-align: center;"><strong>+32.0%</strong></td>
+<td style="text-align: center;">+7.90% (B) / +7.90% (A)</td>
+<td style="text-align: left;">진입 판단 기준점 (정규분포 중심 닻)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: center;"><strong>21,000원</strong></td>
-<td style="text-align: center;"><strong>-26.3%</strong></td>
+<td style="text-align: center;">-26.3% (공통)</td>
 <td style="text-align: center;">25%</td>
-<td style="text-align: center;">-6.58%</td>
-<td style="text-align: center;"><strong>-16.0%</strong></td>
+<td style="text-align: center;">-6.58% (공통)</td>
+<td style="text-align: left;">과거 10년 역사적 지하실 펀더멘털 바닥</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
-<td style="text-align: center;"><strong>31,755원</strong></td>
 <td style="text-align: center;">—</td>
 <td style="text-align: center;"><strong>100%</strong></td>
-<td style="text-align: center;"><strong>+11.42%</strong></td>
-<td style="text-align: center;"><strong>+27.00%</strong></td>
+<td style="text-align: center;"><strong>+11.42% (대안B) / +11.42% (대안A)</strong></td>
+<td style="text-align: left;">(25-50-25 대칭 정규분포 닻 고정 기준)</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li><strong>R:R Ratio (현재가 28,500원 기준):</strong></li>
-<li><strong>Base 기준 R:R</strong> = Base 상승폭(<code>+15.8%</code>) ÷ Bear 하방폭(<code>26.3%</code>) = <strong><code>0.60 : 1</code></strong> (<code>&lt; 1.0</code> 현가 추격 매수 불리)</li>
-<li><strong>Bull 기준 R:R</strong> = Bull 상승폭(<code>+40.4%</code>) ÷ Bear 하방폭(<code>26.3%</code>) = <strong><code>1.54 : 1</code></strong> (중립)</li>
-<li><strong>R:R Ratio (일봉 60일선 <code>24,680원</code> ~ <code>25,000원</code> 눌림목 분할 매수 시):</strong></li>
-<li><strong>Base 기준 R:R</strong> = <code>+32.0% ÷ 16.0%</code> = <strong><code>2.00 : 1</code></strong> (<code>≥ 2.0 매수 유리 충족 ✅</code>)</li>
-<li><strong>Bull 기준 R:R</strong> = <code>+60.0% ÷ 16.0%</code> = <strong><code>3.75 : 1</code></strong></li>
-<li><strong>손익비 판정</strong>: 현재가(<code>28,500원</code>) 기준 확률가중 기대수익률은 <strong><code>+11.42%</code></strong>로 양(+)의 기대값을 유지하고 있으나, Base 단독 R:R이 <strong><code>0.60 : 1</code></strong>로 과거 10년 PBR 밴드 상단부(<code>1.85배</code>, 81% 백분위) 및 주봉 MFI 과열권(<code>81.8</code>) 부담이 존재합니다. 따라서 현가 일괄 추격 매수를 지양하고 <strong>「보유 및 눌림목 분할 매수 (Hold &amp; Buy on Dips)」</strong>로 판정합니다.</li>
-</ul>
-<hr />
+<h3>[손익비 듀얼 게이트(Dual-Gate) 및 상방가중 꼼수 원천 금지 규칙 적용]</h3>
+<ol>
+<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>Base 상승폭 ÷ Bear 하방폭</code> = <strong>0.60 : 1</strong> (&lt; 1.0 미달 ➔ 펀더멘털 안전마진 경계, 장기 바이앤홀드 부적합)</li>
+<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]</strong>:</li>
+<li><strong>산식</strong>: <code>Base 상승폭 ÷ 안전핀(27,354원, -4.0% / 노이즈 5.0% 기준) 거리</code> = <strong>3.16 : 1</strong> <em>(눌림목 25,000원 진입 시 </em><em>2.00 : 1</em><em>)</em> ($\ge 2.0 : 1$ 실전 손익비 우수 ✅)</li>
+<li><strong>4분면 투자의견 매트릭스 판정</strong>:</li>
+<li><strong>Gate 1 미달(&lt;1.0) &amp; Gate 2 합격(≥2.0)</strong> ➡️ <strong><code>[🚀 조건부 추세 트레이딩 분할 매수 (Trading Buy on Dips — 안전핀 엄수)]</code></strong></li>
+<li><strong>판정 근거</strong>: 과거 지하실(Bear 21,000원) 대비로는 하방폭(-26.3%)이 열려 있어 현가 추격 바이앤홀드는 위험하나, 안전핀(27,354원) 및 60일선 눌림목(25,000원)을 엄수하는 조건 하에 Base 목표가(33,000원)까지의 트레이딩 손익비는 2.0~3.2:1로 우수하므로 조건부 추세 트레이딩 분할 매수로 대응합니다.</li>
+</ol>
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
 <h3>[역DCF ↔ 시나리오 결론 동기화 검증 — 필수 체크 ✅]</h3>
 <ul>
@@ -880,37 +877,50 @@ p > em {
                 const initWacc = rawWacc.toFixed(1);
                 const initTerminal = rawTerm.toFixed(1);
 
-                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low from attributes or Phase 3 scenario table
-                function extractFirstKrwPrice(str) {
-                    if (!str) return null;
-                    const m = str.match(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/);
-                    if (m) return parseFloat(m[1].replace(/,/g, ''));
+                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
                     const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
-                    if (m2) return parseFloat(m2[1].replace(/,/g, ''));
-                    return null;
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
                 }
 
                 let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
                 let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
 
-                if (!autoBull || !autoBase || !autoBear) {
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
                     rows.forEach(tr => {
                         const tds = tr.querySelectorAll('td');
                         if (tds.length >= 5) {
                             const label = tds[0].innerText.trim();
-                            // Find the target price column (usually tds[tds.length - 2], or tds[tds.length - 3] if 2 upside columns exist)
-                            let priceCandidate = extractFirstKrwPrice(tds[tds.length - 2].innerText);
-                            if (!priceCandidate && tds.length >= 6) {
-                                priceCandidate = extractFirstKrwPrice(tds[tds.length - 3].innerText);
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
                             }
-                            if (priceCandidate) {
-                                if (!autoBull && /bull/i.test(label)) autoBull = priceCandidate;
-                                if (/tp1/i.test(label)) autoBase = priceCandidate;
-                                else if (!autoBase && /base/i.test(label)) autoBase = priceCandidate;
-                                if (!autoBear && /bear/i.test(label)) autoBear = priceCandidate;
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
                             }
                         }
                     });
@@ -925,6 +935,8 @@ p > em {
                 if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
                 if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
                 if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
                 const initBuy1 = autoBear;
@@ -962,7 +974,11 @@ p > em {
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>총 투자예산 (원)</label>' +
@@ -1179,6 +1195,12 @@ p > em {
                     const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
                     const trailingStop3 = Math.round(tBull * 0.92);
 
+                    // Side-by-side Model B vs Model A profit comparison
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
                     function fmtSignedKrw(v) {
                         const r = Math.round(v);
                         return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
@@ -1215,7 +1237,25 @@ p > em {
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>총 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>';
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
                 }
 
                 const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
