@@ -129,6 +129,8 @@ html_template = f"""<!DOCTYPE html>
                 const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
                 let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
                 let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
@@ -154,6 +156,10 @@ html_template = f"""<!DOCTYPE html>
                 let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {{
                     const rows = document.querySelectorAll('table tr');
@@ -198,12 +204,18 @@ html_template = f"""<!DOCTYPE html>
                 if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
-                const initBuy1 = autoBear;
-                const initBuy2 = rawPrice;
-                const initBuy3 = Math.round(rawPrice * 1.03);
+                // Conflict-free default Buy 1 < Buy 2 < Buy 3 < Target & Hard Stop 1 < Buy 1
+                let initBuy1 = attrBuy1 > 0 ? attrBuy1 : Math.min(autoBear, Math.round(rawPrice * 0.92), Math.round(autoBase * 0.85));
+                let initBuy2 = attrBuy2 > 0 ? attrBuy2 : (rawPrice <= autoBase * 0.96 ? Math.max(rawPrice, Math.round(initBuy1 * 1.03)) : Math.round((initBuy1 + autoBase * 0.92) / 2));
+                let initBuy3 = attrBuy3 > 0 ? attrBuy3 : (rawPrice <= autoBase * 0.96 ? Math.min(Math.round(initBuy2 * 1.03), Math.round(autoBase * 0.96)) : Math.round(autoBase * 0.92));
+                if (initBuy1 >= initBuy2) initBuy1 = Math.round(initBuy2 * 0.95);
+                if (initBuy3 <= initBuy2) initBuy3 = Math.round(initBuy2 * 1.03);
+
+                let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
+                if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -212,6 +224,10 @@ html_template = f"""<!DOCTYPE html>
                         '<div class="dcf-input-group">' +
                             '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
+                            '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -233,7 +249,7 @@ html_template = f"""<!DOCTYPE html>
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 이중 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
                     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
                         '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
                         '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
@@ -252,12 +268,16 @@ html_template = f"""<!DOCTYPE html>
                             '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
-                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
                             '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
                             '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1단계 초입 고정 안전핀 (원 · 진입 손절선)</label>' +
+                            '<input type="text" id="sop-input-stop-pin" value="' + initStopPin.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2단계 20일 매물대 하단가 (원 · 돌파 후 기준)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
@@ -277,6 +297,7 @@ html_template = f"""<!DOCTYPE html>
 
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
+                const elNetDebt = document.getElementById('dcf-input-net-debt');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -285,17 +306,16 @@ html_template = f"""<!DOCTYPE html>
                 const elResultBox = document.getElementById('dcf-result-box');
                 
                 function parseFormattedNum(val) {{
-                    return parseFloat(val.toString().replace(/,/g, ''));
+                    if (val === undefined || val === null) return 0;
+                    const cleaned = val.toString().replace(/,/g, '').trim();
+                    if (cleaned === '' || cleaned === '-') return 0;
+                    return parseFloat(cleaned);
                 }}
 
                 function formatNumberInput(e) {{
-                    // Skip for number types
                     if (e.target.type === 'number') return;
-                    
                     let cursor = e.target.selectionStart;
                     let originalLength = e.target.value.length;
-                    
-                    // Allow minus sign at the beginning for FCF
                     let isNegative = e.target.value.startsWith('-');
                     let val = e.target.value.replace(/[^\\d.]/g, '');
                     
@@ -317,36 +337,8 @@ html_template = f"""<!DOCTYPE html>
                     e.target.setSelectionRange(cursor, cursor);
                 }}
 
-                function calculateImpliedGrowth() {{
-                    const price = parseFormattedNum(elPrice.value);
-                    const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
-                    const wacc = parseFloat(elWacc.value) / 100.0;
-                    const terminal = parseFloat(elTerminal.value) / 100.0;
-
-                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {{
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }}
-
-                    if (fcf <= 0) {{
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }}
-
-                    if (wacc <= terminal) {{
-                         elResultValue.textContent = "N/A";
-                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
-                         elResultBox.className = "dcf-result-box error";
-                         return;
-                    }}
-
-                    const targetValue = price * shares;
-                    
+                function solveImpliedGrowthForTarget(targetVal, fcf, wacc, terminal) {{
+                    if (targetVal <= 0 || fcf <= 0 || wacc <= terminal) return null;
                     function calcDCFValue(g) {{
                         let pv = 0;
                         let cf = fcf;
@@ -358,32 +350,79 @@ html_template = f"""<!DOCTYPE html>
                         pv += tv / Math.pow(1 + wacc, 5);
                         return pv;
                     }}
-                    
                     let low = -0.99;
-                    let high = 10.0; // max 1000% — unified with Python
+                    let high = 10.0;
                     let g = 0;
                     let found = false;
                     for (let iter = 0; iter < 200; iter++) {{
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {{
+                        if (Math.abs(pv - targetVal) / targetVal < 0.00001) {{
                             found = true;
                             break;
                         }}
-                        if (pv > targetValue) {{
+                        if (pv > targetVal) {{
                             high = g;
                         }} else {{
                             low = g;
                         }}
                     }}
+                    if (found || Math.abs(high - low) < 0.00001) return g;
+                    return null;
+                }}
 
-                    if (found || Math.abs(high - low) < 0.00001) {{
-                        const growthPercent = (g * 100).toFixed(2);
-                        elResultValue.textContent = growthPercent + "%";
-                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
-                        if (g < 0) {{
+                function calculateImpliedGrowth() {{
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal) || price <= 0 || shares <= 0) {{
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }}
+
+                    if (fcf <= 0) {{
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다 (Normalized FCF를 입력해 보세요).";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }}
+
+                    if (wacc <= terminal) {{
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }}
+
+                    const equityVal = price * shares;
+                    const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
+                    const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+
+                    if (gEquity !== null) {{
+                        const eqPct = (gEquity * 100).toFixed(2);
+                        const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
+                        const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        let primaryG = gEquity;
+                        if (Math.abs(netDebtEok) > 0 && gEv !== null) {{
+                            const evPct = (gEv * 100).toFixed(2);
+                            primaryG = netDebtEok > 0 ? gEv : gEquity;
+                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                        }} else {{
+                            elResultValue.textContent = eqPct + "%";
+                            elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
+                        }}
+                        if (primaryG < 0) {{
                              elResultBox.className = "dcf-result-box low-growth";
-                        }} else if (g > 0.15) {{
+                        }} else if (primaryG > 0.15) {{
                              elResultBox.className = "dcf-result-box high-growth";
                         }} else {{
                              elResultBox.className = "dcf-result-box normal-growth";
@@ -395,7 +434,7 @@ html_template = f"""<!DOCTYPE html>
                     }}
                 }}
 
-                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {{
                     input.addEventListener('input', (e) => {{
                         formatNumberInput(e);
@@ -409,8 +448,9 @@ html_template = f"""<!DOCTYPE html>
                 const elBudget = document.getElementById('sop-input-budget');
                 const elBuy1 = document.getElementById('sop-input-buy1');
                 const elBuy2 = document.getElementById('sop-input-buy2');
-                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBuy3 = document.getElementById('sop-input-buy3');
+                const elStopPin = document.getElementById('sop-input-stop-pin');
+                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBase = document.getElementById('sop-input-base');
                 const elBull = document.getElementById('sop-input-bull');
 
@@ -422,8 +462,9 @@ html_template = f"""<!DOCTYPE html>
                     const budget = parseFormattedNum(elBudget.value) || 0;
                     const b1 = parseFormattedNum(elBuy1.value) || 1;
                     const b2 = parseFormattedNum(elBuy2.value) || 1;
-                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const rawStopPin = parseFormattedNum(elStopPin.value) || Math.round(b1 * 0.95);
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const tBase = parseFormattedNum(elBase.value) || b2;
                     const tBull = parseFormattedNum(elBull.value) || b2;
 
@@ -438,10 +479,23 @@ html_template = f"""<!DOCTYPE html>
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
-                    const safetyPin = Math.round(pocLow * 0.97);
+                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
+                    const minEntryPrice = Math.min(b1, b2, avgPrice);
+                    let safetyPin = rawStopPin;
+                    let pinAutoCorrected = false;
+                    if (safetyPin >= minEntryPrice) {{
+                        safetyPin = Math.round(minEntryPrice * 0.95);
+                        pinAutoCorrected = true;
+                    }}
+                    const pocTrailingPin = Math.round(pocLow * 0.97);
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // Hierarchy validation notice
+                    let orderNotice = "";
+                    if (avgPrice >= tBase) {{
+                        orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
+                    }}
 
                     // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
@@ -468,10 +522,11 @@ html_template = f"""<!DOCTYPE html>
                         return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
                     }}
 
-                    const riskAmt = Math.max(1, avgPrice - safetyPin);
-                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
-                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const riskAmt = avgPrice - safetyPin;
+                    const rewardAmt = ((tBase + tBull) / 2) - avgPrice;
+                    const sopRR = (riskAmt > 0 && rewardAmt > 0) ? (rewardAmt / riskAmt).toFixed(2) + ' : 1' : '0.00 : 1 (재설정 필요)';
                     const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+                    const pinNote = pinAutoCorrected ? ' <span style="color:#dc2626;font-size:8.5pt;">(평단가 초과 방지를 위해 진입하단 -5%로 자동보정됨)</span>' : '';
 
                     elBuySummary.innerHTML =
                         '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
@@ -480,12 +535,13 @@ html_template = f"""<!DOCTYPE html>
                         '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
                         '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
-                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>' +
+                        orderNotice;
 
                     elStopSummary.innerHTML =
-                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
-                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
-                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<h4>🚨 ② 이중 안전핀(초입 손절 vs 돌파 후 보호) & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 초입 고정 안전핀(진입 손절선):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)' + pinNote + '</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 매물대 돌파 후 보호핀(POC -3%):</strong> <strong>' + pocTrailingPin.toLocaleString() + '원</strong> (매물대 상단 안착 후 본절·수익 보호선으로 격상)</div>' +
                         '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
                         '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
                         '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
@@ -496,7 +552,7 @@ html_template = f"""<!DOCTYPE html>
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + '</strong></div>' +
                         '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
                 }}
 
@@ -517,7 +573,7 @@ html_template = f"""<!DOCTYPE html>
                     }});
                 }}
 
-                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                const sopInputs = [elBudget, elBuy1, elBuy2, elBuy3, elStopPin, elPocLow, elBase, elBull];
                 sopInputs.forEach(inp => {{
                     inp.addEventListener('input', (e) => {{
                         formatNumberInput(e);

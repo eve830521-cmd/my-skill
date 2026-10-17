@@ -131,35 +131,45 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         if m_cp:
             data["current_price"] = clean_md(m_cp.group(1))
 
-    # 3. Implied growth rate (역DCF 요구성장률) — inspect Section 1
+    # 3. Implied growth rate (역DCF 요구성장률 — Equity & EV 병기 지원) — inspect Section 1
     sec1_match = re.search(r"##\s*1\..*?(?=##\s*2\.|\Z)", text, re.DOTALL)
     sec1_text = sec1_match.group(0) if sec1_match else text
 
-    ig_table_pat = r"\|\s*\*\*?(?:①\s*)?\[?보고\s*FCF[^\n|]*\|\s*(?:[^|\n%]*\s*\|\s*)?\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)"
-    m_ig = re.search(ig_table_pat, sec1_text)
-    if not m_ig:
-        ig_line_pats = [
-            r"(?:유통주식수|DART\s*유통주식수|실질\s*유통주식수)[^\n|]*?요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[^\n]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-            r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?(?:DART\s*유통주식수\s*기준\s*)?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-            r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?[^\n*]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-        ]
-        candidates_ig = [re.search(p, sec1_text) for p in ig_line_pats]
-        candidates_ig = [m for m in candidates_ig if m is not None]
-        if candidates_ig:
-            m_ig = min(candidates_ig, key=lambda m: m.start())
-    if not m_ig:
-        for fallback_pat in [r"(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", r"연평균\s*\*\*?([+\-−]?\d+(?:\.\d+)?%)\*\*?"]:
-            m_ig = re.search(fallback_pat, sec1_text)
-            if m_ig:
-                break
-    if m_ig:
-        raw_ig = m_ig.group(1).replace("`", "").strip()
-        if not raw_ig.startswith("연간"):
-            raw_ig = "연간 " + raw_ig
-        data["implied_growth"] = clean_md(raw_ig)
+    m_eq = re.search(r"유통시총\(Equity\)\s*기준\s*요구성장률[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", sec1_text)
+    m_ev = re.search(r"실질\s*기업가치\(EV[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", sec1_text)
+    if m_eq and m_ev:
+        eq_val = m_eq.group(1).replace("`", "").replace("연간", "").strip()
+        ev_val = m_ev.group(1).replace("`", "").replace("연간", "").strip()
+        if eq_val != ev_val:
+            data["implied_growth"] = clean_md(f"Equity {eq_val} | EV {ev_val}")
+        else:
+            data["implied_growth"] = clean_md(f"연간 {eq_val}")
+    else:
+        ig_table_pat = r"\|\s*\*\*?(?:①\s*)?\[?(?:보고\s*FCF|유통시총|실질\s*기업가치)[^\n|]*\|\s*(?:[^|\n%]*\s*\|\s*)?\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)"
+        m_ig = re.search(ig_table_pat, sec1_text)
+        if not m_ig:
+            ig_line_pats = [
+                r"(?:유통주식수|DART\s*유통주식수|실질\s*유통주식수|실질\s*EV)[^\n|]*?요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[^\n]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+                r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?(?:DART\s*유통주식수\s*기준\s*)?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+                r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?[^\n*]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+            ]
+            candidates_ig = [re.search(p, sec1_text) for p in ig_line_pats]
+            candidates_ig = [m for m in candidates_ig if m is not None]
+            if candidates_ig:
+                m_ig = min(candidates_ig, key=lambda m: m.start())
+        if not m_ig:
+            for fallback_pat in [r"(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", r"연평균\s*\*\*?([+\-−]?\d+(?:\.\d+)?%)\*\*?"]:
+                m_ig = re.search(fallback_pat, sec1_text)
+                if m_ig:
+                    break
+        if m_ig:
+            raw_ig = m_ig.group(1).replace("`", "").strip()
+            if not raw_ig.startswith("연간"):
+                raw_ig = "연간 " + raw_ig
+            data["implied_growth"] = clean_md(raw_ig)
 
-    # 4. Bull / Base / TP1 / Bear targets from scenario table (supports both single price and Model B / Model A side-by-side)
-    sec3_match = re.search(r"##\s*3\..*?(?=##\s*4\.|\Z)", text, re.DOTALL)
+    # 4. Bull / Base / TP1 / Bear targets from scenario table (supports both single price and Model B / Model A side-by-side, across PER/PBR/EV-EBITDA/Yield headers)
+    sec3_match = re.search(r"##\s*3\..*?(?=##\s*(?:3\.5|4)\b|\Z)", text, re.DOTALL)
     sec3_text = sec3_match.group(0) if sec3_match else text
 
     def _format_price_upside_cell(raw_p_cell: str, raw_u_cell: str) -> str:
