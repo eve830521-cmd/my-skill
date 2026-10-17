@@ -78,6 +78,39 @@ def extract_multiline_trigger(sec4_text: str, header_patterns: list, stop_patter
     return "<br>".join(collected) if collected else "-"
 
 
+def extract_opt_valuation_metric(comp_dir: str, p3_text: str) -> str:
+    """
+    Extracts the #1 ranked valuation metric (e.g. PBR, PER, EV/EBITDA, 배당수익률).
+    First inspects Phase1_Report.md (Section 8 table / text), then falls back to Phase3_DCF.md.
+    """
+    p1_path = os.path.join(comp_dir, "3_Final_Reports", "Phase1_Report.md")
+    if os.path.exists(p1_path):
+        try:
+            with open(p1_path, "r", encoding="utf-8") as f:
+                p1_text = f.read()
+            m_row = re.search(r"\|\s*\*\*?(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\*\*\s*\|[^\n]*?\|\s*\*\*?1위\b", p1_text, re.IGNORECASE)
+            if m_row:
+                return m_row.group(1).upper()
+            m_row2 = re.search(r"\|\s*(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\|[^\n]*?\|\s*\*\*?1위\b", p1_text, re.IGNORECASE)
+            if m_row2:
+                return m_row2.group(1).upper()
+            m_adopt = re.search(r"채택\s*지표[^\n]*?1순위[^\n]*?\b(PBR|PER|EV/EBITDA|배당수익률)\b", p1_text, re.IGNORECASE)
+            if m_adopt:
+                return m_adopt.group(1).upper()
+        except Exception:
+            pass
+
+    m_p3 = re.search(r"1순위\s*지표[^\n*]*?\*\*?(?:Target\s*)?(PBR|PER|EV/EBITDA|배당수익률)\b", p3_text, re.IGNORECASE)
+    if m_p3:
+        return m_p3.group(1).upper()
+
+    m_hdr = re.search(r"\|\s*(?:구분|시나리오)\s*\|[^\n]*?\b(PBR|PER|EV/EBITDA)\b", p3_text, re.IGNORECASE)
+    if m_hdr:
+        return m_hdr.group(1).upper()
+
+    return "-"
+
+
 def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     p3_path = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
     thesis_path = os.path.join(comp_dir, "Weekly_Trend", "thesis_log.md")
@@ -85,15 +118,22 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     data = {
         "name": comp_name,
         "updated_at": "-",
+        "opt_metric": "-",
         "s_curve_badge": "-",
         "hybrid_badge": "-",
+        "free_call_option": False,
         "current_price": "-",
+        "equity_growth": "-",
+        "ev_growth": "-",
         "implied_growth": "-",
         "bull_target": "-",
         "base_target": "-",
         "tp1_target": "-",
         "bear_target": "-",
         "rr_ratio": "-",
+        "stop_pin": "-",
+        "buy_prices": "-",
+        "primary_target": "-",
         "opinion": "-",
         "buy_trigger": "-",
         "sell_trigger": "-",
@@ -109,7 +149,10 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     with open(p3_path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    # 1. S-Curve & Hybrid Badges
+    # 0. Optimal Valuation Metric (Phase 1 / Phase 3)
+    data["opt_metric"] = extract_opt_valuation_metric(comp_dir, text)
+
+    # 1. S-Curve & Hybrid Badges & Free Call Option
     m_sc = re.search(r"\[S-Curve 국면 인증 뱃지\]\*\*:\s*(.+)", text)
     if m_sc:
         data["s_curve_badge"] = clean_md(m_sc.group(1))
@@ -117,6 +160,9 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     m_hb = re.search(r"\[하이브리드 밸류체인 지위\]\*\*:\s*(.+)", text)
     if m_hb:
         data["hybrid_badge"] = clean_md(m_hb.group(1))
+
+    if re.search(r"(?:무상\s*콜옵션|0원\s*무상|할증\s*0%|sc_mult\s*=\s*(?:1\.00|1\.0|1\b)|신사업\s*익스포저\s*과대\s*차단|단독\s*매출\s*미공시)", text) or "무상 콜옵션" in data["s_curve_badge"]:
+        data["free_call_option"] = True
 
     # 2. Current price from dcf-calculator-root or table
     m_root = re.search(r'id="dcf-calculator-root"[^>]*data-price="([0-9.,]+)"', text)
@@ -131,6 +177,32 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         if m_cp:
             data["current_price"] = clean_md(m_cp.group(1))
 
+    # Stop pin & Buy prices from root tag or text
+    m_stop_tag = re.search(r'data-stop-pin="([0-9.,]+)"', text)
+    if m_stop_tag:
+        try:
+            sp_val = int(float(m_stop_tag.group(1).replace(",", "")))
+            data["stop_pin"] = f"{sp_val:,}원"
+        except Exception:
+            data["stop_pin"] = m_stop_tag.group(1) + "원"
+
+    m_b1 = re.search(r'data-buy1="([0-9.,]+)"', text)
+    m_b2 = re.search(r'data-buy2="([0-9.,]+)"', text)
+    m_b3 = re.search(r'data-buy3="([0-9.,]+)"', text)
+    if m_b1 and m_b2 and m_b3:
+        try:
+            b1_v = f"{int(float(m_b1.group(1).replace(',', ''))):,}원"
+            b2_v = f"{int(float(m_b2.group(1).replace(',', ''))):,}원"
+            b3_v = f"{int(float(m_b3.group(1).replace(',', ''))):,}원"
+            data["buy_prices"] = f"1차 {b1_v} | 2차 {b2_v} | 3차 {b3_v}"
+        except Exception:
+            pass
+
+    if data["stop_pin"] == "-":
+        m_sp_text = re.search(r"(?:1단계\s*(?:초입\s*)?고정\s*안전핀|고정\s*바닥\s*안전핀|Hard\s*Stop\s*1)[^\n`*]*?`?([0-9,]{4,10}원)`?", text, re.IGNORECASE)
+        if m_sp_text:
+            data["stop_pin"] = m_sp_text.group(1)
+
     # 3. Implied growth rate (역DCF 요구성장률 — Equity & EV 병기 지원) — inspect Section 1
     sec1_match = re.search(r"##\s*1\..*?(?=##\s*2\.|\Z)", text, re.DOTALL)
     sec1_text = sec1_match.group(0) if sec1_match else text
@@ -140,6 +212,8 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     if m_eq and m_ev:
         eq_val = m_eq.group(1).replace("`", "").replace("연간", "").strip()
         ev_val = m_ev.group(1).replace("`", "").replace("연간", "").strip()
+        data["equity_growth"] = eq_val
+        data["ev_growth"] = ev_val
         if eq_val != ev_val:
             data["implied_growth"] = clean_md(f"Equity {eq_val} | EV {ev_val}")
         else:
@@ -207,6 +281,14 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             elif len(cells) >= 6 and "원" in cells[-3] and "%" in cells[-2]:
                 data[target_key] = _format_price_upside_cell(cells[-3], cells[-2])
 
+    # Extract primary target for quick action header
+    if data["tp1_target"] != "-":
+        clean_tp = re.sub(r"<br>.*", "", data["tp1_target"])
+        data["primary_target"] = f"TP1: {clean_tp}"
+    elif data["base_target"] != "-":
+        clean_base = re.sub(r"<br>.*", "", data["base_target"])
+        data["primary_target"] = f"Base: {clean_base}"
+
     if data["tp1_target"] != "-" and data["base_target"] != "-":
         data["base_target"] = f"{data['base_target']}<br><span class='rr-sub'>🎯 TP1(단기1차): {data['tp1_target']}</span>"
 
@@ -229,7 +311,6 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             if m_rr:
                 data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
                 break
-
 
     # 6. Opinion / Buy Trigger / Sell Trigger in Section 4
     sec4_match = re.search(r"##\s*4\..*", text, re.DOTALL)
@@ -295,12 +376,54 @@ def build_mobile_html(items: list) -> str:
         else:
             theses_li = "<li>등록된 가설 로그 없음</li>"
 
+        # Chips for header
+        metric_chip = f'<span class="chip-metric">👑 {item["opt_metric"]} 1위</span>' if item["opt_metric"] != "-" else ""
+        free_opt_chip = '<span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>' if item["free_call_option"] else ""
+
+        # Core Action Bar (Safety Pin & Target)
+        action_bar_html = ""
+        has_stop = item["stop_pin"] != "-"
+        has_tgt = item["primary_target"] != "-"
+        if has_stop or has_tgt:
+            stop_sub = f"분할매수가: {item['buy_prices']}" if item["buy_prices"] != "-" else "일봉 종가 이탈 시 기계적 손절"
+            tgt_sub = f"실전 손익비: {item['rr_ratio']}" if item["rr_ratio"] != "-" else "1차 목표가 도달 시 반타작 분할익절"
+            action_bar_html = f"""
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">{item['stop_pin']}</div>
+                    <div class="act-sub">{stop_sub}</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">{item['primary_target']}</div>
+                    <div class="act-sub">{tgt_sub}</div>
+                </div>
+            </div>
+            """
+
+        # DCF Implied Growth Display (Dual chips if Equity & EV available)
+        if item["equity_growth"] != "-" and item["ev_growth"] != "-":
+            dcf_display = f"""
+            <div class="growth-chips-row">
+                <span class="growth-chip eq">주주(Eq) {item['equity_growth']}</span>
+                <span class="growth-chip ev">실질(EV) {item['ev_growth']}</span>
+            </div>
+            <div class="rr-line">손익비: <strong>{item['rr_ratio']}</strong></div>
+            """
+        else:
+            dcf_display = f"""
+            <div class="m-val">{item['implied_growth']} <span class="rr-sub">(R:R {item['rr_ratio']})</span></div>
+            """
+
         cards_html += f"""
         <div class="stock-card" data-name="{item['name']}">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">{item['name']}</span>
-                    <span class="update-date">업데이트: {item['updated_at']}</span>
+                    {metric_chip}
+                    {free_opt_chip}
+                    <span class="update-date">({item['updated_at']})</span>
                 </div>
                 <div class="price-pill">현재가: {item['current_price']}</div>
             </div>
@@ -308,6 +431,7 @@ def build_mobile_html(items: list) -> str:
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> {item['s_curve_badge']}</div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> {item['hybrid_badge']}</div>
             </div>
+            {action_bar_html}
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -322,8 +446,8 @@ def build_mobile_html(items: list) -> str:
                     <div class="m-val">{item['bear_target']}</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">{item['implied_growth']} <span class="rr-sub">(R:R {item['rr_ratio']})</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    {dcf_display}
                 </div>
             </div>
             <div class="triggers-box">
@@ -343,43 +467,50 @@ def build_mobile_html(items: list) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본</title>
+    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.1)</title>
     <style>
         :root {{
-            --bg: #0f172a;
-            --card: #1e293b;
-            --border: #334155;
+            --bg: #0b1120;
+            --card: #151e32;
+            --border: #24324f;
             --text: #f8fafc;
             --muted: #94a3b8;
             --accent: #38bdf8;
             --bull: #34d399;
             --base: #60a5fa;
             --bear: #f87171;
+            --gold: #fbbf24;
+            --purple: #c084fc;
         }}
         * {{ box-sizing: border-box; }}
         body {{
             margin: 0;
-            padding: 14px;
-            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Malgun Gothic", sans-serif;
+            padding: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }}
         .top-bar {{
             max-width: 760px;
-            margin: 0 auto 16px auto;
+            margin: 0 auto 14px auto;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }}
         .top-bar h1 {{
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             font-size: 1.25rem;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }}
         .top-bar .sub {{
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--muted);
             margin-bottom: 12px;
         }}
@@ -388,9 +519,14 @@ def build_mobile_html(items: list) -> str:
             padding: 10px 14px;
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: #0f172a;
+            background: #0b1120;
             color: var(--text);
             font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }}
+        .search-input:focus {{
+            border-color: var(--accent);
         }}
         .container {{
             max-width: 760px;
@@ -404,7 +540,7 @@ def build_mobile_html(items: list) -> str:
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.28);
         }}
         .card-header {{
             display: flex;
@@ -416,40 +552,105 @@ def build_mobile_html(items: list) -> str:
             flex-wrap: wrap;
             gap: 8px;
         }}
+        .title-wrap {{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }}
         .stock-title {{
-            font-size: 1.2rem;
+            font-size: 1.22rem;
             font-weight: 800;
             color: #fff;
-            margin-right: 8px;
+            letter-spacing: -0.02em;
+        }}
+        .chip-metric {{
+            background: rgba(96, 165, 250, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }}
+        .chip-free-opt {{
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
         }}
         .update-date {{
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--muted);
         }}
         .price-pill {{
-            background: #0f172a;
+            background: #0b1120;
             border: 1px solid var(--accent);
             color: var(--accent);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
         }}
         .badges-row {{
-            font-size: 0.82rem;
-            background: rgba(15, 23, 42, 0.6);
+            font-size: 0.8rem;
+            background: rgba(11, 17, 32, 0.7);
             padding: 8px 10px;
             border-radius: 8px;
             margin-bottom: 10px;
+            border: 1px solid rgba(36, 50, 79, 0.6);
         }}
-        .badge-line {{ margin-bottom: 4px; }}
+        .badge-line {{ margin-bottom: 4px; line-height: 1.4; }}
         .badge-line:last-child {{ margin-bottom: 0; }}
         .code-badge {{
             background: rgba(56, 189, 248, 0.15);
             color: #7dd3fc;
             padding: 1px 6px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
+        }}
+        /* Core Action Bar: Safety Pin & Target */
+        .core-action-bar {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }}
+        .action-card {{
+            border-radius: 10px;
+            padding: 9px 11px;
+            border: 1px solid var(--border);
+        }}
+        .stop-card {{
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(248, 113, 113, 0.4);
+        }}
+        .target-card {{
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(96, 165, 250, 0.4);
+        }}
+        .act-label {{
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 600;
+        }}
+        .act-val {{
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin: 2px 0;
+            letter-spacing: -0.01em;
+        }}
+        .stop-val {{ color: var(--bear); }}
+        .target-val {{ color: var(--base); }}
+        .act-sub {{
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            word-break: keep-all;
+            line-height: 1.3;
         }}
         .metrics-grid {{
             display: grid;
@@ -458,31 +659,55 @@ def build_mobile_html(items: list) -> str:
             margin-bottom: 10px;
         }}
         .metric-box {{
-            background: #0f172a;
+            background: #0b1120;
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 8px 10px;
         }}
-        .m-label {{ font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }}
-        .m-val {{ font-size: 0.9rem; font-weight: 700; }}
+        .m-label {{ font-size: 0.72rem; color: var(--muted); margin-bottom: 2px; }}
+        .m-val {{ font-size: 0.9rem; font-weight: 700; line-height: 1.35; }}
         .bull .m-val {{ color: var(--bull); }}
         .base .m-val {{ color: var(--base); }}
         .bear .m-val {{ color: var(--bear); }}
-        .rr-sub {{ font-size: 0.78rem; color: var(--muted); font-weight: normal; }}
+        .growth-chips-row {{
+            display: flex;
+            gap: 5px;
+            margin: 3px 0 2px 0;
+            flex-wrap: wrap;
+        }}
+        .growth-chip {{
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }}
+        .growth-chip.eq {{
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }}
+        .growth-chip.ev {{
+            background: rgba(192, 132, 252, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }}
+        .rr-line {{ font-size: 0.72rem; color: var(--muted); margin-top: 2px; }}
+        .rr-sub {{ font-size: 0.75rem; color: var(--muted); font-weight: normal; }}
         .triggers-box {{
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             border-top: 1px dashed var(--border);
             padding-top: 8px;
         }}
-        .t-row {{ margin-bottom: 7px; }}
+        .t-row {{ margin-bottom: 7px; line-height: 1.45; }}
         .buy-t {{ color: #93c5fd; }}
         .sell-t {{ color: #fca5a5; }}
         .thesis-details {{
             margin-top: 8px;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(11, 17, 32, 0.6);
             border-radius: 8px;
             padding: 8px 10px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
+            border: 1px solid rgba(36, 50, 79, 0.5);
         }}
         .thesis-details summary {{
             cursor: pointer;
@@ -494,13 +719,17 @@ def build_mobile_html(items: list) -> str:
             padding-left: 18px;
         }}
         .thesis-details li {{ margin-bottom: 5px; color: #cbd5e1; }}
+        @media (max-width: 480px) {{
+            .core-action-bar {{ grid-template-columns: 1fr; }}
+            .metrics-grid {{ grid-template-columns: 1fr; }}
+        }}
     </style>
 </head>
 <body>
     <div class="top-bar">
         <h1>📱 내 투자 종목 모바일 1페이지 통합 요약본</h1>
-        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | Phase 3 & S-Curve 연동</div>
-        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 티씨케이, 리노공업...)" oninput="filterCards()">
+        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | v4.1 회계·수리 무결성 & S-Curve 연동</div>
+        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 하나머티리얼즈, GST...)" oninput="filterCards()">
     </div>
     <div class="container" id="cardContainer">
         {cards_html}
@@ -555,3 +784,4 @@ def main(output_local: str = DEFAULT_OUTPUT_LOCAL):
 if __name__ == "__main__":
     out_arg = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUTPUT_LOCAL
     main(out_arg)
+
