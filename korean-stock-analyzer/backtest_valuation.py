@@ -465,23 +465,55 @@ def _get_split_adjusted_quarterly_eps(row, latest_sh):
     return raw_val
 
 
-def _detect_scurve_phase2_status(stock_code, corp_name=None, scurve_override=None, dart_exposure_override=None):
+def _detect_scurve_phase2_status(
+    stock_code,
+    corp_name=None,
+    scurve_override=None,
+    dart_exposure_override=None,
+    early_ignition=False,
+    w60_disparity_pct=100.0,
+    op_yoy=None,
+):
     """
-    Auto-detects S-Curve Phase 2 (10~40% golden sweet-spot & DART standalone theme exposure >= 30%).
-    Enforces Free Call Option rule: if standalone new-tech revenue is undisclosed or <30%, S-Curve boost is 0%.
+    Auto-detects S-Curve Phase 2 (10~40% golden sweet-spot & DART standalone theme exposure >= 30%,
+    OR verified DART Early Ignition: backlog/order YoY +30% or CapEx >= 10% equity + margin non-decay + 60w disparity <= 140%).
+    Enforces Free Call Option rule: if standalone new-tech revenue is undisclosed/<30% and no Early Ignition, S-Curve boost is 0%.
     """
     code_str = str(stock_code).zfill(6) if stock_code else ""
     if scurve_override is False:
         return {
             'is_phase2': False,
+            'is_early_ignition': False,
             'theme_name': 'S-Curve 할증 미적용 (--no-s-curve)',
             'exposure_pct': 0.0,
             'source_pdf': None
         }
+    if early_ignition:
+        margin_ok = (op_yoy is None) or (float(op_yoy) >= -5.0)
+        loc_ok = float(w60_disparity_pct or 100.0) <= 140.0
+        exp_val = dart_exposure_override if dart_exposure_override is not None else 15.0
+        if margin_ok and loc_ok:
+            return {
+                'is_phase2': True,
+                'is_early_ignition': True,
+                'theme_name': f'⚡ DART 선행 발화 검증 (--early-ignition: 수주·CapEx 급증 + 마진 방어 + 60주선 이격도 {w60_disparity_pct:.1f}% ≤ 140%)',
+                'exposure_pct': exp_val,
+                'source_pdf': 'DART 수주/시설투자 공시 & 분기 마진 검증'
+            }
+        else:
+            block_rsn = f"60주선 이격도 과열({w60_disparity_pct:.1f}% > 140%)" if not loc_ok else f"영업이익 역성장({op_yoy:+.1f}%)"
+            return {
+                'is_phase2': False,
+                'is_early_ignition': False,
+                'theme_name': f'🚫 고점 과잉증설/마진 피크아웃 경보 ({block_rsn} → 선행 발화 할증 차단)',
+                'exposure_pct': exp_val,
+                'source_pdf': None
+            }
     if dart_exposure_override is not None and dart_exposure_override < 30.0:
         return {
             'is_phase2': False,
-            'theme_name': f'DART 신기술 단독 익스포저 미달 ({dart_exposure_override:.1f}% < 30% 컷오프 → 무상 콜옵션 0% 처리)',
+            'is_early_ignition': False,
+            'theme_name': f'DART 신기술 단독 익스포저 미달 ({dart_exposure_override:.1f}% < 30% 컷오프 & 선행 발화 미지정 → 무상 콜옵션 0% 처리)',
             'exposure_pct': dart_exposure_override,
             'source_pdf': None
         }
@@ -489,6 +521,7 @@ def _detect_scurve_phase2_status(stock_code, corp_name=None, scurve_override=Non
         exp_val = dart_exposure_override if dart_exposure_override is not None else 30.0
         return {
             'is_phase2': True,
+            'is_early_ignition': False,
             'theme_name': '사용자/리포트 S-Curve Phase 2 지정 (--s-curve-phase2)',
             'exposure_pct': exp_val,
             'source_pdf': 'Global_Trend 80p+ 심층 리포트 검증'
@@ -932,9 +965,11 @@ def compute_section3_stock_nature_and_tp1(
     dart_exposure=None,
     forward_eps=None,
     expected_dps=0.0,
+    early_ignition=False,
+    forward_eps_g=None,
 ):
     """
-    (B) Section 3 종목 체질 판별, Forward BPS 계산, [대안 B vs 대안 A] 목표가 병기 자동 산출 (상한 캡 적용)
+    (B) Section 3 종목 체질 판별, Forward BPS 계산, [대안 B vs 대안 A] 목표가 병기 자동 산출 (PEG 리레이팅 및 이중 하드캡 적용)
     """
     print(f"\n======================================================================")
     print(f"🎯 [Phase 3 - Section 3] 종목 체질 판별 & [대안 B vs 대안 A] 목표가 나란히 자동 산출")
@@ -959,6 +994,9 @@ def compute_section3_stock_nature_and_tp1(
 
     effective_52w_range = min(range_52w_close_pct, median_52w_range_pct)
     range_52w_pct = range_52w_close_pct
+
+    w_ma60_val = float(df_week['close'].rolling(60, min_periods=1).mean().iloc[-1]) if not df_week.empty else curr_price
+    w60_disparity_pct = (curr_price / w_ma60_val * 100.0) if w_ma60_val > 0 else 100.0
 
     bps = bench.get('bps') or sec2_res.get('curr_bps_used') or 0
     trailing_eps = bench.get('eps') or sec2_res.get('curr_eps_used') or 0
@@ -1027,20 +1065,37 @@ def compute_section3_stock_nature_and_tp1(
         corp_name=corp_name or bench.get('stock_name'),
         scurve_override=scurve_override,
         dart_exposure_override=dart_exposure,
+        early_ignition=early_ignition,
+        w60_disparity_pct=w60_disparity_pct,
+        op_yoy=op_yoy,
     )
     sc_base_mult = 1.10 if (sc_info['is_phase2'] and not is_type_b) else 1.00
     sc_bull_mult = 1.12 if (sc_info['is_phase2'] and not is_type_b) else 1.00
     if sc_info['is_phase2'] and not is_type_b:
-        sc_reason = f"적용 ✅ [{sc_info['theme_name']} | DART 검증 익스포저 {sc_info['exposure_pct']:.1f}% ≥ 30%] → Base +10.0% / Bull +12.0% 할증"
+        exp_tag = "선행 발화 검증" if sc_info.get('is_early_ignition') else f"DART 검증 익스포저 {sc_info['exposure_pct']:.1f}% ≥ 30%"
+        sc_reason = f"적용 ✅ [{sc_info['theme_name']} | {exp_tag}] → Base +10.0% / Bull +12.0% 할증"
     else:
         sc_reason = f"미적용 ⚪ [{sc_info['theme_name']}] → +0.0% (본업 대안 B 기준 평가)"
 
-    base_mult_a = round(op_mult * sc_base_mult, 4)
-    bull_mult_a = round(op_mult * sc_bull_mult, 4)
+    # PEG(0.8) Dynamic Re-rating with Dual Hard-Cap (g_max <= 35% -> max PER 28x, and Model A <= Model B * 1.45)
+    raw_g = float(forward_eps_g) if (forward_eps_g is not None and forward_eps_g > 0) else (float(op_yoy) if (op_yoy is not None and op_yoy >= 30.0) else 0.0)
+    peg_note = "미적용 (일반 가중계수 적용)"
+    if sc_info['is_phase2'] and not is_type_b and raw_g >= 30.0:
+        capped_g = min(raw_g, 35.0)
+        peg_target_per = round(capped_g * 0.80, 1)  # max 28.0x
+        if eps and eps > 0 and base_auto_b > 0:
+            peg_base_price = eps * peg_target_per
+            implied_peg_mult = min(1.45, max(op_mult * sc_base_mult, peg_base_price / base_auto_b))
+            sc_base_mult = round(implied_peg_mult / op_mult, 4) if op_mult > 0 else 1.10
+            sc_bull_mult = round(min(1.45 / op_mult, max(sc_bull_mult, sc_base_mult * 1.04)), 4) if op_mult > 0 else 1.12
+        peg_note = f"적용 🚀 [원시 성장률 {raw_g:.1f}% → 하드캡 인정 성장률 g={capped_g:.1f}% × PEG 0.8 = 인정 PER {peg_target_per:.1f}배 (대안B×1.45 상한 적용)]"
+
+    base_mult_a = min(1.45, round(op_mult * sc_base_mult, 4))
+    bull_mult_a = min(1.45, round(op_mult * sc_bull_mult, 4))
 
     bear_auto_a = bear_auto_b
-    base_auto_a = round((base_auto_b * base_mult_a) / 10) * 10
-    bull_auto_a = round((bull_auto_b * bull_mult_a) / 10) * 10
+    base_auto_a = min(round((base_auto_b * 1.45) / 10) * 10, round((base_auto_b * base_mult_a) / 10) * 10)
+    bull_auto_a = min(round((bull_auto_b * 1.45) / 10) * 10, round((bull_auto_b * bull_mult_a) / 10) * 10)
 
     # Peak Cap Check: Prevent Model A Bull from exceeding 10Y historical cycle peak PBR/PER ceiling
     pbr_cap_price = round((forward_bps * (sec2_res.get('pbr_cycle_max') or pbr_p90 * 1.25)) / 10) * 10 if forward_bps > 0 else bull_auto_a
@@ -1056,7 +1111,7 @@ def compute_section3_stock_nature_and_tp1(
     tp1_upside_b = (tp1_price_b / curr_price - 1.0) * 100.0 if curr_price > 0 else 0.0
     tp1_upside_a = (tp1_price_a / curr_price - 1.0) * 100.0 if curr_price > 0 else 0.0
 
-    print(f"    - 단일 기준 주가 (최신 일봉 종가): {curr_price:,.0f}원")
+    print(f"    - 단일 기준 주가 (최신 일봉 종가): {curr_price:,.0f}원 (주봉 60주선 이격도: {w60_disparity_pct:.1f}%)")
     print(f"    - 최근 52주 주봉 종가 범위: {low_52w_close:,.0f}원 ~ {high_52w_close:,.0f}원 (단순 52주 등락폭: {range_52w_close_pct:.1f}% | 3Y 롤링 52주 중위값: {median_52w_range_pct:.1f}%)")
     print(f"    - 현재 공식 BPS: {bps:,.0f}원 (현재 PBR {curr_pbr:.2f}배)" + (f" | 추정 Forward BPS: {forward_bps:,.0f}원 (Forward PBR {curr_price/forward_bps:.2f}배)" if forward_bps != bps else ""))
 
@@ -1070,25 +1125,26 @@ def compute_section3_stock_nature_and_tp1(
         nature_badge = "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]"
         nature_desc = (
             f"유효 52주 등락폭({effective_52w_range:.1f}%) 또는 PBR({curr_pbr:.2f}배) 기준 추세/사이클 종목 해당!\n"
-            f"      ➔ Phase 1 1순위 채택 지표 기반 [🛡️ 대안 B(보수적 순수 DART 중심 닻) | 🚀 대안 A(실적·S-Curve 할증 상단)] 목표가를 나란히 병기합니다."
+            f"      ➔ Phase 1 1순위 채택 지표 기반 [🛡️ 대안 B(보수적 순수 DART 중심 닻) | 🚀 대안 A(실적·S-Curve·PEG 할증 상단)] 목표가를 나란히 병기합니다."
         )
 
     print(f"\n    ▶ Section 3 종목 체질 판정: {nature_badge}")
     print(f"      {nature_desc}")
 
-    print(f"\n    ▶ [대안 A (실적 모멘텀 · S-Curve 할증) 가중 계수 산출 내역]:")
+    print(f"\n    ▶ [대안 A (실적 모멘텀 · S-Curve · PEG 할증) 가중 계수 산출 내역]:")
     print(f"      ① DART 실적 모멘텀 가감산 (op_mult = ×{op_mult:.2f}): {op_reason}")
-    print(f"      ② S-Curve Phase 2 할증 (Base ×{sc_base_mult:.2f} / Bull ×{sc_bull_mult:.2f}): {sc_reason}")
+    print(f"      ② S-Curve Phase 2 / 선행발화 할증 (Base ×{sc_base_mult:.2f} / Bull ×{sc_bull_mult:.2f}): {sc_reason}")
+    print(f"      ③ PEG(0.8) 동적 리레이팅 & 이중 하드캡 (g≤35%, ×1.45배 상한): {peg_note}")
     if sc_info.get('source_pdf'):
         print(f"         • 검증 출처: {sc_info['source_pdf']}")
-    print(f"      ③ 최종 대안 A 멀티플 가중치: Base ×{base_mult_a:.4f} ({(base_mult_a - 1)*100:+.1f}%) | Bull ×{bull_mult_a:.4f} ({(bull_mult_a - 1)*100:+.1f}%) | Bear ×1.0000 (하방 보호 고정)")
+    print(f"      ④ 최종 대안 A 멀티플 가중치: Base ×{base_mult_a:.4f} ({(base_mult_a - 1)*100:+.1f}%) | Bull ×{bull_mult_a:.4f} ({(bull_mult_a - 1)*100:+.1f}%) | Bear ×1.0000 (하방 보호 고정)")
 
     final_base_b = round(base_target / 10) * 10 if (base_target is not None and base_target > 0) else base_auto_b
-    final_base_a = round((final_base_b * base_mult_a) / 10) * 10
+    final_base_a = min(round((final_base_b * 1.45) / 10) * 10, round((final_base_b * base_mult_a) / 10) * 10)
     final_bull_b = round(bull_target / 10) * 10 if (bull_target is not None and bull_target > 0) else bull_auto_b
-    final_bull_a = round((final_bull_b * bull_mult_a) / 10) * 10
+    final_bull_a = min(round((final_bull_b * 1.45) / 10) * 10, round((final_bull_b * bull_mult_a) / 10) * 10)
 
-    print(f"\n    ▶ [시나리오 목표가 가이드라인 — 🛡️ 대안 B (중심 닻) vs 🚀 대안 A (할증 상단)]:")
+    print(f"\n    ▶ [시나리오 목표가 가이드라인 — 🛡️ 대안 B (중심 닻) vs 🚀 대안 A (할증 상단, 최대 ×1.45 캡)]:")
     print(f"      • Bull (호황 상단): 🛡️ 대안 B {final_bull_b:,.0f}원 ({(final_bull_b/curr_price - 1)*100:+.1f}%)  |  🚀 대안 A {final_bull_a:,.0f}원 ({(final_bull_a/curr_price - 1)*100:+.1f}%)")
     print(f"      • Base (기본 적정): 🛡️ 대안 B {final_base_b:,.0f}원 ({(final_base_b/curr_price - 1)*100:+.1f}%)  |  🚀 대안 A {final_base_a:,.0f}원 ({(final_base_a/curr_price - 1)*100:+.1f}%)")
     print(f"      • TP1  (단기 실전): 🛡️ 대안 B {tp1_price_b:,.0f}원 ({tp1_upside_b:+.1f}%)  |  🚀 대안 A {tp1_price_a:,.0f}원 ({tp1_upside_a:+.1f}%) [52주 70~75%: {tp1_p70:,.0f}~{tp1_p75:,.0f}원 / 60일선: {d60_ma:,.0f}원]")
@@ -1100,6 +1156,7 @@ def compute_section3_stock_nature_and_tp1(
         'range_52w_pct': range_52w_pct,
         'median_52w_range_pct': median_52w_range_pct,
         'effective_52w_range': effective_52w_range,
+        'w60_disparity_pct': w60_disparity_pct,
         'forward_bps': forward_bps,
         'op_mult': op_mult,
         'sc_base_mult': sc_base_mult,
@@ -1237,7 +1294,8 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
         rsi14 = (100.0 - (100.0 / (1.0 + rs_w))).fillna(50.0)
         curr_rsi = float(rsi14.iloc[-1])
 
-        print(f"\n  [주봉 (Weekly, 기준일: {curr_w_date}, 종가: {curr_w_close:,.0f}원)]")
+        w60_disp = (curr_w_close / w_ma60 * 100.0) if w_ma60 > 0 else 100.0
+        print(f"\n  [주봉 (Weekly, 기준일: {curr_w_date}, 종가: {curr_w_close:,.0f}원, 60주선 이격도: {w60_disp:.1f}%)]")
         print(f"    - 주봉 이동평균선:   10주선 {int(round(w_ma10)):,}원 | 20주선 {int(round(w_ma20)):,}원 | 60주선 {int(round(w_ma60)):,}원")
         print(f"    - 주봉 볼린저밴드(20, 2): 상단 {int(round(bb_upper)):,}원 | 중심(20주) {int(round(w_ma20)):,}원 | 하단 {int(round(bb_lower)):,}원")
         print(f"    - 주봉 MACD(12,26,9): MACD {curr_macd:,.1f} / Signal {curr_sig:,.1f} / Histogram {curr_hist:+,.1f} ({'양(+) 추세' if curr_hist >= 0 else '음(-) 조정'})")
@@ -1245,13 +1303,21 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
 
         divergence_warn = (curr_rsi >= 70.0) and (curr_mfi < 70.0)
         mfi_peakout_warn = (max_12w_mfi >= 80.0) and (curr_mfi < 80.0)
-        print(f"    - 고점경보 판독:     1호(주봉 MFI 80 하향이탈): {'🚨경보' if mfi_peakout_warn else '정상'} | 2호(RSI≥70 & MFI<70 괴리): {'🚨경보' if divergence_warn else '정상'}")
+        is_double_top_trap = (w60_disp > 125.0 and max_12w_mfi >= 80.0 and curr_mfi < 75.0) or (w60_disp > 140.0) or (curr_mfi >= 80.0)
+        is_kickoff_surge = (w60_disp <= 125.0 and max_12w_mfi >= 80.0)
+        wave_status = (
+            "🚨 고공권 쌍봉/과열 경보 (Track 2 돌파진입 차단)"
+            if is_double_top_trap
+            else ("⚡ 바닥권 초입 수급 분출 (Kick-off Surge 인정)" if is_kickoff_surge else "🟢 순수 1차 파동 (과열 이력 없음)")
+        )
+        print(f"    - 고점경보 판독:     1호(주봉 MFI 80 하향이탈): {'🚨경보' if mfi_peakout_warn else '정상'} | 2호(RSI≥70 & MFI<70 괴리): {'🚨경보' if divergence_warn else '정상'} | 파동 상태: {wave_status}")
 
         res.update({
             'w_close': int(round(curr_w_close)),
             'w_ma10': int(round(w_ma10)),
             'w_ma20': int(round(w_ma20)),
             'w_ma60': int(round(w_ma60)),
+            'w60_disp': w60_disp,
             'bb_upper': int(round(bb_upper)),
             'bb_lower': int(round(bb_lower)),
             'w_macd': curr_macd,
@@ -1259,26 +1325,53 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
             'w_macd_hist': curr_hist,
             'w_mfi14': curr_mfi,
             'w_rsi14': curr_rsi,
-            'w_mfi14_12w_max': max_12w_mfi
+            'w_mfi14_12w_max': max_12w_mfi,
+            'is_double_top_trap': is_double_top_trap,
         })
 
-    # --- 3. Automated Conflict-Free SOP Order & Dual Safety Pin Design ---
+    # --- 3. Automated Conflict-Free SOP Order & Dual Safety Pin Design (Track 1 vs Track 2) ---
     curr_p = res.get('d_close') or res.get('w_close') or 10000
     base_b = sec3_res.get('base_auto', int(curr_p * 1.25))
+    base_a = sec3_res.get('base_auto_a', base_b)
     tp1_b = sec3_res.get('tp1_price', int(curr_p * 1.15))
     bear_b = sec3_res.get('bear_auto', int(curr_p * 0.85))
     is_box = sec3_res.get('is_low_vol_box', False)
+    sc_info = sec3_res.get('scurve_info', {})
+    is_sc_p2 = bool(sc_info.get('is_phase2', False)) and not bool(sec2_res.get('is_type_b', False))
+    is_double_top = bool(res.get('is_double_top_trap', False))
+
     primary_t = tp1_b if (is_box and tp1_b < base_b) else base_b
 
-    # Check if stock is overvalued vs Base fair value
-    is_overvalued = curr_p >= base_b * 0.96
+    # Check if stock is overvalued vs Model B Base fair value
+    is_overvalued_vs_b = curr_p >= base_b * 0.96
+    # Track 2 eligibility: Overvalued vs Model B, but S-Curve Phase 2/Early Ignition is active, >=15% upside to Model A Base, and NOT in High-Altitude Double-Top / Overheated trap
+    is_track2_momentum = is_overvalued_vs_b and is_sc_p2 and (base_a >= curr_p * 1.15) and (not is_double_top)
+    is_overvalued = is_overvalued_vs_b and (not is_track2_momentum)
 
-    if is_overvalued:
-        # Pullback accumulation mode below Base fair value
+    if is_track2_momentum:
+        primary_t = base_a
+        d20 = res.get('d_ma20', int(curr_p * 0.96))
+        p_low = res.get('poc_low', int(curr_p * 0.96))
+        p_high = res.get('poc_high', int(curr_p * 1.02))
+        support_anchor = max(min(d20, curr_p * 0.97), min(p_low, curr_p * 0.97), curr_p * 0.93)
+        buy1 = int(round(min(support_anchor, curr_p * 0.96) / 10) * 10)
+        buy2 = int(round(min(curr_p, primary_t * 0.87) / 10) * 10)
+        if buy2 <= buy1:
+            buy2 = int(round((buy1 * 1.025) / 10) * 10)
+        buy3 = int(round(min(max(p_high, curr_p * 1.02), primary_t * 0.91) / 10) * 10)
+        if buy3 <= buy2:
+            buy3 = int(round((buy2 * 1.025) / 10) * 10)
+        sop_mode_desc = (
+            f"🚀 [Track 2: S-Curve 주도주 추세 돌파 분할매수 모드]: 현재가({curr_p:,}원)가 보수적 대안 B({base_b:,}원)를 돌파했으나, "
+            f"S-Curve 검증 & 순수 1차 파동(고점 쌍봉 미해당)으로 대안 A 목표가({base_a:,}원)까지 +{(base_a/curr_p-1)*100:.1f}% 열려 있어 일봉 20일선/매물대 기반 타이트 3분할 진입 허용!"
+        )
+    elif is_overvalued:
+        # Track 1: Pullback accumulation mode below Base fair value
         buy1 = int(round((base_b * 0.80) / 10) * 10)
         buy2 = int(round((base_b * 0.85) / 10) * 10)
         buy3 = int(round((base_b * 0.90) / 10) * 10)
-        sop_mode_desc = f"⏳ [고평가 추격매수 차단 → 눌림목 대기 모드]: 현재가({curr_p:,}원) ≥ Base 적정가({base_b:,}원) 부근이므로 현재가 추격 매수를 금지하고 Base 대비 -10~-20% 안전마진 구간({buy1:,}~{buy3:,}원)에서만 분할 진입!"
+        block_detail = " (고공권 쌍봉/과열 또는 대안 A 여력 부족으로 Track 2 돌파 진입 차단)" if is_sc_p2 else ""
+        sop_mode_desc = f"⏳ [Track 1: 고평가 추격매수 차단 → 눌림목 대기 모드{block_detail}]: 현재가({curr_p:,}원) ≥ 대안 B 적정가({base_b:,}원) 부근이므로 현재가 추격 매수를 금지하고 Base 대비 -10~-20% 안전마진 구간({buy1:,}~{buy3:,}원)에서만 분할 진입!"
     else:
         # Standard ascending pyramid or box value accumulation with strict Buy1 < Buy2 < Buy3 < Primary Target
         buy1 = curr_p
@@ -1318,14 +1411,21 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
     avg_buy_price = int(round(buy1 * 0.30 + buy2 * 0.40 + buy3 * 0.30))
 
     # Dual Safety Pin:
-    # 1) Initial Hard Stop Pin (초입 고정 안전핀) MUST be strictly below Buy 1 (around -6% to -10% below Buy 1, anchored to 20d low or Bear floor)
+    # 1) Initial Hard Stop Pin (초입 고정 안전핀) MUST be strictly below Buy 1 (around -5% to -8% for Track 2, or -6% to -10% for Track 1)
     low20_pin = int(round(res.get('d_low20', buy1) * 0.97 / 10) * 10)
     bear_pin = int(round(bear_b * 0.97 / 10) * 10)
-    cand_pins = [p for p in [low20_pin, bear_pin] if (buy1 * 0.86) <= p <= (buy1 * 0.96)]
-    if cand_pins:
-        init_stop_pin = max(cand_pins)
+    d20_pin = int(round(res.get('d_ma20', buy1) * 0.97 / 10) * 10)
+    poc_low_pin = int(round(res.get('poc_low', buy1) * 0.97 / 10) * 10)
+
+    if is_track2_momentum:
+        t2_cands = [p for p in [d20_pin, poc_low_pin, low20_pin] if (buy1 * 0.92) <= p <= (buy1 * 0.95)]
+        init_stop_pin = max(t2_cands) if t2_cands else int(round((buy1 * 0.935) / 10) * 10)
     else:
-        init_stop_pin = int(round((buy1 * 0.92) / 10) * 10)
+        cand_pins = [p for p in [low20_pin, bear_pin] if (buy1 * 0.86) <= p <= (buy1 * 0.96)]
+        if cand_pins:
+            init_stop_pin = max(cand_pins)
+        else:
+            init_stop_pin = int(round((buy1 * 0.92) / 10) * 10)
 
     # 2) Breakout Trailing Pin (2차/3차 매물대 돌파 안착 후 상향 보호핀)
     poc_trail = res.get('poc_trail_pin', int(round(buy2 * 0.97)))
@@ -1341,7 +1441,7 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
     print(f"    - 1차 매수 (30% · 가치/눌림목 선취매): {buy1:,}원")
     print(f"    - 2차 매수 (40% · 1차 추세선 돌파):    {buy2:,}원")
     print(f"    - 3차 매수 (30% · 상단 매물대/추세 안착): {buy3:,}원")
-    print(f"    - ▶ 3분할 완성 평균단가: {avg_buy_price:,}원 (1차 목표가 {primary_t:,}원 대비 기대수익 {target_upside_pct:+.1f}%)")
+    print(f"    - ▶ 3분할 완성 평균단가: {avg_buy_price:,}원 (기준 1차 목표가 {primary_t:,}원 대비 기대수익 {target_upside_pct:+.1f}%)")
     print(f"    - 🚨 [1단계: 초입 고정 손절 안전핀 (Hard Stop 1)]: {init_stop_pin:,}원 (1차 매수가 대비 {init_loss_pct:+.1f}%, 완성 평단 대비 {avg_loss_pct:+.1f}% | 실전 R:R = {exec_rr:.2f} : 1)")
     print(f"    - 🔒 [2단계: 상단 매물대 돌파 후 본절 보호핀 (Trailing Stop 2)]: {breakout_trail_pin:,}원 (주가가 20일 매물대 상단 {res.get('poc_high', buy3):,}원 돌파 안착 성공 시에만 손절선을 이 가격으로 상향 이동)")
 
@@ -1354,6 +1454,7 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
         'breakout_trail_pin': breakout_trail_pin,
         'exec_rr': round(exec_rr, 2),
         'is_overvalued': is_overvalued,
+        'is_track2_momentum': is_track2_momentum,
     })
     return res
 
@@ -1369,6 +1470,8 @@ def run_valuation_backtest(
     dart_exposure=None,
     forward_eps=None,
     expected_dps=0.0,
+    early_ignition=False,
+    forward_eps_g=None,
 ):
     print(f"\n======================================================================")
     print(f"📊 [Korean Stock Analyzer v4.1] 4대 밸류에이션 지표 10년 풀사이클 백테스트")
@@ -1448,6 +1551,8 @@ def run_valuation_backtest(
         dart_exposure=dart_exposure,
         forward_eps=forward_eps,
         expected_dps=expected_dps,
+        early_ignition=early_ignition,
+        forward_eps_g=forward_eps_g,
     )
     sec4_res = compute_section4_master_sop_indicators(df_day, df_full_week, sec2_res, sec3_res)
 
@@ -1476,6 +1581,8 @@ if __name__ == '__main__':
     parser.add_argument('--dart-exposure', type=float, default=None, help="DART verified standalone new-tech revenue exposure %% (e.g. 17.5)")
     parser.add_argument('--forward-eps', type=float, default=None, help="Estimated annual/forward controlling EPS (KRW) to compute Forward BPS")
     parser.add_argument('--expected-dps', type=float, default=0.0, help="Expected annual DPS (KRW) for Forward BPS calculation")
+    parser.add_argument('--early-ignition', action='store_true', help="Enable DART Early Ignition gate (verified backlog +30%%/CapEx >=10%% + margin defense)")
+    parser.add_argument('--forward-eps-g', type=float, default=None, help="12M Forward or TTM EPS growth rate %% for PEG(0.8) re-rating (capped at 35%%)")
     parser.add_argument('--s-curve-phase2', action='store_true', help="Force enable S-Curve Phase 2 (+10%% Base / +12%% Bull) boost")
     parser.add_argument('--no-s-curve', action='store_true', help="Force disable S-Curve Phase 2 boost")
     args = parser.parse_args()
@@ -1492,4 +1599,6 @@ if __name__ == '__main__':
         dart_exposure=args.dart_exposure,
         forward_eps=args.forward_eps,
         expected_dps=args.expected_dps,
+        early_ignition=args.early_ignition,
+        forward_eps_g=args.forward_eps_g,
     )
