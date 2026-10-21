@@ -1,9 +1,20 @@
+"""
+Mobile 1-Page Integrated Summary Generator for Korean Stock Analyzer (v4.2)
+- Prioritizes 2_Translated_DB/valuation_metrics.json (Single Source of Truth) to eliminate AI transcription errors.
+- Supports SOTP 20% Decomposition badge, 4-Regime Check status, and Cyclical Peak-Trap warning chip.
+- Parses 6-column Popperian Falsification thesis_log.md (including QoQ delta & Kill-Switch numeric thresholds).
+"""
+
 import os
 import sys
 import re
 import glob
+import json
 import shutil
 from datetime import datetime
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 STOCK_RESEARCH_DIR = r"e:\antigravity-work\my-skill\Stock_Research"
 DEFAULT_OUTPUT_LOCAL = os.path.join(STOCK_RESEARCH_DIR, "00_모바일_통합요약본.html")
@@ -13,7 +24,6 @@ DEFAULT_OUTPUT_GDRIVE = r"G:\내 드라이브\01.현탁\01.재테크(G)\02. 보�
 def clean_md(text: str) -> str:
     if not text:
         return "-"
-    text = text.strip()
     text = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"`(.*?)`", r"<span class='code-badge'>\1</span>", text)
     return text.strip()
@@ -36,7 +46,8 @@ def extract_multiline_trigger(sec4_text: str, header_patterns: list, stop_patter
             m = re.match(pat, s_line, re.IGNORECASE)
             if m:
                 start_idx = i
-                first_line_remainder = m.group(1).strip() if m.lastindex and m.group(1) else ""
+                if m.lastindex and m.group(1):
+                    first_line_remainder = m.group(1).strip().lstrip(":-*").strip()
                 break
         if start_idx is not None:
             break
@@ -45,21 +56,15 @@ def extract_multiline_trigger(sec4_text: str, header_patterns: list, stop_patter
         return "-"
 
     collected = []
-    if first_line_remainder and first_line_remainder not in (":", "-", "*"):
+    if first_line_remainder:
         collected.append(clean_md(first_line_remainder))
 
     for j in range(start_idx + 1, len(lines)):
         s = lines[j].strip()
         if not s:
-            if collected:
-                continue
-            else:
-                continue
-
-        # Stop if we hit a markdown heading, horizontal rule, HTML div, or next top-level section bullet
+            continue
         if s.startswith("#") or s.startswith("---") or s.startswith("<div"):
             break
-
         hit_stop = False
         for sp in stop_patterns:
             if re.match(sp, s, re.IGNORECASE):
@@ -67,11 +72,9 @@ def extract_multiline_trigger(sec4_text: str, header_patterns: list, stop_patter
                 break
         if hit_stop:
             break
-
-        # Clean bullet prefix (-, *, 1., 2., etc.)
         cleaned_item = re.sub(r"^(?:[-*•]|\d+\.)\s*", "", s).strip()
         if cleaned_item:
-            collected.append(clean_md(cleaned_item))
+            collected.append("• " + clean_md(cleaned_item))
         if len(collected) >= 8:
             break
 
@@ -88,32 +91,51 @@ def extract_opt_valuation_metric(comp_dir: str, p3_text: str) -> str:
         try:
             with open(p1_path, "r", encoding="utf-8") as f:
                 p1_text = f.read()
-            m_row = re.search(r"\|\s*\*\*?(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\*\*\s*\|[^\n]*?\|\s*\*\*?1위\b", p1_text, re.IGNORECASE)
+            m_row = re.search(
+                r"\|\s*\*\*?(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\*\*\s*\|[^\n]*?\|\s*\*\*?1위\b",
+                p1_text,
+                re.IGNORECASE,
+            )
             if m_row:
                 return m_row.group(1).upper()
-            m_row2 = re.search(r"\|\s*(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\|[^\n]*?\|\s*\*\*?1위\b", p1_text, re.IGNORECASE)
+            m_row2 = re.search(
+                r"\|\s*(PBR|PER|EV/EBITDA|배당수익률)[^\n|]*?\|[^\n]*?\|\s*\*\*?1위\b",
+                p1_text,
+                re.IGNORECASE,
+            )
             if m_row2:
                 return m_row2.group(1).upper()
-            m_adopt = re.search(r"채택\s*지표[^\n]*?1순위[^\n]*?\b(PBR|PER|EV/EBITDA|배당수익률)\b", p1_text, re.IGNORECASE)
+            m_adopt = re.search(
+                r"채택\s*지표[^\n]*?1순위[^\n]*?\b(PBR|PER|EV/EBITDA|배당수익률)\b",
+                p1_text,
+                re.IGNORECASE,
+            )
             if m_adopt:
                 return m_adopt.group(1).upper()
         except Exception:
             pass
 
-    m_p3 = re.search(r"1순위\s*지표[^\n*]*?\*\*?(?:Target\s*)?(PBR|PER|EV/EBITDA|배당수익률)\b", p3_text, re.IGNORECASE)
+    m_p3 = re.search(
+        r"1순위\s*지표[^\n*]*?\*\*?(?:Target\s*)?(PBR|PER|EV/EBITDA|배당수익률)\b",
+        p3_text,
+        re.IGNORECASE,
+    )
     if m_p3:
         return m_p3.group(1).upper()
-
-    m_hdr = re.search(r"\|\s*(?:구분|시나리오)\s*\|[^\n]*?\b(PBR|PER|EV/EBITDA)\b", p3_text, re.IGNORECASE)
+    m_hdr = re.search(
+        r"\|\s*(?:구분|시나리오)\s*\|[^\n]*?\b(PBR|PER|EV/EBITDA)\b",
+        p3_text,
+        re.IGNORECASE,
+    )
     if m_hdr:
         return m_hdr.group(1).upper()
-
     return "-"
 
 
 def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     p3_path = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
     thesis_path = os.path.join(comp_dir, "Weekly_Trend", "thesis_log.md")
+    ssot_path = os.path.join(comp_dir, "2_Translated_DB", "valuation_metrics.json")
 
     data = {
         "name": comp_name,
@@ -122,9 +144,13 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         "s_curve_badge": "-",
         "hybrid_badge": "-",
         "free_call_option": False,
+        "sotp_badge": "",
+        "regime_badge": "",
+        "cyclical_trap_badge": "",
         "current_price": "-",
         "equity_growth": "-",
         "ev_growth": "-",
+        "core_ev_growth": "-",
         "implied_growth": "-",
         "bull_target": "-",
         "base_target": "-",
@@ -149,10 +175,17 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     with open(p3_path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    # 0. Optimal Valuation Metric (Phase 1 / Phase 3)
-    data["opt_metric"] = extract_opt_valuation_metric(comp_dir, text)
+    # Load SSOT JSON first if available (Code-computed Ground Truth)
+    ssot = {}
+    if os.path.exists(ssot_path):
+        try:
+            with open(ssot_path, "r", encoding="utf-8") as sf:
+                ssot = json.load(sf)
+        except Exception:
+            ssot = {}
 
-    # 1. S-Curve & Hybrid Badges & Free Call Option
+    data["opt_metric"] = ssot.get("primary_metric") or extract_opt_valuation_metric(comp_dir, text)
+
     m_sc = re.search(r"\[S-Curve 국면 인증 뱃지\]\*\*:\s*(.+)", text)
     if m_sc:
         data["s_curve_badge"] = clean_md(m_sc.group(1))
@@ -161,95 +194,134 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     if m_hb:
         data["hybrid_badge"] = clean_md(m_hb.group(1))
 
-    if re.search(r"(?:무상\s*콜옵션|0원\s*무상|할증\s*0%|sc_mult\s*=\s*(?:1\.00|1\.0|1\b)|신사업\s*익스포저\s*과대\s*차단|단독\s*매출\s*미공시)", text) or "무상 콜옵션" in data["s_curve_badge"]:
+    if re.search(
+        r"(?:무상\s*콜옵션|0원\s*무상|할증\s*0%|sc_mult\s*=\s*(?:1\.00|1\.0|1\b)|신사업\s*익스포저\s*과대\s*차단|단독\s*매출\s*미공시)",
+        text,
+    ) or "무상 콜옵션" in data["s_curve_badge"]:
         data["free_call_option"] = True
 
-    # 2. Current price from dcf-calculator-root or table
-    m_root = re.search(r'id="dcf-calculator-root"[^>]*data-price="([0-9.,]+)"', text)
-    if m_root:
-        try:
-            p_val = int(float(m_root.group(1).replace(",", "")))
-            data["current_price"] = f"{p_val:,}원"
-        except Exception:
-            data["current_price"] = m_root.group(1) + "원"
+    # v4.2 New Badges from SSOT or Markdown (SOTP 20%, Regime Shift, Cyclical Peak Trap)
+    if ssot.get("sotp", {}).get("sotp_triggered") or re.search(r"SOTP\s*분리\s*평가\s*강제\s*발동", text):
+        non_op_pct = ssot.get("sotp", {}).get("non_op_max_ratio_pct")
+        data["sotp_badge"] = f"🏛️ SOTP분리(비영업 {non_op_pct:.0f}%)" if non_op_pct else "🏛️ SOTP분리(비영업≥20%)"
+    if ssot.get("regime", {}).get("regime_changed") or re.search(r"레짐\s*변화\s*감지", text):
+        data["regime_badge"] = "🔄 4대레짐변화검토"
+    if ssot.get("cyclical_guard", {}).get("is_peak_trap") or re.search(r"사이클\s*고점\s*이익\s*함정\s*경보", text):
+        data["cyclical_trap_badge"] = "🚨 피크멀티플제한(Mid-Cycle캡)"
+
+    # Current Price (SSOT Priority -> HTML Tag -> Markdown Table)
+    if ssot.get("anchor_price"):
+        data["current_price"] = f"{int(round(float(ssot['anchor_price']))):,}원"
     else:
-        m_cp = re.search(r"\|\s*\*\*?현재 주가.*?\*\*\s*\|\s*([^|]+)\|", text)
-        if m_cp:
-            data["current_price"] = clean_md(m_cp.group(1))
+        m_root = re.search(r'id="dcf-calculator-root"[^>]*data-price="([0-9.,]+)"', text)
+        if m_root:
+            try:
+                p_val = int(float(m_root.group(1).replace(",", "")))
+                data["current_price"] = f"{p_val:,}원"
+            except Exception:
+                data["current_price"] = m_root.group(1) + "원"
+        else:
+            m_cp = re.search(r"\|\s*\*\*?현재 주가.*?\*\*\s*\|\s*([^|]+)\|", text)
+            if m_cp:
+                data["current_price"] = clean_md(m_cp.group(1))
 
-    # Stop pin & Buy prices from root tag or text
-    m_stop_tag = re.search(r'data-stop-pin="([0-9.,]+)"', text)
-    if m_stop_tag:
-        try:
-            sp_val = int(float(m_stop_tag.group(1).replace(",", "")))
-            data["stop_pin"] = f"{sp_val:,}원"
-        except Exception:
-            data["stop_pin"] = m_stop_tag.group(1) + "원"
+    # Stop Pin & Buy 1~3 (SSOT Priority -> HTML Tag -> Markdown Text)
+    sec4_ssot = ssot.get("section4", {})
+    if sec4_ssot.get("init_stop_pin"):
+        data["stop_pin"] = f"{int(sec4_ssot['init_stop_pin']):,}원"
+    else:
+        m_stop_tag = re.search(r'data-stop-pin="([0-9.,]+)"', text)
+        if m_stop_tag:
+            try:
+                sp_val = int(float(m_stop_tag.group(1).replace(",", "")))
+                data["stop_pin"] = f"{sp_val:,}원"
+            except Exception:
+                data["stop_pin"] = m_stop_tag.group(1) + "원"
 
-    m_b1 = re.search(r'data-buy1="([0-9.,]+)"', text)
-    m_b2 = re.search(r'data-buy2="([0-9.,]+)"', text)
-    m_b3 = re.search(r'data-buy3="([0-9.,]+)"', text)
-    if m_b1 and m_b2 and m_b3:
-        try:
-            b1_v = f"{int(float(m_b1.group(1).replace(',', ''))):,}원"
-            b2_v = f"{int(float(m_b2.group(1).replace(',', ''))):,}원"
-            b3_v = f"{int(float(m_b3.group(1).replace(',', ''))):,}원"
-            data["buy_prices"] = f"1차 {b1_v} | 2차 {b2_v} | 3차 {b3_v}"
-        except Exception:
-            pass
+    if sec4_ssot.get("buy1") and sec4_ssot.get("buy2") and sec4_ssot.get("buy3"):
+        data["buy_prices"] = (
+            f"1차 {int(sec4_ssot['buy1']):,}원 | 2차 {int(sec4_ssot['buy2']):,}원 | 3차 {int(sec4_ssot['buy3']):,}원"
+        )
+    else:
+        m_b1 = re.search(r'data-buy1="([0-9.,]+)"', text)
+        m_b2 = re.search(r'data-buy2="([0-9.,]+)"', text)
+        m_b3 = re.search(r'data-buy3="([0-9.,]+)"', text)
+        if m_b1 and m_b2 and m_b3:
+            try:
+                b1_v = f"{int(float(m_b1.group(1).replace(',', ''))):,}원"
+                b2_v = f"{int(float(m_b2.group(1).replace(',', ''))):,}원"
+                b3_v = f"{int(float(m_b3.group(1).replace(',', ''))):,}원"
+                data["buy_prices"] = f"1차 {b1_v} | 2차 {b2_v} | 3차 {b3_v}"
+            except Exception:
+                pass
 
     if data["stop_pin"] == "-":
-        m_sp_text = re.search(r"(?:1단계\s*(?:초입\s*)?고정\s*안전핀|고정\s*바닥\s*안전핀|Hard\s*Stop\s*1)[^\n`*]*?`?([0-9,]{4,10}원)`?", text, re.IGNORECASE)
+        m_sp_text = re.search(
+            r"(?:1단계\s*(?:초입\s*)?고정\s*안전핀|고정\s*바닥\s*안전핀|Hard\s*Stop\s*1)[^\n`*]*?`?([0-9,]{4,10}원)`?",
+            text,
+            re.IGNORECASE,
+        )
         if m_sp_text:
             data["stop_pin"] = m_sp_text.group(1)
 
-    # 3. Implied growth rate (역DCF 요구성장률 — Equity & EV 병기 지원) — inspect Section 1
-    sec1_match = re.search(r"##\s*1\..*?(?=##\s*2\.|\Z)", text, re.DOTALL)
-    sec1_text = sec1_match.group(0) if sec1_match else text
-
-    m_eq = re.search(r"유통시총\(Equity\)\s*기준\s*요구성장률[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", sec1_text)
-    m_ev = re.search(r"실질\s*기업가치\(EV[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", sec1_text)
-    if m_eq and m_ev:
-        eq_val = m_eq.group(1).replace("`", "").replace("연간", "").strip()
-        ev_val = m_ev.group(1).replace("`", "").replace("연간", "").strip()
-        data["equity_growth"] = eq_val
-        data["ev_growth"] = ev_val
-        if eq_val != ev_val:
-            data["implied_growth"] = clean_md(f"Equity {eq_val} | EV {ev_val}")
-        else:
-            data["implied_growth"] = clean_md(f"연간 {eq_val}")
+    # Section 1: Reverse DCF Growth Rates
+    dcf_ssot = ssot.get("reverse_dcf", {})
+    if dcf_ssot.get("implied_g_distb_pct") is not None:
+        data["equity_growth"] = f"{dcf_ssot['implied_g_distb_pct']:+.2f}%"
+        if dcf_ssot.get("implied_g_ev_pct") is not None:
+            data["ev_growth"] = f"{dcf_ssot['implied_g_ev_pct']:+.2f}%"
+        if dcf_ssot.get("implied_g_core_ev_pct") is not None:
+            data["core_ev_growth"] = f"{dcf_ssot['implied_g_core_ev_pct']:+.2f}%"
+        data["implied_growth"] = f"Equity {data['equity_growth']} | EV {data['ev_growth']}"
     else:
-        ig_table_pat = r"\|\s*\*\*?(?:①\s*)?\[?(?:보고\s*FCF|유통시총|실질\s*기업가치)[^\n|]*\|\s*(?:[^|\n%]*\s*\|\s*)?\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)"
-        m_ig = re.search(ig_table_pat, sec1_text)
-        if not m_ig:
-            ig_line_pats = [
-                r"(?:유통주식수|DART\s*유통주식수|실질\s*유통주식수|실질\s*EV)[^\n|]*?요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[^\n]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-                r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?(?:DART\s*유통주식수\s*기준\s*)?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-                r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?[^\n*]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
-            ]
-            candidates_ig = [re.search(p, sec1_text) for p in ig_line_pats]
-            candidates_ig = [m for m in candidates_ig if m is not None]
-            if candidates_ig:
-                m_ig = min(candidates_ig, key=lambda m: m.start())
-        if not m_ig:
-            for fallback_pat in [r"(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", r"연평균\s*\*\*?([+\-−]?\d+(?:\.\d+)?%)\*\*?"]:
-                m_ig = re.search(fallback_pat, sec1_text)
-                if m_ig:
-                    break
-        if m_ig:
-            raw_ig = m_ig.group(1).replace("`", "").strip()
-            if not raw_ig.startswith("연간"):
-                raw_ig = "연간 " + raw_ig
-            data["implied_growth"] = clean_md(raw_ig)
+        sec1_match = re.search(r"##\s*1\..*?(?=##\s*2\.|\Z)", text, re.DOTALL)
+        sec1_text = sec1_match.group(0) if sec1_match else text
+        m_eq = re.search(
+            r"유통시총\(Equity\)\s*기준\s*요구성장률[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+            sec1_text,
+        )
+        m_ev = re.search(
+            r"실질\s*기업가치\(EV[^\n|]*\|\s*\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+            sec1_text,
+        )
+        if m_eq and m_ev:
+            eq_val = m_eq.group(1).replace("`", "").replace("연간", "").strip()
+            ev_val = m_ev.group(1).replace("`", "").replace("연간", "").strip()
+            data["equity_growth"] = eq_val
+            data["ev_growth"] = ev_val
+            data["implied_growth"] = f"Equity {eq_val} | EV {ev_val}"
+        else:
+            ig_table_pat = r"\|\s*\*\*?(?:①\s*)?\[?(?:보고\s*FCF|유통시총|실질\s*기업가치)[^\n|]*\|\s*(?:[^|\n%]*\s*\|\s*)?\*\*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)"
+            m_ig = re.search(ig_table_pat, sec1_text)
+            if not m_ig:
+                ig_line_pats = [
+                    r"(?:유통주식수|DART\s*유통주식수|실질\s*유통주식수|실질\s*EV)[^\n|]*?요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[^\n]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+                    r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?(?:DART\s*유통주식수\s*기준\s*)?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+                    r"요구(?:하는)?\s*(?:향후\s*\d+개?년\s*)?(?:FCF\s*)?(?:연평균\s*)?성장률[은:\s]*\*\*?[^\n*]*?(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)",
+                ]
+                candidates_ig = [re.search(p, sec1_text) for p in ig_line_pats]
+                candidates_ig = [m for m in candidates_ig if m]
+                if candidates_ig:
+                    m_ig = min(candidates_ig, key=lambda m: m.start())
+            if not m_ig:
+                for fallback_pat in [r"(연간\s*`?[+\-−]?\d+(?:\.\d+)?%`?)", r"연평균\s*\*\*?([+\-−]?\d+(?:\.\d+)?%)\*\*?"]:
+                    m_ig = re.search(fallback_pat, sec1_text)
+                    if m_ig:
+                        break
+            if m_ig:
+                raw_ig = m_ig.group(1).replace("`", "").strip()
+                if not raw_ig.startswith("연간"):
+                    raw_ig = "연간 " + raw_ig
+                data["implied_growth"] = clean_md(raw_ig)
 
-    # 4. Bull / Base / TP1 / Bear targets from scenario table (supports both single price and Model B / Model A side-by-side, across PER/PBR/EV-EBITDA/Yield headers)
+    # Section 3: Scenarios & R:R
     sec3_match = re.search(r"##\s*3\..*?(?=##\s*(?:3\.5|4)\b|\Z)", text, re.DOTALL)
     sec3_text = sec3_match.group(0) if sec3_match else text
 
     def _format_price_upside_cell(raw_p_cell: str, raw_u_cell: str) -> str:
         if "/" in raw_p_cell and "/" in raw_u_cell:
-            p_parts = [clean_md(x) for x in raw_p_cell.split("/") if x.strip()]
-            u_parts = [clean_md(x) for x in raw_u_cell.split("/") if x.strip()]
+            p_parts = [clean_md(x.strip()) for x in raw_p_cell.split("/")]
+            u_parts = [clean_md(x.strip()) for x in raw_u_cell.split("/")]
             if len(p_parts) >= 2 and len(u_parts) >= 2:
                 return f"🛡️B: {p_parts[0]} ({u_parts[0]})<br>🚀A: {p_parts[1]} ({u_parts[1]})"
         price_str = clean_md(raw_p_cell)
@@ -263,7 +335,6 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         cells = [c.strip() for c in s_line.strip("|").split("|")]
         if len(cells) < 5:
             continue
-
         first_col = re.sub(r"[*`]", "", cells[0]).strip()
         target_key = None
         if re.match(r"^Bull\b", first_col, re.IGNORECASE):
@@ -274,27 +345,33 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             target_key = "tp1_target"
         elif re.match(r"^Bear\b", first_col, re.IGNORECASE):
             target_key = "bear_target"
+        if target_key:
+            raw_p_cell = cells[-2]
+            raw_u_cell = cells[-1]
+            if len(cells) >= 6 and ("%" in cells[-2]) and ("원" in cells[-3]):
+                raw_p_cell = cells[-3]
+                raw_u_cell = cells[-2]
+            data[target_key] = _format_price_upside_cell(raw_p_cell, raw_u_cell)
 
-        if target_key and data[target_key] == "-":
-            if "원" in cells[-2]:
-                data[target_key] = _format_price_upside_cell(cells[-2], cells[-1])
-            elif len(cells) >= 6 and "원" in cells[-3] and "%" in cells[-2]:
-                data[target_key] = _format_price_upside_cell(cells[-3], cells[-2])
-
-    # Extract primary target for quick action header
     if data["tp1_target"] != "-":
         clean_tp = re.sub(r"<br>.*", "", data["tp1_target"])
         data["primary_target"] = f"TP1: {clean_tp}"
+        if data["base_target"] != "-":
+            data["base_target"] = f"{data['base_target']}<br><span class='rr-sub'>🎯 TP1(단기1차): {data['tp1_target']}</span>"
     elif data["base_target"] != "-":
         clean_base = re.sub(r"<br>.*", "", data["base_target"])
         data["primary_target"] = f"Base: {clean_base}"
 
-    if data["tp1_target"] != "-" and data["base_target"] != "-":
-        data["base_target"] = f"{data['base_target']}<br><span class='rr-sub'>🎯 TP1(단기1차): {data['tp1_target']}</span>"
-
-    # 5. Dual-Gate R:R Ratio (supports Gate 1 & Gate 2 across lines, with fallback to single R:R)
-    m_g1 = re.search(r"Gate\s*1[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|바닥권)", sec3_text, re.IGNORECASE)
-    m_g2 = re.search(r"Gate\s*2[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|관망|차단|진입차단)", sec3_text, re.IGNORECASE)
+    m_g1 = re.search(
+        r"Gate\s*1[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|바닥권)",
+        sec3_text,
+        re.IGNORECASE,
+    )
+    m_g2 = re.search(
+        r"Gate\s*2[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|관망|차단|진입차단)",
+        sec3_text,
+        re.IGNORECASE,
+    )
     if m_g1 and m_g2:
         g1_str = re.sub(r"\s+", "", m_g1.group(1))
         g2_str = re.sub(r"\s+", "", m_g2.group(1))
@@ -312,7 +389,6 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
                 data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
                 break
 
-    # 6. Opinion / Buy Trigger / Sell Trigger in Section 4
     sec4_match = re.search(r"##\s*4\..*", text, re.DOTALL)
     sec4_text = sec4_match.group(0) if sec4_match else text
 
@@ -320,6 +396,7 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     if not m_op:
         m_op = re.search(r"[-*]\s*\*\*?(?:손익비\s*)?판정\s*:?\*\*?\s*:?\s*([^\n]+)", sec3_text)
     m_band = re.search(r"[-*]\s*\*\*?목표(?:주가|가)\s*밴드\s*:?\*\*?\s*:?\s*(.+)", sec4_text)
+
     op_parts = []
     if m_op:
         op_parts.append(clean_md(m_op.group(1)))
@@ -348,19 +425,43 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     ]
     data["sell_trigger"] = extract_multiline_trigger(sec4_text, sell_headers, sell_stops)
 
-    # 7. Thesis Log
+    # Parse thesis_log.md (Supports both legacy 4-col and v4.2 6-col with QoQ + Falsification Kill-Switch)
     if os.path.exists(thesis_path):
-        with open(thesis_path, "r", encoding="utf-8") as tf:
-            for line in tf:
-                if "|" in line and ("가설" in line or "진행 중" in line or "검증 완료" in line):
+        try:
+            with open(thesis_path, "r", encoding="utf-8") as tf:
+                for line in tf:
+                    if "|" not in line:
+                        continue
+                    if not any(k in line for k in ("가설", "진행 중", "검증 완료", "약화", "폐기")):
+                        continue
                     parts = [p.strip() for p in line.strip().strip("|").split("|")]
-                    if len(parts) >= 3 and parts[0] not in ("기록 일자", "기록일자", ":---"):
-                        date_str = parts[0]
-                        title_str = parts[1]
+                    if len(parts) < 3 or any(h in parts[0] for h in ("기록 일자", "기록일자", "가설 ID", ":---")):
+                        continue
+
+                    date_str = parts[0]
+                    title_str = parts[1]
+                    if len(parts) >= 6:
+                        # v4.2 6-column format: [ID/Date | Thesis | QoQ Delta | Bullish Fact | Falsification Kill-Switch | Status]
+                        qoq_str = parts[2]
+                        fact_str = parts[3]
+                        kill_str = parts[4]
+                        status_str = parts[5]
+                        if len(fact_str) > 80:
+                            fact_str = fact_str[:80] + "..."
+                        entry_html = (
+                            f"[{date_str}] {clean_md(title_str)} ({clean_md(status_str)})"
+                            f"<br><span style='color:#38bdf8;font-size:0.75rem;'>📊 직전분기(QoQ): {clean_md(qoq_str)}</span>"
+                            f"<br><span style='color:#cbd5e1;font-size:0.75rem;'>✅ 근거: {clean_md(fact_str)}</span>"
+                            f"<br><span style='color:#fca5a5;font-size:0.75rem;font-weight:700;'>🚨 약화/반증 기준: {clean_md(kill_str)}</span>"
+                        )
+                        data["theses"].append(entry_html)
+                    else:
                         desc_str = parts[2]
                         if len(desc_str) > 110:
                             desc_str = desc_str[:110] + "..."
                         data["theses"].append(f"[{date_str}] {clean_md(title_str)}: {clean_md(desc_str)}")
+        except Exception:
+            pass
 
     return data
 
@@ -368,25 +469,55 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
 def build_mobile_html(items: list) -> str:
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     cards_html = ""
+
     for item in items:
         theses_li = ""
         if item["theses"]:
-            for th in item["theses"][-3:]:
+            for th in item["theses"][-4:]:
                 theses_li += f"<li>{th}</li>"
         else:
             theses_li = "<li>등록된 가설 로그 없음</li>"
 
-        # Chips for header
-        metric_chip = f'<span class="chip-metric">👑 {item["opt_metric"]} 1위</span>' if item["opt_metric"] != "-" else ""
-        free_opt_chip = '<span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>' if item["free_call_option"] else ""
+        metric_chip = (
+            f'<span class="chip-metric">👑 {item["opt_metric"]} 1위</span>'
+            if item["opt_metric"] != "-"
+            else ""
+        )
+        free_opt_chip = (
+            '<span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>'
+            if item["free_call_option"]
+            else ""
+        )
+        sotp_chip = (
+            f'<span class="chip-sotp">{item["sotp_badge"]}</span>'
+            if item.get("sotp_badge")
+            else ""
+        )
+        regime_chip = (
+            f'<span class="chip-regime">{item["regime_badge"]}</span>'
+            if item.get("regime_badge")
+            else ""
+        )
+        cyc_chip = (
+            f'<span class="chip-cyc">{item["cyclical_trap_badge"]}</span>'
+            if item.get("cyclical_trap_badge")
+            else ""
+        )
 
-        # Core Action Bar (Safety Pin & Target)
         action_bar_html = ""
         has_stop = item["stop_pin"] != "-"
         has_tgt = item["primary_target"] != "-"
         if has_stop or has_tgt:
-            stop_sub = f"분할매수가: {item['buy_prices']}" if item["buy_prices"] != "-" else "일봉 종가 이탈 시 기계적 손절"
-            tgt_sub = f"실전 손익비: {item['rr_ratio']}" if item["rr_ratio"] != "-" else "1차 목표가 도달 시 반타작 분할익절"
+            stop_sub = (
+                f"분할매수가: {item['buy_prices']}"
+                if item["buy_prices"] != "-"
+                else "일봉 종가 이탈 시 기계적 손절"
+            )
+            tgt_sub = (
+                f"실전 손익비: {item['rr_ratio']}"
+                if item["rr_ratio"] != "-"
+                else "1차 목표가 도달 시 반타작 분할익절"
+            )
             action_bar_html = f"""
             <div class="core-action-bar">
                 <div class="action-card stop-card">
@@ -402,12 +533,17 @@ def build_mobile_html(items: list) -> str:
             </div>
             """
 
-        # DCF Implied Growth Display (Dual chips if Equity & EV available)
         if item["equity_growth"] != "-" and item["ev_growth"] != "-":
+            core_ev_span = (
+                f'<span class="growth-chip sotp">본업EV {item["core_ev_growth"]}</span>'
+                if item.get("core_ev_growth") and item["core_ev_growth"] != "-"
+                else ""
+            )
             dcf_display = f"""
             <div class="growth-chips-row">
                 <span class="growth-chip eq">주주(Eq) {item['equity_growth']}</span>
                 <span class="growth-chip ev">실질(EV) {item['ev_growth']}</span>
+                {core_ev_span}
             </div>
             <div class="rr-line">손익비: <strong>{item['rr_ratio']}</strong></div>
             """
@@ -423,6 +559,9 @@ def build_mobile_html(items: list) -> str:
                     <span class="stock-title">{item['name']}</span>
                     {metric_chip}
                     {free_opt_chip}
+                    {sotp_chip}
+                    {regime_chip}
+                    {cyc_chip}
                     <span class="update-date">({item['updated_at']})</span>
                 </div>
                 <div class="price-pill">현재가: {item['current_price']}</div>
@@ -456,7 +595,7 @@ def build_mobile_html(items: list) -> str:
                 <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br>{item['sell_trigger']}</div>
             </div>
             <details class="thesis-details">
-                <summary>💡 핵심 투자 가설 로그 보기 ({len(item['theses'])}건)</summary>
+                <summary>💡 핵심 투자 가설 · 직전분기(QoQ) · 반증 기준 보기 ({len(item['theses'])}건)</summary>
                 <ul>{theses_li}</ul>
             </details>
         </div>
@@ -467,7 +606,7 @@ def build_mobile_html(items: list) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.1)</title>
+    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.2)</title>
     <style>
         :root {{
             --bg: #0b1120;
@@ -582,6 +721,33 @@ def build_mobile_html(items: list) -> str:
             font-size: 0.72rem;
             font-weight: 700;
         }}
+        .chip-sotp {{
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }}
+        .chip-regime {{
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }}
+        .chip-cyc {{
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }}
         .update-date {{
             font-size: 0.75rem;
             color: var(--muted);
@@ -613,7 +779,6 @@ def build_mobile_html(items: list) -> str:
             border-radius: 4px;
             font-size: 0.78rem;
         }}
-        /* Core Action Bar: Safety Pin & Target */
         .core-action-bar {{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -691,6 +856,11 @@ def build_mobile_html(items: list) -> str:
             color: #c084fc;
             border: 1px solid rgba(192, 132, 252, 0.3);
         }}
+        .growth-chip.sotp {{
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }}
         .rr-line {{ font-size: 0.72rem; color: var(--muted); margin-top: 2px; }}
         .rr-sub {{ font-size: 0.75rem; color: var(--muted); font-weight: normal; }}
         .triggers-box {{
@@ -718,7 +888,7 @@ def build_mobile_html(items: list) -> str:
             margin: 8px 0 0 0;
             padding-left: 18px;
         }}
-        .thesis-details li {{ margin-bottom: 5px; color: #cbd5e1; }}
+        .thesis-details li {{ margin-bottom: 8px; color: #cbd5e1; }}
         @media (max-width: 480px) {{
             .core-action-bar {{ grid-template-columns: 1fr; }}
             .metrics-grid {{ grid-template-columns: 1fr; }}
@@ -728,7 +898,7 @@ def build_mobile_html(items: list) -> str:
 <body>
     <div class="top-bar">
         <h1>📱 내 투자 종목 모바일 1페이지 통합 요약본</h1>
-        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | v4.1 회계·수리 무결성 & S-Curve 연동</div>
+        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | v4.2 SOTP·4대레짐·사이클캡·반증가설·SSOT 연동</div>
         <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 하나머티리얼즈, GST...)" oninput="filterCards()">
     </div>
     <div class="container" id="cardContainer">
@@ -754,34 +924,35 @@ def build_mobile_html(items: list) -> str:
 def main(output_local: str = DEFAULT_OUTPUT_LOCAL):
     items = []
     if not os.path.exists(STOCK_RESEARCH_DIR):
-        print(f"Directory not found: {STOCK_RESEARCH_DIR}")
+        print(f"[Error] Stock_Research 폴더가 존재하지 않습니다: {STOCK_RESEARCH_DIR}")
         return
 
     for entry in sorted(os.listdir(STOCK_RESEARCH_DIR)):
         if entry == "Global_Trend":
             continue
         comp_dir = os.path.join(STOCK_RESEARCH_DIR, entry)
-        if os.path.isdir(comp_dir):
-            p3_file = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
-            if os.path.exists(p3_file):
-                summary = extract_company_summary(comp_dir, entry)
-                items.append(summary)
+        if not os.path.isdir(comp_dir):
+            continue
+        p3_file = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
+        if not os.path.exists(p3_file):
+            continue
+        summary = extract_company_summary(comp_dir, entry)
+        items.append(summary)
 
     html_out = build_mobile_html(items)
     with open(output_local, "w", encoding="utf-8") as f:
         f.write(html_out)
-    print(f"[완료] 로컬 통합 요약본 생성: {output_local} (총 {len(items)}개 기업)")
+    print(f"[완료] 모바일 통합 요약본 생성: {output_local} (총 {len(items)}개 기업)")
 
     gdrive_dir = os.path.dirname(DEFAULT_OUTPUT_GDRIVE)
     if os.path.exists(gdrive_dir) and output_local == DEFAULT_OUTPUT_LOCAL:
         try:
             shutil.copy2(output_local, DEFAULT_OUTPUT_GDRIVE)
-            print(f"[완료] 구글 드라이브 자동 복사: {DEFAULT_OUTPUT_GDRIVE}")
+            print(f"[완료] 구글 드라이브 자동 동기화: {DEFAULT_OUTPUT_GDRIVE}")
         except Exception as e:
-            print(f"[참고] 구글 드라이브 복사 생략: {e}")
+            print(f"[경고] 구글 드라이브 복사 실패: {e}")
 
 
 if __name__ == "__main__":
     out_arg = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUTPUT_LOCAL
     main(out_arg)
-
