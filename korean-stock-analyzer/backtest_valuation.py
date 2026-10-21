@@ -1,5 +1,8 @@
 """
-Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer (v4.2)
+Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer (v4.2.1)
+- [PATCH v4.2.1 #1] --rerating-date Post-Rerating Band Isolation: Directly filters s5 & weekly quantiles (p20/p65/p90) in Section 8 & Section 2 so legacy pre-rerating multiples do not distort Bear/Base targets.
+- [PATCH v4.2.1 #2] Structural Re-rating vs Cyclical Peak Separation (Step 3.0): Exempts verified structural re-rating stocks (Post-Rerating / S-Curve Phase 2 + OPM level shift >= +4%p with intact QoQ margin) from 5Y mid-cycle EPS compression, while extending Peak-Out Guard across all sectors (A~D) when QoQ margin breaks down.
+- [PATCH v4.2.1 #3] Track 2 Breakout Dead-Zone Fix (Section 4): Fixes the `curr_p <= base_a * 0.90` mathematical dead-zone so S-Curve leaders breaking above Model B Base can properly enter Track 2 with tight safety pins (-5%~-8%) and Gate 2 R:R >= 2.0.
 - Enforces Single Price Anchor (latest daily close)
 - Enforces Controlling Shareholder Net Income/Equity (지배주주 순이익/지분) & Split/Bonus-issue Retroactive Adjustment
 - [NEW v4.2 #1] Step 1.5 Book Value Decomposition & SOTP 20% Rule (본업가치 + 비영업자산 - 순차입금) + Core Operating Earnings/ROIC Sustainability Check
@@ -878,7 +881,7 @@ def compute_step2_0_regime_change_check(dart_ts, sotp_res, rerating_date=None):
     }
 
 
-def compute_phase1_section8_metrics_ranking(stock_code, bench, df_week, dart_ts, curr_price):
+def compute_phase1_section8_metrics_ranking(stock_code, bench, df_week, dart_ts, curr_price, rerating_date=None):
     """
     Computes Phase 1 Section 8 4-Metric (PBR, PER, DivYield, EV/EBITDA) 10Y Band, R², and Directional Match %,
     filtering out spurious correlations (directional match < 50% or low-payout dividend illusions).
@@ -900,6 +903,16 @@ def compute_phase1_section8_metrics_ranking(stock_code, bench, df_week, dart_ts,
 
     if not s5.empty and "price" in s5.columns:
         s5c = s5.dropna(subset=["price"]).copy()
+        if rerating_date:
+            try:
+                rr_dt = pd.to_datetime(rerating_date)
+                if "date" in s5c.columns:
+                    s5c["dt_tmp"] = pd.to_datetime(s5c["date"].astype(str), errors="coerce")
+                    s5_post = s5c[s5c["dt_tmp"] >= rr_dt]
+                    if len(s5_post) >= 16:
+                        s5c = s5_post.copy()
+            except Exception:
+                pass
         bps_scale = 1.0
         if official_bps > 0 and "BPS" in s5c.columns and s5c["BPS"].dropna().shape[0] > 0:
             last_bps = float(s5c["BPS"].dropna().iloc[-1])
@@ -991,7 +1004,7 @@ def compute_phase1_section8_metrics_ranking(stock_code, bench, df_week, dart_ts,
     }
 
 
-def compute_section2_value_trap(stock_code, bench, df_week, dart_ts, curr_price):
+def compute_section2_value_trap(stock_code, bench, df_week, dart_ts, curr_price, rerating_date=None):
     """
     (A) DART 시계열 연동 및 Section 2 가치함정 이원화 자동 판정 + 직전 분기(QoQ) 실적 및 반증 임계치(Kill-Switch) 산출
     """
@@ -1159,10 +1172,20 @@ def compute_section2_value_trap(stock_code, bench, df_week, dart_ts, curr_price)
             s5_copy["dt"] = pd.to_datetime(s5_copy["date"].astype(str), errors="coerce")
         else:
             s5_copy["dt"] = pd.NaT
+        rerating_applied = False
         if s5_copy["dt"].notna().any():
             max_dt = s5_copy["dt"].max()
             cutoff_3y = max_dt - pd.DateOffset(years=3)
-            s5_3y = s5_copy[s5_copy["dt"] >= cutoff_3y].copy()
+            eff_cutoff = cutoff_3y
+            if rerating_date:
+                try:
+                    rr_dt = pd.to_datetime(rerating_date)
+                    if len(s5_copy[s5_copy["dt"] >= rr_dt]) >= 16:
+                        eff_cutoff = max(cutoff_3y, rr_dt)
+                        rerating_applied = True
+                except Exception:
+                    pass
+            s5_3y = s5_copy[s5_copy["dt"] >= eff_cutoff].copy()
         else:
             s5_3y = s5_copy.tail(min(len(s5_copy), 156)).copy()
 
@@ -1212,6 +1235,14 @@ def compute_section2_value_trap(stock_code, bench, df_week, dart_ts, curr_price)
 
     if pbr_3y_max is None and not df_week.empty and official_bps and official_bps > 0:
         w3y = df_week.tail(156)
+        if rerating_date:
+            try:
+                rr_dt = pd.to_datetime(rerating_date)
+                w_post = df_week[df_week["date"] >= rr_dt]
+                if len(w_post) >= 16:
+                    w3y = w_post
+            except Exception:
+                pass
         pbr_series = w3y["close"] / official_bps
         pbr_3y_max = float(pbr_series.max())
         pbr_3y_mean = float(pbr_series.mean())
@@ -1221,6 +1252,14 @@ def compute_section2_value_trap(stock_code, bench, df_week, dart_ts, curr_price)
 
     if per_3y_max is None and not df_week.empty and official_eps and official_eps > 0:
         w3y = df_week.tail(156)
+        if rerating_date:
+            try:
+                rr_dt = pd.to_datetime(rerating_date)
+                w_post = df_week[df_week["date"] >= rr_dt]
+                if len(w_post) >= 16:
+                    w3y = w_post
+            except Exception:
+                pass
         per_series = w3y["close"] / official_eps
         per_3y_max = float(per_series.max())
         per_3y_mean = float(per_series.mean())
@@ -1364,6 +1403,8 @@ def compute_section3_stock_nature_and_tp1(
     forward_eps_g=None,
     sector_type="A",
     sotp_res=None,
+    regime_res=None,
+    rerating_date=None,
 ):
     """
     (B) Section 3 종목 체질 판별, 사이클주 '피크 이익 × 높은 멀티플' 함정 차단(Peak-Cycle Trap Guard),
@@ -1441,25 +1482,49 @@ def compute_section3_stock_nature_and_tp1(
         else per_p90
     )
 
-    # [NEW v4.2 #3] Cyclical "Peak Earnings × Peak Multiple" Trap Guard
+    # [PATCH v4.2.1 #2] Cyclical "Peak Earnings × Peak Multiple" Trap Guard vs Structural Re-rating Separation
+    sc_info_pre = _detect_scurve_phase2_status(
+        stock_code,
+        corp_name=corp_name or bench.get("stock_name"),
+        scurve_override=scurve_override,
+        dart_exposure_override=dart_exposure,
+        early_ignition=early_ignition,
+    )
     mid_cycle_eps = sec2_res.get("mid_cycle_eps")
     mid_cycle_roe = sec2_res.get("mid_cycle_roe")
     curr_roe = sec2_res.get("curr_roe")
+    qoq_op_pct = sec2_res.get("qoq_op_pct")
+    opm_shift = (regime_res or {}).get("opm_shift_pctp")
     is_cyclical_sector = str(sector_type).upper() in ("A", "B")
+
+    # Genuine Structural Re-rating exemption: Post-Rerating date specified OR (S-Curve Phase 2 + OPM level shift >= +4.0%p)
+    # AND quarterly operating profit is NOT breaking down (QoQ >= -10%)
+    qoq_intact = (qoq_op_pct is None) or (qoq_op_pct >= -10.0)
+    is_structural_rerating = bool(
+        qoq_intact
+        and (
+            rerating_date is not None
+            or (sc_info_pre.get("is_phase2") and opm_shift is not None and opm_shift >= 4.0)
+        )
+    )
+
     is_peak_earnings = False
     peak_trap_reason = ""
     eps_for_valuation = eps
 
-    if is_cyclical_sector:
+    if is_cyclical_sector and not is_structural_rerating:
         if mid_cycle_eps and mid_cycle_eps > 0 and eps >= mid_cycle_eps * 1.35:
             is_peak_earnings = True
-            peak_trap_reason = f"현재/추정 EPS({eps:,.0f}원) ≥ 5년 Mid-Cycle 중위 EPS({mid_cycle_eps:,.0f}원) × 1.35배"
+            peak_trap_reason = f"현재/추정 EPS({eps:,.0f}원) ≥ 5년 Mid-Cycle 중위 EPS({mid_cycle_eps:,.0f}원) × 1.35배 (단순 사이클 피크)"
         elif mid_cycle_roe and curr_roe and (curr_roe >= mid_cycle_roe + 5.0) and curr_roe >= 15.0:
             is_peak_earnings = True
-            peak_trap_reason = f"현재 ROE({curr_roe:.1f}%) ≥ 5년 Mid-Cycle 중위 ROE({mid_cycle_roe:.1f}%) + 5.0%p"
+            peak_trap_reason = f"현재 ROE({curr_roe:.1f}%) ≥ 5년 Mid-Cycle 중위 ROE({mid_cycle_roe:.1f}%) + 5.0%p (단순 사이클 피크)"
+    elif mid_cycle_eps and mid_cycle_eps > 0 and eps >= mid_cycle_eps * 1.35 and (qoq_op_pct is not None and qoq_op_pct <= -15.0):
+        # Universal Peak-Out Guard across ALL sectors (A~D) when earnings are high but QoQ OP drops <= -15%
+        is_peak_earnings = True
+        peak_trap_reason = f"전 업종(Type {sector_type}) 고점 피크아웃 경보: EPS({eps:,.0f}원) ≥ 5년 중위 × 1.35배 & 직전분기 영업이익 QoQ {qoq_op_pct:+.1f}% 둔화"
 
     if is_peak_earnings:
-        # Compress target PER on peak earnings or use Mid-Cycle Normalized EPS * Mean PER
         compressed_base_per = min(eff_per_p65, max(per_p20 * 1.15, (per_p20 + (sec2_res.get("per_3y_mean") or 12.0)) / 2.0))
         compressed_bull_per = min(eff_per_p90, (sec2_res.get("per_3y_mean") or 14.0) * 1.10)
         eff_per_p65 = round(compressed_base_per, 2)
@@ -1912,23 +1977,32 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
     curr_p = res.get("d_close") or res.get("w_close") or 10000
     base_b = sec3_res.get("base_auto", int(round(curr_p * 1.25)))
     base_a = sec3_res.get("base_auto_a", base_b)
+    bull_a = sec3_res.get("bull_auto_a", int(round(base_a * 1.25)))
     tp1_b = sec3_res.get("tp1_price", int(round(curr_p * 1.15)))
     bear_b = sec3_res.get("bear_auto", int(round(curr_p * 0.85)))
     is_box = sec3_res.get("is_low_vol_box", False)
     primary_t = tp1_b if (is_box and tp1_b < base_b) else base_b
 
-    # Check if Track 2 (S-Curve Leader Breakout) applies
+    # [PATCH v4.2.1 #3] Track 2 (S-Curve Leader Breakout) Dead-Zone Elimination
     sc_info = sec3_res.get("scurve_info", {})
+    w_ma20_val = res.get("w_ma20", curr_p)
     w_ma60_val = res.get("w_ma60", curr_p)
     disparity_60w = (curr_p / w_ma60_val * 100.0) if w_ma60_val > 0 else 100.0
     overheated = (disparity_60w > 140.0) or (
         disparity_60w > 125.0 and res.get("w_mfi14_12w_max", 50.0) >= 80.0 and res.get("w_mfi14", 50.0) < 75.0
     )
 
+    # Track 2 ceiling: allows entry up to base_a (or midpoint to bull_a if weekly trend is aligned and Gate 2 R:R >= 2.0)
+    track2_target = base_a if curr_p <= base_a * 0.90 else int(round(((base_a + bull_a) / 2.0) / 10) * 10)
+    track2_ceiling = max(int(round(base_a * 0.98)), int(round(track2_target * 0.88)))
+    weekly_trend_ok = (curr_p >= w_ma20_val * 0.95) and (w_ma20_val >= w_ma60_val * 0.97)
+
     is_track2 = (
         sc_info.get("is_phase2", False)
+        and not sec3_res.get("is_peak_trap", False)
         and (curr_p >= primary_t * 0.96)
-        and (curr_p <= base_a * 0.90)
+        and (curr_p <= track2_ceiling)
+        and weekly_trend_ok
         and not overheated
     )
     is_overvalued = (curr_p >= primary_t * 0.96) and not is_track2
@@ -1937,13 +2011,15 @@ def compute_section4_master_sop_indicators(df_day, df_week, sec2_res, sec3_res):
         buy1 = int(round((base_b * 0.80) / 10) * 10)
         buy2 = int(round((base_b * 0.85) / 10) * 10)
         buy3 = int(round((base_b * 0.90) / 10) * 10)
-        sop_mode_desc = f"⏳ [고평가 추격매수 차단 → 눌림목 대기 모드]: 현재가({curr_p:,}원) ≥ Base 적정가({base_b:,}원) 부근이므로 현재가 추격 매수를 금지하고 Base 대비 -10~-20% 안전마진 구간({buy1:,}~{buy3:,}원)에서만 분할 진입!"
+        sop_mode_desc = f"⏳ [고평가 추격매수 차단 → 눌림목 대기 모드]: 현재가({curr_p:,}원) ≥ Base 적정가({base_b:,}원) 부근이므로 현재가 추격 매수를 금지하고 Base 대비 -10~-20% 안전마진 구간({buy1:,}~{buy3:,}원)에서만 오름차순(1차<2차<3차) 분할 진입!"
     elif is_track2:
-        primary_t = base_a
-        buy1 = int(round((curr_p * 0.97) / 10) * 10)
+        primary_t = max(track2_target, int(round((curr_p * 1.15) / 10) * 10))
+        buy1 = int(round((curr_p * 0.96) / 10) * 10)
         buy2 = int(round(curr_p / 10) * 10)
-        buy3 = int(round(min(curr_p * 1.03, base_a * 0.92) / 10) * 10)
-        sop_mode_desc = f"🔥 [Track 2: S-Curve 주도주 돌파 분할매수 모드]: 대안 B({base_b:,}원) 돌파 후 대안 A({base_a:,}원) 대비 안전마진 확보 & 과열 경보 없음(60주 이격도 {disparity_60w:.1f}%)"
+        buy3 = int(round(min(curr_p * 1.03, primary_t * 0.93) / 10) * 10)
+        if buy3 <= buy2:
+            buy3 = int(round((buy2 * 1.02) / 10) * 10)
+        sop_mode_desc = f"🔥 [Track 2: S-Curve 주도주 돌파 분할매수 모드 (데드존 해체)]: 대안 B({base_b:,}원) 돌파 후 1차 타겟({primary_t:,}원) 대비 상방 여력 확보 & 주봉 추세 건전(60주 이격도 {disparity_60w:.1f}%)"
     else:
         max_buy_ceiling = int(round(min(curr_p * 0.92, base_b * 0.85) if curr_p > primary_t else min(primary_t * 0.92, curr_p * 1.04)))
         buy1 = int(round(min(bear_b, curr_p * 0.94, primary_t * 0.82) / 10) * 10)
@@ -2290,14 +2366,14 @@ def run_valuation_backtest(
         dart_ts, sotp_res, rerating_date=rerating_date
     )
 
-    # [Phase 1 Section 8] 4-Metric Backtest & Spurious Filter
+    # [Phase 1 Section 8] 4-Metric Backtest & Spurious Filter (with rerating_date isolation)
     sec8_res = compute_phase1_section8_metrics_ranking(
-        stock_code, bench, df_full_week, dart_ts, curr_price
+        stock_code, bench, df_full_week, dart_ts, curr_price, rerating_date=rerating_date
     )
 
-    # [Phase 3 Section 2] Value Trap + QoQ + Falsification Kill-Switch
+    # [Phase 3 Section 2] Value Trap + QoQ + Falsification Kill-Switch (with rerating_date isolation)
     sec2_res = compute_section2_value_trap(
-        stock_code, bench, df_full_week, dart_ts, curr_price
+        stock_code, bench, df_full_week, dart_ts, curr_price, rerating_date=rerating_date
     )
 
     # [Phase 3 Section 3] Stock Nature + Cyclical Peak-Multiple Trap Guard + Model B/A
@@ -2319,6 +2395,8 @@ def run_valuation_backtest(
         forward_eps_g=forward_eps_g,
         sector_type=sector_type,
         sotp_res=sotp_res,
+        regime_res=regime_res,
+        rerating_date=rerating_date,
     )
 
     # [v4.2 Step 3.5] Multi-Stage Risk Causal Chain Diagnosis
