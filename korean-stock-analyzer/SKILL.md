@@ -98,7 +98,8 @@ description: "DART 원본 공시(PDF) 및 증권사 딥리서치(PDF) 기반 한
     - 신기술 테마 분석 시(예: 수조형 Tank 액침냉각 vs 엔비디아 루빈 DLC 수랭식 콜드플레이트 등), 글로벌 빅테크의 아키텍처 채택 방향과 부합하는지 Phase 2에서 반드시 반대 시나리오까지 교차 검증합니다.
 - **3. 검증 나침반(Verification Pointer) 및 진실 우선순위**:
   - 진실 우선순위: $\text{DART 사업보고서 원문 (1순위)} > \text{제도권 PDF 원문 (2순위)} > \text{JSON 레지스트리 (3순위)}$
-  - `korean cycle`의 `00_megatrend/docs/s_curve_registry.json`을 검증 나침반 좌표로 1차 참조하되, 기재된 `source_pdf`와 `source_page`를 `parse_pdf.py`로 핀포인트 대조(Cross-Checking)하여 검증된 페이지만 인용합니다 (No-Blind-Citation 100% 준수).
+  - `korean cycle`의 `00_megatrend/docs/s_curve_registry.json`을 검증 나침반 좌표로 1차 참조하되, 인용 전 반드시 `parse_pdf.py`로 기재된 `source_page`에서 `anchor_keyword`를 직접 찾아 실측 대조(Cross-Checking)해야 합니다.
+  - **🚨 실측 미확인 시 보수적 보류 원칙**: `anchor_keyword`가 해당 페이지에서 발견되지 않거나 수치가 불일치할 경우, 레지스트리 숫자를 맹목적으로 믿지 않고 침투율을 **'미검증'**으로 표기하며 S-Curve 국면 판정 및 대안 A 멀티플 할증 부여를 보류합니다 (No-Blind-Citation 100% 준수).
 
 ### [Phase 1: 기업 해독기 (원천 팩트 초안 뼈대)]
 ```markdown
@@ -525,7 +526,7 @@ description: "DART 원본 공시(PDF) 및 증권사 딥리서치(PDF) 기반 한
 1. **트리거**: 사용자가 **"Phase 2 진행해 줘"** 명령.
 2. **자동 선반영 (대화 전)**:
    - `Global_Trend/cycle_timeline.md`를 스캔하여 대상 기업의 전방 산업과 관련된 최신 1~2회차 폴더 및 1년 시계열 트렌드 리포트(PDF) 선별 파싱 (글로벌 빅테크 기술 표준 대체 리스크 교차 점검 포함).
-   - **S-Curve 침투율 & 매매 타이밍 진단 연동**: `korean cycle/00_megatrend/docs/s_curve_registry.json`의 검증 나침반(출처 PDF 및 실측 페이지)을 확인하고 `parse_pdf.py`로 핀포인트 실측 대조한 뒤, Phase 2 `1.1` 진단 매트릭스를 작성 (DART 단독 매출 미공시 시 무상 콜옵션·할증 0% 명시).
+   - **S-Curve 침투율 & 매매 타이밍 진단 연동 (실측 앵커 검증 의무화)**: `korean cycle/00_megatrend/docs/s_curve_registry.json`의 검증 나침반(`source_pdf`, `source_page`, `anchor_keyword`)을 확인하고 `parse_pdf.py`로 해당 페이지에서 `anchor_keyword`를 직접 찾아 실측 대조합니다. 만약 키워드를 찾지 못하거나 수치가 불일치하면 침투율을 '미검증'으로 표기하고 S-Curve 국면 판정 및 대안 A 멀티플 할증을 보류합니다. 실측 확인 시에만 Phase 2 `1.1` 진단 매트릭스를 작성합니다 (DART 단독 매출 미공시 시 무상 콜옵션·할증 0% 명시).
    - 해당 기업 `Weekly_Trend/` 내의 증권사 리포트/IR(PDF/MD) 및 `thesis_log.md`(기존 가설) 자동 파싱.
    - **양방향 공시 팩트체크**: 모든 트렌드 주장과 사용자 가설을 Phase 1의 DART 공시 팩트로 전수 타격하여 `✅ 팩트체크 타격 결과` 판정.
 3. 정해진 [Phase 2 뼈대]에 맞춰 `3_Final_Reports/Phase2_Story.md` 및 HTML 생성.

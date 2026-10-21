@@ -390,404 +390,387 @@ p > em {
     </script>
 </head>
 <body>
-    <h1>🎯 GST (083450) Phase 3: 가격 판독기 (역DCF 및 가치함정 차단 액션 플랜)</h1>
+    <h1>🎯 GST (083450) Phase 3: 밸류에이션 및 전략</h1>
 <blockquote>
-<p><strong>[S-Curve 국면 인증 뱃지]</strong>: <code>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 12.5% | 적극 매수 &amp; 추세추종)]</code><br />
-<strong>[하이브리드 밸류체인 지위]</strong>: <code>[👑 DART 검증 순수 주도주]</code> (칠러 라인업 등재 및 글로벌 레지스트리 탑픽 익스포저 65% ≥ 30% 컷오프 통과)</p>
+<p><strong>[S-Curve 국면 인증 뱃지]</strong>: <code>[🎁 본업 저평가 + 신사업 무상 콜옵션(단독 매출 미공시·할증 0%)]</code> <em>(AIDC 액체냉각 장비 시장 내 액침냉각 비중 약 7.0% 선택적 틈새, DART 단독 매출 미공시로 <code>sc_mult = 1.00</code>)</em><br />
+<strong>[하이브리드 밸류체인 지위]</strong>: <code>[💎 병목 밸류체인 히든 챔피언 (반도체 Sub-fab 본업 100%)]</code> + <code>[🎁 무상 콜옵션 보유주 (AIDC 액침냉각)]</code>
+- <strong>분석 기준일 및 단일 기준 주가 (Single Price Anchor):</strong> <strong>2026년 10월 16일 일봉 종가 <code>45,600원</code></strong> (<code>backtest_valuation.py</code> 및 <code>calc_reverse_dcf.py</code> 실측, 참고 주봉 종가 <code>45,600원</code> — Phase 1~3 전 과정 100% 통일)</p>
 </blockquote>
 <hr />
-<h2>0.5. FCF 품질 점검 (Free Cash Flow Quality Check)</h2>
-<p>본격적인 밸류에이션 역산에 앞서, DART 연결감사보고서 및 반기보고서 현금흐름표를 바탕으로 GST의 잉여현금흐름(FCF)이 회계적 착시 없이 순수한 영업활동으로부터 지속 가능한지 품질을 정밀 검증했습니다.</p>
+<h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단 — Equity &amp; EV 병기)</h2>
+<h3>Step 0.5: FCF 품질 검증 및 정상화 FCF(Normalized FCF) 점검 (역DCF 연산 직전 필수 수행)</h3>
+<p><code>[공시 팩트]</code> DART 제25기 사업보고서(<code>2026.03.18</code>) 및 제26기 반기보고서(<code>2026.08.14</code>) 연결 현금흐름표와 <code>Data.xlsx</code> 분기·TTM 시계열을 기반으로 역DCF 투입 전 4대 FCF 품질 지표를 분리 점검한 결과는 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">FCF 점검 항목</th>
-<th style="text-align: center;">2024년 온기</th>
-<th style="text-align: center;">2025년 온기</th>
-<th style="text-align: center;">2026년 상반기 (1H)</th>
-<th style="text-align: left;">건전성 평가 및 세부 내역</th>
+<th style="text-align: left;">품질 체크</th>
+<th style="text-align: left;">점검 기준</th>
+<th style="text-align: left;">기업 현황 (<code>[공시 팩트]</code> 실측 수치)</th>
+<th style="text-align: center;">판정</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>당기순이익 (NI)</strong></td>
-<td style="text-align: center;">381.2억 원</td>
-<td style="text-align: center;">356.1억 원</td>
-<td style="text-align: center;">215.4억 원</td>
-<td style="text-align: left;">회계상 장부 순이익 (수익성 지속 유지)</td>
+<td style="text-align: left;"><strong>OCF/순이익 갭</strong></td>
+<td style="text-align: left;">OCF÷지배순이익 비율이 1.5배 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">• <strong>2025년 온기:</strong> 영업CF <code>415.9억</code> ÷ 지배순이익 <code>452.8억</code> = <strong><code>0.92배</code></strong><br>• <strong>2026.H1 누적:</strong> 영업CF <code>399.3억</code> ÷ 지배순이익 <code>295.1억</code> = <strong><code>1.35배</code></strong><br>• <strong>2026.2Q TTM:</strong> 영업CF <code>629.8억</code> ÷ 지배순이익 <code>556.4억</code> = <strong><code>1.13배</code></strong> <em>(1.5배 이하 정상 범위)</em></td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>영업활동현금흐름 (OCF)</strong></td>
-<td style="text-align: center;"><strong>544.1억 원</strong></td>
-<td style="text-align: center;"><strong>415.9억 원</strong></td>
-<td style="text-align: center;"><strong>240.2억 원</strong></td>
-<td style="text-align: left;">실제 유입 현금 (NI 대비 지속적 초과 유입)</td>
+<td style="text-align: left;"><strong>운전자본(WC) 변동</strong></td>
+<td style="text-align: left;">WC 순변동이 OCF의 30% 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">• <strong>2025년 4Q ~ 2026년 2Q 시차 발생:</strong> 2025년 말 출하 확대분 매출채권 증가로 25년 온기 OCF(<code>415.9억</code>, FCF <code>286.9억</code>)가 일시 축소된 후, 2026년 2분기 매출채권 회수로 2Q 단독 OCF가 <strong><code>292.0억 원</code></strong>(반기 누적 OCF <code>399.3억</code>, TTM OCF <code>629.8억</code>)으로 급증함. 분기별 운전자본 회수 시차 보정을 위해 <strong>정상화(TTM 지배주주) FCF 병기 필수</strong></td>
+<td style="text-align: center;"><strong>⚠️경고 (시차 보정)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>OCF / NI 비율</strong></td>
-<td style="text-align: center;"><strong>142.7%</strong></td>
-<td style="text-align: center;"><strong>116.8%</strong></td>
-<td style="text-align: center;"><strong>111.5%</strong></td>
-<td style="text-align: left;"><strong>우수 (기준치 100% 지속 초과 달성 ✅)</strong></td>
+<td style="text-align: left;"><strong>CapEx 사이클 착시</strong></td>
+<td style="text-align: left;">상반기 FCF 단순 ×2 연환산 시 하반기 CapEx 누락 또는 불황기 CapEx 절감 착시 여부</td>
+<td style="text-align: left;">• <strong>연결 CapEx 추이:</strong> 2023년 <code>210.0억</code> → 2024년 <code>196.0억</code> → 2025년 <code>129.1억</code> → 2026.H1 <code>100.2억</code> (<code>2026.2Q TTM CapEx 169.7억 원</code>)<br>• 상반기 FCF(<code>299.1억</code>)를 단순 ×2 연환산(<code>598.2억</code>)하지 않고, <strong>2025년 온기 확정 연결 FCF(<code>286.9억</code>)</strong>를 기본 기준값(<code>--fcf</code>)으로 삼고 <strong>최근 4분기 합산(TTM) 지배주주 FCF(<code>458.3억</code>)</strong>를 정상화 FCF(<code>--norm-fcf</code>)로 병기함</td>
+<td style="text-align: center;"><strong>정상 (보수적 반영)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>운전자본 변동 ($\Delta$WC)</strong></td>
-<td style="text-align: center;">+45.8억 원</td>
-<td style="text-align: center;">-18.2억 원</td>
-<td style="text-align: center;">-22.5억 원</td>
-<td style="text-align: left;">수주 증가에 따른 재고자산/매출채권 일시 증가분 (정상 범주)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>유무형자산 CAPEX</strong></td>
-<td style="text-align: center;">111.0억 원</td>
-<td style="text-align: center;">120.5억 원</td>
-<td style="text-align: center;">60.2억 원</td>
-<td style="text-align: left;">안성 본사 조립 체력(5,000억 원) 및 R&amp;D 유지보수 설비투자</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>잉여현금흐름 (FCF)</strong></td>
-<td style="text-align: center;"><strong>433.1억 원</strong></td>
-<td style="text-align: center;"><strong>295.4억 원</strong></td>
-<td style="text-align: center;"><strong>180.0억 원</strong></td>
-<td style="text-align: left;"><strong>순수 잉여현금창출력 확인</strong> (1H 연환산 시 약 360억 원)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>일회성 비영업 손익 점검</strong></td>
-<td style="text-align: center;">특이사항 없음</td>
-<td style="text-align: center;">특이사항 없음</td>
-<td style="text-align: center;">특이사항 없음</td>
-<td style="text-align: left;">자산처분이익, 파생평가이익 등 왜곡 요인 전무 (순수 본업)</td>
+<td style="text-align: left;"><strong>비지배지분 귀속 괴리</strong></td>
+<td style="text-align: left;">연결 FCF 중 비지배지분 유출이 15% 초과 시 지배주주 귀속 FCF 병기</td>
+<td style="text-align: left;">• 주요 종속기업이 100% 해외 자회사 및 ㈜이에스티(지분율 <code>92.96%</code>)로 구성되어 <strong>지배주주 순이익 귀속률이 <code>99.63%</code></strong>(2025년 <code>99.33%</code>, 2026.H1 <code>99.89%</code>)에 달함 (비지배지분 유출 <code>0.4%</code> 미만으로 괴리 없음)</td>
+<td style="text-align: center;"><strong>정상</strong></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>FCF 품질 종합 판정: [ 최우수 (Tier 1) — 할인 불필요 ]</strong><br />
-GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입금 의존도가 1% 미만(부채비율 23.8%)인 무차입 경영 상태입니다. 대규모 공장 부지 매입과 같은 일회성 현금 유출입이나 회계적 이익 착시가 없으므로, <strong>2025년 온기 FCF 295.0억 원을 보수적 기본 FCF로 채택</strong>하고 <strong>2026년 1H 연환산 FCF 360.0억 원을 민감도 지표로 병기</strong>하여 역DCF를 산출합니다.</p>
-</blockquote>
+<ul>
+<li><strong>정상화 FCF (<code>Normalized FCF</code>) 산출 내역:</strong></li>
+<li><strong>기준(보고) FCF (<code>--fcf 286.9</code>):</strong> 2025년 온기 확정 연결 영업CF(<code>415.9억 원</code>) − 연결 유·무형자산 취득액(<code>129.1억 원</code>) = <strong><code>286.9억 원</code></strong> <em>(가장 보수적인 온기 감사 완료 기준)</em></li>
+<li><strong>정상화(지배주주) FCF (<code>--norm-fcf 458.3</code>):</strong> 최근 4개 분기 합산(2025.3Q~2026.2Q TTM) 연결 영업CF(<code>629.8억 원</code>) − TTM 연결 CapEx(<code>169.7억 원</code>) = TTM 연결 FCF(<code>460.0억 원</code>) × 지배주주 귀속률(<code>99.63%</code>) = <strong><code>458.3억 원</code></strong> <em>(2025년 말~2026년 상반기 매출채권 회수 시차가 정상화된 최신 현금창출력)</em></li>
+</ul>
 <hr />
-<h2>1. 시장 프라이싱 역산 (역DCF 및 요구 성장률 진단)</h2>
-<p>시장 참여자들이 최신 주가(45,250원)에 부여하고 있는 내재 기대치(Implied Expectation)를 수학적으로 역산하여, 현재 가격이 고평가(과도한 탐욕)인지 아니면 저평가(안전마진)인지를 판독했습니다.</p>
-<h3>[역DCF 기본 입력 변수 (2026.10.15 기준 최신화)]</h3>
+<h3>Step 1: 역DCF 연산 — 유통시총(Equity) &amp; 실질 기업가치(EV) 2행 병기</h3>
+<p><code>[공시 팩트]</code> <code>calc_reverse_dcf.py</code> (v4.1)를 구동하여 단일 기준 주가(<code>45,600원</code>), DART 공식 유통주식수(<code>17,963,419주</code> 및 2026.10.13 최신 공시 반영 <code>17,879,037주</code> 교차 확인), 가용 순현금(<code>+1,000.7억 원</code>, 즉 순차입금 <code>−1,000.7억 원</code>), 그리고 기준 FCF(<code>286.9억 원</code>) 및 정상화 FCF(<code>458.3억 원</code>)를 대입해 산출한 향후 5년 요구 성장률(Implied FCF CAGR)은 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">입력 변수</th>
-<th style="text-align: center;">수치</th>
-<th style="text-align: left;">출처 (DART 공시 및 시장 팩트)</th>
+<th style="text-align: left;">수치</th>
+<th style="text-align: left;">출처 (DART 문서명 + 페이지/항목)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>현재 주가</strong></td>
-<td style="text-align: center;"><strong>45,250원</strong></td>
-<td style="text-align: left;">2026년 10월 15일 최신 주봉 종가 (10월 초 54,200원에서 눌림목 안착)</td>
+<td style="text-align: left;"><strong>단일 기준 주가</strong></td>
+<td style="text-align: left;"><strong><code>45,600원</code></strong></td>
+<td style="text-align: left;">분석 기준일(<code>2026.10.16</code>) 일봉 종가 (<code>Phase 1~3 공통 단일 앵커</code>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>총 발행주식수 (<code>istc_totqy</code>)</strong></td>
-<td style="text-align: center;"><strong>18,430,000주</strong></td>
-<td style="text-align: left;"><code>[공시 팩트: DART 2026.1H 반기보고서 p.27]</code> 및 <code>get_shareholders</code></td>
+<td style="text-align: left;"><strong><code>18,430,000주</code></strong></td>
+<td style="text-align: left;"><code>[GST]반기보고서(2026.08.14)</code> I. 발행주식의 총수 (보통주 단일, 우선주·CB·BW <code>0주</code>, 명목 시총 <code>8,404.08억 원</code>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>자기주식수 (<code>tesstk_co</code>)</strong></td>
-<td style="text-align: center;"><strong>466,581주</strong></td>
-<td style="text-align: left;"><code>[공시 팩트: DART 2026.07.28 자사주 취득 신탁 50억 진행 중]</code></td>
+<td style="text-align: left;"><strong><code>466,581주</code></strong> <em>(최신 <code>550,963주</code>)</em></td>
+<td style="text-align: left;">반기말 <code>466,581주(2.53%)</code> / <code>자기주식처분결과보고서(2026.10.13)</code> 기준 신탁취득(<code>+105,907주</code>)·상여처분(<code>-21,525주</code>) 반영 시 <strong><code>550,963주(2.99%)</code></strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>공시 실질 유통주식수 (<code>distb_stock_co</code>)</strong></td>
-<td style="text-align: center;"><strong>17,963,419주</strong></td>
-<td style="text-align: left;"><code>[공시 팩트: DART 공식 유통주식수 (총발행 - 자기주식)]</code></td>
+<td style="text-align: left;"><strong>실질 유통주식수 (<code>distb_stock_co</code>)</strong></td>
+<td style="text-align: left;"><strong><code>17,963,419주</code></strong> <em>(최신 <code>17,879,037주</code>)</em></td>
+<td style="text-align: left;">반기말 공식 유통주식수 <code>17,963,419주</code> (<strong>유통 시가총액 <code>8,191.32억 원</code></strong>) / 2026.10.13 기준 <code>17,879,037주</code> (<code>8,152.84억 원</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>총발행 시가총액 (명목)</strong></td>
-<td style="text-align: center;"><strong>8,339.58억 원</strong></td>
-<td style="text-align: left;">45,250원 × 18,430,000주</td>
+<td style="text-align: left;"><strong>순차입금 / (가용 순현금)</strong></td>
+<td style="text-align: left;"><strong><code>−1,000.7억 원</code></strong> <em>(가용 순현금 <code>+1,000.7억</code>)</em></td>
+<td style="text-align: left;">2026.06말 연결 총차입금 <code>100.9억</code>(단기차입금 <code>100.9억</code>, 장기차입·사채 <code>0원</code>) − 현금성자산·단기금융상품 <code>1,101.6억</code>(<code>686.2억+415.4억</code>) <em>(공정가치금융자산 <code>412.8억</code>은 보수적 제외)</em></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>실질 유통 시가총액 (유통)</strong></td>
-<td style="text-align: center;"><strong>8,128.45억 원</strong></td>
-<td style="text-align: left;">45,250원 × 17,963,419주</td>
+<td style="text-align: left;"><strong>실질 기업가치 (EV)</strong></td>
+<td style="text-align: left;"><strong><code>7,190.62억 원</code></strong> <em>(최신 <code>7,152.14억</code>)</em></td>
+<td style="text-align: left;">유통 시가총액(<code>8,191.32억 원</code>) + 우선주 시총(<code>0원</code>) − 가용 순현금(<code>1,000.70억 원</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>기준 FCF (2025년 온기 보수적)</strong></td>
-<td style="text-align: center;"><strong>295.0억 원</strong></td>
-<td style="text-align: left;"><code>[공시 팩트: DART 2025 사업보고서 현금흐름표 OCF 415.9억 - CAPEX 120.5억]</code></td>
+<td style="text-align: left;"><strong>기준 FCF (및 정상화 FCF)</strong></td>
+<td style="text-align: left;"><strong><code>286.9억 원</code></strong> <em>(정상화 </em><em><code>458.3억 원</code></em><em>)</em></td>
+<td style="text-align: left;">• <strong>기준 FCF (<code>286.9억</code>):</strong> 2025년 온기 연결 영업CF <code>415.9억</code> − 연결 CapEx <code>129.1억</code><br>• <strong>정상화 FCF (<code>458.3억</code>):</strong> 2026.2Q TTM 연결 영업CF <code>629.8억</code> − TTM CapEx <code>169.7억</code> × 지배비율 <code>99.63%</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>기준 FCF (2026년 1H 연환산)</strong></td>
-<td style="text-align: center;">360.0억 원</td>
-<td style="text-align: left;"><code>[공시 팩트: DART 2026.1H 반기 현금흐름표 180억 × 2]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가중평균자본비용 (WACC)</strong></td>
-<td style="text-align: center;"><strong>9.0%</strong></td>
-<td style="text-align: left;">반도체 장비 업종 표준 WACC (8.0% ~ 10.0% 민감도 적용)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>영구성장률 ($g$)</strong></td>
-<td style="text-align: center;"><strong>2.0%</strong></td>
-<td style="text-align: left;">국내 장기 잠재성장률 표준치 고정</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>투영 기간</strong></td>
-<td style="text-align: center;"><strong>5년</strong></td>
-<td style="text-align: left;">2026년 ~ 2030년 5개년 현금흐름 역산</td>
+<td style="text-align: left;"><strong>WACC / 영구성장률 / 기간</strong></td>
+<td style="text-align: left;"><strong><code>9.0%</code> / <code>2.0%</code> / <code>5년</code></strong></td>
+<td style="text-align: left;">코스닥 반도체 장비 섹터 표준 할인율 <code>9.0%</code> (<code>--wacc 0.09 --terminal 0.02 --years 5</code>)</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3>[역DCF 연산 결과 (방안 A 병기 — <code>calc_reverse_dcf.py</code> 실측 연산)]</h3>
-<p>내장 헬퍼 스크립트(<code>calc_reverse_dcf.py</code>)를 통해 LLM 자체 암산 없이 오차 0.00%의 정밀 연산을 수행했습니다.</p>
-<ul>
-<li><strong>[현재 주가 45,250원 / 기준 FCF 295.0억 원 기준]</strong></li>
-<li><strong>▶ [DART 유통주식수 기준] 요구 FCF 성장률: 연간 17.54%</strong> (실질 유통 시총 8,128.45억 원 기준)</li>
-<li>▶ [총발행주식수 기준] 요구 FCF 성장률: 연간 18.20% (명목 시총 8,339.58억 원 기준)</li>
-<li><strong>[2026년 1H 연환산 FCF(360억 원) 적용 시]</strong></li>
-<li><strong>▶ [DART 유통주식수 기준] 요구 FCF 성장률: 연간 12.51%</strong> (총발행 기준 연간 13.15%)</li>
-<li><strong>[WACC 민감도 분석 (45,250원, 유통주식수 기준, FCF 295억 원)]</strong></li>
-<li>WACC 8.0%: 요구 FCF 성장률 <strong>연간 13.56%</strong></li>
-<li>WACC 10.0%: 요구 FCF 성장률 <strong>연간 21.18%</strong></li>
-</ul>
-<hr />
-<h3>[역DCF 요구성장률 해석 및 시장 괴리율 진단]</h3>
+<h4>📊 역DCF 정밀 연산 결과표 (<code>calc_reverse_dcf.py</code> v4.1 실측 — Equity &amp; EV 2행 병기)</h4>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">요구 성장률 범위</th>
-<th style="text-align: left;">해석 가이드라인</th>
-<th style="text-align: left;">GST 적용 결과 및 팩트 대조 판정</th>
+<th style="text-align: left;">구분 (역DCF 산출 매트릭스)</th>
+<th style="text-align: center;">적용 기업가치 (Target Value)</th>
+<th style="text-align: center;">기준 FCF (<code>286.9억</code>, 2025 온기 확정) 요구 성장률</th>
+<th style="text-align: center;">정상화 FCF (<code>458.3억</code>, 2026.2Q TTM 지배) 요구 성장률</th>
+<th style="text-align: left;">채택 기준 및 재무적 해석</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">&lt; 0% (역성장)</td>
-<td style="text-align: left;">시장이 FCF 축소를 반영</td>
-<td style="text-align: left;">해당 없음</td>
+<td style="text-align: left;"><strong>① 유통시총 (Equity) 기준</strong> <em>(현금 미차감 보수적 기본값)</em></td>
+<td style="text-align: center;"><strong><code>8,191.32억 원</code></strong> <em>(17,963,419주)</em></td>
+<td style="text-align: center;"><strong>연간 <code>+18.46%</code></strong> <em>(총주식 기준 <code>+19.12%</code> / 10.13 유통주식 기준 <code>+18.34%</code>)</em></td>
+<td style="text-align: center;"><strong>연간 <code>+6.81%</code></strong> <em>(10.13 유통주식 기준 <code>+6.70%</code>)</em></td>
+<td style="text-align: left;">사내 유보 현금을 차감하지 않은 보수적 주주 시총 기준</td>
 </tr>
 <tr>
-<td style="text-align: left;">0 ~ 10%</td>
-<td style="text-align: left;">보수적 성장만 요구 (합리적 밸류에이션)</td>
-<td style="text-align: left;">해당 없음</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>10 ~ 20%</strong></td>
-<td style="text-align: left;"><strong>중간 성장 요구 (기업 역사적 CAGR과 대조 필수)</strong></td>
-<td style="text-align: left;"><strong>✅ GST 현재가 해당 (온기 FCF 기준 연 17.54% / 연환산 기준 연 12.51%)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">20 ~ 30%</td>
-<td style="text-align: left;">공격적 성장 요구 (고평가 경계, Capa 점검)</td>
-<td style="text-align: left;">10월 초 54,200원 당시(연 22.25%)에서 벗어남</td>
-</tr>
-<tr>
-<td style="text-align: left;">&gt; 30%</td>
-<td style="text-align: left;">과도한 탐욕 반영 (안전마진 부재)</td>
-<td style="text-align: left;">해당 없음</td>
+<td style="text-align: left;"><strong>② 실질 기업가치 (EV) 기준</strong> <em>(가용 순현금 1,000.7억 차감)</em></td>
+<td style="text-align: center;"><strong><code>7,190.62억 원</code></strong> <em>(시총 − 순현금)</em></td>
+<td style="text-align: center;"><strong>연간 <code>+15.13%</code></strong> <em>(10.13 유통주식 기준 <code>+14.99%</code>)</em></td>
+<td style="text-align: center;"><strong>연간 <code>+3.72%</code></strong> <em>(10.13 유통주식 기준 <code>+3.60%</code>)</em></td>
+<td style="text-align: left;"><strong>2025년 배당성향 25.68%(116.3억) + 2026.07 자사주 신탁매입(50억) 등 총주주환원율 30%+ 검증 완료로 EV 기준 유효</strong></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>💡 시장 기대치 괴리율 종합 진단: [ 고평가 과열 해소 ➡️ 합리적 안전마진 영역 재진입 ]</strong><br />
-1. 주가가 10월 초 54,200원에서 현재 <strong>45,250원(-16.5%)</strong>으로 건강한 기술적 조정을 거침에 따라, 시장 요구 5개년 FCF 성장률은 연 22.25%에서 <strong>연간 17.54% (연환산 FCF 기준 연 12.51%)</strong>로 대폭 안정화되었습니다.
-2. 이에 따라 과거 54,200원 당시 진입했던 '20~30% 고평가 경계선'을 완전히 탈출하여, <strong>'10~20%: 합리적 중간 성장 요구' 구간에 성공적으로 안착</strong>했습니다.
-3. 현재 주가(45,250원)는 전방 신규 팹(삼성전자 평택 P5, SK하이닉스 용인 Y1) 선행 Sub-fab 인프라 발주 본업 실적만으로도 충분히 정당화되는 편안한 밸류에이션 영역이며, S-Curve Phase 2(침투율 12.5%) AIDC 액침냉각 상용화 가치는 주가에 여전히 <strong>'무상 콜옵션'</strong>으로 온전히 남아 있습니다.</p>
-</blockquote>
+<ul>
+<li><strong>시장 기대치 괴리율 진단 (<code>합리적 밸류에이션 ~ 중간 성장 요구 영역</code>):</strong></li>
+<li><strong>2025년 온기 보고 FCF(<code>286.9억 원</code>) 기준:</strong> 현재 주가(<code>45,600원</code>)는 향후 5년간 연평균 <strong><code>+18.46% (Equity 기준)</code> / <code>+15.13% (EV 기준)</code></strong>의 FCF 성장을 요구하고 있습니다. 이는 GST의 최근 4개년(2021~2025년) 연결 FCF CAGR(<strong><code>+21.8%</code></strong>, <code>130.4억 → 286.9억</code>) 및 2026년 상반기 영업이익 성장률(<strong><code>+27.3%</code></strong>) 이내에 위치하여, 30% 이상의 비현실적 탐욕이 반영된 버블 구간은 아닙니다.</li>
+<li><strong>2026.2Q TTM 정상화 FCF(<code>458.3억 원</code>) 기준:</strong> 2025년 말 매출채권이 2026년 상반기에 회수되며 창출된 최근 4분기 TTM 현금흐름을 기준으로 하면 요구 성장률은 <strong><code>+6.81% (Equity 기준)</code> / <code>+3.72% (EV 기준)</code></strong>에 불과합니다.</li>
+<li><strong>결론 브릿지:</strong> 현금창출력(FCF) 및 가용 순현금(<code>1,000.7억 원</code>) 관점에서는 하방 경직성이 매우 탄탄합니다. 다만 현재 주가(<code>45,600원</code>)의 멀티플(<code>PER 15.10배</code>, <code>PBR 2.54배</code>)이 과거 3년 평균(<code>PER 10.25배</code>, <code>PBR 1.62배</code>) 대비 상단 권역에 올라와 있으므로, Section 3·4에서 밸류에이션 밴드 기준의 안전마진을 별도로 엄격히 검증합니다.</li>
+</ul>
 <hr />
 <h2>2. 3대 가치함정(Value Trap) 진단 필터 🚨</h2>
-<p>DART 공시 팩트와 최신 Global Trend를 결합하여 3대 위험 지표를 전수 점검하고, <code>backtest_valuation.py</code>를 통해 유형 A/B 이원화 판정을 수행했습니다.</p>
+<p><code>[공시 팩트]</code> 단순 저PER/저PBR 착시를 차단하기 위해 DART 재무제표 및 Global Trend 선행지표로 3대 가치함정 필터를 전수 점검하고, <code>backtest_valuation.py</code> (v4.1)를 통해 <strong>[유형 A vs 유형 B]</strong> 이원화 판정을 수행한 결과는 다음과 같습니다 <em>(2024년 6월 1:1 무상증자 효과를 과거 시계열 전체에 100% 소급 보정한 수정 지배주주 EPS 기준 적용)</em>.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">가치함정 진단 지표</th>
 <th style="text-align: left;">점검 기준 (Check Point)</th>
 <th style="text-align: left;">🚨 정량 경보 임계값</th>
-<th style="text-align: left;">기업 현황 팩트</th>
-<th style="text-align: center;">위험 판정 (정상 / 🚨경보)</th>
+<th style="text-align: left;">기업 현황 팩트 (<code>[공시 팩트]</code> &amp; <code>[글로벌 트렌드]</code>)</th>
+<th style="text-align: center;">위험 판정</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>① 해자 훼손 (Moat Decay)</strong></td>
 <td style="text-align: left;">최근 2~3개 분기 OPM 지속 하락, 특허 패소, 점유율 침투 여부</td>
-<td style="text-align: left;">• OPM <strong>연속 2분기</strong> 전년동기 대비 <strong>3%p 이상</strong> 하락 <br> • 핵심 제품 시장점유율 <strong>5%p 이상</strong> 감소 <br> • 특허 소송 패소 또는 핵심 라이선스 만료 공시</td>
-<td style="text-align: left;">• OPM: 2024년 17.57% $\to$ 2025년 17.05% $\to$ 2026.1H 16.57%로 16~18%대 고수익성 지속 방어 <code>[공시 팩트]</code> <br> • 삼성전자 스크러버 점유율 1위, SK하이닉스향 양산 납품 본격 확대로 메모리 3사 점유율 확대 중 <code>[글로벌 트렌드: LS증권 p.39]</code> <br> • 친환경 전기식 스크러버 및 일체형 칠러 특허 소송 전무</td>
-<td style="text-align: center;"><strong>정상 (0개)</strong></td>
+<td style="text-align: left;">• OPM <strong>연속 2분기</strong> 전년동기 대비 <strong>3%p 이상</strong> 하락<br>• 핵심 제품 시장점유율 <strong>5%p 이상</strong> 감소<br>• 특허 소송 패소 또는 핵심 라이선스 만료 공시</td>
+<td style="text-align: left;">• <strong>OPM 추이:</strong> 2024년 <code>17.57%</code> → 2025년 <code>17.04%</code> → 2026.1Q <code>17.42%</code> → 2026.2Q <code>15.58%</code> (2026.H1 누적 <strong><code>16.57%</code></strong>, 전년동기 <code>16.49%</code> 대비 <strong><code>+0.08%p</code> 상승</strong>, TTM OPM <code>17.49%</code>)<br>• <strong>수출 및 점유율:</strong> Scrubber 부문 내 수출 비중이 2025년 <code>67.3%</code>에서 2026.H1 <strong><code>77.7%</code></strong>로 확대되며 마이크론·중화권·대만 내 점유율 확장 지속. 특허 소송 패소 공시 <strong>0건</strong></td>
+<td style="text-align: center;"><strong>🟢 정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>② 사이클 피크아웃 (Peak-out)</strong></td>
-<td style="text-align: left;"><strong>[반도체/IT 맞춤형 선행지표]</strong> 전방 칩 재고 급증, WFE 발주 축소, 가동률 100% 정점 여부</td>
-<td style="text-align: left;">• 선행지표 <strong>2개 이상 동시 하락 반전</strong> 시 경보</td>
-<td style="text-align: left;">• HBM3E 12단 및 선단 DRAM 공급 부족 지속으로 전방 팹 인프라 증설 필수 가동 <br> • 평택 P5 및 용인 원삼 Y1 클린룸 준공(2027.02) 선행 Sub-fab 셋업이 2026H2~2027에 본격화되는 초기 램프업 국면 <br> • 안성 본사 조립 체력(5,000억 원) 대비 현재 조업도 약 80% 수준으로 피크가 아닌 생산 확대 구간</td>
-<td style="text-align: center;"><strong>정상 (0개)</strong></td>
+<td style="text-align: left;"><strong>[반도체/IT 선행지표]</strong> 정점 통과 여부 — <strong>2개 이상 동시 하락 반전 시 경보</strong><br>• 전방 칩 재고 급증, WFE 발주 축소, 출하 대수(Q) 및 재고자산(제품·재공품) 정점 하락 반전</td>
+<td style="text-align: left;">섹터 선행지표 2개 이상 동시 하락 반전</td>
+<td style="text-align: left;">• <strong>출하량(Q) 및 선행 재고 급증 (<code>[공시 팩트]</code>):</strong> 2026.H1 총 장비 생산 대수가 <strong><code>1,842대</code></strong>(연환산 <code>3,684대</code>, 25년 연간 <code>2,878대</code> 대비 <code>+28.0%</code> 페이스)로 증가 중이며, 고객사 납품 대기분인 <strong>제품(<code>303.9억</code>) + 재공품(<code>160.1억</code>) 합계가 <code>464.0억 원</code></strong>으로 2025년 말(<code>302.5억</code>) 대비 <strong><code>+53.4%</code> 급증</strong><br>• <strong>전방 CapEx (<code>[글로벌 트렌드: 하나증권 26.09.02 p.42~43 / 유안타 26.10.15 p.7~8]</code>):</strong> 삼성전자 평택 P5·테일러 파운드리(2nm GAA 수율 60%대 회복), SK하이닉스 용인 Y1·청주 P&amp;T7 등 2026~2027년 Sub-fab 선행 발주 사이클 확장 국면</td>
+<td style="text-align: center;"><strong>🟢 정상</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>③ 자본배치 왜곡 (Capital Distortion)</strong></td>
-<td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무 여부</td>
-<td style="text-align: left;">• ROIC <strong>2개년 연속</strong> WACC(8~10%) <strong>미만</strong> 하락 <br> • 순현금 3년 연속 증가 + 배당성향 20% 미만 + 신규투자 없음 <br> • TSR 3년 마이너스 지속</td>
-<td style="text-align: left;">• ROIC: 2024년 17.2%, 2025년 16.5%, 2026E 20%+ 로 WACC(9.0%)를 2배 이상 상회하는 초과이익 창출 <br> • 주주환원: 2024년 18.8만 주 소각 완료, 2025년 배당성향 25.68%, 2026.07.28 체결 <strong>50억 원 자사주 취득 신탁계약</strong> 정상 집행 중 <code>[공시 팩트: DART]</code> <br> • 신규투자: 차세대 초저온 칠러 및 액침냉각(Tank, CDU) 파일럿 라인에 적극 재투자</td>
-<td style="text-align: center;"><strong>정상 (0개)</strong></td>
+<td style="text-align: left;">현금 축적 대비 신규 성장투자 부재로 ROIC 급락, 주주환원 전무, 계열사 부당 지원/채무보증 여부</td>
+<td style="text-align: left;">• ROIC <strong>2개년 연속</strong> WACC(9.0%) <strong>미만</strong> 하락<br>• 순현금 3년 연속 증가 + 배당성향 20% 미만 + 신규투자 없음<br>• 자기자본 대비 20% 이상 부실 계열사 채무보증 또는 중복상장 가치 유출</td>
+<td style="text-align: left;">• <strong>ROIC &amp; ROE (<code>Data.xlsx</code> 실측):</strong> ROIC가 2023년 <code>16.74%</code> → 2024년 <code>19.93%</code> → 2025년 <code>17.76%</code> → <strong>2026.2Q TTM <code>18.41%</code></strong>로 WACC(<code>9.0%</code>)의 2배를 지속 상회하며, 현재 지배주주 ROE도 <strong><code>17.02%</code></strong> 기록<br>• <strong>주주환원 대폭 확대:</strong> 2025년 결산 배당금을 주당 <code>300원 → 650원(+116.7%)</code>으로 인상하여 <strong>배당성향 <code>25.68%</code>(<code>116.3억 원</code>)</strong> 달성 + 2024.12 자사주 <code>188,260주</code> 소각 + 2026.07 자사주 <code>50억 원(105,907주)</code> 추가 신탁 취득<br>• <strong>지배구조 청정:</strong> 전환사채(CB/BW) <code>0원</code>, 외부 계열사 채무보증 <code>0건</code>, 모자회사 중복상장 없음</td>
+<td style="text-align: center;"><strong>🟢 정상</strong></td>
 </tr>
 </tbody>
 </table>
-<h3>[사이클 저점(유형 A) vs 구조적 버블 붕괴(유형 B) 이원화 판정 (<code>backtest_valuation.py</code> 실측 연동)]</h3>
+<h3>[사이클 저점·정상 궤도(유형 A) vs 구조적 버블 붕괴(유형 B) 이원화 판정 (<code>backtest_valuation.py</code> 실측 연동)]</h3>
 <ul>
-<li><strong><code>🟢 [유형 A: 일시적 사이클 저점 (Cyclical Trough)]</code></strong>:</li>
-<li><strong>판정 근거 (<code>backtest_valuation.py</code> 실측)</strong>: 최근 2년 누적 BPS 증감률 <strong>+28.38% (≥ +15%)</strong>, 현재 ROE <strong>17.02% (≥ 8.5% 건전)</strong>, 최근 2년 누적 EPS 증감률 <strong>+24.84% (&gt; -30% 방어)</strong>.</li>
-<li><strong>집행 조치</strong>: 가치함정 멀티플 페널티 면제 &amp; Bear 지하실(과거 3년 하위 20% PBR 1.15배 또는 배당수익률 지지선) 보호막 정상 가동.</li>
+<li><strong><code>backtest_valuation.py</code> Section 2 실측 지표:</strong></li>
+<li><strong>지배주주 순이익 귀속률:</strong> <strong><code>99.6%</code></strong> (<code>2026.2Q TTM</code> 기준 <code>556.4억 ÷ 558.4억 = 99.63%</code>)</li>
+<li><strong>최근 2년 누적(무상증자 소급보정) 지배주주 EPS 증감률:</strong> <strong><code>+28.71%</code></strong> (<code>&gt; -30.0%</code> 방어 통과)</li>
+<li><strong>최근 2년 누적 유통 BPS 증감률:</strong> <strong><code>+28.38%</code></strong> (<code>≥ +15.0%</code> 자산 축적 성장 통과)</li>
+<li><strong>최근 분기 수정 지배주주 EPS QoQ 추이:</strong> <code>2026.1Q 965.0원 → 2026.2Q 678.0원</code> (<code>반기 누적 1,643.0원</code>, YoY <code>+54.1%</code> 대규모 흑자 지속 🟢)</li>
+<li><strong>현재 지배주주 ROE:</strong> <strong><code>17.02%</code></strong> (<code>≥ 8.5%</code> 고수익성 기준 통과)</li>
+<li><strong>주봉 이동평균선 배열:</strong> <strong>정배열 (<code>주봉 20주선 48,532원 ≥ 60주선 36,868원</code>) 📈</strong></li>
+<li><strong>최종 가치함정 판정:</strong> <strong><code>🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal) — 경보 0개]</code></strong></li>
+<li><strong>집행 조치:</strong> 가치함정 멀티플 강제 할인(Haircut) 페널티를 면제하며, 과거 3년 하위 20% PBR(<code>1.15배</code>) 및 PER(<code>6.95배</code>) 기반의 <strong>Bear 지하실 하방 지지선(<code>20,710원</code>)</strong> 보호막을 정상 가동합니다.</li>
 </ul>
-<blockquote>
-<p><strong>🚨 가치함정 페널티 집행 결과: [ 경보 0개: 정상 (Normal) &amp; 유형 A ]</strong><br />
-3대 가치함정 경보 0개 및 유형 A(건전 사이클주)로 공식 판정되었으므로, <strong>Target PER 멀티플 할인 페널티 없이 원안대로 바텀업 시나리오 스트레스 테스트를 집행</strong>합니다.</p>
-</blockquote>
 <hr />
 <h2>3. 정량 바텀업 시나리오 스트레스 테스트</h2>
-<h3>[시나리오 실적 추론 3대 원칙 준수 선언]</h3>
+<h3>[시나리오 실적 추론 원칙 및 4대 회계 무결성 체크리스트 (Accounting Integrity Gate) 적용 내역]</h3>
 <ol>
-<li><strong>산식 영구 고정 및 상속</strong>: Phase 1의 <code>## 7</code>에서 정의된 <strong>[유형 B 수주조립·엔지니어링 장비 표준 공식]</strong>을 100% 상속하여 일관되게 적용함.<br />
-<code>[채택 공식: 안성 본사 조립 체력(5,000억 원) × 신규 팹 수주 집행률(실질 조업도)]</code> 및 <code>[장비 총 출하 대수(Q) × 대당 평균 판매단가(P: ASP) + 용역 매출]</code></li>
-<li><strong>산출 체인 숫자 명시 강제</strong>: <code>[핵심 드라이버] → 매출액 → 영업이익(OPM 명시) → 순이익 → EPS</code> 4단계를 전 시나리오에 숫자로 명시. (무차입 경영 상태로 <code>영업이익 × (1 - 실효세율 17.5%) = 순이익</code> 적용)</li>
-<li><strong>핵심 드라이버 수치 출처 강제</strong>: 수주 집행률 및 단가 추정에 <code>[공시 팩트]</code> 및 <code>[추정: OO증권]</code> 뱃지 엄격 기재.</li>
+<li><strong>① 산식 및 최적 밸류에이션 지표 100% 상속 (Phase 1 Section 7 &amp; Section 8 연동):</strong></li>
+<li><strong>표준 산식 (유형 B — 수주조립·엔지니어링 장비):</strong> DART Section 4에서 공장 가동률 산출을 생략함에 따라 <code>'공장 가동률'</code> 단어를 일절 배제하고, <strong><code>[장비별 총 출하 대수(Q: Scrubber + Chiller) × 대당 평균 판매단가(P: ASP) + 글로벌 누적 설치대수 비례 용역·상품 매출] × OPM + 순금융수익 − 법인세 → 연결 당기순이익 × 지배주주 귀속률(99.6%) ÷ 실질 유통주식수(17,963,419주) = 지배주주 EPS</code></strong> 산식을 100% 상속합니다.</li>
+<li><strong>최적 밸류에이션 지표:</strong> Phase 1 Section 8 백테스트 1순위 채택 지표인 <strong><code>Target PER (수정 지배EPS 기준, R²=0.64, 방향일치율 64.1%)</code></strong>을 시나리오 표의 주 멀티플로 적용하고, 2순위 보조 지표인 <strong><code>내재 Forward PBR (</code>Forward BPS = 현재 유통 BPS 17,958원 + 추정 지배EPS − 예상 DPS<code>기준, R²=0.75, 방향일치율 61.5%)</code></strong>을 괄호 안에 나란히 병기하여 교차 검증합니다.</li>
+<li><strong>② 4대 회계 무결성 체크리스트 (Accounting Integrity Gate) 전수 반영:</strong></li>
+<li><strong>체크 1 [신규 CapEx 감가상각비 및 초기 고정비 차감]:</strong> 화성·발안 사업장 설비 확충 및 해외 CS 거점 투자(연간 CapEx 약 <code>170~200억 원</code> ÷ 내용연수 8년)에 따른 <strong>연간 신규 감가상각비 및 초기 고정비(<code>Base -25.0억 원 / Bull -30.0억 원</code>, OPM <code>-0.57%p</code>)</strong>를 기초 영업이익에서 명시적으로 차감하여 모델링했습니다.</li>
+<li><strong>체크 2 [순금융수익 부호 일관성 및 CB 유효이자 상각 점검]:</strong> 당사는 전환사채(CB/BW/EB) 잔액이 <strong><code>0원</code></strong>이어서 사채할인발행차금 유효이자 상각비가 없으며, 가용 순현금(<code>+1,000.7억 원</code>)에서 발생하는 이자수익이 이자비용(단기차입금 이자 연 <code>-4~5억 원</code>)을 크게 상회하므로 <strong>순금융수익(<code>+20.0억 ~ +35.0억 원</code>)을 영업이익에 가산(<code>+</code>)한 뒤 법인세(유효세율 <code>21.0%</code>)를 차감(<code>-</code>)</strong>하여 본문 수식과 시나리오 표의 부호를 1원까지 일치시켰습니다.</li>
+<li><strong>체크 3 [일회성 손익 제거 및 환율 영업/영업외 분리]:</strong> 2025년 발생한 비주력 사업 중단영업손실(<code>-11.2억 원</code>) 등 일회성 요인을 경상 이익 추정에서 제거하고, 달러 수출(Scrubber 내 77.7%) 환율 효과는 매출원가율(영업손익)과 기말 외화자산 평가(영업외손익)로 분리했습니다.</li>
+<li><strong>체크 4 [지배구조 할인 및 미공시 신사업 할증 차단]:</strong> 부실 계열사 채무보증·중복상장이 <strong><code>0건</code></strong>이므로 지배구조 할인은 <code>0%</code>이나, <strong>AIDC 액침냉각 신사업은 DART에 단독 매출이 분리 공시되지 않았으므로(<code>0.0% &lt; 30%</code>) S-Curve 멀티플 할증(<code>sc_mult = 1.00</code>, <code>0%</code>)을 원천 차단</strong>했습니다.</li>
 </ol>
-<h3>[종목 체질 분류 및 <code>🛡️ 대안 B vs 🚀 대안 A</code> 가중 계수 (<code>backtest_valuation.py</code> 실측)]</h3>
-<ul>
-<li><strong>종목 체질 판정</strong>: <strong><code>🚀 [성장·사이클 추세주 (52주 등락폭 173.8% ≥ 36% &amp; PBR 2.52배)]</code></strong></li>
-<li><strong>대안 A 가중 계수 산출 내역</strong>:</li>
-<li>① DART 실적 모멘텀 계수 (<code>op_mult</code>): <strong>×1.00</strong> (중립, TTM 영업이익 YoY +17.4%, ROE 17.02%)</li>
-<li>② S-Curve Phase 2 골든 스위트스팟 계수 (<code>sc_mult</code>): <strong>적용 ✅</strong> (AIDC 액침냉각 침투율 12.5% Phase 2 진입 및 레지스트리 탑픽 익스포저 65% ≥ 30% 컷오프 통과) ➡️ <strong>Base ×1.10 (+10.0%) / Bull ×1.12 (+12.0%)</strong> 추가 부여</li>
-<li>③ 최종 대안 A 가중치: <strong>Base ×1.1000 (+10.0%) / Bull ×1.1200 (+12.0%) / Bear ×1.0000 (하방 보호 고정)</strong></li>
-</ul>
 <hr />
-<h3>[시나리오별 상세 산출 체인 및 적정주가 (최신 주가 45,250원 기준 — 6열 표준 표)]</h3>
+<h3>📊 시나리오별 목표주가 및 산출 체인 (<code>backtest_valuation.py</code> v4.1 실측 연동)</h3>
+<blockquote>
+<p><strong>산식 선택 근거</strong>: Phase 1 <code>## 7</code> 채택 공식(유형 B: 장비별 출하 대수 $Q \times$ 대당 단가 $P$ + 글로벌 설치대수 비례 용역·상품 매출) 및 4대 회계 무결성(신규 CapEx 감가상각비 <code>-25~-30억</code> 차감, 순현금 순금융수익 <code>+</code> 가산 후 유효세율 <code>21.0%</code> 법인세 <code>-</code> 차감, 지배주주 귀속률 <code>99.6%</code> 곱셈)을 100% 반영.
+<strong>밸류에이션 지표</strong>: Phase 1 <code>## 8</code> 채택 1순위 주 지표 = <strong><code>PER (수정 지배EPS 기준, R²=0.64, 방향일치율 64.1%)</code></strong> + 2순위 교차검증 = <strong><code>PBR (Forward BPS 기준, R²=0.75, 방향일치율 61.5%)</code></strong>. 리레이팅 적용 여부: <strong>미적용 (<code>AIDC 액침냉각 단독 매출 미공시 0.0% → S-Curve 할증 0% 차단</code>)</strong>
+<strong>종목 체질 판정</strong>: <strong><code>🚀 [성장·사이클 추세주 (52주 주봉 등락폭 173.8% / 3Y 롤링 중위값 96.3% ≥ 36%)]</code></strong> <em>(참고용으로 단기 실전 저항선인 <code>TP1</code> 행도 함께 병기)</em>
+<strong>대안 A 가중 계수 (<code>backtest_valuation.py</code> 실측)</strong>: <code>① 실적 모멘텀(26.2Q 단독 영업이익 YoY -10.9% / TTM YoY +17.4% &lt; +20.0%, ROE 17.02%) = ×1.00</code> × <code>② S-Curve Phase 2 할증(액침냉각 단독공시 익스포저 0.0% &lt; 30%) = Base ×1.00 / Bull ×1.00</code> ➡️ <strong>최종 대안 A 가중치: <code>Base ×1.0000 (+0.0%) / Bull ×1.0000 (+0.0%)</code></strong></p>
+</blockquote>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">시나리오 구분</th>
-<th style="text-align: left;">핵심 드라이버 가정 <code>[출처 뱃지]</code> 및 산출 체인</th>
-<th style="text-align: center;">매출 → 영업이익(OPM) → 순이익 / EPS</th>
+<th style="text-align: left;">핵심 드라이버 가정 <code>[출처 뱃지]</code> 및 4대 회계 무결성 산출 체인</th>
+<th style="text-align: center;">매출 → 영업이익(OPM) → 지배순이익 / 주당지표(EPS·Forward BPS)</th>
 <th style="text-align: center;">Target PER (🛡️대안 B | 🚀대안 A)</th>
 <th style="text-align: center;"><strong>적정주가 (🛡️대안 B | 🚀대안 A)</strong></th>
-<th style="text-align: center;">현재가(45,250원) 대비 등락률 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: center;">현재가(<code>45,600원</code>) 대비 등락률 (🛡️대안 B | 🚀대안 A)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>Bull (호황)</strong></td>
-<td style="text-align: left;">• 조업도(체력 5,000억 대비 수주 집행률): <strong>95.0%</strong> <code>[추정: 평택 P5 조기 가동 및 용인 원삼 Y1 인프라 셋업 가속]</code> <br> • 칠러 고단가 전기식 비중 확대(ASP +10%), 스크러버 출하량 전년비 +25% <code>[추정: 26.09.29.LS증권 p.4, 38]</code></td>
-<td style="text-align: center;">매출 <strong>4,750억 원</strong> <br> ➡️ OP <strong>879억 원</strong> (OPM 18.50%) <br> ➡️ 순이익 <strong>725억 원</strong> / <strong>EPS 4,036원</strong></td>
-<td style="text-align: center;"><strong>18.5배</strong> (B) / <strong>20.7배</strong> (A) <code>[과거 5년 Peak / S-Curve Phase 2 할증]</code></td>
-<td style="text-align: center;"><strong>74,600원 (대안B)</strong> / <strong>83,550원 (대안A)</strong></td>
-<td style="text-align: center;"><strong>+64.9% (대안B)</strong> / <strong>+84.6% (대안A)</strong></td>
+<td style="text-align: left;">• <strong>드라이버:</strong> 삼성 평택 P5·테일러 Fab(2nm GAA)·용인 Y1·마이크론 HBM4 반입 극대화 <code>[글로벌 트렌드: 하나증권 26.09.02 p.42~43 / 유안타 26.10.15 p.7~8]</code><br>• <strong>26E 호황 멀티플 상단 적용</strong> <em>(참고 27E 호황 실적: Scrubber <code>2,520대×1.28억=3,225.6억</code> + Chiller <code>1,750대×0.58억=1,015.0억</code> + 용역·상품 <code>987.4억</code> = 매출 <code>5,228억</code>, 신규 D&amp;A <code>-30억</code> 차감 후 OP <code>946억[18.09%]</code> → 지배NI <code>771.9억</code> / 27E EPS <code>4,297원</code> <code>[추정: LS증권 26.09.29 p.44 표 8]</code>)</em></td>
+<td style="text-align: center;">매출 <strong>4,389.0억</strong> <em>(27E 5,228.0억)</em> → OP <strong>759.0억</strong>(OPM <strong>17.29%</strong>, <em>27E 946.0억[18.09%]</em>) → 지배NI <strong>624.5억</strong>(99.6%) / <strong>EPS 3,476원</strong> <em>(27E 4,297원)</em> · <strong>Forward BPS 20,784원</strong></td>
+<td style="text-align: center;"><strong>15.88배 (B) / 15.88배 (A)</strong> <code>[3Y PER 상위 90%(15.86배) &amp; Forward BPS × 3Y PBR 상위 90%(2.66배) 일치 / 27E EPS 기준 내재 PER 12.84배]</code></td>
+<td style="text-align: center;"><strong><code>55,190원</code> (대안B)</strong> / <strong><code>55,190원</code> (대안A)</strong></td>
+<td style="text-align: center;"><strong><code>+21.0%</code> (대안B)</strong> / <strong><code>+21.0%</code> (대안A)</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Base (기본)</strong></td>
-<td style="text-align: left;">• 조업도(체력 5,000억 대비 수주 집행률): <strong>87.8%</strong> <code>[추정: LS증권 26.09.29 p.44 표 8 및 컨센서스]</code> <br> • 스크러버/칠러 정상 출하 및 부품/유지보수 용역 매출 안정적 발생 <code>[공시 팩트: DART 반기보고서 추세 상속]</code></td>
-<td style="text-align: center;">매출 <strong>4,389억 원</strong> <br> ➡️ OP <strong>759억 원</strong> (OPM 17.29%) <br> ➡️ 순이익 <strong>627억 원</strong> / <strong>EPS 3,490원</strong></td>
-<td style="text-align: center;"><strong>16.0배</strong> (B) / <strong>17.6배</strong> (A) <code>[역사적 중간값 / S-Curve Phase 2 할증]</code></td>
-<td style="text-align: center;"><strong>55,800원 (대안B)</strong> / <strong>61,380원 (대안A)</strong></td>
-<td style="text-align: center;"><strong>+23.3% (대안B)</strong> / <strong>+35.6% (대안A)</strong></td>
+<td style="text-align: left;">• <strong>드라이버:</strong> <code>26.H1</code> 생산실적(<code>1,842대</code>) 연환산 및 하반기 재고(<code>464.0억</code>) 매출 전환 <code>[공시 팩트]</code> + <code>[추정: LS증권 26.09.29 p.44 표 8]</code><br>• <strong>산출 체인:</strong> Scrubber <code>2,260대×1.22억=2,757.2억</code> + Chiller <code>1,450대×0.54억=783.0억</code> + 용역·상품 <code>848.8억</code> = 매출 <code>4,389.0억</code> → 기초OP <code>784.0억</code> − <strong>신규 CapEx 감가상각비 <code>-25.0억</code></strong> = OP <code>759.0억</code> + <strong>순금융수익 <code>+34.7억</code></strong> − 법인세 <code>-166.7억(21%)</code> = 연결NI <code>627.0억</code> × 귀속률 <code>99.6%</code></td>
+<td style="text-align: center;">매출 <strong>4,389.0억</strong> → OP <strong>759.0억</strong>(OPM <strong>17.29%</strong>) → 지배NI <strong>624.5억</strong>(귀속률 99.6%) / <strong>EPS 3,476원</strong> (<code>DPS 650원</code> 차감 후 <strong>Forward BPS 20,784원</strong>)</td>
+<td style="text-align: center;"><strong>11.35배 (B) / 11.35배 (A)</strong> <code>[3Y PER 상위 65% 중앙 밴드(11.35배) / 내재 Forward PBR 1.90배]</code></td>
+<td style="text-align: center;"><strong><code>39,460원</code> (대안B)</strong> / <strong><code>39,460원</code> (대안A)</strong></td>
+<td style="text-align: center;"><strong><code>-13.5%</code> (대안B)</strong> / <strong><code>-13.5%</code> (대안A)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>TP1 (단기 실전)</strong></td>
-<td style="text-align: left;"><em>(추세주 52주 70~75% 실거래 분위수 및 일봉 60일선(46,548원) 돌파 지지 기준)</em></td>
-<td style="text-align: center;">단기 20일 매물대 상단 회귀</td>
-<td style="text-align: center;">52주 75% 분위수 및 60일선 지지</td>
-<td style="text-align: center;"><strong>50,780원 (대안B·A 공통)</strong></td>
-<td style="text-align: center;"><strong>+12.2% (대안B·A 공통)</strong></td>
+<td style="text-align: left;"><strong>TP1 (단기 실전 1차)</strong></td>
+<td style="text-align: left;">• <em>(추세주 단기 트레이딩 저항선 참고 병기)</em> 최근 52주 주봉 종가 75% 분위수(<code>48,562원</code>), 최근 60일 일봉 고가 75% 분위수(<code>50,780원</code>), 일봉 20일선(<code>50,582원</code>) 기술적 저항 구간</td>
+<td style="text-align: center;">단기 기술적 반등 및 20일 이동평균선·매물대 하단 회귀</td>
+<td style="text-align: center;"><strong>14.61배 (B) / 14.61배 (A)</strong> <code>[26E EPS 3,476원 기준 / 내재 Forward PBR 2.44배]</code></td>
+<td style="text-align: center;"><strong><code>50,780원</code> (대안B)</strong> / <strong><code>50,780원</code> (대안A)</strong></td>
+<td style="text-align: center;"><strong><code>+11.4%</code> (대안B)</strong> / <strong><code>+11.4%</code> (대안A)</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bear (침체)</strong></td>
-<td style="text-align: left;">• 조업도(체력 5,000억 대비 수주 집행률): <strong>65.0%</strong> <code>[추정: 전방 IDM CAPEX 2~3개 분기 지연, 보수적 가정]</code> <br> • 신규 팹 발주 일시 정체, 교체 및 용역 매출 위주 방어, 고정비 부담으로 마진 둔화</td>
-<td style="text-align: center;">매출 <strong>3,250억 원</strong> <br> ➡️ OP <strong>439억 원</strong> (OPM 13.50%) <br> ➡️ 순이익 <strong>360억 원</strong> / <strong>EPS 2,004원</strong></td>
-<td style="text-align: center;"><strong>11.5배</strong> <code>[역사적 하단 Trough / 하방 보호 고정]</code></td>
-<td style="text-align: center;"><strong>23,000원 (대안B·A 공통)</strong></td>
-<td style="text-align: center;"><strong>-49.2% (대안B·A 공통)</strong></td>
+<td style="text-align: left;">• <strong>드라이버:</strong> 전방 IDM 신규 팹 장비 반입 이연 및 단가 인하(CR) 스트레스 가정 <code>[공시 팩트: 2023년 감산기 매출 -13.8% 역성장 실측 준용]</code><br>• <strong>산출 체인:</strong> Scrubber <code>1,800대×1.15억=2,070.0억</code> + Chiller <code>1,100대×0.49억=539.0억</code> + 용역·상품 <code>741.0억</code> = 매출 <code>3,350.0억</code> → 기초OP <code>535.0억</code> − <strong>신규 D&amp;A·충당금 <code>-40.0억</code></strong> = OP <code>495.0억</code> + 순금융수익 <code>+20.0억</code> − 법인세 <code>-108.2억</code> = 연결NI <code>406.8억</code> × <code>99.6%</code></td>
+<td style="text-align: center;">매출 <strong>3,350.0억</strong> → OP <strong>495.0억</strong>(OPM <strong>14.78%</strong>) → 지배NI <strong>405.2억</strong> / 스트레스 <strong>EPS 2,256원</strong> <em>(공식 TTM EPS 3,019원)</em> · <strong>현재 유통 BPS 17,958원</strong></td>
+<td style="text-align: center;"><strong>6.86배 <code>[TTM EPS 기준]</code> / 9.18배 <code>[Bear EPS 기준]</code></strong> <code>[3Y PBR 하위 20%(1.15배) × BPS 17,958원 &amp; 3Y PER 하위 20%(6.95배) 하방 보호 고정]</code></td>
+<td style="text-align: center;"><strong><code>20,710원</code> (대안B·A 공통)</strong></td>
+<td style="text-align: center;"><strong><code>-54.6%</code> (대안B·A 공통)</strong></td>
 </tr>
 </tbody>
 </table>
-<p><em>(주 1: EPS 산출은 DART 공식 유통주식수 17,963,419주를 기준으로 계산함)</em><br />
-<em>(주 2: Bear 시나리오 적정주가 23,000원은 2026E 예상 BPS 대비 PBR 1.07배 수준으로, 과거 10년 역사적 PBR 하단 밴드의 강력한 자산가치 바닥 지지선과 일치함. 백테스트 하위 20% PBR 1.15배 적용 시 지지선은 20,900원(-53.8%)임)</em></p>
 <hr />
+<h3>⚖️ 손익비(Risk/Reward) 정량 산출 및 듀얼 게이트(Dual-Gate) 판정 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">등락률 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: center;">확률 가중치 (영구 고정)</th>
+<th style="text-align: center;">가중 기대값 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull (호황 — <code>55,190원</code>)</strong></td>
+<td style="text-align: center;"><code>+21.0%</code> (B) / <code>+21.0%</code> (A)</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;"><code>+5.3%</code> (B) / <code>+5.3%</code> (A)</td>
+<td style="text-align: left;">익절 전용 트레일링 타겟 (진입 판단 시 분자 제외)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base (기본 — <code>39,460원</code>)</strong></td>
+<td style="text-align: center;"><code>-13.5%</code> (B) / <code>-13.5%</code> (A)</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;"><code>-6.7%</code> (B) / <code>-6.7%</code> (A)</td>
+<td style="text-align: left;">진입 판단 기준점 (정규분포 중심 닻 — 현재가 초과 상태)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear (침체 — <code>20,710원</code>)</strong></td>
+<td style="text-align: center;"><code>−54.6%</code> (공통)</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;"><code>−13.6%</code> (공통)</td>
+<td style="text-align: left;">과거 3년 하위 20% PBR(<code>1.15배</code>)/PER(<code>6.95배</code>) 펀더멘털 바닥</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong><code>−15.1%</code> (대안B) / <code>−15.1%</code> (대안A)</strong></td>
+<td style="text-align: left;">25-50-25 대칭 정규분포 닻 고정 기준 (상방가중 꼼수 배제)</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><strong>손익비(Risk/Reward) 정량 산출 및 듀얼 게이트 판정 (<code>🛡️ 대안 B</code> vs <code>🚀 대안 A</code> 나란히 비교):</strong></li>
+<li><strong>실전 듀얼 R:R 게이트(Dual-Gate) 산출 및 4분면 매트릭스 판정:</strong></li>
+<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]:</strong><ul>
+<li><strong>산식:</strong> <code>Base 상승폭(-13.5%) ÷ Bear 하방폭(54.6%)</code> = <strong><code>음수 (-0.25 : 1, 대안B·A 공통 — 안전마진 부재 · 현재가 추격매수 차단)</code></strong></li>
+<li><strong>판정 (<code>&lt; 1.0 : 1</code> 미달):</strong> 현재 주가(<code>45,600원</code>, TTM PER <code>15.10배</code> / PBR <code>2.54배</code>)가 이미 과거 3년 PER 상위 65% 기반의 <strong>Base 적정주가(<code>39,460원</code>, 2026E PER <code>11.35배</code>)를 +15.6% 상회</strong>하고 있어, 현재가에서 즉시 매수할 경우 펀더멘털 안전마진이 존재하지 않습니다.</li>
 </ul>
-<p>| 구분 | 등락률 (🛡️대안 B | 🚀대안 A) | 확률 가중치 (영구 고정) | 가중 기대값 (🛡️대안 B | 🚀대안 A) | 비고 |
-| :--- | :---: | :---: | :---: | :--- |
-| <strong>Bull (호황)</strong> | +64.9% (B) / +84.6% (A) | 25% | +16.23% (B) / +21.15% (A) | 익절 전용 트레일링 타겟 (진입 시 분자 제외) |
-| <strong>Base (기본)</strong> | +23.3% (B) / +35.6% (A) | 50% | +11.65% (B) / +17.80% (A) | 진입 판단 기준점 (정규분포 중심 닻) |
-| <strong>Bear (침체)</strong> | -49.2% (공통) | 25% | -12.30% (공통) | 과거 10년 역사적 지하실 펀더멘털 바닥 |
-| <strong>확률가중 기대수익률</strong> | — | <strong>100%</strong> | <strong>+15.58% (대안B) / +26.65% (대안A)</strong> | (25-50-25 대칭 정규분포 닻 고정 기준) |</p>
-<h3>[손익비 듀얼 게이트(Dual-Gate) 및 상방가중 꼼수 원천 금지 규칙 적용]</h3>
-<ol>
-<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]</strong>:</li>
-<li><strong>산식</strong>: <code>Base 상승폭 ÷ Bear 하방폭</code></li>
-<li><strong>🛡️ 대안 B</strong>: $+23.3\% \div 49.2\% = \mathbf{0.47 : 1}$ (&lt; 1.0 미달 ➔ 밸류에이션 하방 노출 경고)</li>
-<li><strong>🚀 대안 A</strong>: $+35.6\% \div 49.2\% = \mathbf{0.72 : 1}$ (&lt; 1.0 미달 ➔ 장기 바이앤홀드 부적합)</li>
-<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]</strong>:</li>
-<li><strong>산식</strong>: <code>Base 상승폭 ÷ 1차 눌림목 전저점 지지선(42,000원, -7.2%) 거리</code></li>
-<li><strong>🛡️ 대안 B</strong>: $+23.3\% \div 7.2\% = \mathbf{3.24 : 1}$ ($\ge 2.0 : 1$ 실전 손익비 우수 ✅)</li>
-<li><strong>🚀 대안 A</strong>: $+35.6\% \div 7.2\% = \mathbf{4.94 : 1}$ ($\ge 2.0 : 1$ 실전 손익비 압도적 우위 ✅)</li>
-<li><em>(2차 본대 진입 후 20일 매물대 하단 -3% 고정 안전핀 50,906원 메모 및 엄수 필수)</em></li>
-<li><strong>4분면 투자의견 매트릭스 판정</strong>:</li>
-<li><strong>Gate 1 미달(&lt;1.0) &amp; Gate 2 합격(≥2.0)</strong> ➡️ <strong><code>[🚀 조건부 추세 트레이딩 분할 매수 (Trading Buy on Dips — 안전핀 엄수)]</code></strong></li>
-<li><strong>판정 근거</strong>: 과거 지하실(Bear 20,900원) 대비로는 하방폭이 열려 있어 장기 바이앤홀드는 위험하나, 눌림목 전저점(42,000원) 및 2차 진입 고정 바닥 안전핀(50,906원)을 철저히 지키는 조건 하에 Base 목표가(55,800~61,380원)까지의 트레이딩 승률은 3.2~4.9:1로 매우 우수하므로 조건부 추세 트레이딩 분할 매수로 대응합니다.</li>
-</ol>
+</li>
+<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]:</strong><ul>
+<li><strong>산식 (눌림목 3분할 완성 평단가 <code>33,540원</code> 기준):</strong> <code>완성 평단가(33,540원) 대비 Base(39,460원) 상승폭(+17.7%) ÷ 완성 평단가 대비 1단계 초입 고정 안전핀(29,040원) 거리(-13.4%)</code> = <strong><code>1.32 : 1 (대안B) / 1.32 : 1 (대안A)</code></strong> <em>(참고: 단기 저항선 TP1 <code>50,780원</code> 기준 시 <code>+51.4% ÷ 13.4% = 3.83 : 1</code>, Bull <code>55,190원</code> 기준 시 <code>4.81 : 1</code>)</em></li>
+<li><strong>판정 (<code>&lt; 1.5 : 1</code> 보수적 기준 소폭 미달):</strong> 현재가(<code>45,600원</code>) 추격 매수는 불가하며, 오직 주가가 <code>Base 적정주가(39,460원)</code> 아래의 <strong>눌림목 안전마진 구간(<code>31,570원 ~ 35,510원</code>, 완성 평단 <code>33,540원</code>)</strong>까지 충분히 조정받았을 때만 분할 진입이 허용됩니다.</li>
+</ul>
+</li>
+<li><strong>4분면 투자의견 매트릭스 최종 결론:</strong><ul>
+<li><strong><code>⏳ [보유 및 눌림목 대기 (Hold &amp; Wait for Pullback — 현재가 추격매수 금지)]</code></strong> <em>(신규 매수는 반드시 <code>Base 적정주가(39,460원)</code> 이하 눌림목 지정가 구간에서만 집행하며, 기존 보유자는 단기 반등 시 <code>TP1(50,780원) ~ Bull(55,190원)</code> 구간에서 분할 차익 실현)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>3.5 ⚖️ 비관론자 반론 및 핵심 리스크 역검증 (Pre-mortem &amp; Devil's Advocate)</h2>
+<p>확증 편향을 차단하기 위해 당사의 Base/Bull 투자 가설이 붕괴될 수 있는 <strong>가장 치명적인 비관론자(Short-seller)의 반론 3가지</strong>와 이를 조기 감지할 <strong>정량적 가설 폐기 트리거(Kill Switch)</strong>를 다음과 같이 정의합니다.</p>
+<ul>
+<li><strong>반론 ① [전방 팹 장비 반입 지연 및 상반기 선수주(Pull-in) 피크아웃 리스크]:</strong> 2026년 1분기(<code>매출 1,158.9억 / 영업이익 201.9억</code>) 대비 2분기(<code>매출 992.4억 / 영업이익 154.6억</code>, YoY <code>-10.9%</code>) 실적이 둔화된 것은 고객사 셋업 스케줄 공백을 시사하며, 반기말 급증한 재고자산(<code>715.9억 원</code>, 제품·재공품 <code>464.0억 원</code>)이 하반기 내 매출로 전환되지 못하고 이연될 경우 연간 영업이익이 컨센서스(<code>759억 원</code>)를 하회할 수 있습니다.</li>
+<li>🚨 <strong>Kill Switch ①:</strong> 차기 분기(2026.3Q~4Q) 공시에서 <strong>분기 매출액이 <code>850억 원</code> 미만으로 하락</strong>하거나 <strong>제품·재공품 재고가 매출 전환 없이 재고자산 평가충당금(<code>현재 55.5억 원</code>)만 전분기 대비 +20% 이상 급증</strong>할 경우 성장 가설을 즉시 폐기합니다.</li>
+<li><strong>반론 ② [해외 종속법인 고정비 증가 및 장기 매출채권 대손 리스크]:</strong> 북미(<code>GST America</code>)·대만(<code>GST Taiwan</code>)·중국·유럽 등 글로벌 7개국 CS 거점 인력 확충 및 설비 CapEx(<code>반기 100.2억 원</code>)로 인해 고정비 부담이 높아진 상황에서, 2026년 반기말 존재하는 <strong>1년 초과 장기 매출채권(<code>58.9억 원</code>, 전체 매출채권의 <code>9.99%</code>)</strong> 및 비주력 자회사 <strong>㈜로보케어 대여금(<code>30.0억 원</code>)</strong>에서 대손상각이 발생할 경우 OPM이 14%대 이하로 훼손될 수 있습니다.</li>
+<li>🚨 <strong>Kill Switch ②:</strong> 연결 영업이익률(OPM)이 <strong>2개 분기 연속 <code>14.0%</code> 미만</strong>으로 하락하거나, 1년 초과 장기 경과 매출채권 비중이 <strong><code>15.0%</code>를 초과</strong>할 경우 목표 멀티플을 20% 강제 할인(Haircut)합니다.</li>
+<li><strong>반론 ③ [AIDC 냉각 기술 표준 경쟁에서 액침냉각의 DLC(직접액체냉각) 대비 열위 리스크]:</strong> <code>[글로벌 트렌드: 26.10.15.IBK투자증권.윤활기유의 시대.pdf p.47 표 15]</code>가 경고했듯, 글로벌 하이퍼스케일러들이 배관 개조 부담이 적은 <strong>직접 액체냉각(Cold Plate DLC)을 주력 표준으로 고착화</strong>하고 액침냉각(Immersion Cooling) 도입을 2028년 이후로 지연시킬 경우, 시장이 기대하는 액침냉각 배수 리레이팅 프리미엄이 소멸할 수 있습니다.</li>
+<li>🚨 <strong>Kill Switch ③:</strong> <strong>2027년 상반기 보고서까지도 DART 공시 내 AIDC 액침냉각 단독 상용 수주·매출이 분리 공시되지 않을 경우</strong>, 액침냉각 신사업 가설을 <code>[검증 유예]</code>에서 <strong><code>[폐기]</code></strong>로 강등하고 순수 반도체 Sub-fab 장비 멀티플(PER <code>10~11배</code>) 상한선을 영구 유지합니다.</li>
+</ul>
+<hr />
 <h2>4. 최종 투자 전략 및 액션 플랜</h2>
-<h3>[역DCF ↔ 시나리오 결론 동기화 검증 (Bridge Logic)]</h3>
-<ul>
-<li><strong>역DCF 결과</strong>: 시장 요구 성장률은 <strong>연간 17.54%</strong>(온기 FCF 기준) / <strong>연간 12.51%</strong>(연환산 FCF 기준)로, 10월 초 연 22.25%의 고평가 경계선에서 벗어나 <strong>'합리적 중간 성장 요구(안전마진 확보)' 구간에 성공적으로 복귀</strong>했습니다.</li>
-<li><strong>시나리오 결과</strong>: Base 시나리오 적정주가 대비 현재 주가(45,250원)의 상승 여력은 <strong>+23.3%(대안B) ~ +35.6%(대안A)</strong>, 확률가중 기대수익률은 <strong>+15.6% ~ +26.7%</strong>로 매수 매력이 대폭 회복되었습니다.</li>
-<li><strong>동기화 정합성 브릿지</strong>:<br />
-  역DCF가 요구하는 연 12~17%의 합리적 성장률과 시나리오 상의 매수 권고 결론이 <strong>완벽하게 상호 일치</strong>합니다. 전방 고객사의 신규 팹 착공과 SK하이닉스향 납품 확대 본업 실적만으로도 현재 가격은 충분히 안전마진을 제공하며, 향후 AIDC 액침냉각 첫 수주 시 멀티플 리레이팅(Bull 74,600원~83,550원)으로 이어지는 상방 레버리지가 살아있습니다.</li>
-</ul>
+<h3>[역DCF ↔ 시나리오 결론 동기화 및 밸류에이션 우위 원칙(Valuation Override Gate)]</h3>
+<ol>
+<li><strong>역DCF ↔ 시나리오 결론 정량 브릿지:</strong></li>
+<li>Step 1 역DCF에서 <strong>2026.2Q TTM 정상화 FCF(<code>458.3억 원</code>) 기준 요구 성장률은 연 <code>+6.81%(Equity) / +3.72%(EV)</code></strong>로 현금흐름 창출 능력 대비 주가 하방은 견고하나, <strong>2025년 온기 확정 FCF(<code>286.9억 원</code>) 기준 요구 성장률은 연 <code>+18.46%(Equity) / +15.13%(EV)</code></strong>이며 현재 주가(<code>45,600원</code>)의 멀티플(<code>PER 15.10배 / PBR 2.54배</code>)은 과거 3년 평균(<code>PER 10.25배 / PBR 1.62배</code>)을 크게 웃돌고 있습니다.</li>
+<li>즉, 시장은 이미 2026년 역대 최대 실적 경신과 AI 데이터센터 액침냉각 기대감을 상당 부분 선반영한 뒤 현재 단기 차익실현 조정(주봉 20주선 <code>48,532원</code> 및 일봉 20일선 <code>50,582원</code> 하향 이탈)을 겪고 있는 상태입니다.</li>
+<li><strong>🚨 밸류에이션 우위 원칙 (Valuation Override Gate) 발동:</strong></li>
+<li>현재 주가(<code>45,600원</code>)가 <code>🛡️ 대안 B / 🚀 대안 A Base 적정주가(39,460원)</code>보다 높으므로(<code>Base 적정주가 ≤ 현재가</code>), <strong>현재가 이상에서의 추격 매수(<code>Buy 2, Buy 3 &gt; Base</code>)를 100% 엄격 금지</strong>합니다.</li>
+<li>투자의견을 <strong><code>⏳ [보유 및 눌림목 대기 (Hold &amp; Wait for Pullback)]</code></strong>로 설정하고, 마스터 SOP의 1~3차 분할 매수가 전체를 반드시 <code>Base 적정주가(39,460원)</code> 대비 -10% ~ -20% 안전마진이 확보되는 <strong>눌림목 구간(<code>31,570원 ~ 35,510원</code>)</strong>으로 배치하여 수리적 무결성을 완성합니다.</li>
+</ol>
 <hr />
-<h3>📋 실전 매매 액션 플랜 및 트리거 (마스터 SOP 4단계 차트 트리거 — <code>backtest_valuation.py</code> 실측값 주입)</h3>
+<h3>📋 실전 매매 액션 플랜 및 트리거 (마스터 SOP 4단계 차트 트리거 — <code>backtest_valuation.py</code> 실측값)</h3>
 <ul>
-<li><strong>투자의견:</strong> <strong>조건부 추세 트레이딩 분할 매수 (Trading Buy on Dips — 안전핀 42,000원/50,906원 엄수)</strong></li>
-<li>
-<p><strong>목표가 밴드 (🛡️대안 B / 🚀대안 A 병기):</strong><br />
-<strong>🛡️대안 B(보수적): 55,800원(Base) ~ 74,600원(Bull) | 🚀대안 A(업황·S-Curve 할증): 61,380원(Base) ~ 83,550원(Bull)</strong> (단기 1차 TP1: 50,780원)</p>
-</li>
-<li>
-<p><strong>매수 트리거 (Buy Trigger — 마스터 SOP 3분할 매수 전술):</strong></p>
-</li>
-<li><strong>1차 정찰병 (비중 30% — 눌림목 지지선 진입):</strong><br />
-     현재 주가 <strong>44,000원 ~ 46,000원 구간(일봉 60일선 46,548원 하단 및 일봉 Slow Stochastic(12,5,5) %K=46.9% 조정 구간)</strong>에서 1차 정찰병 30% 선진입.</li>
-<li><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 &amp; 고정 바닥 안전핀 메모):</strong><br />
-     일봉 종가가 <strong>20일 매물대(5칸 POC: 52,480원 ~ 55,690원, 비중 28.8%) 하단 돌파</strong> 및 <strong>일봉 20일 이동평균선(50,548원)</strong>을 <strong>20일 평균 거래량 대비 1.25배(<code>vol_ratio ≥ 1.25</code>, 현재 0.50배) 이상</strong> 거래량으로 동시 돌파할 때 40% 본대 투입.<br />
-     ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(52,480원)에서 -3%인 <strong><code>50,906원</code>을 고정 바닥 안전핀으로 영구 기록</strong>.</li>
-<li>
-<p><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong><br />
-     주봉 종가가 <strong>주봉 20주 이동평균선(48,515원)</strong> 위에 완전히 재안착하고 <strong>주봉 MACD Histogram(현재 -249.6)이 양(+) 전환</strong>될 때 잔여 30% 투입 완성.</p>
-</li>
-<li>
-<p><strong>매도 / 손절 트리거 (Sell &amp; Stop-Loss Trigger — 초입 안전핀 vs 허리 홀딩 &amp; 2단계 익절):</strong></p>
-</li>
-<li><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><ul>
-<li><strong>초입부 (평단가 대비 수익률 &lt; +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<code>50,906원</code>)</strong> 또는 전저점 지지선(42,000원)을 일봉 종가 기준 하향 이탈 시 기계적 손절.</li>
-<li><strong>상승 허리 (평단가 대비 수익률 ≥ +15% &amp; 주봉 20주선 위):</strong> 일봉 단기 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주선(<code>48,515원</code>)을 깨기 전까지 끝까지 추세 홀딩</strong>.</li>
+<li><strong>투자의견:</strong> <strong><code>⏳ 보유 및 눌림목 대기 (Hold &amp; Wait for Pullback — 현재가 45,600원 추격매수 금지)</code></strong></li>
+<li><strong>목표가 밴드 (🛡️대안 B / 🚀대안 A 병기):</strong></li>
+<li><strong>🛡️ 대안 B (보수적 순수 DART 주 닻):</strong> <strong><code>39,460원 (Base 적정가)</code> / <code>50,780원 (TP1 단기 저항)</code> ~ <code>55,190원 (Bull 호황 상단)</code></strong> <em>(Bear 하방 지지선 <code>20,710원</code>)</em></li>
+<li><strong>🚀 대안 A (업황·S-Curve 할증 기준):</strong> <strong><code>39,460원 (Base 적정가)</code> / <code>50,780원 (TP1 단기 저항)</code> ~ <code>55,190원 (Bull 호황 상단)</code></strong> <em>(액침냉각 단독 매출 미공시로 S-Curve 할증 <code>0%</code> 차단 — 대안 B와 동일)</em></li>
+<li><strong>매수 트리거 (Buy Trigger — 마스터 SOP 눌림목 3분할 매수 전술 | <code>Hard Stop 1 (29,040원) &lt; Buy 1 (31,570원) &lt; Buy 2 (33,540원) &lt; Buy 3 (35,510원) &lt; Base (39,460원)</code> 절대 부등식 100% 충족):</strong></li>
+<li><strong>1차 정찰병 (비중 30% — Base 대비 -20% 눌림목 / 주봉 장기 지지권):</strong> 주가 <strong><code>31,570원</code></strong> (주가가 <code>Base 적정주가 39,460원</code>의 80% 안전마진 구간까지 충분히 조정받고, 일봉 Slow Stochastic(12,5,5)이 침체권 <code>%K ≤ 20</code>에서 골든크로스를 발생할 때 30% 선진입. <strong>현재 일봉 Slow Stochastic <code>%K = 31.5% / %D = 61.1%</code> 데드크로스 조정 중으로 대기</strong>).</li>
+<li><strong>2차 본대 투입 (비중 40% — Base 대비 -15% 중심 지지 / 거래량 동반 반등):</strong> 주가 <strong><code>33,540원</code></strong> (1차 진입 후 주봉 60주 이동평균선(<code>36,868원</code>) 하단 언더슈팅 구간에서 <strong>20일 평균 거래량(<code>155,337주</code>) 대비 1.25배(<code>vol_ratio ≥ 1.25</code>, 현재 <code>0.86배</code>) 이상</strong> 거래량을 동반한 양봉 반등 및 지지 확인 시 40% 본대 투입).</li>
+<li><strong>3차 확인사살 (비중 30% — Base 대비 -10% 추세 복귀 안착):</strong> 주가 <strong><code>35,510원</code></strong> (주봉 볼린저밴드 하단(<code>36,914원</code>) 및 주봉 60주 이동평균선(<code>36,868원</code>) 회복 흐름 속에서 <strong>주봉 MACD(12,26,9) Histogram(현재 <code>-227.3</code> 음전환 조정 중)이 음(-) 축소 및 양(+) 전환</strong>될 때 잔여 30% 투입 완성. <strong>3분할 완성 평균단가 <code>33,540원</code> &lt; 1차 목표가 Base <code>39,460원</code>[기대수익 <code>+17.7%</code>] 및 TP1 <code>50,780원</code>[<code>+51.4%</code>] 수리적 검증 완료</strong>).</li>
+<li><strong>매도/손절 트리거 (Sell &amp; Stop-Loss Trigger — 이중 안전핀 &amp; 허리 홀딩 &amp; 2단계 익절):</strong></li>
+<li><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><ul>
+<li><strong>🚨 1단계 초입 고정 안전핀 (<code>Hard Stop 1</code>, 진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(<code>31,570원</code>, <code>-8.0%</code>) 및 3분할 완성 평단가(<code>33,540원</code>, <code>-13.4%</code>) 아래로 엄격히 설정된 <strong><code>29,040원</code></strong>을 일봉 종가 기준 하향 이탈 시 조건 없이 기계적 손절합니다.</li>
+<li><strong>🔒 2단계 매물대 돌파 후 트레일링 보호핀 (<code>Trailing Stop 2</code>):</strong> 향후 주가가 상승 추세로 복귀하여 <strong>일봉 20일 매물대(5칸 POC: <code>52,480원 ~ 55,690원</code>, 거래비중 <code>27.7%</code>) 상단인 <code>55,690원</code></strong>을 완전히 돌파·안착한 이후에만 보호핀을 20일 매물대 하단(<code>52,480원</code>) -3%인 <strong><code>50,906원</code></strong>으로 격상하여 수익을 방어합니다.</li>
+<li><strong>상승 허리 홀딩 (평단가 대비 수익률 ≥ +15% &amp; 주봉 20주선 위):</strong> 일봉 20일선(<code>50,582원</code>) 이탈이나 단기 음봉 노이즈에 흔들리지 않고, <strong>주봉 종가가 주봉 20주 이동평균선(<code>48,532원</code>)을 하향 이탈하기 전까지 추세 홀딩</strong>합니다. <em>(단, 현재 주가 <code>45,600원</code>은 주봉 20주선 <code>48,532원</code> 및 일봉 60일선 <code>46,532원</code>을 소폭 하향 이탈한 단기 조정 국면이므로 신규 추격 매수를 삼가고 눌림목 지지를 기다립니다.)</em></li>
 </ul>
 </li>
 <li><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><ul>
-<li><strong>Base 1차 목표가(<code>🛡️대안B 55,800원 / 🚀대안A 61,380원</code>)</strong> 또는 단기 <strong>TP1(<code>50,780원</code>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 54.2) &lt; 50</strong>(수급 고갈)이면 즉시 50% 기계적 익절.</li>
-<li>만약 <strong>주봉 MFI(14) ≥ 50</strong>으로 스마트머니 수급이 살아있다면 익절을 보류하고 <strong>Bull 목표가(<code>🛡️대안B 74,600원 / 🚀대안A 83,550원</code>)</strong>까지 추세 추종.</li>
+<li><strong>눌림목 신규 진입자 (완성 평단 <code>33,540원</code> 기준):</strong> <strong>Base 1차 목표가(<code>🛡️대안B 39,460원 / 🚀대안A 39,460원</code>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <code>53.0</code>) &lt; 50</strong>(수급 고갈)이면 즉시 보유 물량의 50%를 분할 익절하고, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 <strong>TP1(<code>50,780원</code>) 및 Bull 목표가(<code>🛡️대안B 55,190원 / 🚀대안A 55,190원</code>)</strong>까지 추세 추종합니다.</li>
+<li><strong>현재가(<code>45,600원</code>) 인근 기존 보유자:</strong> 단기 기술적 반등 시 <strong>1차 저항선인 TP1(<code>50,780원</code>, 일봉 20일선 <code>50,582원</code> 부근)</strong> 도달 구간에서 주봉 MFI(14) 수급 강도를 점검하여 비중 30~50%를 선제 축소하고, 잔여 물량은 20일 매물대 POC 상단 및 <strong>Bull 목표가(<code>55,190원</code>)</strong> 도달 시 분할 익절합니다.</li>
 </ul>
 </li>
-<li>
-<p><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong></p>
-<ul>
-<li><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI 54.2, 최근 12주 최고 61.2).</li>
-<li><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스 괴리):</strong> 주가는 신고가(또는 Bull 목표가 74,600원~83,550원)를 경신하고 <strong>주봉 RSI(14)(현재 49.4) ≥ 70</strong>인데, <strong>주봉 MFI(14) &lt; 70</strong>에 머물며 수급 이탈 다이버전스 발생 시.</li>
-<li><strong>🚨 고점경보 3호 (추세 붕괴 트레일링 스탑):</strong> 최고점 대비 <strong>-8% 이상 하락함과 동시에 일봉 20일선(<code>50,548원</code>) 종가 이탈</strong>, 또는 <strong>주봉 20주선(<code>48,515원</code>) 종가 이탈</strong> 시 잔여 물량 전량 청산.</li>
+<li><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><ul>
+<li><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <code>53.0</code>, 최근 12주 최고 <code>61.2</code> — <strong>현재 정상</strong>).</li>
+<li><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스 괴리):</strong> 주가는 52주 신고가(<code>64,900원</code>) 또는 Bull 목표가(<code>55,190원</code>)를 경신하고 <strong>주봉 RSI(14)(현재 <code>49.7</code>) ≥ 70</strong>인데, <strong>주봉 MFI(14) &lt; 70</strong>에 머물며 스마트머니 유입이 멈추는 다이버전스 발생 시 (<strong>현재 정상</strong>).</li>
+<li><strong>🚨 고점경보 3호 (추세 붕괴 트레일링 스탑):</strong> 목표가 돌파 후 최고점 대비 <strong>-8% 이상 하락함과 동시에 일봉 20일선(<code>50,582원</code>) 종가 이탈</strong>, 또는 <strong>주봉 20주선(<code>48,532원</code>) 종가 이탈</strong> 시 잔여 물량 전량 익절.</li>
 </ul>
 </li>
-<li>
-<p><strong>핵심 모니터링 체크리스트:</strong></p>
-</li>
-<li><strong>[분기별 실적 확인]</strong> 안성 본사 조립 체력(5,000억 원) 대비 실질 조업도 85% 이상 유지 및 분기 매출 1,000억 원 / OPM 17% 상회 여부 추적.</li>
-<li><strong>[50억 자사주 신탁 소진율]</strong> 하나은행 위탁 자사주 신탁의 장내 매수 진행률 및 추가 소각 공시 연계 여부.</li>
-<li><strong>[차세대 액침냉각 첫 본계약 공시]</strong> 글로벌 5대 플레이어 지위에 걸맞은 하이퍼스케일러 또는 해상 바지선 FDC향 양산 수주 공시 발생 여부.</li>
+<li><strong>핵심 모니터링 체크리스트 (차기 분기 공시 추적 과제):</strong></li>
+<li><strong>반기말 급증 재고(<code>715.9억 원</code>, 제품·재공품 <code>464.0억 원</code>)의 2026년 3~4분기 매출 전환 속도:</strong> 분기 매출 <code>1,100억 원+</code> 및 OPM <code>17.0%+</code> 회복 여부.</li>
+<li><strong>삼성전자 테일러 파운드리(2nm GAA) 및 평택 P5 · 마이크론 HBM4 Sub-fab 발주:</strong> Scrubber 부문 내 수출 비중(<code>현재 77.7%</code>) 및 미국·대만·싱가포르 종속법인 매출 성장세 지속 여부.</li>
+<li><strong>AIDC 액침냉각 무상 콜옵션의 실체화 (배수 리레이팅 트리거):</strong> DART 정기보고서 <code>'II. 사업의 내용'</code> 내 액침냉각(Tank·CDU) 단독 수주 공시 또는 매출 분리 기재 시점 (분리 공시 및 비중 확대 확인 시 S-Curve 할증 계수 즉시 가동).</li>
 </ul>
 <hr />
-<div id="dcf-calculator-root" data-price="45250" data-shares="17963419" data-total-shares="18430000" data-fcf="295" data-bear="20900" data-base="55800" data-bull="74600" data-base-a="61380" data-bull-a="83550" data-poc-low="52480"></div>
+<h3>✅ [핀셋 Boost 게이트 — Phase 3 출력 직전 5대 수리·위계 무결성(5 Math Assertions) 자가 검증 완료]</h3>
+<ol>
+<li><strong>Assertion 1 [단일 주가 &amp; 분자·분모 일치]:</strong> Phase 1~3 전 과정의 현재 주가가 <code>2026-10-16</code> 일봉 종가 <strong><code>45,600원</code></strong>으로 100% 통일되었으며, 지배주주 귀속 순이익(귀속률 <strong><code>99.6%</code></strong>) 분자와 2024.06 1:1 무상증자 소급 보정 및 자사주 차감 유통주식수(<strong><code>17,963,419주</code></strong>, 최신 2026.10.13 기준 <code>17,879,037주</code> 병기) 분모가 오차 없이 일관되게 적용되었습니다.</li>
+<li><strong>Assertion 2 [산식·주 지표 상속 &amp; 4대 회계 무결성]:</strong> Phase 1 <code>## 7</code> 채택 공식(유형 B: 장비 출하 대수 $Q \times$ 대당 단가 $P$ + 유지보수 용역)과 <code>## 8</code> 1순위 지표(<strong><code>Target PER</code></strong>, 보조 <code>Forward PBR / Forward BPS 20,784원</code>)가 시나리오 표에 그대로 상속되었고, ① 신규 CapEx 감가상각비(<code>-25~-30억 원</code>) 차감, ② 순금융수익(<code>+</code>) 가산 후 법인세(<code>-</code>) 차감 부호 일치, ③ 일회성 중단영업손실 제거, ④ <strong>단독 매출 미공시 신사업(AIDC 액침냉각 <code>0.0%</code>) 할증 차단(<code>sc_mult = 1.00</code>, <code>0%</code>)</strong>이 완벽히 준수되었습니다.</li>
+<li><strong>Assertion 3 [역DCF Equity·EV 병기 &amp; 밸류에이션 우위 게이트]:</strong> <code>calc_reverse_dcf.py</code>를 통해 유통시총(Equity <code>8,191.3억</code>, 요구성장률 <code>+18.46%</code> [정상화 <code>+6.81%</code>])과 가용 순현금(<code>-1,000.7억</code>)이 반영된 실질 기업가치(EV <code>7,190.6억</code>, 요구성장률 <code>+15.13%</code> [정상화 <code>+3.72%</code>])를 2행 병기하였으며, <code>Base 적정주가(39,460원) ≤ 현재가(45,600원)</code>이므로 현재가 추격매수를 금지하고 <strong><code>⏳ [보유 및 눌림목 대기]</code></strong> 모드로 전환했습니다.</li>
+<li><strong>Assertion 4 [매수가·안전핀·목표가 절대 부등식]:</strong> <strong><code>1단계 초입 고정 안전핀(29,040원) &lt; 1차 매수가(31,570원) &lt; 2차 매수가(33,540원) = 완성 평단가(33,540원) &lt; 3차 매수가(35,510원) &lt; 1차 목표가 Base(39,460원) &lt; TP1(50,780원) &lt; Bull(55,190원)</code></strong> 위계질서가 단 1원의 역전도 없이 100% 성립합니다.</li>
+<li><strong>Assertion 5 [본문 ↔ HTML 계산기 태그 100% 일치]:</strong> 하단 <code>&lt;div id="dcf-calculator-root"&gt;</code>의 모든 <code>data-</code> 속성이 본문 수치와 1원/1주 단위까지 정확히 일치함을 검증했습니다.</li>
+</ol>
+<div id="dcf-calculator-root" data-price="45600" data-shares="17963419" data-total-shares="18430000" data-fcf="286.9" data-net-debt="-1000.7" data-bear="20710" data-base="39460" data-bull="55190" data-base-a="39460" data-bull-a="55190" data-buy1="31570" data-buy2="33540" data-buy3="35510" data-stop-pin="29040" data-poc-low="52480"></div>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -820,6 +803,8 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                 const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
                 let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
                 let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
@@ -845,6 +830,10 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                 let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
@@ -889,12 +878,18 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                 if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
-                const initBuy1 = autoBear;
-                const initBuy2 = rawPrice;
-                const initBuy3 = Math.round(rawPrice * 1.03);
+                // Conflict-free default Buy 1 < Buy 2 < Buy 3 < Target & Hard Stop 1 < Buy 1
+                let initBuy1 = attrBuy1 > 0 ? attrBuy1 : Math.min(autoBear, Math.round(rawPrice * 0.92), Math.round(autoBase * 0.85));
+                let initBuy2 = attrBuy2 > 0 ? attrBuy2 : (rawPrice <= autoBase * 0.96 ? Math.max(rawPrice, Math.round(initBuy1 * 1.03)) : Math.round((initBuy1 + autoBase * 0.92) / 2));
+                let initBuy3 = attrBuy3 > 0 ? attrBuy3 : (rawPrice <= autoBase * 0.96 ? Math.min(Math.round(initBuy2 * 1.03), Math.round(autoBase * 0.96)) : Math.round(autoBase * 0.92));
+                if (initBuy1 >= initBuy2) initBuy1 = Math.round(initBuy2 * 0.95);
+                if (initBuy3 <= initBuy2) initBuy3 = Math.round(initBuy2 * 1.03);
+
+                let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
+                if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -903,6 +898,10 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                         '<div class="dcf-input-group">' +
                             '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
+                            '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -924,7 +923,7 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 이중 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
                     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
                         '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
                         '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
@@ -943,12 +942,16 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                             '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
-                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
                             '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
                             '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1단계 초입 고정 안전핀 (원 · 진입 손절선)</label>' +
+                            '<input type="text" id="sop-input-stop-pin" value="' + initStopPin.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2단계 20일 매물대 하단가 (원 · 돌파 후 기준)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
@@ -968,6 +971,7 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
 
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
+                const elNetDebt = document.getElementById('dcf-input-net-debt');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -976,17 +980,16 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                 const elResultBox = document.getElementById('dcf-result-box');
                 
                 function parseFormattedNum(val) {
-                    return parseFloat(val.toString().replace(/,/g, ''));
+                    if (val === undefined || val === null) return 0;
+                    const cleaned = val.toString().replace(/,/g, '').trim();
+                    if (cleaned === '' || cleaned === '-') return 0;
+                    return parseFloat(cleaned);
                 }
 
                 function formatNumberInput(e) {
-                    // Skip for number types
                     if (e.target.type === 'number') return;
-                    
                     let cursor = e.target.selectionStart;
                     let originalLength = e.target.value.length;
-                    
-                    // Allow minus sign at the beginning for FCF
                     let isNegative = e.target.value.startsWith('-');
                     let val = e.target.value.replace(/[^\d.]/g, '');
                     
@@ -1008,36 +1011,8 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     e.target.setSelectionRange(cursor, cursor);
                 }
 
-                function calculateImpliedGrowth() {
-                    const price = parseFormattedNum(elPrice.value);
-                    const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
-                    const wacc = parseFloat(elWacc.value) / 100.0;
-                    const terminal = parseFloat(elTerminal.value) / 100.0;
-
-                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (fcf <= 0) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (wacc <= terminal) {
-                         elResultValue.textContent = "N/A";
-                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
-                         elResultBox.className = "dcf-result-box error";
-                         return;
-                    }
-
-                    const targetValue = price * shares;
-                    
+                function solveImpliedGrowthForTarget(targetVal, fcf, wacc, terminal) {
+                    if (targetVal <= 0 || fcf <= 0 || wacc <= terminal) return null;
                     function calcDCFValue(g) {
                         let pv = 0;
                         let cf = fcf;
@@ -1049,32 +1024,79 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                         pv += tv / Math.pow(1 + wacc, 5);
                         return pv;
                     }
-                    
                     let low = -0.99;
-                    let high = 10.0; // max 1000% — unified with Python
+                    let high = 10.0;
                     let g = 0;
                     let found = false;
                     for (let iter = 0; iter < 200; iter++) {
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
+                        if (Math.abs(pv - targetVal) / targetVal < 0.00001) {
                             found = true;
                             break;
                         }
-                        if (pv > targetValue) {
+                        if (pv > targetVal) {
                             high = g;
                         } else {
                             low = g;
                         }
                     }
+                    if (found || Math.abs(high - low) < 0.00001) return g;
+                    return null;
+                }
 
-                    if (found || Math.abs(high - low) < 0.00001) {
-                        const growthPercent = (g * 100).toFixed(2);
-                        elResultValue.textContent = growthPercent + "%";
-                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
-                        if (g < 0) {
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal) || price <= 0 || shares <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다 (Normalized FCF를 입력해 보세요).";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const equityVal = price * shares;
+                    const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
+                    const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+
+                    if (gEquity !== null) {
+                        const eqPct = (gEquity * 100).toFixed(2);
+                        const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
+                        const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        let primaryG = gEquity;
+                        if (Math.abs(netDebtEok) > 0 && gEv !== null) {
+                            const evPct = (gEv * 100).toFixed(2);
+                            primaryG = netDebtEok > 0 ? gEv : gEquity;
+                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                        } else {
+                            elResultValue.textContent = eqPct + "%";
+                            elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
+                        }
+                        if (primaryG < 0) {
                              elResultBox.className = "dcf-result-box low-growth";
-                        } else if (g > 0.15) {
+                        } else if (primaryG > 0.15) {
                              elResultBox.className = "dcf-result-box high-growth";
                         } else {
                              elResultBox.className = "dcf-result-box normal-growth";
@@ -1086,7 +1108,7 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     }
                 }
 
-                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {
                     input.addEventListener('input', (e) => {
                         formatNumberInput(e);
@@ -1100,8 +1122,9 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                 const elBudget = document.getElementById('sop-input-budget');
                 const elBuy1 = document.getElementById('sop-input-buy1');
                 const elBuy2 = document.getElementById('sop-input-buy2');
-                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBuy3 = document.getElementById('sop-input-buy3');
+                const elStopPin = document.getElementById('sop-input-stop-pin');
+                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBase = document.getElementById('sop-input-base');
                 const elBull = document.getElementById('sop-input-bull');
 
@@ -1113,8 +1136,9 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     const budget = parseFormattedNum(elBudget.value) || 0;
                     const b1 = parseFormattedNum(elBuy1.value) || 1;
                     const b2 = parseFormattedNum(elBuy2.value) || 1;
-                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const rawStopPin = parseFormattedNum(elStopPin.value) || Math.round(b1 * 0.95);
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const tBase = parseFormattedNum(elBase.value) || b2;
                     const tBull = parseFormattedNum(elBull.value) || b2;
 
@@ -1129,10 +1153,23 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
-                    const safetyPin = Math.round(pocLow * 0.97);
+                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
+                    const minEntryPrice = Math.min(b1, b2, avgPrice);
+                    let safetyPin = rawStopPin;
+                    let pinAutoCorrected = false;
+                    if (safetyPin >= minEntryPrice) {
+                        safetyPin = Math.round(minEntryPrice * 0.95);
+                        pinAutoCorrected = true;
+                    }
+                    const pocTrailingPin = Math.round(pocLow * 0.97);
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // Hierarchy validation notice
+                    let orderNotice = "";
+                    if (avgPrice >= tBase) {
+                        orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
+                    }
 
                     // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
@@ -1159,10 +1196,11 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                         return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
                     }
 
-                    const riskAmt = Math.max(1, avgPrice - safetyPin);
-                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
-                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const riskAmt = avgPrice - safetyPin;
+                    const rewardAmt = ((tBase + tBull) / 2) - avgPrice;
+                    const sopRR = (riskAmt > 0 && rewardAmt > 0) ? (rewardAmt / riskAmt).toFixed(2) + ' : 1' : '0.00 : 1 (재설정 필요)';
                     const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+                    const pinNote = pinAutoCorrected ? ' <span style="color:#dc2626;font-size:8.5pt;">(평단가 초과 방지를 위해 진입하단 -5%로 자동보정됨)</span>' : '';
 
                     elBuySummary.innerHTML =
                         '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
@@ -1171,12 +1209,13 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                         '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
                         '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
-                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>' +
+                        orderNotice;
 
                     elStopSummary.innerHTML =
-                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
-                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
-                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<h4>🚨 ② 이중 안전핀(초입 손절 vs 돌파 후 보호) & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 초입 고정 안전핀(진입 손절선):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)' + pinNote + '</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 매물대 돌파 후 보호핀(POC -3%):</strong> <strong>' + pocTrailingPin.toLocaleString() + '원</strong> (매물대 상단 안착 후 본절·수익 보호선으로 격상)</div>' +
                         '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
                         '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
                         '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
@@ -1187,7 +1226,7 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + '</strong></div>' +
                         '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
                 }
 
@@ -1208,7 +1247,7 @@ GST의 OCF는 당기순이익을 매년 110%~140% 상회하고 있으며, 차입
                     });
                 }
 
-                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                const sopInputs = [elBudget, elBuy1, elBuy2, elBuy3, elStopPin, elPocLow, elBase, elBull];
                 sopInputs.forEach(inp => {
                     inp.addEventListener('input', (e) => {
                         formatNumberInput(e);

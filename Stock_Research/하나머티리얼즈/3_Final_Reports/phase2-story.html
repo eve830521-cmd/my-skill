@@ -390,294 +390,310 @@ p > em {
     </script>
 </head>
 <body>
-    <h1>📖 Phase 2: 스토리 리더 (Global &amp; Weekly 트렌드 공시 팩트체크)</h1>
+    <h1>[Phase 2] 하나머티리얼즈 (166090) 내러티브 및 교차 검증 (Story &amp; Cross-Check)</h1>
 <blockquote>
-<p><strong>분석 기준일:</strong> 2026-10-15 | <strong>분석 대상:</strong> 하나머티리얼즈 (KOSDAQ: 166090)<br />
-<strong>핵심 교차검증 소스:</strong> DART <code>[하나머티리얼즈]반기보고서(2026.08.13)</code>, <code>[하나머티리얼즈]사업보고서(2026.03.13)</code>, 수시공시(<code>2026.08.04~2026.09.29</code>), Global Trend 최신 아카이브(<code>26.10.07.대신증권.배당투자 오디세이.pdf</code>, <code>26.10.08.유안타증권.sam but differ.pdf</code>, <code>26.10.01.대신증권.결국은 본업.pdf</code>, <code>26.09.29.LS증권.AI병목의 전이.pdf</code>, <code>26.09.02.하나증권.증설의 시대, 후공정의 수혜도 함께 온다.pdf</code>, <code>cycle_timeline.md</code>), Global S-Curve Registry (<code>s_curve_registry.json</code>), <code>Weekly_Trend/thesis_log.md</code>, <code>backtest_valuation.py</code> 마스터 SOP 실측 엔진</p>
+<p><strong>분석 기준일</strong>: 2026-10-17 (클린 리빌드 v4.1 및 2026.10 중순 글로벌 트렌드·DART 공시 반영)
+<strong>단일 기준 주가 (Single Price Anchor)</strong>: <strong>53,400원</strong> (<code>backtest_valuation.py</code> v4.1 최신 일봉 종가 기준, 주봉 종가 53,400원 동일)
+<strong>핵심 검증 과제</strong>: 2026.10.15 신규 글로벌 트렌드(<strong>GAA 구조 전환의 파운드리·메모리 동시 확산 + 2027년 P4·M15X 웨이퍼 투입량(Q) 확장에 따른 전공정 소모성 부품 바통 터치</strong>)와 하나머티리얼즈의 2026년 반기 어닝 서프라이즈(<strong>매출 1,834.9억[YoY +49.5%], 영업이익 473.1억[YoY +174.8%, 2Q OPM 28.88%], 2Q 가동률 87.77%</strong>), 그리고 2026년 8~10월 연속 공시된 4대 구조적 이벤트(<strong>① 702억 실리콘 음극재 증설, ② 1,000억 0% 무이자 EB 발행 및 차입금 차환, ③ 최대주주 담보제공 472.46만 주 및 베트남 계열사 2,608.6억[자기자본 대비 44.0%] 채무보증, ④ 10.28 임시주총 364.96억 비과세 감액배당 확정</strong>)를 팩트 데이터 및 회계적 무결성 기준으로 교차 검증하고, <code>SKILL.md</code> v4.1의 <strong>신사업 단독 매출 미공시 시 0원 무상 콜옵션(할증 0%) 분리 원칙</strong>을 엄격히 적용하여 <strong>Phase 3 밸류에이션 파라미터</strong>를 확정합니다.</p>
 </blockquote>
 <hr />
-<h2>1. Global 산업 사이클 및 테마 검증</h2>
-<h3>① 글로벌 메가트렌드 요약: 'AI 병목의 전이', '환율 안정화', 그리고 '배당·밸류업(감액배당)'</h3>
+<h2>1. 글로벌 사이클 및 테마 교차 검증 (Global Trend vs. DART)</h2>
+<p><code>Global_Trend</code> 폴더 내 거시·섹터 타임라인(<code>cycle_timeline.md</code> 2026.10 중순 업데이트본) 및 원본 PDF 리포트(<code>parse_pdf.py</code> 페이지 실측 완료)에서 도출된 핵심 매크로/섹터 내러티브가 하나머티리얼즈의 실제 공시(DART) 데이터와 어떻게 부합하는지 교차 검증합니다.</p>
+<h3>① [신규 2026.10.15 트렌드] GAA 아키텍처 전환의 전방위 확산과 전공정 소모품(Parts)으로의 모멘텀 전이</h3>
 <ul>
-<li><strong>AI 병목의 전이 (AI HBM $\rightarrow$ Server DRAM/eSSD $\rightarrow$ 신규 Fab 건설 및 전환투자):</strong>
-  AI 성장에 따른 서버용 HBM 및 고용량 DDR5, 엔터프라이즈 eSSD 수요 급증으로 메모리 제조사들이 HBM 위주로 전공정 생산능력(Capa)을 집중 배정하면서 범용 메모리 공급 부족과 가동률 급등이 동시에 나타나고 있습니다 <code>[글로벌 트렌드: 26.09.29.LS증권.AI병목의 전이.pdf p.2-3]</code>. 특히 웨이퍼 투입량을 근본적으로 늘리기 위한 <strong>신규 Fab 건설 및 레거시 라인의 선단 공정 전환투자(Conversion)</strong>가 본격화되면서, 국내 건식 식각(Dry Etching) 공정 밸류체인 내에서 <strong>하나머티리얼즈는 SiC Ring(티씨케이, 케이엔제이와 과점) 및 대구경 Si/쿼츠 링(원익QnC, 월덱스와 과점) 양대 부문을 모두 영위하는 핵심 소모품 공급사</strong>로 확고히 등재되어 있습니다 <code>[글로벌 트렌드: 26.09.29.LS증권.AI병목의 전이.pdf p.13 그림3]</code>.</li>
-<li><strong>2026~2029 메모리 증설 로드맵과 전공정 소재·부품의 '최장기(Longest Duration)' 수혜:</strong>
-  삼성전자의 <strong>평택 P4</strong>(2026년 4분기 65K $\rightarrow$ 2027년 4분기 150K 풀 램프업) 및 <strong>P5</strong>(2026년 3분기 본공사 재개 $\rightarrow$ 2028년 1분기 클린룸/웨이퍼 투입), SK하이닉스의 <strong>청주 M15X</strong>(2026년 1분기 HBM4 대응 1b 램프 개시, 2026년 4분기 40K $\rightarrow$ 2027년 4분기 80K) 및 <strong>용인 Y1</strong>(2027년 3분기 Phase 1 40K 투입 개시 $\rightarrow$ 최대 300K) 등 대규모 신규 클린룸 가동이 2026년 하반기부터 2029년까지 줄지어 예정되어 있습니다 <code>[글로벌 트렌드: 26.09.02.하나증권.증설의 시대, 후공정의 수혜도 함께 온다.pdf p.6]</code>.</li>
-<li><strong>영역별 수혜 시차 프레임(T-3Q vs T~):</strong> 전공정 장비가 클린룸 완공 및 장비 발주 시점(T-3~-1분기)에 단기 집중 수혜를 받는 것과 달리, <strong>하나머티리얼즈가 속한 전공정 소재·부품 영역은 생산 램프 시점(T~)부터 웨이퍼 투입 총량 및 가동률 램프업에 비례하여 반복적인 소모성 교체 수요가 확대되므로 사이클의 지속 기간(Duration)이 가장 길게 이어지는 구조적 특징</strong>을 갖습니다 <code>[글로벌 트렌드: 26.09.02.하나증권.증설의 시대, 후공정의 수혜도 함께 온다.pdf p.7, p.43 도표60]</code>.</li>
-<li><strong>2026년 10월 상반기 최신 매크로 화두: '환율 하락(원화 강세)과 3Q 실적 차별화' 및 '비과세 감액배당' (<code>cycle_timeline.md</code>):</strong></li>
-<li><strong>원/달러 환율 안정화:</strong> 10월 거시 리포트(<code>[글로벌 트렌드: 26.10.08.유안타증권.sam but differ.pdf p.3-4]</code>, <code>[글로벌 트렌드: 26.10.01.대신증권.결국은 본업.pdf p.1]</code>)는 공통적으로 환율 하락(원화 강세, 1,420원대 안착)에 따른 3Q26 수출주 실적 우려를 지적하고 있습니다. 그러나 하나머티리얼즈는 <strong>주원재료 Ingot(수입 비중 72.8%) 매입단가 인하 효과가 가속되는 반면, 내수 매출 비중이 70.5%로 압도적이어서 환율 하락에 따른 실적 타격이 전혀 없는 '원가 개선 수혜주'</strong>로 판명됩니다.</li>
-<li><strong>비과세 감액배당 밸류업:</strong> 제도권 배당 심층 리포트(<code>[글로벌 트렌드: 26.10.07.대신증권.배당투자 오디세이.pdf p.47-50]</code>)에서 공인된 '자본준비금의 이익잉여금 전입 기업' 분석과 맞물려, 동사의 <strong>2026년 10월 28일 임시주총(주식발행초과금 364.96억 원 감액 결의)</strong>이 연말 배당 시즌 강력한 세제 혜택(배당소득세 15.4% 비과세) 모멘텀으로 직결됩니다.</li>
+<li><strong>글로벌 트렌드 팩트 (<code>Global_Trend</code> 원문 검증)</strong>:</li>
+<li><strong>유안타증권 (<code>26.10.15.유안타증권.2027Issue&amp;Theme(change).pdf</code> p.3, p.6-8 그림2·표1, p.12-15 그림5-7·차트3-4)</strong>: AI 반도체 고집적화를 위한 트랜지스터 구조 혁신(<strong>FinFET $\rightarrow$ GAA</strong>)이 파운드리 선단공정(삼성 2nm GAA 수율 <code>30%대</code> $\rightarrow$ <code>26.1Q 50%대</code> $\rightarrow$ <code>26.3Q 60%대</code> 안착 및 메타 MTIA3·테슬라 AI6 수주)을 넘어 <strong>차세대 메모리(1d nm 이하 DRAM 및 400단+ 3D NAND)까지 동시 확산</strong>되고 있음. 나노시트(Nanosheet) 적층 및 선택적 식각(Selective Etching) 공정 추가로 인해 웨이퍼당 고난도 식각 스텝 수와 챔버 내 플라즈마 노출 시간이 구조적으로 급증함. 특히 <strong>2026년 연초 대비 주가가 급등한 전공정 장비주와 달리, 상대적으로 소외되었던 전공정 소재·부품(Parts) 섹터가 2027년 삼성전자 평택 P4 및 SK하이닉스 청주 M15X 본격 가동(Wafer Input Q 확장)과 맞물려 최우선 리레이팅 타깃</strong>으로 부각됨.</li>
+<li><strong>LS증권 (<code>26.09.29.LS증권.AI병목의 전이.pdf</code> p.2-3, p.13 그림3)</strong>: AI 병목이 HBM을 넘어 범용 D램 및 고단화 낸드로 확산되면서 웨이퍼 투입량(Q)이 동반 증가하고 있으며, 공정 미세화·고단화로 플라즈마 가혹도가 극대화됨. 해당 보고서 <strong>p.13 [그림3] 소부장 서플라이체인 도표</strong>에서 <strong>하나머티리얼즈는 <code>Si, Quartz Ring</code> 부문과 <code>SiC Ring</code> 부문 양쪽 모두의 대표 과점 공급사</strong>로 명시됨.</li>
+<li><strong>하나증권 (<code>26.09.02.하나증권.증설의 시대, 후공정의 수혜도 함께 온다.pdf</code> p.6-7, p.41 도표58, p.43 도표60)</strong>: 반도체 장비가 리드타임에 따라 단발성으로 인식되는 것과 달리, <strong>전공정 소모성 부품(Parts)은 웨이퍼 투입량(Wafer Input)에 비례하여 사이클 지속 기간이 가장 길게 나타남(p.43 도표60)</strong>. 또한 <strong>p.41 [도표58] 글로벌 피어 밸류에이션 표</strong>에서 식각 파츠 경쟁사인 <strong>티씨케이(TCK)가 26F PER 24.9배(27F 20.6배)</strong>에 거래되는 반면, <strong>하나머티리얼즈는 컨센서스 기준 26F PER 12.7배(27F 9.7배)</strong>로 현저한 밸류에이션 갭을 보임.</li>
+<li><strong>기업 DART 팩트 대조 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>가동률 및 수익성 수직 복원</strong>: <code>[하나머티리얼즈]반기보고서(2026.08.13)</code> p.23에 따르면 반기 생산능력(<code>2,247,744시간</code>) 대비 실제 생산실적은 <strong><code>1,881,341시간</code></strong>으로 상반기 평균 가동률이 <strong><code>83.70%</code> (1Q <code>79.62%</code> $\rightarrow$ 2Q <code>87.77%</code>, 생산금액 기준 가동률 <code>88.89%</code>)</strong>까지 급등함 (2023년 <code>40.77%</code>, 2024년 <code>64.15%</code>, 2025년 <code>66.56%</code> 대비 완벽한 피크아웃 탈출).</li>
+<li><strong>아산 제2사업장 선제 증설 효과 및 영업레버리지 폭발</strong>: 2025년 하반기 준공된 아산 제2사업장 신공장 라인이 메모리 HBM/선단 D램 및 고단화 3D NAND 식각 공정용 대구경 일체형 Si/SiC 파츠 수요를 흡수하며, 2026년 상반기 연결 매출액 <strong><code>1,834.9억 원 (YoY +49.51%)</code></strong>, 영업이익 <strong><code>473.1억 원 (YoY +174.82%, 반기 OPM 25.79%)</code></strong>을 기록함. 특히 <strong>2026년 2분기 단독 매출액 <code>900.8억 원 (YoY +46.4%, QoQ -3.6%)</code>, 영업이익 <code>260.2억 원 (YoY +206.1%, QoQ +22.2%, OPM 28.88%)</code></strong>으로 가동률이 85% 임계점을 돌파하자 고정비 레버리지 효과가 극대화됨을 숫자로 입증함.</li>
+</ul>
+<h3>② [원재료 매크로] 원/달러 환율 안정화 및 폴리실리콘/잉곳 단가 하향 안정화 (마진 스프레드 확대)</h3>
+<ul>
+<li><strong>글로벌 트렌드 팩트 (<code>Global_Trend</code> 원문 검증)</strong>:</li>
+<li><strong>유안타증권 (<code>26.10.08.유안타증권.sam but differ.pdf</code> p.3-4) &amp; 대신증권 (<code>26.10.01.대신증권.결국은 본업.pdf</code> p.1)</strong>: 원/달러 환율 피크아웃 및 글로벌 폴리실리콘 공급 과잉 지속은 원재료 수입 비중이 높은 내수 중심 제조업체의 원가율(COGS)을 구조적으로 개선시켜 본업 마진 스프레드를 확대하는 핵심 요인임.</li>
+<li><strong>기업 DART 팩트 대조 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>잉곳(Ingot) 매입 단가 YoY -23.2% 하락</strong>: <code>[하나머티리얼즈]반기보고서(2026.08.13)</code> p.24 원재료 매입 현황을 보면, 동사는 핵심 원재료인 다결정 실리콘 및 잉곳의 <strong><code>72.8%</code> (<code>133.5억 원 / 183.4억 원</code>)를 해외(일본 미쓰비시머티리얼즈[MMC] 등)에서 수입</strong>하는 반면, 제품 매출의 <strong><code>70.53%</code> (<code>1,294.1억 원</code>)는 국내(원화 결제 및 로컬 공급)</strong>에서 발생함.</li>
+<li>실제 원재료 <strong>Ingot kg당 평균 매입 단가는 <code>2024년 199,686원/kg</code> $\rightarrow$ <code>2025년 183,836원/kg</code> $\rightarrow$ <code>2026년 상반기 141,094원/kg</code>으로 전년 대비 <code>-23.2%</code> 급락(2024년 대비 <code>-29.3%</code> 하락)</strong>함. 가동률 상승(<code>87.77%</code>)에 따른 고정비 부담 완화와 원재료 단가 하락(<code>-23.2%</code>)이 동시에 맞물리며 2026년 2분기 영업이익률이 <strong><code>28.88%</code></strong>(2021~2022년 슈퍼사이클 고점 OPM <code>29.1~30.3%</code>에 근접)까지 수직 복원됨.</li>
+</ul>
+<h3>③ [주주환원 테마] 자본준비금 감액 및 비과세 배당(감액배당) 확정</h3>
+<ul>
+<li><strong>글로벌 트렌드 팩트 (<code>Global_Trend</code> 원문 검증)</strong>:</li>
+<li><strong>대신증권 (<code>26.10.07.대신증권.배당투자 오디세이.pdf</code> p.3-4, p.47-50)</strong>: 상법 제461조의2에 따른 자본준비금(주식발행초과금) 감액 및 이익잉여금 전입을 통한 <strong>비과세 배당(감액배당)</strong>은 일반 개인주주에게 배당소득세(<code>15.4%</code>) 면제 및 금융소득종합과세(최고 <code>49.5%</code>) 제외 혜택을 제공하여 실질 배당수익률을 약 <code>+18.2%</code> 이상 높이는 강력한 밸류업(Value-Up) 리레이팅 촉매로 작용함.</li>
+<li><strong>기업 DART 팩트 대조 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>2026.10.13 주주총회소집공고 (<code>20261013000258</code>) 확정</strong>: 2026년 9월 11일 이사회 결의(<code>20260911000431</code>)에 이어 10월 13일 최종 확정 공시된 소집공고에 따르면, 오는 <strong>2026년 10월 28일 09:00 아산 제2사업장 대강당</strong>에서 열리는 임시주주총회(전자투표 <code>10.18~10.27</code>) 제1호 의안으로 <strong><code>자본준비금 감소의 건(주식발행초과금 36,496,087,277원을 감액하여 이익잉여금으로 전입)</code></strong>이 상정됨.</li>
+<li>이는 유통주식수(<code>19,289,452주</code>) 기준 주당 약 <strong><code>1,892원</code></strong>에 달하는 비과세 배당 재원을 확보하는 것으로, 과거 연간 주당 300원(시가배당률 <code>0.56%</code>, 배당성향 <code>15.1%</code>)에 머물렀던 저배당 기조를 탈피하고 최대주주(하나마이크론)의 현금 흐름 확보 니즈와 소액주주의 비과세 배당 니즈를 동시에 충족시키는 확실한 주주환원 모멘텀임.</li>
 </ul>
 <hr />
-<h3>② 당사 영향 및 팩트 대조: 내러티브가 아닌 '이미 숫자로 증명된 어닝 서프라이즈'</h3>
-<p>글로벌 트렌드 리포트가 제시한 <strong>"웨이퍼 투입 + 가동률 램프 이후 전공정 식각 소모품 반복 수요 확대"</strong> 시나리오가 하나머티리얼즈의 실제 재무제표에 반영되고 있는지 Phase 1 DART 공시 팩트와 1:1 대조한 결과는 다음과 같습니다:</p>
+<h3>🛡️ [Defender 3] 산업 기술 대체 리스크 (Tech Substitution Risk) 교차 검증</h3>
+<p>글로벌 기술 패러다임 변화 속에서 하나머티리얼즈의 주력 제품인 <strong>실리콘(Si) 일체형 일렉트로드(Electrode) 및 포커스링(Cathode/Ring)</strong>이 <strong>극저온 식각(Cryo Etching) 도입이나 탄화규소(SiC) 링 침투</strong>에 의해 도태될 가능성(Value Trap)이 있는지 엄격히 검증합니다.</p>
+<ol>
+<li><strong>SiC(탄화규소) 링의 Si(실리콘) 링 잠식 리스크</strong>:</li>
+<li><strong>리스크 논리</strong>: 3D NAND 단수가 300~400단 이상으로 높아지면서 고출력 플라즈마 내구성이 뛰어난 SiC 포커스링 채택이 늘어나 기존 Si 링 시장을 잠식할 수 있다는 우려.</li>
+<li><strong>방어 논거 및 DART 실측</strong>:<ul>
+<li><strong>첫째, 상부 일렉트로드(Si Electrode)의 기술적 비대체성</strong>: 식각 챔버 하부의 포커스링(Focus Ring)은 일부 고난도 산화막(Oxide) 식각 공정에서 SiC로 대체될 수 있으나, 챔버 상부에서 수백~수천 개의 미세 가스 분사 홀(Through-hole)을 정밀 가공해야 하는 <strong>대구경 실리콘 일렉트로드(Si Electrode)는 소재의 가공성·열충격 저항성·파티클 제어 특성상 SiC로 대체가 불가능</strong>하며 하나머티리얼즈가 글로벌 독과점 지위를 유지하고 있음.</li>
+<li><strong>둘째, GAA 전환에 따른 폴리실리콘(Poly-Si) 및 SiGe 식각 공정 증가</strong>: <code>26.10.15.유안타증권.2027Issue&amp;Theme(change).pdf</code> (<code>p.6-8</code>)에서 확인되듯, 파운드리 및 차세대 메모리의 GAA 전환은 나노시트(Si/SiGe) 채널 형성을 위한 실리콘 계열 식각 공정을 오히려 대폭 증가시킴. 실리콘 계열 식각 챔버에서는 오염 방지를 위해 동질 소재인 <strong>고순도 단결정 Si 파츠(Si Ring &amp; Si Electrode)</strong> 사용이 필수적임. 실제 동사의 2026년 상반기 <strong>Si 부품 매출은 <code>1,630.7억 원</code>으로 전년 동기(<code>1,069.6억 원</code>) 대비 <code>+52.46%</code> 급증</strong>하며 대체 우려가 기우임을 증명함.</li>
+<li><strong>셋째, 자체 SiC Ring 내재화 및 Dual-Portfolio 구축</strong>: 동사는 이미 <code>Hybrid SiC Ring</code> 및 순수 <code>SiC Ring</code>을 자체 개발·양산하여 <code>기타 부품(2026.1H 185.5억 원, YoY +29.5%)</code> 라인업으로 북미/일본 장비사 및 국내외 소자업체에 공급 중임 (<code>26.09.29.LS증권.AI병목의 전이.pdf p.13 그림3</code>에서 Si/Quartz Ring과 SiC Ring 양대 부문 핵심 공급사로 동시 등재).</li>
+</ul>
+</li>
+<li><strong>극저온 식각(Cryo Etching) 도입에 따른 파츠 소모량 감소 우려</strong>:</li>
+<li><strong>리스크 논리</strong>: 도쿄일렉트론(TEL) 등이 400단 이상 3D NAND 채널홀 식각에 도입하는 극저온 식각 장비는 식각 속도를 높여 웨이퍼당 공정 시간을 단축시키므로 파츠 소모량이 줄어들 수 있다는 우려.</li>
+<li><strong>방어 논거 및 지배구조 팩트</strong>:<ul>
+<li>극저온 식각 장비 제조사인 <strong>도쿄일렉트론(TEL, Tokyo Electron Korea Ltd.)은 하나머티리얼즈의 지분 <code>13.78%(2,726,200주)</code>를 보유한 2대 주주이자 최우선 전략적 파트너</strong>임 (19년간의 독점적 합작·파트너십).</li>
+<li>극저온(<code>-60°C ~ -70°C</code>)과 고출력 플라즈마가 교차하는 극한 챔버 환경에서는 열충격 저항성과 전기전도도가 특수 설계된 <strong>차세대 대구경 일체형(One-piece) Si/SiC 파츠</strong>가 필수적이며, 일반 범용 파츠 대비 <strong>평균판매단가(ASP)가 1.5~2.0배 이상 상승</strong>하여 물량 효과를 단가 상승(P)과TEL향 점유율(M/S) 확대로 충분히 상쇄함.</li>
+</ul>
+</li>
+<li><strong>검증 판정</strong>: <strong>🟢 기술 대체 리스크 매우 낮음 (Pass)</strong> — Si Electrode의 비대체성, GAA 공정 확장에 따른 Si 파츠 수요 증가(1H Si 매출 YoY +52.5%), TEL(지분 13.78%)과의 혈맹, 자체 SiC 파츠 양산으로 기술 전환이 오히려 ASP 상승 요인으로 작용함.</li>
+</ol>
+<hr />
+<h2>1.1. S-Curve 침투율 단계 및 타이밍 매트릭스 (Penetration &amp; Timing Matrix)</h2>
+<p><code>Global_Trend/s_curve_registry.json</code>의 산업별 침투율 데이터와 하나머티리얼즈의 DART 부문별 매출 구성을 결합하여 S-Curve 위치를 판정합니다.</p>
+<blockquote>
+<p><strong>[🚨 <code>SKILL.md</code> v4.1 신사업 단독 매출 미공시 = '0원 무상 콜옵션(할증 0%)' 처리 규칙 엄수]</strong>
+1. <strong>DART 단독 매출 공시 여부 검증</strong>: <code>[하나머티리얼즈]반기보고서(2026.08.13)</code> p.22 주요 제품 등의 현황을 전수 조사한 결과, <strong>① 차세대 SiC 파츠(SiC Ring/Hybrid SiC)</strong>는 단독 매출액이 분리 공시되지 않고 <strong><code>기타 부품(SiC Ring, Tube, Disk, Ingot 합산 묶음공시: 185.5억 원, 매출 비중 10.11%)</code></strong> 내에 혼재되어 있어 <strong>단독 신기술 노출도 컷오프(<code>30%</code>)에 미달(<code>10.11% &lt; 30%</code>)</strong>합니다. <strong>② 차세대 실리콘 음극재(Si Anode)</strong>는 2027년 6월 30일 준공 예정으로 현재 DART 매출이 <strong><code>0.0% (0원)</code></strong>입니다.
+2. <strong>무상 콜옵션(Free Call Option) 분리 및 S-Curve 멀티플 할증 영구 차단</strong>: 따라서 <code>SKILL.md</code> v4.1 제4원칙 및 Phase 1 Section 8(<code>backtest_valuation.py</code> v4.1 <code>--dart-exposure 10.11</code>)에 의거하여, <strong>SiC 파츠와 실리콘 음극재는 모두 '0원 무상 콜옵션(Free Call Option)'으로 엄격히 분리</strong>하며, <strong>Phase 3 적정 멀티플 산출 시 S-Curve 가산 배수(<code>sc_mult</code>)를 <code>1.00배(할증 0%)</code>로 강제 고정</strong>합니다 (과거 구버전 보고서의 임의 할증 <code>+10~12%</code> 완전 폐기).
+3. <strong>본업(전공정 식각용 Si/기타 소모성 파츠) 기준 공식 시그널 도출</strong>: 반면 동사 매출의 <strong><code>98.98%</code> (<code>Si 부품 88.87% + 기타 부품 10.11%</code>)</strong>를 차지하는 본업(반도체 전공정 식각 챔버용 소모성 파츠)은 HBM·선단 DRAM·고단화 3D NAND·GAA 파운드리 가동률 회복 사이클의 직접적인 수혜를 받고 있으므로, 공식 투자 시그널은 <strong><code>🟢 [본업 가치 매수 + 신사업 무상 콜옵션]</code></strong>으로 판정합니다.</p>
+</blockquote>
+<h3>📊 [표 1-1] 사업부별 S-Curve 침투율 및 무상 콜옵션 분리 매트릭스</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분 (사업부 / 기술)</th>
+<th style="text-align: center;">DART 매출 비중 (2026.1H 실측)</th>
+<th style="text-align: center;">단독 공시 여부 및 30% 컷오프 판정</th>
+<th style="text-align: center;">S-Curve 단계 (침투율 구간)</th>
+<th style="text-align: center;">Phase 3 멀티플 할증 (<code>sc_mult</code>)</th>
+<th style="text-align: left;">분류 및 밸류에이션 반영 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>① 반도체 식각용 Si 파츠 본업</strong><br>(Si Electrode, Si Ring 등)</td>
+<td style="text-align: center;"><strong>88.87%</strong><br>(<code>1,630.7억 원</code>)</td>
+<td style="text-align: center;"><strong>단독 공시 (Pass)</strong><br>핵심 캐시카우 본업</td>
+<td style="text-align: center;"><strong>Stage 2~3</strong><br>(선단공정·GAA 확장기 / 성숙기 캐시카우)</td>
+<td style="text-align: center;"><strong>×1.00배 (0%)</strong><br>(본업 사이클 복원)</td>
+<td style="text-align: left;"><strong>본업 가치 평가의 핵심 축</strong><br>2Q 가동률 <code>87.77%</code>, OPM <code>28.88%</code> 실적으로 Forward EPS/BPS에 직접 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>② 기타 반도체 부품 내 SiC 파츠</strong><br>(SiC Ring, Tube, Disk, Ingot 묶음)</td>
+<td style="text-align: center;"><strong>10.11%</strong><br>(<code>185.5억 원</code> 묶음)</td>
+<td style="text-align: center;"><strong>단독 미공시 (Fail)</strong><br>묶음 전체도 <code>10.11% &lt; 30%</code></td>
+<td style="text-align: center;"><strong>Stage 2 초기</strong><br>(글로벌 침투율 <code>~22.0%</code> 추정)</td>
+<td style="text-align: center;"><strong>×1.00배 (0%)</strong><br><strong>(할증 영구 차단)</strong></td>
+<td style="text-align: left;"><strong>🎁 0원 무상 콜옵션 #1</strong><br>단독 매출 30% 이상 분리 공시 전까지 멀티플 프리미엄(0%) 완전 배제</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>③ 이차전지 실리콘 음극재</strong><br>(폐슬러지 재활용 Si Anode)</td>
+<td style="text-align: center;"><strong>0.00%</strong><br>(<code>0원</code>, 투자 진행 중)</td>
+<td style="text-align: center;"><strong>매출 미발생 (Fail)</strong><br>2027.06.30 준공 예정</td>
+<td style="text-align: center;"><strong>Stage 1 (태동기)</strong><br>(글로벌 침투율 <code>~3.0%</code> 미만)</td>
+<td style="text-align: center;"><strong>×1.00배 (0%)</strong><br><strong>(할증 영구 차단)</strong></td>
+<td style="text-align: left;"><strong>🎁 0원 무상 콜옵션 #2 (단기 비용 차감)</strong><br>멀티플 할증은 0%로 차단하되, 27.2H 준공 후 <strong>초기 상각·고정비(<code>-60억/6M</code>)는 보수적으로 비용 차감</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>④ 상품 및 금융부문 기타</strong></td>
+<td style="text-align: center;"><strong>1.02%</strong><br>(<code>18.8억 원</code>)</td>
+<td style="text-align: center;">비주력 부수 매출</td>
+<td style="text-align: center;">해당 없음</td>
+<td style="text-align: center;"><strong>×1.00배 (0%)</strong></td>
+<td style="text-align: left;">본업 현금흐름에 통합</td>
+</tr>
+</tbody>
+</table>
+<h3>📊 [표 1-2] S-Curve 침투율 × 주가/밸류에이션 타이밍 매트릭스 (단일 기준 주가 53,400원 기준)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">검증 축 (Dimension)</th>
+<th style="text-align: left;">현재 상태 및 실측 데이터 (2026-10-16 종가 <code>53,400원</code> 기준)</th>
+<th style="text-align: left;">기준 임계치 (Threshold)</th>
+<th style="text-align: left;">판정 및 해석</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>① 기술/사이클 포지션 (S-Curve &amp; Cycle)</strong></td>
+<td style="text-align: left;">• <strong>본업(전공정 식각 파츠 98.98%)</strong>: HBM3E/HBM4·GAA 파운드리·300단+ NAND 웨이퍼 투입(Q) 회복 및 2027년 P4/M15X 가동 앞둔 <strong>사이클 확장 초입 (2Q26 가동률 <code>87.77%</code>)</strong><br>• <strong>신사업(SiC 파츠 &amp; 실리콘 음극재)</strong>: DART 단독 매출 30% 미만(<code>10.11%</code> 묶음 / <code>0.0%</code>)으로 <strong>무상 콜옵션(<code>sc_mult = 1.00</code>)</strong> 분리</td>
+<td style="text-align: left;">본업 가동률 <code>&gt; 80%</code> 돌파 &amp; 신사업 할증 <code>0%</code> 보수적 통제</td>
+<td style="text-align: left;"><strong>본업 어닝 서프라이즈 실측 확인</strong><br>(가짜 테마 프리미엄 거품 0%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>② 주가/밸류에이션 위치 (Valuation Position)</strong></td>
+<td style="text-align: left;">• <strong>현재 주가</strong>: <strong><code>53,400원</code></strong> (유통시총 <code>10,300.6억 원</code>)<br>• <strong>현재 PBR</strong>: <strong><code>1.68배</code></strong> (공식 유통 BPS <code>31,788원</code> 기준)<br>  - 10년 밴드(<code>1.24배 ~ 6.39배</code>) 하위 <strong>19.2% 구간</strong><br>  - 3년 평균(<code>2.08배</code>) 대비 <strong>-19.2% 할인</strong>, 3년 하위 20%(<code>1.49배</code>) 근접<br>• <strong>현재 PER</strong>: <strong><code>16.45배</code></strong> (DART TTM <code>16.05배</code>, 26.1H 연환산 <code>13.77배</code>)<br>  - 3년 평균(<code>23.93배</code>) 대비 <strong>-31.3% 할인</strong>, 피어 TCK(<code>26F 24.9배</code>) 대비 반값 수준<br>• <strong>Bear 하단 주가(<code>47,210원</code>) 대비 괴리</strong>: <strong><code>-11.6%</code></strong> (하방 경직성 확보)</td>
+<td style="text-align: left;">3Y 평균 멀티플(<code>2.08배</code>) 이하 &amp; Bear 하방 리스크 <code>-15%</code> 이내</td>
+<td style="text-align: left;"><strong>실적 폭증(2Q OP +206.1%) 대비 멀티플이 역사적 하단권에 머무른 저평가 구간</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>🎯 최종 타이밍 매트릭스 시그널</strong></td>
+<td style="text-align: left;"><strong><code>🟢 [본업 가치 매수 + 신사업 무상 콜옵션]</code></strong><br><em>(Core Value Buy + Free Call Option)</em></td>
+<td style="text-align: left;">본업 <code>op_mult = 1.00</code> × 신사업 <code>sc_mult = 1.00</code> (<code>🛡️대안 B = 🚀대안 A</code> 단일화)</td>
+<td style="text-align: left;"><strong>신사업 할증(0%) 없이 순수 본업 PBR 밴드 평균(<code>2.08~2.42배</code>) 회귀만으로도 강력한 업사이드 확보</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. 주간/시장 내러티브 및 회계적 무결성 심층 검증 (Weekly &amp; Market Narrative)</h2>
+<p>시장과 언론에서 회자되는 하나머티리얼즈의 4대 핵심 내러티브를 DART 원문 공시 및 <strong>회계적 무결성 4대 원칙(감가상각비·유효이자·환율·지배구조)</strong>으로 엄격히 검증합니다.</p>
+<h3>① [신사업 &amp; CapEx 회계 검증] 702억 원 실리콘 음극재(Si Anode) 양산 투자: 기술적 실체 vs 초기 상각비 부담</h3>
+<ul>
+<li><strong>시장 내러티브</strong>: "하나머티리얼즈가 반도체 Si 잉곳/파츠 가공 공정에서 발생하는 고순도 실리콘 폐슬러지를 재활용하여 원가 경쟁력이 뛰어난 이차전지용 실리콘 음극재 양산에 본격 진출한다."</li>
+<li><strong>DART 공시 및 특허 팩트 확인 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>신규시설투자 공시 (<code>2026.08.12</code>, 접수번호 <code>20260812900903</code>)</strong>: 이차전지용 실리콘 음극재 양산라인 구축을 위해 자기자본 대비 <code>12.14%</code>에 해당하는 <strong><code>702억 원</code></strong> 투자를 결의함. 투자기간은 <strong><code>2026-08-12 ~ 2027-06-30</code></strong>(약 10.5개월).</li>
+<li><strong>특허권 확보 실체 (<code>반기보고서 p.32</code>)</strong>: 단순 구상이 아니라 <code>2024.03.11</code> 등록특허 <strong>'실리콘 슬러지 정제 방법'</strong>(고순도 Si 파츠 가공 시 발생하는 폐슬러지에서 불순물을 제거해 배터리용 고순도 실리콘 분말을 회수하는 원가 절감 핵심 기술) 및 <code>2026.04.20</code> 등록특허 <strong>'리튬 이차전지용 음극 활물질 및 그 제조 방법'</strong>을 이미 확보함.</li>
+<li><strong>🔍 회계적 무결성 교차 검증 (Phase 3 시나리오 반영 파라미터)</strong>:</li>
+<li><strong>무상 콜옵션 분류</strong>: 현재 매출이 <code>0원</code>이므로 Phase 3 목표 멀티플 할증은 <strong><code>0% (sc_mult = 1.00)</code></strong>로 완전 차단함.</li>
+<li><strong>준공 직후 초기 감가상각비 및 고정비 차감 필수</strong>: 투자 완료일(<code>2027-06-30</code>) 직후인 <strong>2027년 하반기(12M Forward 산정 구간 내 6개월 포함)</strong>부터 배터리 셀/소재 고객사 퀄(Qualification) 테스트 및 초기 저율 가동 기간 동안 매출 기여 없이 비용이 먼저 발생함. 동사 반기보고서 주석의 내용연수(건물 30~40년, 기계장치 5~6년)를 적용할 때 <code>702억 원</code> 설비(기계장치 비중 75% 가정)에서 발생하는 <strong>신규 감가상각비 연 약 <code>93.7억 원</code> + 초기 가동 고정비(인건비·전력비·시운전비) 연 약 <code>26.3억 원</code> = 연간 약 <code>120.0억 원</code>(반기 6개월 기준 <code>-60.0억 원</code>)의 영업이익 차감 요인</strong>을 Phase 3의 12M Forward 영업이익 추정치에 보수적으로 선반영해야 함.</li>
+</ul>
+<h3>② [재무/이자비용 회계 검증] 1,000억 원 무이자(0.0%) 사모 교환사채(EB) 발행과 차입금 차환 효과</h3>
+<ul>
+<li><strong>시장 내러티브</strong>: "보유 중이던 모회사 하나마이크론 주식을 담보로 표면·만기금리 0.0%의 무이자 교환사채 1,000억 원을 발행하여 고금리 은행 차입금 900억 원을 상환함으로써 금융비용을 대폭 절감했다."</li>
+<li><strong>DART 공시 팩트 확인 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>주요사항보고서(<code>2026.09.02</code>) 및 증권발행결과(<code>2026.09.14</code>, <code>20260914900381</code>)</strong>: 제5회 무기명식 무보증 사모 교환사채 <strong><code>1,000억 원</code></strong> 발행 완료. <strong>표면이자율 <code>0.0%</code>, 만기보장수익률(YTM) <code>0.0%</code></strong>, 만기일 <code>2028-09-14</code>(2년 만기 일시상환).</li>
+<li><strong>교환 대상</strong>: 자사주가 아닌 동사가 보유 중인 <strong>하나마이크론(067310) 보통주 <code>2,907,991주</code></strong>(교환가액 <strong><code>34,388원</code></strong>, 리픽싱 조항 없음)이므로, 교환권 행사 시에도 <strong>하나머티리얼즈의 발행주식수 희석(Dilution)은 <code>0주(0.0%)</code></strong>임.</li>
+<li><strong>자금 사용 목적</strong>: 산업은행(<code>600억 원</code>) 및 신한은행(<code>300억 원</code>) 시설자금 대출 총 <strong><code>900억 원</code> 상환</strong> + 원자재 구매 등 운영자금 <strong><code>100억 원</code></strong>.</li>
+<li><strong>🔍 회계적 무결성 교차 검증 (Phase 3 시나리오 반영 파라미터)</strong>:</li>
+<li><strong>순차입금(Net Debt) 불변 원칙</strong>: 기존 은행 차입금 <code>900억 원</code>을 상환하고 사채(교환사채 부채) <code>1,000억 원</code>이 유입(현금 <code>+100억 원</code> 증가)되었으므로, <strong>장부상 총차입금에서 현금성자산을 뺀 순차입금 규모 자체는 2026.2Q 말 기준 <code>+716.5억 원</code>(<code>총차입금 1,192.4억 − 현금성자산 475.9억</code>) 수준에서 실질적으로 동일하게 유지</strong>됨 (역DCF EV 산출 시 순차입금 <code>+716.5억 원</code> 차감 없이 100% 반영).</li>
+<li><strong>현금 이자 절감 vs K-IFRS 유효이자율 상각비 반영</strong>: 연 4.0~4.5%대 은행 대출 <code>900억 원</code> 상환으로 <strong>실제 현금 유출 이자비용은 연간 약 <code>36~40억 원</code> 절감</strong>됨. 그러나 K-IFRS 회계기준상 무이자(0%) 교환사채는 일반 사채 현재가치와 액면가(<code>1,000억 원</code>)의 차이를 교환권 대가(파생상품부채 등)로 분리 인식한 뒤 만기(2년)에 걸쳐 <strong>연간 약 <code>30~35억 원</code>의 비현금성 유효이자율 상각비(금융비용)</strong>로 손익계산서에 계상해야 함. 따라서 손익계산서상 순금융비용은 <code>0원</code>이 되는 것이 아니라 <strong>연간 약 <code>20~25억 원</code>의 순금융비용(이자비용 − 이자수익)</strong>이 계속 인식되는 것으로 Phase 3 세전이익을 산출해야 하며, 만기(<code>2028.09.14</code>)까지 하나마이크론 주가가 교환가액(<code>34,388원</code>)에 미달할 경우 발생할 <code>1,000억 원</code> 차환(Refinancing) 리스크를 점검 지표로 관리해야 함.</li>
+</ul>
+<h3>③ [지배구조 &amp; 우발부채 검증] 베트남 계열사 2,608.6억 원(자기자본의 44.0%) 채무보증 및 최대주주 주식담보 472.46만 주</h3>
+<ul>
+<li><strong>시장 내러티브</strong>: "실적 턴어라운드에도 불구하고 하나머티리얼즈가 경쟁사(티씨케이 등) 대비 만성적인 멀티플 할인을 받는 이유는 모회사 하나마이크론 그룹 관련 채무보증과 최대주주 주식담보 계약 때문이다."</li>
+<li><strong>DART 공시 팩트 확인 (<code>1_Raw_Data</code> 검증)</strong>:</li>
+<li><strong>반기보고서 우발부채 공시(<code>p.18, p.198</code>) 및 타인에대한채무보증결정</strong>: 동사는 모회사 하나마이크론의 베트남 패키징 법인인 <strong><code>HANA MICRON VINA CO., LTD.</code></strong>의 시설자금 차입(<code>USD 200,000,000</code>)에 대해 <strong>연대보증(보증기간 <code>2024.11.28 ~ 2029.11.28</code>)</strong>을 제공하고 있음. 원화 환산 보증금액은 이사회 결의 기준 <strong><code>2,608.6억 원</code></strong>(반기말 환율 적용 시 약 <code>2,700억 원</code> 수준)으로, 2026.2Q 말 동사 <strong>지배주주 자본총계(<code>6,131.7억 원</code>) 대비 무려 <code>44.0%</code></strong>에 달함. (안전장치로 모회사 하나마이크론으로부터 동사 주식 <code>987,633주</code>[<code>2,608.6억 원</code> 상당]를 역담보로 제공받음).</li>
+<li><strong>최대주주변경을수반하는주식담보제공계약체결 기재정정(<code>2026.09.29</code>, <code>20260929900849</code>) 및 대량보유상황보고서(<code>2026.09.30</code>, <code>20260930000828</code>)</strong>: 최대주주인 <strong>하나마이크론(주)</strong>는 보유 지분 <strong><code>6,428,508주</code>(지분율 <code>32.50%</code>, 특수관계인 포함 <code>8,957,208주</code> [<code>44.84%</code>])</strong> 중 총 8건의 계약(한국산업은행 담보 및 하나머티리얼즈 연대보증 역담보 등)을 통해 합계 <strong><code>4,724,610주</code>(보유주식의 <code>73.5%</code>, 발행주식총수의 <code>23.89%</code>, 담보설정총액 <code>3,388.6억 원</code>)</strong>를 담보로 제공 중임. 공시 원문상 <strong>"담보권이 전부 실행될 경우 최대주주 하나마이크론의 소유주식수는 <code>1,703,898주(지분율 8.62%)</code>로 감소하여 2대 주주인 도쿄일렉트론코리아(<code>2,726,200주, 13.78%</code>)보다 낮아져 최대주주가 변경될 수 있음"</strong>이 명시되어 있음.</li>
+<li><strong>🔍 회계적 무결성 교차 검증 (Phase 3 시나리오 반영 파라미터)</strong>:</li>
+<li>역담보(<code>987,633주</code>)가 설정되어 있고 베트남 법인(HANA MICRON VINA)이 정상 가동 중이나, 자기자본의 <code>44.0%</code>에 달하는 계열사 채무보증과 최대주주 지분의 <code>73.5%</code> 담보 제공은 코리아 디스카운트(지배구조 오버행)의 명백한 사유임.</li>
+<li>따라서 <code>SKILL.md</code> v4.1의 <strong>시나리오 4대 회계 무결성 원칙(④ 계열사 채무보증·중복상장 지배구조 할인 10~20% 강제)</strong>에 의거, Phase 3 시나리오 밸류에이션 산출 시 <strong>피어(TCK 26F PER 24.9배) 대비 지배구조 할인율(Governance Discount 10~15%)을 내재화한 보수적 멀티플(<code>Base PBR 2.15배 [3Y 평균 2.08배 근방], Base PER 18.0배</code>)</strong>을 적용하여 목표주가 거품을 원천 차단함.</li>
+</ul>
+<h3>④ [주주환원 &amp; 지배구조 시너지] 2026.10.28 임시주총 비과세 감액배당(364.96억 원)의 숨은 연결고리</h3>
+<ul>
+<li><strong>시장 내러티브</strong>: "단순한 주주환원 이벤트를 넘어, 최대주주 하나마이크론의 유동성 확충 니즈와 소액주주의 비과세 배당 확대 니즈가 완벽히 일치하는 구조적 변화다."</li>
+<li><strong>DART 공시 및 인과관계 검증</strong>:</li>
+<li>앞서 검증한 바와 같이 최대주주 하나마이크론(<code>32.50%</code>) 및 특수관계인(최창호 회장 <code>11.15%</code> 등 합산 <code>44.84%</code>)은 차입금 상환 및 담보 유지를 위해 자회사인 하나머티리얼즈로부터 안정적인 현금 배당 유입이 절실한 상황임.</li>
+<li><code>2026.10.28</code> 임시주총(<code>20261013000258</code>)을 통해 주식발행초과금 <strong><code>364.96억 원</code></strong>을 이익잉여금으로 전입하면, 대주주(최창호 회장 등 개인 특수관계인)는 최고 <code>49.5%</code>의 금융소득종합과세 없이 배당금을 수령할 수 있고, 일반 소액주주 역시 <code>15.4%</code> 배당소득세 없이 100% 세전 금액 그대로 배당을 수령하게 됨.</li>
+<li>동사의 2026년 상반기 FCF가 <strong><code>+283.7억 원</code></strong>(최근 4분기 TTM FCF <strong><code>+567.3억 원</code></strong>)으로 급증한 상태이므로, 2026년 결산배당부터 주당배당금(DPS)의 대폭 상향 및 비과세 지급이 실행될 개연성이 극도로 높음.</li>
+</ul>
+<hr />
+<h2>3. 사용자 투자 가설 점검표 (User Hypothesis Verification)</h2>
+<p><code>Weekly_Trend/thesis_log.md</code>에 등재된 9대 핵심 투자 가설의 최신 검증 결과입니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">가설 번호 및 내용</th>
+<th style="text-align: left;">검증 소스 (<code>Global_Trend</code> &amp; <code>DART</code>)</th>
+<th style="text-align: center;">판정</th>
+<th style="text-align: left;">핵심 검증 코멘트 (숫자 및 팩트 중심)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>가설 1</strong>: AI 반도체(HBM·선단 DRAM·300단+ NAND) 가동률 회복 및 아산 제2사업장 가동이 실적으로 직결되는가?</td>
+<td style="text-align: left;">• <code>26.08.13 반기보고서</code> (p.22, p.23)<br>• <code>26.09.29 LS증권</code> (p.2-3, p.13)</td>
+<td style="text-align: center;"><strong>🟢 강화 (Reinforced)</strong></td>
+<td style="text-align: left;">2026.1H 매출 <strong><code>1,834.9억(YoY +49.51%)</code></strong>, 영업이익 <strong><code>473.1억(YoY +174.82%)</code></strong>. 가동률 2023년 <code>40.77%</code> $\rightarrow$ 1Q26 <code>79.62%</code> $\rightarrow$ <strong>2Q26 <code>87.77%</code></strong>로 수직 상승하며 2Q OPM <strong><code>28.88%</code></strong> 달성.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 2</strong>: 극저온 식각(Cryo Etching) 및 SiC 링 대체에도 불구하고 주력 Si 파츠 경쟁력과 TEL 파트너십이 유효한가?</td>
+<td style="text-align: left;">• <code>26.10.15 유안타증권</code> (p.6-8, p.12-15)<br>• <code>26.08.13 반기보고서</code> (p.22)</td>
+<td style="text-align: center;"><strong>🟢 강화 (Reinforced)</strong></td>
+<td style="text-align: left;">상부 Si Electrode는 SiC 대체 불가, GAA 전환으로 Si/SiGe 식각 스텝 오히려 증가. 1H Si 부품 매출 <strong><code>1,630.7억(YoY +52.46%)</code></strong> 급증. 2대 주주 TEL(<code>13.78%</code>)과의 19년 혈맹 및 자체 SiC Ring 내재화로 완벽 방어.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 3</strong>: 차세대 SiC 파츠의 S-Curve 성장 모멘텀이 밸류에이션 할증 요인이 될 수 있는가?</td>
+<td style="text-align: left;">• <code>26.08.13 반기보고서</code> (p.22)<br>• <code>s_curve_registry.json</code> &amp; <code>SKILL.md</code> v4.1</td>
+<td style="text-align: center;"><strong>🟡 중립 / 무상 콜옵션 분리</strong></td>
+<td style="text-align: left;">기타 부품(<code>185.5억</code>, YoY +29.5%)이 고성장 중이나 DART상 Tube/Disk/Ingot과 묶음공시(<code>10.11% &lt; 30% 컷오프</code>)됨. <strong><code>SKILL.md</code> v4.1에 의거 S-Curve 멀티플 할증(<code>sc_mult = 1.00</code>, <code>0%</code>)을 원천 차단하고 '0원 무상 콜옵션 #1'으로 분리</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 4</strong>: 702억 원 실리콘 음극재(Si Anode) 양산 투자가 중장기 신성장 동력인가? (초기 비용 영향 포함)</td>
+<td style="text-align: left;">• <code>26.08.12 신규시설투자등</code><br>• <code>26.08.13 반기보고서</code> (p.32 특허)</td>
+<td style="text-align: center;"><strong>🟡 중립 / 무상 콜옵션 + 초기비용 차감</strong></td>
+<td style="text-align: left;">폐슬러지 정제 특허(<code>24.03.11</code>) 및 음극활물질 특허(<code>26.04.20</code>) 기반 <code>702억 원</code> 투자(<code>27.06.30</code> 준공). 현재 매출 <code>0%</code>이므로 <strong>무상 콜옵션 #2(할증 0%)</strong>로 분류하되, 27.2H 준공 직후 <strong>초기 상각·고정비(연 <code>120억</code>, 반기 <code>-60억</code>)를 12M Fwd OP에서 보수적 차감</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 5</strong>: 1,000억 원 무이자(0.0%) 교환사채(EB) 발행이 주주가치 희석 없이 재무구조를 개선하는가?</td>
+<td style="text-align: left;">• <code>26.09.14 증권발행결과(자율공시)</code></td>
+<td style="text-align: center;"><strong>🟢 유효 (회계적 유효이자 반영)</strong></td>
+<td style="text-align: left;">하나마이크론 지분 담보 발행으로 동사 주식 희석 <code>0%</code>. 은행대출 <code>900억</code> 상환으로 현금이자 연 <code>36~40억</code> 절감. 단, 장부상 순차입금(<code>+716.5억</code>)은 유지되며 K-IFRS <strong>비현금 유효이자 상각비(연 <code>30~35억</code>, 순금융비용 연 <code>20~25억</code>)</strong> 및 28년 차환 리스크를 반영해야 함.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 6</strong>: 364.96억 원 자본준비금 감액 결의가 비과세 배당 확대로 이어지는가?</td>
+<td style="text-align: left;">• <code>26.10.13 주주총회소집공고</code><br>• <code>26.10.07 대신증권</code> (p.3-4, p.47-50)</td>
+<td style="text-align: center;"><strong>🟢 강화 (Reinforced)</strong></td>
+<td style="text-align: left;"><strong>2026-10-28 09:00 임시주총 소집 확정</strong>. 주식발행초과금 <code>364.96억 원</code>(유통주식 주당 약 <code>1,892원</code>) 이익잉여금 전입으로 <code>15.4%</code> 배당소득세 면제 비과세 배당 재원 확정.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 7</strong>: 최대주주(하나마이크론) 주식담보(472.46만 주) 및 베트남 계열사 채무보증(2,608.6억 원) 리스크는 통제 가능한가?</td>
+<td style="text-align: left;">• <code>26.09.29 기재정정 주식담보계약</code><br>• <code>26.09.30 대량보유상황보고서</code></td>
+<td style="text-align: center;"><strong>🟠 주의 (지배구조 할인 10~15% 적용)</strong></td>
+<td style="text-align: left;">베트남 계열사 채무보증(<code>2,608.6억</code>, 자기자본의 <code>44.0%</code>, 역담보 <code>98.76만 주</code> 확보) 및 최대주주 담보제공(<code>472.46만 주</code>, 전량 실행 시 지분율 <code>32.50%</code> $\rightarrow$ <code>8.62%</code> 하락 가능성). Phase 3에서 <strong>지배구조 할인(10~15%)</strong>을 멀티플에 상시 반영하여 보수적으로 통제.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 8</strong>: 원/달러 환율 안정화 및 원재료 잉곳 단가 하락이 마진 스프레드를 확대하는가?</td>
+<td style="text-align: left;">• <code>26.08.13 반기보고서</code> (p.22, p.24)<br>• <code>26.10.08 유안타증권</code> (p.3-4)</td>
+<td style="text-align: center;"><strong>🟢 강화 (Reinforced)</strong></td>
+<td style="text-align: left;">매출 내수 비중 <code>70.53%</code> vs 원재료 잉곳 수입 비중 <code>72.8%</code>. <strong>Ingot 매입 단가가 <code>25년 183,836원/kg</code> $\rightarrow$ <code>26.1H 141,094원/kg</code>(YoY <code>-23.2%</code>)으로 급락</strong>하며 2Q26 OPM <code>28.88%</code> 달성의 핵심 동력으로 입증됨.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 9</strong>: [26.10.15 신규] GAA 전환의 메모리 확산 및 2027년 P4·M15X 가동이 전공정 부품주로의 수급/모멘텀 이동을 견인하는가?</td>
+<td style="text-align: left;">• <code>26.10.15 유안타증권</code> (p.3, p.6-8, p.12-15)<br>• <code>26.09.02 하나증권</code> (p.41, p.43)</td>
+<td style="text-align: center;"><strong>🟢 신규 강화 (New Reinforced)</strong></td>
+<td style="text-align: left;">GAA 구조의 파운드리(삼성 2nm 수율 60%대)·메모리 동시 확산으로 식각 난이도 및 스텝 수 급증. 2026년 장비주 강세 이후 2027년 P4·M15X 웨이퍼 투입(Q) 확장에 따라 <strong>전공정 소모성 파츠(하나머티리얼즈 현재 PBR <code>1.68배</code>, PER <code>16.45배</code>)로의 리레이팅 바통 터치</strong> 조건 완비.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. 심층 분석 및 Phase 3 밸류에이션 연결고리 (Synthesis for Phase 3)</h2>
+<p>Phase 1의 팩트/백테스트 결과와 Phase 2의 내러티브/회계적 무결성 검증을 종합하여, <strong>Phase 3 (역DCF 및 가치함정 차단 액션 플랜)</strong>에 상속할 5대 핵심 파라미터를 다음과 같이 확정합니다.</p>
+<ol>
+<li><strong>단일 기준 주가 및 분자/분모 앵커 고정</strong>:</li>
+<li><strong>단일 기준 주가 (<code>curr_d_close</code>)</strong>: <strong><code>53,400원</code></strong> (유통주식수 <code>19,289,452주</code>, 유통시총 <code>10,300.6억 원</code>).</li>
+<li><strong>현재 지배주주 BPS / EPS</strong>: 공식 유통 BPS <strong><code>31,788원</code></strong> (현재 PBR <strong><code>1.68배</code></strong>), 공식 지배주주 EPS <strong><code>3,246원</code></strong> (DART 4Q TTM <code>3,328원</code>, 2026.1H 연환산 <code>3,878원</code>, 지배주주 귀속률 <strong><code>100.0%</code></strong>).</li>
+<li><strong>1순위 주 밸류에이션 지표 및 Forward Anchor 상속</strong>:</li>
+<li>Phase 1 Section 8의 10년(494주) 주봉 백테스트 결과에 따라 <strong>1순위 지표인 <code>PBR</code> ($R^2 = 0.55$, 방향 일치율 <code>66.7%</code>)</strong>과 <strong>공동 주 지표인 <code>PER</code> ($R^2 = 0.29$, 방향 일치율 <code>52.8%</code>)</strong>을 Phase 3 시나리오 표의 주 멀티플로 상속합니다 (방향 일치율 <code>33.3%</code>인 배당수익률은 허위 상관으로 완전 배제).</li>
+<li>특히 PBR을 주 멀티플로 채택함에 따라, 단순 과거 장부가(<code>31,788원</code>)가 아니라 12M Forward 지배주주 순이익 유보분(비과세 배당 유출 차감 후)을 가산한 <strong><code>12M Forward BPS</code></strong>를 밸류에이션 Anchor로 적용합니다.</li>
+<li><strong>12M Forward 실적 추정의 4대 회계 무결성(Accounting Integrity) 반영</strong>:</li>
+<li><strong>매출 및 본업 OPM</strong>: 2026.1H 실적(<code>매출 1,834.9억, 영업이익 473.1억, 2Q OPM 28.88%</code>)과 2027년 P4·M15X 가동 및 GAA 식각 스텝 증가를 반영하여 반도체 파츠 본업의 12M Forward 매출을 <code>3,950억 ~ 4,200억 원</code>(Base <code>4,050억 원</code>)으로 추산하되,</li>
+<li><strong>① 실리콘 음극재 초기 상각·고정비 차감</strong>: <code>2027.06.30</code> 준공되는 <code>702억 원</code> 음극재 라인의 초기 감가상각비 및 고정비 부담(<strong>연간 <code>-120억 원</code>, 12M Forward 구간 내 6개월분 <code>-60억 원</code></strong>)을 본업 영업이익에서 명시적으로 차감합니다.</li>
+<li><strong>② 0% EB 유효이자 상각비 반영</strong>: <code>1,000억 원</code> 무이자 EB 발행으로 현금 이자는 줄어드나 K-IFRS상 비현금 유효이자 상각비(<code>연 30~35억 원</code>)가 발생하므로 <strong>연간 순금융비용 <code>-20~25억 원</code></strong>을 차감하여 세전이익 및 지배주주 순이익(유효세율 약 <code>20.0%</code>)을 산출합니다.</li>
+<li><strong>S-Curve 할증 0% (<code>sc_mult = 1.00</code>) 및 지배구조 할인(10~15%) 내재화</strong>:</li>
+<li>DART 단독 매출 30% 미만인 SiC 파츠(<code>10.11%</code> 묶음)와 실리콘 음극재(<code>0.0%</code>)는 <strong>0원 무상 콜옵션</strong>으로 분리하여 <strong><code>sc_mult = 1.00 (0%)</code></strong> 및 <strong><code>op_mult = 1.00 (0%)</code></strong>을 엄격히 적용합니다 (<code>🛡️대안 B = 🚀대안 A</code>).</li>
+<li>또한 베트남 계열사 채무보증(<code>2,608.6억 원</code>, 자기자본의 <code>44.0%</code>) 및 최대주주 주식담보(<code>472.46만 주</code>) 오버행을 반영하여, 피어(TCK 26F PER 24.9배) 및 자사 3Y 상위 밴드(<code>PBR 2.42~2.80배</code>) 대비 <strong>10~15% 지배구조 할인을 적용한 보수적 멀티플</strong>로 Bull/Base/Bear 적정주가를 산출합니다.</li>
+<li><strong>역DCF 2행 병기 (Equity vs EV)</strong>:</li>
+<li>유통시총(<code>10,300.6억 원</code>) 기준과 순차입금(<code>+716.5억 원</code>)을 가산한 실질 기업가치(<strong><code>EV = 11,017.1억 원</code></strong>) 기준 내재 요구성장률(Implied CAGR)을 2행으로 나란히 병기하여 시장 기대치의 과열 여부를 교차 검증합니다.</li>
+</ol>
+<hr />
+<h2>💡 Phase 2 최종 요약 테이블 (Executive Summary)</h2>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">검증 항목</th>
-<th style="text-align: left;">글로벌 트렌드 내러티브 (기대치)</th>
-<th style="text-align: left;">하나머티리얼즈 DART 공시 팩트 (실제치)</th>
-<th style="text-align: left;">일치 여부 및 레버리지 진단</th>
+<th style="text-align: left;">핵심 팩트 및 검증 결과</th>
+<th style="text-align: left;">Phase 3 연결 판정</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>전방 웨이퍼 투입 및 설비 가동률</strong></td>
-<td style="text-align: left;">2026년 P4·M15X 램프 개시 및 메모리 감산 종료로 전공정 가동률 본격 회복 <code>[글로벌 트렌드: 26.09.02.하나증권...pdf p.6-7]</code></td>
-<td style="text-align: left;">2023년 <strong>40.77%</strong>(저점) $\rightarrow$ 2024년 <strong>64.15%</strong> $\rightarrow$ 2025년 <strong>66.56%</strong> $\rightarrow$ 1Q26 <strong>79.62%</strong> $\rightarrow$ <strong>1H26 누적 83.70% (2Q26 단독 87.77%, 원가기준 88.89%)</strong> <code>[공시 팩트: 2026 반기보고서 p.24]</code></td>
-<td style="text-align: left;"><strong>100% 부합 (V자 급반등)</strong><br>신규 아산 2공장 증설 캐파(연 449.55만 시간)가 빠르게 채워지며 완연한 풀가동 초입 진입</td>
+<td style="text-align: left;"><strong>글로벌 사이클 &amp; 테마 적합성</strong></td>
+<td style="text-align: left;">• <strong>GAA 전환(파운드리+메모리) 및 2027 P4·M15X 가동(<code>26.10.15 유안타</code>)</strong>으로 식각 파츠(Q) 장기 확장 사이클 진입<br>• 2Q26 가동률 <strong><code>87.77%</code></strong>, 잉곳 단가 <strong><code>YoY -23.2%</code></strong> 하락으로 <strong>2Q26 OPM <code>28.88%</code>(YoY +206.1%)</strong> 달성</td>
+<td style="text-align: left;"><strong>🟢 최상 (Strong Fit)</strong><br>전공정 장비주에서 소모품(Parts)으로의 리레이팅 국면</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>외형 성장 (매출액)</strong></td>
-<td style="text-align: left;">웨이퍼 투입 총량 비례 소모성 교체 수요 확대 <code>[글로벌 트렌드: 26.09.02.하나증권...pdf p.43 도표60]</code></td>
-<td style="text-align: left;"><strong>2026년 반기 누적 연결 매출액 1,834.9억 원 (YoY +49.51%)</strong> <code>[공시 팩트: 2026 반기보고서 p.37, p.40]</code><br>• 실리콘부품(Si): <strong>1,630.7억 원</strong> (88.87%, 내수 1,212.4억 / 수출 418.3억)<br>• 기타부품(SiC 외): <strong>185.5억 원</strong> (10.11%, 내수 75.4억 / 수출 110.1억) <code>[공시 팩트: p.22, p.25]</code></td>
-<td style="text-align: left;"><strong>100% 부합 (사상 최대 페이스)</strong><br>내수 메모리 투톱(삼성·SK) 발주 급증과 해외 장비사(TEL 등)향 Si·SiC 수출 동반 약진</td>
+<td style="text-align: left;"><strong>기술 대체 리스크 (Defender 3)</strong></td>
+<td style="text-align: left;">• 상부 <strong>Si Electrode는 SiC 대체 불가</strong>, GAA 전환 시 Si/SiGe 식각 증가로 <strong>1H Si 부품 매출 <code>YoY +52.5%</code> 급증</strong><br>• 2대 주주 <strong>TEL(<code>13.78%</code>)</strong>과의 독점적 파트너십 및 자체 SiC Ring 양산으로 대체 리스크 완벽 방어</td>
+<td style="text-align: left;"><strong>🟢 통과 (Pass)</strong><br>기술 진화가 오히려 대구경 일체형 파츠 ASP 상승 견인</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>영업레버리지 및 수익성 (OPM)</strong></td>
-<td style="text-align: left;">컨센서스 2026F EPS 성장률 <strong>+104.3%</strong>, 2027F <strong>+30.7%</strong> 추정 <code>[추정: 26.09.02.하나증권...pdf p.41 도표58]</code></td>
-<td style="text-align: left;"><strong>2026년 반기 누적 영업이익 473.1억 원 (YoY +174.82%, 누적 OPM 25.79%)</strong> — 반기 만에 2025년 온기 영업이익(500.8억)의 <strong>94.5%</strong> 달성!<br>• <strong>2Q26(3개월) 단독 OPM 28.88%</strong> (매출 900.9억, 영업이익 260.2억, YoY <strong>+206.1%</strong>, 1Q26 OPM 22.80% 대비 <strong>+6.08%p 급등</strong>) <code>[공시 팩트: 2026 반기보고서 p.40]</code></td>
-<td style="text-align: left;"><strong>기대치 대폭 상회 (어닝 서프라이즈)</strong><br>가동률 80% 돌파에 따른 고정비 희석 + 주원재료 Ingot 매입단가 <strong>YoY -23.2% 하락</strong>(183,836원 $\rightarrow$ 141,094원/kg) <code>[공시 팩트: p.23]</code>의 이중 수혜 폭발</td>
+<td style="text-align: left;"><strong>S-Curve &amp; 무상 콜옵션 분리</strong></td>
+<td style="text-align: left;">• 본업 식각 파츠 노출도 <strong><code>98.98%</code></strong> vs DART 단독 미공시 SiC(<code>10.11%</code> 묶음) &amp; 음극재(<code>0.0%</code>)<br>• <code>SKILL.md</code> v4.1에 의거 <strong>신사업 멀티플 할증 영구 차단(<code>sc_mult = 1.00</code>, <code>0%</code>) 및 0원 무상 콜옵션 분리</strong></td>
+<td style="text-align: left;"><strong><code>🟢 [본업 가치 매수 + 신사업 무상 콜옵션]</code></strong><br>(<code>🛡️대안 B = 🚀대안 A</code> 단일화)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>잉여현금흐름 (FCF) 전환</strong></td>
-<td style="text-align: left;">대규모 설비투자(CapEx) 종료 후 현금 회수기 진입 기대</td>
-<td style="text-align: left;">2023년 FCF <strong>-764.5억</strong>(아산 2공장 집중 투자) $\rightarrow$ 2024년 <strong>+335.2억</strong> $\rightarrow$ 2025년 <strong>+485.2억</strong> $\rightarrow$ <strong>1H26 반기 FCF +283.7억 원 (YoY +208.5% 폭증)</strong> <code>[공시 팩트: 2025 사업보고서 p.40-41, 2026 반기보고서 p.43]</code></td>
-<td style="text-align: left;"><strong>100% 부합 (강력한 현금창출력)</strong><br>선제적 CapEx 사이클 종료 후 본격적인 현금 회수(Harvesting) 구간 진입 확인</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Peer 대비 밸류에이션 매력도</strong></td>
-<td style="text-align: left;">전공정 소재·부품 평균 26F P/E 16.9배, 27F P/E 11.5배 (티씨케이 26F 24.9배, 27F 18.8배) 대비 <strong>하나머티리얼즈 26F P/E 12.7배, 27F P/E 9.7배</strong> <code>[추정: 26.09.02.하나증권...pdf p.41 도표58]</code></td>
-<td style="text-align: left;">최신 실측(2026.10.15, 현재가 51,800원 기준), <strong>공식 PBR 1.63배, PER 15.96배(연환산 13.36배)</strong>로 과거 10년 중앙값(2.75배) 및 3년 평균(2.08배)을 대폭 하회하며, 3년 하위 20% Bear 지지선(54,450원) 아래로 과매도 진입</td>
-<td style="text-align: left;"><strong>극단적 안전마진 (Valuation Deep Discount)</strong><br>Si 부품 마진 착시 및 단기 노이즈로 3Y 하단까지 밀려나 극대화된 손익비 제공</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>✅ <strong>팩트체크 타격 결과: [ True — 전공정 '증설의 시대' 최장기 소모품 수혜 내러티브는 반기 영업이익 +174.82% 및 2Q26 단독 OPM 28.88%라는 확정 공시 숫자로 완벽히 입증됨 ]</strong></li>
-</ul>
-<hr />
-<h2>1.1 S-Curve 침투율 &amp; 매매 타이밍 진단 매트릭스 (Global S-Curve 레이더 연동)</h2>
-<p>[검증 나침반] 
-글로벌 테크 S-Curve 중앙 관제소(<code>korean cycle/00_megatrend/docs/s_curve_registry.json</code>, <code>s_curve_spec.md</code> v1.0.0)에 등재된 <code>th_sic_focus_ring</code> 레코드를 참조하고, 검증 원본(<code>26.09.29.LS증권.AI병목의 전이.pdf p.13 그림3</code>), Phase 1 DART 공시 팩트(1순위 진실 계층) 및 <code>backtest_valuation.py</code>의 <code>🛡️대안 B vs 🚀대안 A</code> 가중 계수 엔진(2026.10.15 실측)을 대조하여 진단 매트릭스를 작성합니다.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">진단 항목</th>
-<th style="text-align: left;">정량 수치 및 상태</th>
-<th style="text-align: left;">출처 및 근거 (No-Blind-Citation &amp; 진실 계층)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>소속 신기술 테마</strong></td>
-<td style="text-align: left;"><strong>① [1차 S-Curve / 본업 캐시카우] 대구경 실리콘(Si) 일체형 전극(Electrode) 및 링(Ring)</strong><br><strong>② [2차 S-Curve / 고성장 엔진] 극저온·고플라즈마 식각용 Solid/Hybrid SiC 포커스링 (<code>th_sic_focus_ring</code>)</strong><br><strong>③ [3차 S-Curve / 차세대 옵션] 이차전지용 실리콘 음극재 (본업 고순도 Si 스크랩 업사이클링)</strong></td>
-<td style="text-align: left;">• <code>s_curve_registry.json</code> (<code>th_sic_focus_ring</code>)<br>• <code>[공시 팩트: 2026 반기보고서 p.22, p.25, p.32]</code><br>• <code>[공시 팩트: 2026.08.12 신규시설투자등]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>현재 산업 침투율</strong></td>
-<td style="text-align: left;">• <strong>Solid SiC 포커스링 (<code>th_sic_focus_ring</code>) 통합 침투율:</strong> <strong>28.5%</strong> (전분기 22.0%, QoQ <strong>+6.5%p</strong> 가속)<br>• <strong>대구경 Si Electrode/Ring:</strong> 성숙기 과점 시장 내 <strong>당사 가동률 2023년 40.77% $\rightarrow$ 1H26 누적 83.70% (2Q26 87.77%)</strong> 급반등<br>• <strong>이차전지용 실리콘 음극재:</strong> <strong>약 3~5% 미만의 극초기 태동기</strong> (2027.06.30 양산 라인 완공 예정)</td>
-<td style="text-align: left;">• <code>s_curve_registry.json</code> (<code>composite_value = 28.5%</code>, <code>[글로벌 트렌드: 26.09.29.LS증권...pdf p.13 그림3]</code> 실측 대조)<br>• <code>[공시 팩트: 2026 반기보고서 p.24 가동률]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>S-Curve 국면 판정</strong></td>
-<td style="text-align: left;"><strong>⭐ Phase 2: 골든 스위트스팟 (Solid/Hybrid SiC 링 28.5%) + 가동률 V자 시클리컬 업사이클 초입 (대구경 Si 부품 88.87%) + Phase 1 태동기 (실리콘 음극재)</strong></td>
-<td style="text-align: left;"><code>s_curve_spec.md</code> v1.0.0 다중 S-Curve 분류 기준</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>공식 투자 액션 시그널</strong></td>
-<td style="text-align: left;"><strong><code>[적극 매수 &amp; 추세추종]</code></strong> (Aggressive Buy &amp; Ride)</td>
-<td style="text-align: left;">침투율 10~40% 구간 &amp; 가동률 80% 돌파 영업레버리지 폭발 구간</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>하이브리드 밸류체인 지위 (Truth Hierarchy 검증)</strong></td>
-<td style="text-align: left;">• <strong>[1순위 DART 팩트 교정]:</strong> 3순위 JSON 추정치(25.0%)와 달리, DART 2026년 반기보고서(<code>p.22, p.25</code>) 실측 기준 <strong>'기타 부품(SiC Ring 외)' 매출은 185.5억 원(<code>10.11%</code>)</strong>으로 순수 Solid SiC 단일 테마 기준으로는 <code>&lt; 30%</code>(<code>[⚠️ SiC 단일 테마 부분 노출]</code>)임.<br>• <strong>그러나 주력인 '실리콘부품(대구경 Si Electrode &amp; Ring, <code>88.87%</code>, 1,630.7억 원)' 역시 사양길 레거시가 아닌 동일한 전공정 식각 챔버 필수 소모품</strong>이므로, <strong>'전공정 식각 소모품 통합 테마' 노출도는 <code>98.98%</code>로 완벽한 <code>[🟢 전공정 식각 소모품 순수 주도주]</code></strong>이자 <strong><code>[💎 TEL(13.78%) 캡티브 &amp; 잉곳 내재화 히든 챔피언]</code></strong>으로 판정함.</td>
-<td style="text-align: left;">• <strong>Truth Hierarchy 원칙:</strong> 1순위 DART 공시 실측치(Si 부품 88.87% + SiC 외 기타부품 10.11% = 식각 소모품 합산 <strong>98.98%</strong>) 최종 채택 <code>[공시 팩트: 2026 반기보고서 p.22, p.25, p.162]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Phase 3 <code>🚀대안 A</code> 할증 연동 (<code>backtest_valuation.py</code> 2026.10.15 실측)</strong></td>
-<td style="text-align: left;"><strong>Base <code>×1.1000 (+10.0%)</code> | Bull <code>×1.1200 (+12.0%)</code> | Bear <code>×1.0000 (고정)</code></strong><br>• ① DART 실적 모멘텀(<code>op_mult</code>): <strong><code>×1.00 (중립)</code></strong> <em>(26.2Q OP YoY +206.1%이나 TTM ROE 10.47% &lt; 12% 임계치로 보수적 0% 적용)</em><br>• ② S-Curve Phase 2(<code>sc_mult</code>): <strong><code>Base ×1.10 (+10.0%) / Bull ×1.12 (+12.0%)</code></strong></td>
-<td style="text-align: left;">• <code>backtest_valuation.py</code> 실측: 전공정 식각 부품 익스포저($\ge 30\%$) 및 S-Curve Phase 2 스위트스팟 검증 통과 (<code>26.09.29.LS증권...pdf p.13</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>3Y 밴드 가이드라인 목표가 (현재가 51,800원 기준)</strong></td>
-<td style="text-align: left;">• <strong>Bull (호황):</strong> 🛡️대안 B <strong>114,100원</strong> (+120.3%) | 🚀대안 A <strong>127,790원</strong> (+146.7%)<br>• <strong>Base (기본):</strong> 🛡️대안 B <strong>80,940원</strong> (+56.3%) | 🚀대안 A <strong>89,030원</strong> (+71.9%)<br>• <strong>TP1 (단기):</strong> 🛡️대안 B <strong>63,320원</strong> (+22.2%) | 🚀대안 A <strong>63,320원</strong> (+22.2%)<br>• <strong>Bear (하방):</strong> 🛡️대안 B·A 공통 <strong>54,450원</strong> (+5.1% — 현재가 아래 하방 지지)</td>
-<td style="text-align: left;">• <code>backtest_valuation.py</code> 10년 풀사이클 주봉 494캔들 실측 결과</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>차기 변곡점 모니터링</strong></td>
-<td style="text-align: left;">• 아산사업장 가동률 <strong>90% 돌파</strong> 및 분기 OPM <strong>28~30%</strong> 안착 여부<br>• <strong>2026.10.28 임시주총</strong> 자본준비금(364.96억) 감액 가결 및 연말 비과세 배당 확정</td>
-<td style="text-align: left;">2026년 3분기·연간 정기보고서 및 임시주총 결과 공시 추적</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong><code>Weekly_Trend/thesis_log.md</code> 자동 연동:</strong> 본 진단 결과는 사용자 핵심 가설(<code>[가설 7] 다중 S-Curve &amp; 전공정 최장기 사이클 결합 리레이팅 가설</code> 및 <code>[가설 8] 🛡️대안 B vs 🚀대안 A 목표가 병기 및 20일 매물대·안전핀 기반 3분할 매수 가설</code>)로 자동 기록되어 Phase 3 밸류에이션 목표가 산정에 공식 반영됩니다.</li>
-</ul>
-<hr />
-<h2>2. Weekly 개별 리포트 및 시장 내러티브 검증</h2>
-<p>최근 시장과 증권가에서 하나머티리얼즈를 둘러싸고 제기된 4대 핵심 내러티브(우려 및 기대)를 DART 공시 팩트 및 정량 데이터로 1:1 정밀 검증합니다.</p>
-<h3>① 내러티브 1: "Si 부품 비중(88.9%)이 너무 높고 SiC 비중(10.1%)이 낮아, 낸드 고단화 사이클에서 마진율 상승이 제한적일 것이다"</h3>
-<ul>
-<li><strong>핵심 전제:</strong> 극저온 식각(Cryo Etching) 및 200단 이상 3D NAND 공정에서는 고단가 Solid SiC 링 채택이 늘어나는 반면, 하나머티리얼즈는 기존 Si(실리콘) 부품 비중이 약 89%에 달해 티씨케이(TCK) 대비 수익성 개선 폭이 뒤처질 것이라는 주장.</li>
-<li><strong>공시 팩트 대조:</strong> [공시 팩트]</li>
-<li><strong>2Q26 단독 OPM 28.88% 달성으로 마진 정체설 정면 반박:</strong> 2026년 반기보고서(<code>p.40</code>) 확인 결과, 1분기 연결 영업이익률 <strong>22.80%</strong>(매출 934.0억, 영업이익 213.0억)에서 <strong>2분기 단독 영업이익률은 무려 <code>28.88%</code>(매출 900.9억, 영업이익 260.2억, YoY +206.1%)로 불과 1개 분기 만에 +6.08%p 수직 상승</strong>했습니다. 반기 누적 영업이익은 <strong>473.1억 원(YoY +174.82%)</strong>으로 이미 2025년 연간 영업이익(500.8억 원)의 94.5%를 단 6개월 만에 달성했습니다 <code>[공시 팩트: 2026 반기보고서 p.37, p.40]</code>.</li>
-<li><strong>대구경 Si 잉곳 수직계열화 + 원재료 단가 -23.2% 하락의 이중 레버리지:</strong> 하나머티리얼즈의 Si 부품은 단순 외주 가공품이 아니라 대구경 단결정 실리콘 잉곳(Ingot)을 직접 성장시켜 가공하는 <strong>수직계열화 제품</strong>으로, 과거 풀가동기(2021~2022년)에도 전사 <strong>OPM 30.35% ~ 30.50%</strong>를 기록한 초고마진 캐시카우입니다 <code>[공시 팩트: 2023 사업보고서 p.26]</code>. 게다가 2026년 상반기 주원재료인 <strong>Ingot 매입 단가가 kg당 141,094원으로 전년(183,836원/kg) 대비 -23.2%, 2024년(199,686원/kg) 대비 -29.3% 급락</strong>하면서 원가율이 극적으로 개선되었습니다 <code>[공시 팩트: 2026 반기보고서 p.23]</code>.</li>
-<li><strong>식각 챔버 상단(Si Electrode)과 하단(Si/SiC Ring)의 동시 소모 구조:</strong> 3D NAND 고단화 및 선단 DRAM 공정에서 하단 포커스링 일부가 SiC로 전환되더라도, 챔버 상단의 <strong>대구경 실리콘 일체형 전극(Si Cathode/Electrode)은 대체 불가능한 필수 소모품</strong>으로서 고플라즈마 환경에서 교체 주기가 오히려 단축됩니다.</li>
-<li>✅ <strong>팩트체크 타격 결과: [ False — Si 부품 마진 정체설은 완벽한 시장의 착시이며, 2Q26 단독 OPM 28.88% 달성으로 티씨케이(2Q26 OPM 28.30%)를 오히려 상회하는 수익성 폭발력이 증명됨 ]</strong></li>
-</ul>
-<h3>② 내러티브 2: "702억 원 규모의 이차전지 실리콘 음극재 시설투자는 전기차 캐즘(Chasm) 시기에 무리한 자본 배분(CapEx)이 아닌가?"</h3>
-<ul>
-<li><strong>핵심 전제:</strong> 2026년 8월 12일 공시된 <strong>702억 원(자기자본 대비 15.14%) 규모의 이차전지용 실리콘 음극재 양산 라인 신규시설투자</strong>가 반도체 본업 호황기에 번 현금을 무관한 배터리 섹터에 소진시킬 것이라는 우려.</li>
-<li><strong>공시 팩트 대조:</strong> [공시 팩트]</li>
-<li><strong>특허로 입증된 본업 Si 스크랩 업사이클링(Upcycling) 원가 해자:</strong> 반기보고서 연구개발실적 및 지적재산권 내역(<code>p.29-32</code>)을 전수 확인한 결과, 동사는 이미 <strong><code>'실리콘 슬러지로부터 고순도 실리콘 분말 회수 및 정제 방법'</code>(2024.03.11 특허 등록)</strong>에 이어, 최근 <strong><code>'리튬 이차전지용 음극 활물질 및 그의 제조방법'</code>(2026.04.20 특허 등록)</strong>까지 핵심 특허 포트폴리오 구축을 완료했습니다 <code>[공시 팩트: 2026 반기보고서 p.32]</code>. 즉, 반도체 대구경 Si 잉곳 절단·연마 공정에서 매년 대량으로 발생하는 <strong>반도체급 초고순도(9N~11N급) 실리콘 커프(Kerf) 스크랩 및 슬러지를 음극재 원료로 재활용</strong>하므로, 타 음극재 업체들이 겪는 원재료 구매 부담을 극적으로 낮춘 파괴적 원가 구조를 보유하고 있습니다.</li>
-<li><strong>본업 FCF만으로도 자체 조달 가능한 재무 여력:</strong> 투자 기간은 <strong>2026년 8월 12일 ~ 2027년 6월 30일</strong>(약 10.5개월)로 분산 집행되며 <code>[공시 팩트: 2026.08.12 신규시설투자등]</code>, 동사의 2026년 상반기 6개월 영업현금흐름(CFO 439.6억 원) 및 연간 예상 EBITDA(1,300억~1,500억 원대)를 감안하면 재무 건전성 훼손 없이 자체 현금흐름으로 100% 감당 가능한 수준입니다.</li>
-<li>✅ <strong>팩트체크 타격 결과: [ 과장됨(Exaggerated) — 무관한 다각화가 아니라 본업 반도체 Si 슬러지 부산물을 재활용하는 특허 기반 업사이클링 투자이며, 본업 FCF로 충분히 자체 조달 가능함 ]</strong></li>
-</ul>
-<h3>③ 내러티브 3: "8월 노사 분규(직장폐쇄) 및 모회사 하나마이크론 관련 지배구조/재무 부담이 주가 발목을 잡고 있다"</h3>
-<ul>
-<li><strong>공시 팩트 대조:</strong> [공시 팩트]</li>
-<li><strong>8월 노사 이슈 조기 수습:</strong> 2026년 8월 하순(8.22~8.25) 부분파업 및 직장폐쇄 이슈가 단기 투자심리를 위축시켰으나 4일 만에 직장폐쇄가 해제되며 조기 정상화되었고, 반기보고서(<code>p.24</code>)상 2분기 가동률(87.77%)에서 확인되듯 생산 라인의 구조적 훼손은 전혀 없었습니다.</li>
-<li><strong>모회사 지분 활용 1,000억 원 '무이자(0.0%)' 교환사채(EB) 발행으로 고금리 차입금 900억 원 일거 상환:</strong> 동사는 보유 중이던 모회사 하나마이크론 지분 2,907,991주를 교환대상으로 하여 <strong>표면이자율 0.0%, 만기보장수익률(YTM) 0.0%, 교환가액 34,388원(할증 발행) 조건의 사모 교환사채 1,000억 원을 2026년 9월 14일 납입 완료</strong>했습니다 <code>[공시 팩트: 2026.08.04 교환사채권발행결정, 2026.09.14 증권발행결과]</code>. 조달 자금 중 <strong>900억 원을 기존 고금리 은행 시설대/운전대 상환에 즉시 투입</strong>함으로써, 하나머티리얼즈 신주 발행에 따른 <strong>주주 희석(Dilution) 0%</strong>로 연간 약 35억~40억 원의 이자비용을 절감하는 재무적 묘수를 달성했습니다. 또한 모회사 하나마이크론(주)에 대한 250억 원 채무보증 및 자금보충약정도 2026.08.04 조기상환으로 전액 해지 완료되었습니다 <code>[공시 팩트: 2026 반기보고서 p.179-180]</code>.</li>
-<li><strong>잔존 모니터링 요인 (베트남 관계사 채무보증):</strong> 다만 계열사 <code>HANA MICRON VINA CO., LTD.</code>의 KDB산업은행 시설자금 차입에 대해 제공한 <strong>USD 200,000,000(약 2,700억 원 규모, 보증기간 2023.06.29 ~ 2029.11.28)의 연대보증</strong> 건은 만기 시점까지 지속적인 추적 관찰이 필요합니다 <code>[공시 팩트: 2026 반기보고서 p.28, p.179]</code>.</li>
-<li>✅ <strong>팩트체크 타격 결과: [ 부분 유효 — 베트남 법인 채무보증은 지속 모니터링 요인이나, 노사 이슈는 4일 만에 종결되었고 1,000억 무이자 EB 발행으로 900억 차입금을 상환하여 재무 구조는 오히려 급격히 개선됨 ]</strong></li>
-</ul>
-<h3>④ 내러티브 4 (최신 10월 시장 이슈): "원/달러 환율 하락(원화 강세) 및 IT 3Q26 실적 시즌 경계감으로 주가가 5.1만 원대로 급락했으니 관망해야 하는가?"</h3>
-<ul>
-<li><strong>핵심 전제:</strong> 10월 초 원/달러 환율이 1,420원대로 하락하고 테크 대형주(삼성전자 잠정실적 등) 실적 시즌 진입에 따른 단기 변동성 확대로 코스닥 소부장 전반의 주가가 조정(당사 주가 64,300원 $\rightarrow$ 51,800원)을 받자, 실적 역풍 우려로 동반 매도해야 한다는 심리.</li>
-<li><strong>공시 팩트 대조:</strong> [공시 팩트]</li>
-<li><strong>환율 하락의 진실: 수출 타격 전무, 원재료 수입단가 추가 인하 수혜:</strong><ul>
-<li>동사의 2026년 반기 기준 <strong>내수 매출 비중은 <code>70.5%</code>(1,294.1억 원)</strong>로 압도적이며, 수출은 28.9%에 불과합니다 <code>[공시 팩트: 반기보고서 p.26]</code>.</li>
-<li>반면 주력 원재료인 다결정·단결정 Ingot의 <strong>수입 매입 비중은 <code>72.8%</code>(일본 MMC 외)</strong>에 달합니다 <code>[공시 팩트: p.23]</code>.</li>
-<li>따라서 원/달러 환율 하락은 매출 훼손 효과보다 <strong>원재료 매입원가 절감 효과가 훨씬 크게 작용하여 전사 매출총이익률(GPM) 및 OPM을 추가 개선시키는 확실한 호재</strong>로 작동합니다.</li>
-</ul>
-</li>
-<li><strong>3Y 하위 20% Bear 지지선(54,450원) 아래로의 일시적 과매도:</strong><ul>
-<li>최신 <code>backtest_valuation.py</code> 실측 결과, 현재 주가 <strong>51,800원</strong>은 과거 3년 PBR 하위 20% 지지선인 <strong>54,450원(PBR 1.49배)</strong>마저 일시 하회하는 <strong>PBR <code>1.63배</code></strong>의 극단적 언더슈팅(과매도) 구간입니다.</li>
-<li>2분기 단독 OPM 28.88%의 실적 체력과 10월 28일 비과세 감액배당 임시주총을 감안할 때, 현재의 주가 하락은 실적 훼손에 의한 것이 아니라 시장 센티멘트에 의한 <strong>비이성적 할인(안전마진 극대화 구간)</strong>입니다.</li>
-</ul>
-</li>
-<li>✅ <strong>팩트체크 타격 결과: [ False (기각) — 환율 하락은 수입 원자재(72.8%) 비중이 높은 동사에게 원가 절감 호재이며, 현재 주가(51,800원)는 Bear 지하실마저 뚫고 내려간 강력한 매수 찬스임 ]</strong></li>
-</ul>
-<hr />
-<h2>3. 사용자 투자 가설 검증 (<code>Weekly_Trend/thesis_log.md</code> 기반)</h2>
-<p><code>Weekly_Trend/thesis_log.md</code>에 기록된 사용자의 핵심 투자 가설(가설 1~8)을 DART 1차 공시 데이터 및 <code>backtest_valuation.py</code> 최신 실측치(2026.10.15)로 전수 대조 검증합니다.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">가설 번호 및 일자</th>
-<th style="text-align: left;">사용자 핵심 투자 가설 (<code>thesis_log.md</code>)</th>
-<th style="text-align: left;">DART 팩트 및 정량 데이터 기반 최종 검증 결과</th>
-<th style="text-align: center;">판정 상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>가설 1</strong><br><code>[26.09.11]</code></td>
-<td style="text-align: left;">"가동률이 100%에 근접하게 되면 SiC 링보다 수익률이 저조한 Si 링 매출 비중(88.9%)이 높기 때문에 매출 상승률에 비해 영업이익률 상승률은 낮을 확률이 높은가?"</td>
-<td style="text-align: left;"><strong>❌ 가설 기각 (오히려 영업이익률이 기하급수적으로 폭발함)</strong><br>• <strong>실증 팩트 1 (과거 풀가동 마진):</strong> Si 부품 비중이 90% 이상이었던 2021~2022년 풀가동기(가동률 97.5%) 당시 전사 영업이익률은 <strong>30.35% ~ 30.50%</strong>에 달했음 <code>[공시 팩트: 2023 사업보고서 p.26]</code>.<br>• <strong>실증 팩트 2 (2Q26 마진 수직 점프):</strong> 가동률이 1Q26 <strong>79.62%</strong>에서 2Q26 <strong>87.77%</strong>로 상승하자, 연결 영업이익률은 1Q26 <strong>22.80%</strong>에서 <strong>2Q26 단독 <code>28.88%</code>로 +6.08%p 폭등</strong>하여 동 분기 티씨케이(28.30%)를 추월함 <code>[공시 팩트: 2026 반기보고서 p.24, p.40]</code>.<br>• <strong>원인:</strong> 아산 2공장 대규모 감가상각비(고정비)가 가동률 80% 돌파 시점부터 급격히 희석되고, 대구경 Ingot 자체 성장 수직계열화 및 원재료 매입단가 하락(<strong>YoY -23.2%</strong>, <code>p.23</code>)이 맞물려 한계공헌이익률이 50% 이상으로 폭발하기 때문임.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>논리 훼손 (기각)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 2</strong><br><code>[26.09.11]</code></td>
-<td style="text-align: left;">"낸드 고단화 수혜에 따라 티씨케이는 주가가 상승추세인데 하나머티리얼즈는 주가 상승이 더딘 이유는 무엇인가?"</td>
-<td style="text-align: left;"><strong>⭕ 가설 타당 (시장 착시 + 단기 노이즈 겹침으로 밸류에이션 갭 발생)</strong><br>• 하나증권 Peer 밸류에이션 표(<code>26.09.02...pdf p.41 도표58</code>) 확인 결과, <strong>티씨케이(26F PER 24.9배, 27F 18.8배, 현재 PBR 5.94배)</strong> 대비 <strong>하나머티리얼즈(26F PER 12.7배, 27F 9.7배, 현재 PBR 1.63배)</strong>는 현저한 멀티플 할인을 받고 있음.<br>• 이는 ① 'SiC=고마진 vs Si=범용 저마진'이라는 시장의 피상적 오해, ② 8월 노사 직장폐쇄 단기 센티멘트 악화, ③ 8월 12일 702억 실리콘 음극재 CapEx 발표에 따른 단기 현금 유출 우려가 복합 작용한 결과로, <strong>2Q26 OPM 28.88% 실적이 증명된 현시점에서는 가장 강력한 키맞추기(Re-rating) 근거</strong>가 됨.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>유효함</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 3</strong><br><code>[26.09.11]</code></td>
-<td style="text-align: left;">"현재 설비가동용량을 100%로 가정 시 2026하반기부터 2027상반기 사이에 현재 캐파 100%를 상회할 수 있는 증설 완공 계획이 있는가?"</td>
-<td style="text-align: left;"><strong>⭕ 가설 타당 (아산 2공장 유휴 클린룸 모듈 증설 + 2027.06 음극재 완공)</strong><br>• <strong>반도체 본업:</strong> 아산 2공장 준공으로 연간 가동가능시간이 과거(75.3만 시간) 대비 <strong>6배 확대된 449.55만 시간(반기 224.77만 시간)</strong>으로 이미 확장되어 있으며 <code>[공시 팩트: 2026 반기보고서 p.24]</code>, 풀가동 시 연 4,500억~5,000억 원까지 대응 가능함. 또한 기구축된 클린룸 내 잉곳 그로워(Grower) 및 가공 장비만 보완 반입(리드타임 3~6개월)하면 100%를 초과하는 병목 해소가 즉각 가능함.<br>• <strong>신사업 완공 일정:</strong> 702억 원 규모 이차전지 실리콘 음극재 양산 라인이 <strong>2027년 6월 30일 완공 예정</strong>으로 공시됨 <code>[공시 팩트: 2026.08.12 신규시설투자등]</code>.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>유효함</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 4</strong><br><code>[26.09.17]</code></td>
-<td style="text-align: left;">"수직계열화로 원가 경쟁력이 높다고 하는데 SiC 링 파트도 원가경쟁력이 높은가?"</td>
-<td style="text-align: left;"><strong>🔺 부분 유효 (TCK 대비로는 낮으나, 후발주자 중 독보적 캡티브 및 기술 해자 보유)</strong><br>• CVD SiC 링 원조인 티씨케이 대비로는 CVD 증착 업력 차이로 마진율이 다소 낮으나, 하나머티리얼즈는 ① <strong>2대 주주 도쿄일렉트론(TEL, 지분 13.78%)향 OEM 캡티브 채널</strong> <code>[공시 팩트: p.162]</code>, ② 외측/내측 결합형 <strong>하이브리드(Si+SiC) 링</strong>을 통한 고객사 TCO 절감 솔루션 <code>[공시 팩트: p.29]</code>, ③ <strong><code>'재생 더미 실리콘 카바이드 링 제조방법'</code>(22.10.27 등록) 및 <code>'도전성 실리콘 카바이드 소결체 제조방법'</code>(23.11.27 등록)</strong> 등 SiC 원가 절감 특허 <code>[공시 팩트: p.30-31]</code>를 통해 후발사 대비 확고한 원가 우위를 확보함.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>부분 유효</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 5</strong><br><code>[26.09.17]</code></td>
-<td style="text-align: left;">"음극재 분야 진출이 시너지 효과를 낼 수 있을까? 기존 사업의 부산물로 음극재를 만든다고 들었는데 제대로 이해한 게 맞나?"</td>
-<td style="text-align: left;"><strong>⭕ 가설 완벽 적중 (특허 등록 내역으로 100% 팩트 검증 완료)</strong><br>• 반기보고서(<code>p.32</code>) 특허 내역에서 <strong><code>'실리콘 슬러지로부터 고순도 실리콘 분말 회수 및 정제 방법'</code>(특허 등록 2024.03.11)</strong>과 <strong><code>'리튬 이차전지용 음극 활물질 및 그의 제조방법'</code>(특허 등록 2026.04.20)</strong>이 공식 확인됨.<br>• 반도체 공정용 대구경 단결정 Si 잉곳 절단·가공 시 발생하는 초고순도 실리콘 슬러지 및 스크랩을 폐기하지 않고 음극재 원료로 직접 정제·업사이클링함으로써, 경쟁사 대비 원재료 원가를 혁신적으로 절감하는 구조적 시너지가 입증됨.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>유효함</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 6</strong><br><code>[26.09.17]</code></td>
-<td style="text-align: left;">"하나머티리얼즈의 기술력을 감안하면 실제 음극재 상용화 가능성은 어느 정도로 예측되는가?"</td>
-<td style="text-align: left;"><strong>🔺 중상위 수준의 현실적 가능성 (약 65% 추정, 2028년 본격 매출화 전망)</strong><br>• 단순 R&amp;D 단계를 넘어 2026.04.20 음극 활물질 제조 특허 등록 완료 후 <strong>2026.08.12에 자기자본의 15.14%(702억 원)를 투입하는 양산 라인 투자를 단행</strong>했다는 점은 잠재 고객사와의 사전 샘플 테스트에서 유의미한 물성 검증을 통과했음을 시사함.<br>• 다만 <strong>2027년 6월 30일 설비 완공</strong> 이후 배터리 셀 제조사의 양산 라인 인증(Qualification) 및 스웰링 장기 신뢰성 평가에 통상 6~12개월이 소요되므로, 실질적인 매출 기여는 <strong>2028년부터 본격화</strong>될 것으로 판단하여 보수적 타임라인 관리가 필요함.</td>
-<td style="text-align: center;"><strong>[진행 중]<br>부분 유효</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 7</strong><br><code>[26.10.06]</code></td>
-<td style="text-align: left;"><strong>[S-Curve &amp; 하이브리드 통합 가설]</strong> "삼성 P4·SK M15X 램프업에 따른 전공정 식각 소모품 최장기(Longest Duration) 사이클 속에서, 1차 S-Curve(Si 부품 88.87%, 가동률 83.7% $\rightarrow$ 95%+ 영업레버리지)와 2차 S-Curve(SiC 링 10.11%, Phase 2 골든 스위트스팟)의 동반 성장 및 무이자 EB 1,000억 재무 개선, 10.28 감액배당 주총 모멘텀이 결합되어 27F PER 9.7배의 극단적 저평가가 해소될 것이다."</td>
-<td style="text-align: left;"><strong>🔄 실시간 진행 중 (추적 지표 설정 완료)</strong><br>• <strong>실적 모멘텀:</strong> 1H26 영업이익 473.1억(YoY +174.8%), 2Q26 OPM <strong>28.88%</strong>(YoY +206.1%)로 이미 수익성 임계점 돌파 완료.<br>• <strong>재무/주주환원 모멘텀:</strong> 9월 14일 무이자 EB 1,000억 발행으로 차입금 900억 상환 완료 + <strong>10월 28일 임시주총 자본준비금(주식발행초과금 364.96억 원) 감액 및 이익잉여금 전입을 통한 비과세 감액배당 재원 확보</strong> <code>[공시 팩트: 2026.09.09 주주총회소집결의, 반기보고서 p.40]</code>.</td>
-<td style="text-align: center;"><strong>[진행 중]<br>유효함</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>가설 8</strong><br><code>[26.10.09 신규]</code></td>
-<td style="text-align: left;"><strong>[마스터 SOP <code>🛡️대안 B vs 🚀대안 A</code> &amp; 매물대 분할매수 가설]</strong> "순수 DART 3Y 멀티플 기반 보수적 목표가(<code>🛡️대안 B</code>) 대비 S-Curve Phase 2 골든 스위트스팟 할증(<code>Base +10.0% / Bull +12.0%</code>)을 반영한 <code>🚀대안 A</code> 목표가 병기, 그리고 일봉 20일 매물대 · 고정 바닥 안전핀 · 주봉 20주선 기반 3분할 매수 및 추세 홀딩 전략이 실전 손익비를 극대화하는가?"</td>
-<td style="text-align: left;"><strong>⭕ 가설 타당 (<code>backtest_valuation.py</code> 2026.10.15 정량 실측 검증 완료)</strong><br>• <strong>대안 A 할증 정당성:</strong> TTM ROE(10.47% &lt; 12%) 기준에 따라 실적 모멘텀 할증(<code>op_mult = ×1.00</code>)은 보수적으로 유보하되, 전공정 식각 소모품 통합 익스포저(98.98% $\ge 30\%$) 및 S-Curve Phase 2 스위트스팟(<code>sc_mult = Base ×1.10 / Bull ×1.12</code>) 할증을 적용한 <strong><code>🚀대안 A</code> 목표주가</strong>가 전공정 증설 사이클 상단 포착에 부합함.<br>• <strong>차트 매물대 실측 (10/15 최신):</strong> 현재 주가(51,800원)는 일봉 20일 매물대 POC(63,160~66,500원, 비중 36.9%) 및 고정 안전핀(61,265원), 주봉 20주선(57,460원) 아래로 내려온 극단적 과매도 상태로, 주봉 MACD Histogram(+2.5 양(+) 유지) 및 Slow Stochastic 골든크로스 대기 상태에서 <strong>1차 정찰병(30%) 강력 진입 구간</strong>을 형성함.</td>
-<td style="text-align: center;"><strong>[검증 완료]<br>유효함</strong></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>4. 심화 분석 및 대화 피드백</h2>
-<p>Phase 1의 재무 팩트와 금번 Phase 2의 내러티브 검증을 결합하여 도출한 <strong>3대 심화 인사이트</strong>입니다.</p>
-<h3>① '1,000억 원 무이자(0.0%) 교환사채(EB)' 발행의 숨은 재무적 가치 (연간 세전이익 +35~40억 원 직결)</h3>
-<ul>
-<li>2023년 아산 2공장 대규모 증설(CapEx 1,206.5억 원) 과정에서 증가했던 은행 차입금으로 인해, 동사는 2025년 연간 59.9억 원, 2026년 반기 23.0억 원의 금융원가(이자비용 등)를 부담해 왔습니다 <code>[공시 팩트: 2026 반기보고서 p.41]</code>.</li>
-<li>그러나 2026년 9월 14일 납입 완료된 <strong>1,000억 원 사모 교환사채(EB)</strong>는 동사가 보유한 모회사 하나마이크론 구주(290.8만 주)를 교환대상으로 설정하여 <strong>① 하나머티리얼즈 신주 발행에 따른 주당가치 희석(Dilution)이 전혀 없으며(0%), ② 표면이자율 0.0%·만기보장수익률 0.0%의 무이자 조건으로 조달한 자금 중 900억 원을 즉시 고금리 은행 차입금 상환에 사용</strong>했습니다 <code>[공시 팩트: 2026.08.04 교환사채권발행결정, 2026.09.14 증권발행결과]</code>.</li>
-<li>이에 따라 2026년 4분기부터 부채비율이 대폭 하락하는 것은 물론, <strong>연간 약 35억~40억 원 규모의 이자비용이 순이익(EPS) 증가분으로 고스란히 직결</strong>되며, 향후 하나마이크론 주가가 교환가액(34,388원)을 상회하여 교환권이 행사될 경우 모회사 상호주 해소와 함께 대규모 처분이익까지 인식되는 일석삼조의 재무 구조 개선이 이루어졌습니다.</li>
-</ul>
-<h3>② 2026년 10월 28일 임시주총: '자본준비금 감액(비과세 감액배당)'을 통한 밸류업(Value-Up) 촉매</h3>
-<ul>
-<li>동사는 2026년 9월 9일 이사회 결의를 통해 오는 <strong>2026년 10월 28일 임시주주총회</strong>를 소집하고, <strong>'자본준비금 감액 및 이익잉여금 전입의 건'</strong>을 단독 의안으로 상정했습니다 <code>[공시 팩트: 2026.09.09 주주총회소집결의]</code>.</li>
-<li>2026년 반기말 재무상태표(<code>p.40</code>) 기준 동사의 <strong>주식발행초과금(자본준비금)은 364.96억 원(<code>36,495,782,496원</code>)</strong>에 달합니다. 대신증권 배당 심층 리포트(<code>[글로벌 트렌드: 26.10.07.대신증권.배당투자 오디세이.pdf p.47-50]</code>)에 상세히 분석된 바와 같이, 상법 제461조의2에 따라 이를 감액하여 이익잉여금으로 전입할 경우 개인 주주들은 배당소득세(15.4%)가 전액 면제되고 금융소득종합과세 대상에서도 제외되는 <strong>'비과세 감액배당'</strong>을 수령할 수 있게 됩니다.</li>
-<li>반기 영업이익 473.1억 원 및 반기 FCF +283.7억 원의 풍부한 현금창출력에 <strong>비과세 배당 모멘텀</strong>이 더해지면서, 연말 배당 시즌을 앞두고 기관 및 고액자산가 수급을 유입시키는 강력한 주가 리레이팅 트리거로 작용할 전망입니다.</li>
-</ul>
-<h3>③ 환율 안정화 수혜와 전공정 소모품 '최장기 사이클(Longest Duration)'의 시간</h3>
-<ul>
-<li>하나증권 리포트(<code>26.09.02...pdf p.7, p.43</code>)가 분석하듯 반도체 사이클에서 전공정 장비주는 발주 시점(T-3~-1Q)에 주가가 선반영되는 반면, <strong>하나머티리얼즈와 같은 전공정 식각 소모품 업체는 삼성 P4 및 SK M15X의 실제 웨이퍼 투입과 가동률 램프업이 시작되는 시점(T~)부터 사이클이 끝날 때까지 가장 길고 지속적인 실적 우상향(Longest Duration)</strong>을 누립니다.</li>
-<li>여기에 최신 10월 거시 환경인 원/달러 환율 안정화(1,420원대 안착)는 해외 Ingot 원재료(72.8%) 구매 단가를 낮추어 주는 반면, 내수 매출(70.5%) 방어력을 발휘하게 하므로 <strong>'원가 절감 + 가동률 램프업 + 고정비 희석'의 3중 마진 레버리지</strong>가 2026년 하반기부터 2027년까지 가속화될 것입니다.</li>
-</ul>
-<hr />
-<h2>💡 종합 결론 (내러티브의 실적화 판단)</h2>
-<p>하나머티리얼즈의 시장 내러티브 및 투자자 가설을 DART 공시 팩트와 교차 검증한 결과, <strong>"내러티브는 단순한 기대감이 아니라 이미 2026년 반기 재무제표(영업이익 YoY +174.82%, 2Q26 단독 OPM 28.88%, 반기 FCF +283.7억 원)를 통해 폭발적인 숫자로 증명되고 있음"</strong>을 확인했습니다.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">검증 영역</th>
-<th style="text-align: left;">핵심 진단 결과</th>
-<th style="text-align: center;">투자 매력도 판정</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>1. 글로벌 사이클 정합성</strong></td>
-<td style="text-align: left;">삼성 P4·SK M15X 램프업 및 AI 병목 전이(HBM $\rightarrow$ 서버 DRAM/NAND 웨이퍼 투입 확대)의 <strong>최장기(Longest Duration) 반복 소모품 수혜주</strong> <code>[글로벌 트렌드: 26.09.02.하나증권...pdf p.6-7, p.43]</code></td>
-<td style="text-align: center;"><strong>매우 높음 (★★★★★)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2. S-Curve &amp; 하이브리드 판정</strong></td>
-<td style="text-align: left;">• <strong>통합 식각 소모품 노출도 98.98%</strong> (1차 S-Curve 대구경 Si 부품 <strong>88.87%</strong> 가동률 83.7% 회복 캐시카우 + 2차 S-Curve SiC 외 부품 <strong>10.11%</strong> Phase 2 골든 스위트스팟)<br>• Phase 3 <code>🚀대안 A</code> 할증 가중치 <strong><code>Base ×1.10 (+10%) / Bull ×1.12 (+12%)</code></strong> 공식 부여 <code>[공시 팩트: 반기보고서 p.22, p.25]</code></td>
-<td style="text-align: center;"><strong>적극 매수 &amp; 추세추종</strong><br><code>[🟢 식각 소모품 순수 주도주]</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>3. 수익성(OPM) 우려 불식</strong></td>
-<td style="text-align: left;">'Si 비중이 높아 마진이 정체될 것'이라는 시장 우려를 깨고 <strong>2Q26 단독 OPM 28.88% (+6.08%p QoQ, YoY +206.1%)</strong> 달성하여 동 분기 티씨케이(28.30%) 상회. 가동률 상승 고정비 희석 + Ingot 매입단가 <strong>-23.2% 하락</strong> + 환율 안정화 삼중 수혜 입증 <code>[공시 팩트: 반기보고서 p.23, p.24, p.40]</code></td>
-<td style="text-align: center;"><strong>어닝 서프라이즈 입증</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>4. 재무 개선 &amp; 주주환원 촉매</strong></td>
-<td style="text-align: left;">• <strong>1,000억 무이자(0.0%) EB 발행</strong>으로 고금리 은행 차입금 900억 상환 완료 (희석 0%, 연 이자비용 35~40억 절감)<br>• <strong>10월 28일 임시주총</strong>을 통한 자본준비금(364.96억) 감액 및 <strong>비과세 감액배당</strong> 준비 완료 <code>[공시 팩트: 26.08.04~09.14 공시, 글로벌 트렌드: 26.10.07.대신증권.배당투자 오디세이.pdf p.47-50]</code></td>
-<td style="text-align: center;"><strong>밸류업(Re-rating) 촉매 확보</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>5. 밸류에이션 리레이팅 여력</strong></td>
-<td style="text-align: left;">2026.10.15 현재 주가 <strong>51,800원</strong>은 <strong>PBR 1.63배, PER 15.96배(연환산 13.36배)</strong>로 과거 3년 하위 20% Bear 지지선(54,450원) 아래로 언더슈팅한 상태로, 전공정 부품 Peer 평균(16.9배) 및 티씨케이(24.9배, PBR 5.94배) 대비 <strong>극단적 안전마진 및 강력한 주가 반등 레버리지</strong> 보유</td>
-<td style="text-align: center;"><strong>역사적 바닥 매수 기회</strong></td>
+<td style="text-align: left;"><strong>4대 회계·지배구조 무결성</strong></td>
+<td style="text-align: left;">• <strong>음극재 702억 CapEx</strong>: 27.06 준공 후 12M Fwd 구간 내 초기 상각·고정비 <strong><code>-60억 원(연 -120억)</code></strong> 차감<br>• <strong>1,000억 0% EB</strong>: 순차입금(<code>+716.5억</code>) 유지 및 비현금 유효이자 상각 반영 <strong>순금융비용 <code>연 -20~25억</code></strong> 계상<br>• <strong>지배구조</strong>: 베트남 계열사 채무보증(<code>2,608.6억</code>, 자본의 <code>44.0%</code>) 및 최대주주 담보(<code>472.46만 주</code>) $\rightarrow$ <strong>멀티플 10~15% 할인</strong><br>• <strong>주주환원</strong>: <code>2026.10.28</code> 임시주총 <strong><code>364.96억 원</code> 비과세 감액배당</strong> 확정</td>
+<td style="text-align: left;"><strong>🟢 회계적 무결성 100% 반영</strong><br>낙관적 편향 제거 후에도 본업 저평가(<code>PBR 1.68배</code>) 매력 확고</td>
 </tr>
 </tbody>
 </table>
@@ -713,6 +729,8 @@ p > em {
                 const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
                 let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
                 let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
@@ -738,6 +756,10 @@ p > em {
                 let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
@@ -782,12 +804,18 @@ p > em {
                 if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
-                const initBuy1 = autoBear;
-                const initBuy2 = rawPrice;
-                const initBuy3 = Math.round(rawPrice * 1.03);
+                // Conflict-free default Buy 1 < Buy 2 < Buy 3 < Target & Hard Stop 1 < Buy 1
+                let initBuy1 = attrBuy1 > 0 ? attrBuy1 : Math.min(autoBear, Math.round(rawPrice * 0.92), Math.round(autoBase * 0.85));
+                let initBuy2 = attrBuy2 > 0 ? attrBuy2 : (rawPrice <= autoBase * 0.96 ? Math.max(rawPrice, Math.round(initBuy1 * 1.03)) : Math.round((initBuy1 + autoBase * 0.92) / 2));
+                let initBuy3 = attrBuy3 > 0 ? attrBuy3 : (rawPrice <= autoBase * 0.96 ? Math.min(Math.round(initBuy2 * 1.03), Math.round(autoBase * 0.96)) : Math.round(autoBase * 0.92));
+                if (initBuy1 >= initBuy2) initBuy1 = Math.round(initBuy2 * 0.95);
+                if (initBuy3 <= initBuy2) initBuy3 = Math.round(initBuy2 * 1.03);
+
+                let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
+                if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -796,6 +824,10 @@ p > em {
                         '<div class="dcf-input-group">' +
                             '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
+                            '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -817,7 +849,7 @@ p > em {
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 이중 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
                     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
                         '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
                         '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
@@ -836,12 +868,16 @@ p > em {
                             '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
-                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
                             '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
                             '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1단계 초입 고정 안전핀 (원 · 진입 손절선)</label>' +
+                            '<input type="text" id="sop-input-stop-pin" value="' + initStopPin.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2단계 20일 매물대 하단가 (원 · 돌파 후 기준)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
@@ -861,6 +897,7 @@ p > em {
 
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
+                const elNetDebt = document.getElementById('dcf-input-net-debt');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -869,17 +906,16 @@ p > em {
                 const elResultBox = document.getElementById('dcf-result-box');
                 
                 function parseFormattedNum(val) {
-                    return parseFloat(val.toString().replace(/,/g, ''));
+                    if (val === undefined || val === null) return 0;
+                    const cleaned = val.toString().replace(/,/g, '').trim();
+                    if (cleaned === '' || cleaned === '-') return 0;
+                    return parseFloat(cleaned);
                 }
 
                 function formatNumberInput(e) {
-                    // Skip for number types
                     if (e.target.type === 'number') return;
-                    
                     let cursor = e.target.selectionStart;
                     let originalLength = e.target.value.length;
-                    
-                    // Allow minus sign at the beginning for FCF
                     let isNegative = e.target.value.startsWith('-');
                     let val = e.target.value.replace(/[^\d.]/g, '');
                     
@@ -901,36 +937,8 @@ p > em {
                     e.target.setSelectionRange(cursor, cursor);
                 }
 
-                function calculateImpliedGrowth() {
-                    const price = parseFormattedNum(elPrice.value);
-                    const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
-                    const wacc = parseFloat(elWacc.value) / 100.0;
-                    const terminal = parseFloat(elTerminal.value) / 100.0;
-
-                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (fcf <= 0) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (wacc <= terminal) {
-                         elResultValue.textContent = "N/A";
-                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
-                         elResultBox.className = "dcf-result-box error";
-                         return;
-                    }
-
-                    const targetValue = price * shares;
-                    
+                function solveImpliedGrowthForTarget(targetVal, fcf, wacc, terminal) {
+                    if (targetVal <= 0 || fcf <= 0 || wacc <= terminal) return null;
                     function calcDCFValue(g) {
                         let pv = 0;
                         let cf = fcf;
@@ -942,32 +950,79 @@ p > em {
                         pv += tv / Math.pow(1 + wacc, 5);
                         return pv;
                     }
-                    
                     let low = -0.99;
-                    let high = 10.0; // max 1000% — unified with Python
+                    let high = 10.0;
                     let g = 0;
                     let found = false;
                     for (let iter = 0; iter < 200; iter++) {
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
+                        if (Math.abs(pv - targetVal) / targetVal < 0.00001) {
                             found = true;
                             break;
                         }
-                        if (pv > targetValue) {
+                        if (pv > targetVal) {
                             high = g;
                         } else {
                             low = g;
                         }
                     }
+                    if (found || Math.abs(high - low) < 0.00001) return g;
+                    return null;
+                }
 
-                    if (found || Math.abs(high - low) < 0.00001) {
-                        const growthPercent = (g * 100).toFixed(2);
-                        elResultValue.textContent = growthPercent + "%";
-                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
-                        if (g < 0) {
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal) || price <= 0 || shares <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다 (Normalized FCF를 입력해 보세요).";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const equityVal = price * shares;
+                    const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
+                    const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+
+                    if (gEquity !== null) {
+                        const eqPct = (gEquity * 100).toFixed(2);
+                        const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
+                        const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        let primaryG = gEquity;
+                        if (Math.abs(netDebtEok) > 0 && gEv !== null) {
+                            const evPct = (gEv * 100).toFixed(2);
+                            primaryG = netDebtEok > 0 ? gEv : gEquity;
+                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                        } else {
+                            elResultValue.textContent = eqPct + "%";
+                            elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
+                        }
+                        if (primaryG < 0) {
                              elResultBox.className = "dcf-result-box low-growth";
-                        } else if (g > 0.15) {
+                        } else if (primaryG > 0.15) {
                              elResultBox.className = "dcf-result-box high-growth";
                         } else {
                              elResultBox.className = "dcf-result-box normal-growth";
@@ -979,7 +1034,7 @@ p > em {
                     }
                 }
 
-                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {
                     input.addEventListener('input', (e) => {
                         formatNumberInput(e);
@@ -993,8 +1048,9 @@ p > em {
                 const elBudget = document.getElementById('sop-input-budget');
                 const elBuy1 = document.getElementById('sop-input-buy1');
                 const elBuy2 = document.getElementById('sop-input-buy2');
-                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBuy3 = document.getElementById('sop-input-buy3');
+                const elStopPin = document.getElementById('sop-input-stop-pin');
+                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBase = document.getElementById('sop-input-base');
                 const elBull = document.getElementById('sop-input-bull');
 
@@ -1006,8 +1062,9 @@ p > em {
                     const budget = parseFormattedNum(elBudget.value) || 0;
                     const b1 = parseFormattedNum(elBuy1.value) || 1;
                     const b2 = parseFormattedNum(elBuy2.value) || 1;
-                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const rawStopPin = parseFormattedNum(elStopPin.value) || Math.round(b1 * 0.95);
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const tBase = parseFormattedNum(elBase.value) || b2;
                     const tBull = parseFormattedNum(elBull.value) || b2;
 
@@ -1022,10 +1079,23 @@ p > em {
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
-                    const safetyPin = Math.round(pocLow * 0.97);
+                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
+                    const minEntryPrice = Math.min(b1, b2, avgPrice);
+                    let safetyPin = rawStopPin;
+                    let pinAutoCorrected = false;
+                    if (safetyPin >= minEntryPrice) {
+                        safetyPin = Math.round(minEntryPrice * 0.95);
+                        pinAutoCorrected = true;
+                    }
+                    const pocTrailingPin = Math.round(pocLow * 0.97);
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // Hierarchy validation notice
+                    let orderNotice = "";
+                    if (avgPrice >= tBase) {
+                        orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
+                    }
 
                     // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
@@ -1052,10 +1122,11 @@ p > em {
                         return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
                     }
 
-                    const riskAmt = Math.max(1, avgPrice - safetyPin);
-                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
-                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const riskAmt = avgPrice - safetyPin;
+                    const rewardAmt = ((tBase + tBull) / 2) - avgPrice;
+                    const sopRR = (riskAmt > 0 && rewardAmt > 0) ? (rewardAmt / riskAmt).toFixed(2) + ' : 1' : '0.00 : 1 (재설정 필요)';
                     const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+                    const pinNote = pinAutoCorrected ? ' <span style="color:#dc2626;font-size:8.5pt;">(평단가 초과 방지를 위해 진입하단 -5%로 자동보정됨)</span>' : '';
 
                     elBuySummary.innerHTML =
                         '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
@@ -1064,12 +1135,13 @@ p > em {
                         '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
                         '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
-                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>' +
+                        orderNotice;
 
                     elStopSummary.innerHTML =
-                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
-                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
-                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<h4>🚨 ② 이중 안전핀(초입 손절 vs 돌파 후 보호) & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 초입 고정 안전핀(진입 손절선):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)' + pinNote + '</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 매물대 돌파 후 보호핀(POC -3%):</strong> <strong>' + pocTrailingPin.toLocaleString() + '원</strong> (매물대 상단 안착 후 본절·수익 보호선으로 격상)</div>' +
                         '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
                         '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
                         '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
@@ -1080,7 +1152,7 @@ p > em {
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + '</strong></div>' +
                         '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
                 }
 
@@ -1101,7 +1173,7 @@ p > em {
                     });
                 }
 
-                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                const sopInputs = [elBudget, elBuy1, elBuy2, elBuy3, elStopPin, elPocLow, elBase, elBull];
                 sopInputs.forEach(inp => {
                     inp.addEventListener('input', (e) => {
                         formatNumberInput(e);

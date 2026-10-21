@@ -390,205 +390,123 @@ p > em {
     </script>
 </head>
 <body>
-    <h1>🔍 Phase 1: 기업 해독기 (원천 팩트 초안)</h1>
+    <h1>🔍 Phase 1: 기업 해독기 (원천 팩트 초안) — GST (083450)</h1>
+<blockquote>
+<p><strong>[클린 리빌드(Clean Rebuild v4.1) &amp; 단일 기준 주가 선언]</strong>
+- <strong>분석 기준일 및 단일 기준 주가 (Single Price Anchor):</strong> <strong>2026년 10월 16일 일봉 종가 <code>45,600원</code></strong> (<code>backtest_valuation.py</code> 실측, 참고 주봉 종가 <code>45,600원</code> — Phase 1~3 전 과정 100% 동일 적용)
+- <strong>주식수 및 시가총액 기준 (<code>[공시 팩트]</code>):</strong>
+  - <strong>총 발행주식수 (<code>istc_totqy</code>):</strong> <code>18,430,000주</code> (보통주 단일, 우선주 <code>0주</code> — 총발행 시가총액 <code>8,404.1억 원</code>)
+  - <strong>2026년 반기말 공식 유통주식수 (<code>distb_stock_co</code>):</strong> <code>17,963,419주</code> (반기말 자사주 <code>466,581주[2.53%]</code> 차감 — 유통 시가총액 <strong><code>8,191.3억 원</code></strong>, 제도권 벤치마크 BPS <code>17,958원</code> · PBR <code>2.54배</code> · TTM 지배EPS <code>3,019원</code> · PER <code>15.10배</code> 산출 기준)
+  - <strong>2026년 10월 13일 최신 공시 반영 유통주식수:</strong> <code>17,879,037주</code> (<code>자기주식처분결과보고서[2026.10.13]</code> 기준: 반기말 이후 50억 신탁계약 취득분 <code>105,907주</code> 추가 및 임직원 상여 지급 처분 <code>21,525주</code> 반영 후 총 자사주 <strong><code>550,963주[2.99%]</code></strong> 차감 — 실질 유통 시가총액 <strong><code>8,152.8억 원</code></strong>)
+- <strong>최신 잠정실적·공시 스캔 결과 (<code>2026.10.17</code> DART 전수 확인):</strong> <code>반기보고서(2026.08.14)</code> 이후 3분기 잠정실적 공시, 유상증자, 전환사채(CB/BW/EB) 발행, 계열사 채무보증 결정 공시는 <strong>0건(없음)</strong>이며, <code>주요사항보고서(자기주식처분결정, 2026.10.01)</code>, <code>주식등의대량보유상황보고서(약식 - FIL Limited, 2026.10.12, 지분율 9.10%→8.12%)</code>, <code>자기주식처분결과보고서(2026.10.13)</code>까지 최신 델타를 100% 반영하였습니다.</p>
+<p>💡 <strong>[핵심 용어 3줄 직관 해설]</strong>
+- <strong>스크러버(Scrubber) &amp; 칠러(Chiller)</strong>: 반도체 공장(Fab)에서 웨이퍼를 깎고 증착할 때 나오는 맹독성·온실 가스를 태우거나 녹여 없애주는 <strong>'친환경 공기청정기(스크러버, 매출 비중 63.4%)'</strong>와, 초미세 공정 챔버 온도를 영하 수십 도에서 영상까지 오차 없이 잡아주는 <strong>'초정밀 에어컨·냉각기(칠러, 매출 비중 17.5%)'</strong>입니다.
+- <strong>GAA 공정 전환 &amp; AIDC 액침냉각 무상 콜옵션</strong>: 반도체를 3나노/2나노 GAA 구조와 300~400단 NAND로 쌓을수록 공정 스텝이 늘어나 스크러버·칠러 탑재량(Q)과 단가(P)가 동반 상승하며, 신사업인 <strong>AI 데이터센터(AIDC) 액침냉각</strong>은 기술 실증을 마쳤으나 DART에 단독 매출이 분리 공시되기 전까지 <strong>'0원 무상 콜옵션(할증 0%)'</strong>으로 보수적 평가합니다.
+- <strong>지배주주 귀속 순이익 &amp; 무상증자 소급보정 EPS</strong>: 자회사 소수주주 몫을 뺀 진짜 주주 몫(<strong>지배주주 순이익 귀속률 99.6%</strong>)을 분자로 삼고, 2024년 6월 단행한 <strong>1:1 무상증자 이후 현재 유통주식수</strong>로 과거 10년 치 주당순이익(EPS)과 주당순자산(BPS)을 100% 소급 보정하여 착시 없는 밸류에이션 밴드를 산출합니다.</p>
+</blockquote>
+<hr />
 <h2>1. 비즈니스 모델 및 밸류체인</h2>
-<p>[공시 팩트] 주식회사 글로벌스탠다드테크놀로지(GST, 083450)는 2001년 10월 설립되어 2006년 코스닥 시장에 상장된 반도체 및 디스플레이 제조 인프라 전문 기업입니다 <code>[[GST]반기보고서(2026.08.14), II. 사업의 내용 - 1. 사업의 개요]</code>. </p>
-<p>당사의 핵심 비즈니스는 반도체 및 디스플레이 팹(Fab) 클린룸의 필수 공정 환경 설비인 <strong>유해가스 정화 장비(Scrubber)</strong>와 <strong>초정밀 공정 온도 제어 장비(Chiller)</strong>를 연구개발, 제조, 납품 및 사후 유지보수하는 것입니다.</p>
-<h3>1) 당사의 4대 경제적 해자 (Economic Moat)</h3>
-<ol>
-<li><strong>핵심 부품 수직계열화 독점 해자 (원가 방어력):</strong>
-   당사는 반도체 설비 부품(MFC, 열교환기 등)을 전문 제조하는 자회사 <strong>(주)이에스티(지분율 92.96%)</strong>를 종속회사로 두고 있어 핵심 부품의 안정적 조달과 원가 절감을 달성하고 있습니다 <code>[[GST]반기보고서(2026.08.14), IX. 계열회사 / X. 대주주 등과의 거래]</code>. 이 수직계열화는 칩플레이션과 원자재 인플레이션 환경 속에서도 업계 최고 수준인 <strong>16~18%대의 전사 영업이익률(OPM)</strong>을 유지하게 만드는 핵심 방어벽입니다 <code>[공시 팩트: 연결포괄손익계산서]</code>.</li>
-<li><strong>글로벌 거점망과 높은 전환비용 (Switching Cost):</strong>
-   당사는 미국(Austin), 중국(Wuxi, Hefei, Wuhan), 대만(Hsinchu), 싱가포르, 유럽(Switzerland), 일본 등 글로벌 주요 반도체 클러스터에 현지 서비스 및 판매 종속법인을 구축하고 24시간 밀착 기술 지원 및 유지보수 용역을 제공하고 있습니다 <code>[[GST]사업보고서(2026.03.18) p.48, [GST]반기보고서(2026.08.14)]</code>. 한 번 클린룸에 안착된 스크러버와 칠러는 라인 중단 위험으로 인해 교체가 극히 어려워 강력한 락인(Lock-in) 효과를 발휘합니다.</li>
-<li><strong>신규 팹 선행 Sub-fab 인프라 및 메모리 3사 고객 다변화:</strong>
-   스크러버와 칠러는 메인 WFE(웨이퍼 가공 장비)가 반입되기 전 Sub-fab 인프라 단계에서 먼저 발주 및 시공되는 선행 유틸리티 설비입니다 <code>[글로벌 트렌드: 26.09.29.LS증권.AI병목의 전이.pdf p.38~39]</code>. 당사는 기존 삼성전자 및 Micron향 안정적 공급 기반에 더해, <strong>최근 SK하이닉스향 양산 장비 공급이 본격 확대</strong>되며 메모리 3사 전체로 고객 다변화의 결실을 맺고 있습니다 <code>[글로벌 트렌드: 26.09.29.LS증권.AI병목의 전이.pdf p.39]</code>.</li>
-<li><strong>차세대 AIDC 액침냉각 글로벌 밸류체인 진입:</strong>
-   글로벌 딥리서치에 따르면, 당사는 고발열 AI 서버 냉각의 종착지인 <strong>액침냉각(Immersion Cooling: Tank·CDU·유체정화) 부문에서 글로벌 5대 핵심 플레이어(Submer, GRC, LiquidStack, Asperitas, GST)</strong>로 공식 등재되었습니다 <code>[시장 내러티브: 26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.135 AIDC 냉각 밸류체인 요약표]</code>. 특히 육상 전력·용수 규제를 피해 급부상하는 <strong>해상 부유식 바지선 AIDC(FDC)</strong> 환경에서 염해 차단을 위한 완전 밀봉 액침냉각 탱크와 고밀도 칠러 시스템이 필수 인프라로 대두되며 수혜가 기대됩니다 <code>[글로벌 트렌드: 26.09.08.LS증권.[DCInside] AI시대 조선 산업의 변화와 투자전략.pdf p.31 표 8]</code>.</li>
-</ol>
-<pre><code class="language-mermaid">graph TD
-    A[&quot;공급자 (원자재/부품 제조사)&quot;] --&gt;|&quot;CABINET ASS'Y 등 기초원자재 공급&quot;| B[&quot;GST 본사 (R&amp;D 및 장비 조립/제조)&quot;]
-    A1[&quot;자회사 (주)이에스티 (지분 92.96%)&quot;] -. &quot;핵심 부품(MFC·열교환기) 수직계열화 원가방어 해자&quot; .-&gt; B
-    B --&gt;|&quot;신규 팹 선행 Sub-fab 인프라 (Scrubber &amp; Chiller)&quot;| C1[&quot;삼성전자 (평택 P5 등)&quot;]
-    B --&gt;|&quot;선단공정/HBM 인프라 양산 납품 확대&quot;| C2[&quot;SK하이닉스 (용인 원삼 Y1·P&amp;T7)&quot;]
-    B --&gt;|&quot;글로벌 팹 클린룸 장비 공급&quot;| C3[&quot;Micron 및 글로벌 파운드리/메모리&quot;]
-    B --&gt;|&quot;차세대 액침냉각 Tank/CDU 및 초저온 칠러&quot;| D[&quot;글로벌 AIDC 및 해상 부유식 바지선 (글로벌 5대 체인)&quot;]
-    E[&quot;해외 서비스 종속법인 (미국·대만·중국·싱가포르·유럽)&quot;] --&gt;|&quot;밀착 유지보수 및 엔지니어링 용역 (전환비용 극대화)&quot;| C1
-    E --&gt;|&quot;현지 기술지원 및 부품교체 락인&quot;| C3
-    B --&gt; E
+<blockquote>
+<p><strong>[26.10.17 글로벌 트렌드 델타 업데이트 🌐 (3대 게이트 전수 충족: ① 직접 등재 + ② 수출·환율 직결 + ③ 선단 팹·AIDC 인프라 증설)]</strong>
+- <strong>게이트 ① [제도권 딥리서치 직접 등재]:</strong>
+  - <code>[글로벌 트렌드: 26.09.02.하나증권.증설의 시대, 후공정의 수혜도 함께 온다.pdf p.42 도표 59, p.43 도표 60]</code>에서 반도체 인프라(클린룸·배관·유틸리티) 핵심 종목으로 <strong>GST(083450)</strong>가 실명 등재되었으며, <strong>"신규 팹 착공~장비 반입 선행 구간 수혜(평택 P5 · 용인 Y1 · 청주 P&amp;T7)"</strong> 및 <strong>26F EPS 성장률 +40.9%, 27F +21.5%</strong>가 제시되었습니다.
+  - <code>[글로벌 트렌드: 26.09.02.유안타증권.AIDC 다음 승부처 - 네트워크와 냉각.pdf p.135]</code> 글로벌 AIDC 액침냉각 밸류체인 표(<code>액침냉각 Tank·CDU·유체정화</code>)에서 글로벌 선두권(Submer, GRC, LiquidStack, Asperitas)과 나란히 국내 유일 핵심 기업으로 <strong>GST</strong>가 실명 등재되었습니다.
+- <strong>게이트 ② [글로벌 수출 및 매크로 환율 직결]:</strong>
+  - <code>[공시 팩트]</code> 주력 제품인 Scrubber 부문 내 직접 수출 비중이 <strong>77.7%</strong>(2026년 상반기 Scrubber 매출 1,363.3억 원 중 수출 1,059.1억 원, 전사 매출 대비 49.3%)에 달하며, 미국(Austin)·중국(Wuxi, Hefei, Wuhan)·대만(Hsinchu)·싱가포르·일본·유럽 등 7개 글로벌 거점 종속법인을 통해 달러(USD)·위안화(CNY) 결제가 이루어져 원/달러 환율 및 글로벌 WFE(웨이퍼 제조장비) 투자가 영업마진에 직결됩니다.
+- <strong>게이트 ③ [2026.10 중순 최신 글로벌 트렌드 델타 — 선단 GAA 전환 Q 반등 &amp; 액침냉각 유체 생태계 교차 검증]:</strong>
+  1. <strong>핀펫(FinFET) → GAA 전환 및 삼성 테일러 팹 가동에 따른 Sub-fab 장비 수혜 (<code>[글로벌 트렌드: 26.10.15.유안타증권.2027Issue&amp;Theme(change).pdf p.7~8 표 1, p.12~13 그림 5·6]</code>):</strong> 3나노/2나노 GAA(Gate-All-Around)와 400단대 3D NAND 전환으로 Si/SiGe 적층, 선택적 식각(Etch), ALD, HPA 등 공정 스텝 수와 가스·열 부하가 구조적으로 증가합니다. 특히 삼성전자 2나노 GAA 수율 개선(2025년 30%대 → 2026.1Q 50%대 → 2026.3Q 60%대)과 미국 테일러(Taylor) 파운드리 팹 및 빅테크(메타 MTIA 3세대, 테슬라 AI6) 수주 가시화는, 텍사스 오스틴에 미국 법인(<code>GST America, Inc.</code>)을 보유한 GST의 북미·선단 공정향 고사양 스크러버·칠러 출하(Q) 및 유지보수 용역 확대의 직접적 선행 드라이버입니다.
+  2. <strong>AIDC 액침냉각 유체(그룹III 기유) 밸류체인 확장과 '배수(Multiple) 옵션' 및 표준 경쟁 리스크 (<code>[글로벌 트렌드: 26.10.15.IBK투자증권.윤활기유의 시대.pdf p.23 표 8, p.25 그림 18, p.34, p.44 표 12, p.47 표 15]</code>):</strong> 글로벌 액침냉각 시장이 2024년 53.8억 달러에서 2030년 177.7억 달러로 성장이 전망(p.25 그림 18)되는 가운데, 국내 그룹III 윤활기유 선두인 SK엔무브 등이 액침냉각 유체 실증 및 장비 업체 협업을 가속화하고 있습니다(p.34). 특히 IBK투자증권(p.44 표 12)은 데이터센터 액침냉각이 <strong>"단기(2027년) 영업이익에 수천억 원을 당장 반영하는 사업이 아니라, 실증 → 하이퍼스케일 승인 → 초기 충전 발주 → 반복 계약 단계별로 적용 멀티플(배수)을 상향시키는 옵션"</strong>임을 강조하는 동시에, 하방 변수로 <strong>"냉각 표준 경쟁에서 액침냉각이 직접 액체냉각(DLC)에 밀리는 리스크"</strong>(p.47 표 15)를 명시했습니다. 이는 DART에 액침냉각 단독 상용 매출이 분리 공시되기 전까지 <strong>액침냉각을 '0원 무상 콜옵션(할증 0%)'으로 엄격히 분리</strong>하는 당사의 하이브리드 수비 원칙을 강력하게 뒷받침합니다.</p>
+</blockquote>
+<p><code>[공시 팩트]</code> 주식회사 글로벌스탠다드테크놀로지(GST, 종목코드 <code>083450</code>)는 2001년 설립되어 반도체 및 디스플레이 제조 공정에서 배출되는 유해가스를 연소·플라즈마·촉매·습식 방식으로 정화하는 <strong>가스정화 장비(Scrubber, 스크러버)</strong>와 공정 챔버 및 설비 온도를 정밀 제어하는 <strong>온도조절 장비(Chiller, 칠러)</strong>의 제조·판매 및 글로벌 CS(유지보수 용역)를 주력 사업으로 영위하는 반도체 Sub-fab(보조설비) 선두 기업입니다 (<code>[[GST]반기보고서(2026.08.14), II. 사업의 내용 - 1. 사업의 개요]</code>).</p>
+<ul>
+<li><strong>수익 창출 메커니즘 (Hardware 장비 수주 + Installed Base 용역 Lock-in):</strong></li>
+<li><strong>전방 CapEx 선행 수주 (본업 장비 80.9%):</strong> 글로벌 메모리·파운드리 IDM 고객사(삼성전자, 마이크론, 중국 CXMT 등)가 클린룸을 완공하고 전공정 메인 장비(식각·증착·세정)를 반입할 때, 챔버 하단 Sub-fab에 필수 매칭되어 납품되는 <strong>스크러버(63.4%)</strong>와 <strong>칠러(17.5%)</strong>에서 1차 하드웨어 매출이 발생합니다.</li>
+<li><strong>수직 계열화를 통한 원가 경쟁력:</strong> 판금 및 핵심 설비 부품을 제조하는 자회사 <strong>㈜이에스티</strong>(GST 지분율 92.96%, 2026년 상반기 내부 원재료 매입액 152.1억 원)를 통해 CABINET ASS'Y 등 주요 외장·부품을 내재화하여 15~18%대의 높은 전사 영업이익률(OPM)을 유지합니다 (<code>[[GST]반기보고서(2026.08.14), X. 대주주 등과의 거래내용]</code>).</li>
+<li><strong>고마진 반복 매출(Recurring Revenue, 용역·상품 19.0%):</strong> 장비 납품 이후 가동 연수가 누적될수록 예방정비(PM), 부품 교체, 오버홀 등 <strong>용역 매출(2026년 상반기 361.9억 원, 비중 16.8%)</strong>과 <strong>상품 매출(47.7억 원, 2.2%)</strong>이 미국(<code>GST America</code>), 대만(<code>GST Taiwan</code>), 중국(<code>Wuxi/Hefei/Wuhan</code>), 싱가포르(<code>SGST</code>), 일본(<code>GST Japan</code>), 유럽(<code>GST Europe</code>) 등 해외 종속법인을 통해 안정적인 현금흐름(Cash Cow)을 창출합니다.</li>
+</ul>
+<pre><code class="language-mermaid">flowchart LR
+    subgraph Macro[&quot;🌐 2026.10 글로벌 트렌드 매크로 환경&quot;]
+        M1[&quot;선단 공정 전환 가속&lt;br/&gt;(2nm GAA 수율 개선·테일러 Fab·3D NAND)&lt;br/&gt;[유안타 26.10.15 p.7~8, 12~13]&quot;]
+        M2[&quot;국내외 신규 팹 인프라 투자&lt;br/&gt;(평택 P5 · 용인 Y1 · 청주 P&amp;T7)&lt;br/&gt;[하나증권 26.09.02 p.42~43]&quot;]
+        M3[&quot;AIDC 액침냉각 생태계 확장&lt;br/&gt;(그룹III 유체·Tank/CDU 실증 vs DLC 경쟁)&lt;br/&gt;[IBK 26.10.15 p.25, 44, 47]&quot;]
+    end
+
+    subgraph Supply[&quot;🔧 원재료 및 부품 조달&quot;]
+        S1[&quot;특수관계 자회사 ㈜이에스티&lt;br/&gt;(지분 92.96%, 판금·캐비닛 내재화)&lt;br/&gt;[26.H1 매입 152.1억 원]&quot;]
+        S2[&quot;국내외 외부 부품사&lt;br/&gt;(MFC, Pump, 냉동기, 센서류)&lt;br/&gt;[CABINET ASS'Y · MFC 등]&quot;]
+    end
+
+    subgraph GST[&quot;🏭 GST (083450) 핵심 BM (2026.H1 연결 2,151.3억)&quot;]
+        G1[&quot;🔥 스크러버 (Scrubber)&lt;br/&gt;매출 1,363.3억 (63.4%)&lt;br/&gt;[연소·플라즈마·촉매 가스정화]&quot;]
+        G2[&quot;❄️ 칠러 (Chiller)&lt;br/&gt;매출 377.4억 (17.5%)&lt;br/&gt;[초극저온·전기식·냉매식 온도제어]&quot;]
+        G3[&quot;🛠️ 유지보수 용역 및 상품&lt;br/&gt;매출 410.6억 (19.1%)&lt;br/&gt;[글로벌 7개국 CS 법인 Lock-in]&quot;]
+        G4[&quot;🎁 신사업: AIDC 액침냉각&lt;br/&gt;(Tank·CDU 실증 완료)&lt;br/&gt;[DART 단독 매출 미공시 → 무상 콜옵션]&quot;]
+    end
+
+    subgraph Demand[&quot;🎯 글로벌 전방 고객사&quot;]
+        D1[&quot;국내외 메모리·파운드리 IDM&lt;br/&gt;(삼성전자 평택/테일러, 마이크론&lt;br/&gt;대만/싱가포르/미국, 중국 CXMT 등)&quot;]
+        D2[&quot;글로벌 AI 데이터센터 · 통신사&lt;br/&gt;(액침냉각 파일럿 및 상용 수주 추진)&quot;]
+    end
+
+    M1 --&gt;|&quot;공정 스텝·챔버 수 증가&quot;| G1
+    M1 --&gt;|&quot;초극저온 식각 수요&quot;| G2
+    M2 --&gt;|&quot;Sub-fab 선행 발주&quot;| G1
+    M3 -. &quot;상용 발주 시 배수 리레이팅 옵션&quot; .-&gt; G4
+    S1 --&gt; G1
+    S1 --&gt; G2
+    S2 --&gt; G1
+    S2 --&gt; G2
+    G1 --&gt;|&quot;수출 비중 77.7%&quot;| D1
+    G2 --&gt; D1
+    G3 --&gt;|&quot;설치대수 비례 반복 매출&quot;| D1
+    G4 -. &quot;향후 상용화 타겟&quot; .-&gt; D2
 </code></pre>
+<hr />
 <h2>2. 주요 제품별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
-<p>[공시 팩트] 당사의 최근 5개년(2021~2025년) 및 2026년 상반기 제품별 연결 매출액 및 비중 추이는 다음과 같습니다 <code>[[GST]사업보고서(2022~2026), [GST]반기보고서(2026.08.14), II. 사업의 내용 - 2. 주요 제품 및 서비스]</code>.</p>
+<p><code>[공시 팩트]</code> 최근 5개년(2021~2025년) 및 2026년 상반기 연결 기준 주요 제품별 매출액과 비중 추이는 다음과 같습니다 (<code>[[GST]사업보고서(2024.03.20) / (2026.03.18) / [GST]반기보고서(2026.08.14), II. 사업의 내용 - 2. 주요 제품 및 서비스]</code>).</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">구분</th>
-<th style="text-align: left;">핵심 내용</th>
+<th style="text-align: left;">핵심 내용 (연도별 매출액 [단위: 억 원] 및 전사 매출 비중 [%])</th>
 <th style="text-align: left;">비고</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Scrubber (주력 제품)</strong></td>
-<td style="text-align: left;">2021년 57.8% $\rightarrow$ 2024년 70.4% $\rightarrow$ 2025년 64.8% $\rightarrow$ 2026.1H 63.4% (매출 1,363억 원)</td>
-<td style="text-align: left;">전방 신규 팹(P5·Y1) 클린룸 선행 투자 핵심 캐시카우</td>
+<td style="text-align: left;"><strong>Scrubber (제품)</strong></td>
+<td style="text-align: left;">• <strong>2021년:</strong> 1,760.9억 (57.8%) → <strong>2022년:</strong> 1,769.0억 (56.5%) → <strong>2023년:</strong> 1,633.5억 (58.5%)<br>• <strong>2024년:</strong> 2,346.9억 (70.4%) → <strong>2025년:</strong> 2,261.1억 (65.1%) → <strong>2026.H1:</strong> <strong>1,363.3억 (63.4%)</strong></td>
+<td style="text-align: left;">주력 캐시카우. 해외 IDM(마이크론·중화권 등) 직수출 확대로 26.H1 부문 내 수출 비중 <strong>77.7%</strong> 기록</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Chiller (성장 엔진)</strong></td>
-<td style="text-align: left;">2021년 23.3% $\rightarrow$ 2024년 11.3% $\rightarrow$ 2025년 16.1% $\rightarrow$ 2026.1H 17.5% (매출 377억 원)</td>
-<td style="text-align: left;">공정 미세화 및 고발열 제어용 초저온·전기식 칠러 고성장</td>
+<td style="text-align: left;"><strong>Chiller (제품)</strong></td>
+<td style="text-align: left;">• <strong>2021년:</strong> 710.9억 (23.3%) → <strong>2022년:</strong> 664.4억 (21.2%) → <strong>2023년:</strong> 464.8억 (16.6%)<br>• <strong>2024년:</strong> 376.1억 (11.3%) → <strong>2025년:</strong> 562.0억 (16.2%) → <strong>2026.H1:</strong> <strong>377.4억 (17.5%)</strong></td>
+<td style="text-align: left;">2024년 저점(376.1억) 통과 후 고부가 초저온 칠러 채택 확대로 25년(+49.4%), 26.H1 반등 가속</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>용역 및 유지보수</strong></td>
-<td style="text-align: left;">매년 13~21%의 안정적 비중 유지 (2025년 18.5%, 2026.1H 16.8%, 362억 원)</td>
-<td style="text-align: left;">누적 납품 대수(Installed Base) 증가에 따른 고수익 락인 매출</td>
+<td style="text-align: left;"><strong>용역 (CS/유지보수)</strong></td>
+<td style="text-align: left;">• <strong>2021년:</strong> 461.3억 (15.2%) → <strong>2022년:</strong> 562.6억 (18.1%) → <strong>2023년:</strong> 592.1억 (21.3%)<br>• <strong>2024년:</strong> 446.0억 (13.4%) → <strong>2025년:</strong> 645.5억 (18.6%) → <strong>2026.H1:</strong> <strong>361.9억 (16.8%)</strong></td>
+<td style="text-align: left;">글로벌 누적 설치 장비(Installed Base) 확대에 따른 고마진 개조·정비·오버홀 반복 수익원</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>상품 및 기타</strong></td>
-<td style="text-align: left;">매년 2~4% 내외 (2026.1H 상품 2.2%, 기타 0.05%)</td>
-<td style="text-align: left;">부품 단순 유통 및 보조 제품군</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>수출 비중 (Scrubber)</strong></td>
-<td style="text-align: left;">2023년 39.9% $\rightarrow$ 2024년 51.8% $\rightarrow$ 2025년 43.8% $\rightarrow$ 2026.1H 49.3% (수출 1,059억 원)</td>
-<td style="text-align: left;">Micron, 중화권 등 글로벌 선도 고객사향 직납 경쟁력 입증</td>
-</tr>
-</tbody>
-</table>
-<h3>[주요 제품군 연도별 세부 매출 실적표 (연결 기준)]</h3>
-<p><em>(단위: 백만원, %)</em></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">제품군 (매출유형)</th>
-<th style="text-align: left;">구분</th>
-<th style="text-align: center;">2021년</th>
-<th style="text-align: center;">2022년</th>
-<th style="text-align: center;">2023년</th>
-<th style="text-align: center;">2024년</th>
-<th style="text-align: center;">2025년</th>
-<th style="text-align: center;">2026년 상반기</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Scrubber</strong></td>
-<td style="text-align: left;">매출액</td>
-<td style="text-align: center;">176,090</td>
-<td style="text-align: center;">176,898</td>
-<td style="text-align: center;">163,352</td>
-<td style="text-align: center;">234,695</td>
-<td style="text-align: center;">226,110</td>
-<td style="text-align: center;">136,327</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>비중</strong></td>
-<td style="text-align: center;"><strong>57.8%</strong></td>
-<td style="text-align: center;"><strong>56.5%</strong></td>
-<td style="text-align: center;"><strong>58.5%</strong></td>
-<td style="text-align: center;"><strong>70.4%</strong></td>
-<td style="text-align: center;"><strong>64.8%</strong></td>
-<td style="text-align: center;"><strong>63.4%</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Chiller</strong></td>
-<td style="text-align: left;">매출액</td>
-<td style="text-align: center;">71,095</td>
-<td style="text-align: center;">66,441</td>
-<td style="text-align: center;">46,478</td>
-<td style="text-align: center;">37,614</td>
-<td style="text-align: center;">56,195</td>
-<td style="text-align: center;">37,739</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>비중</strong></td>
-<td style="text-align: center;"><strong>23.3%</strong></td>
-<td style="text-align: center;"><strong>21.2%</strong></td>
-<td style="text-align: center;"><strong>16.6%</strong></td>
-<td style="text-align: center;"><strong>11.3%</strong></td>
-<td style="text-align: center;"><strong>16.1%</strong></td>
-<td style="text-align: center;"><strong>17.5%</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>용역</strong></td>
-<td style="text-align: left;">매출액</td>
-<td style="text-align: center;">46,132</td>
-<td style="text-align: center;">56,262</td>
-<td style="text-align: center;">59,209</td>
-<td style="text-align: center;">44,601</td>
-<td style="text-align: center;">64,553</td>
-<td style="text-align: center;">36,190</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>비중</strong></td>
-<td style="text-align: center;"><strong>15.2%</strong></td>
-<td style="text-align: center;"><strong>18.1%</strong></td>
-<td style="text-align: center;"><strong>21.3%</strong></td>
-<td style="text-align: center;"><strong>13.4%</strong></td>
-<td style="text-align: center;"><strong>18.5%</strong></td>
-<td style="text-align: center;"><strong>16.8%</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>상품 및 기타</strong></td>
-<td style="text-align: left;">매출액</td>
-<td style="text-align: center;">11,170</td>
-<td style="text-align: center;">13,207</td>
-<td style="text-align: center;">10,176</td>
-<td style="text-align: center;">16,536</td>
-<td style="text-align: center;">9,963</td>
-<td style="text-align: center;">4,873</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>비중</strong></td>
-<td style="text-align: center;"><strong>3.7%</strong></td>
-<td style="text-align: center;"><strong>4.2%</strong></td>
-<td style="text-align: center;"><strong>3.6%</strong></td>
-<td style="text-align: center;"><strong>4.9%</strong></td>
-<td style="text-align: center;"><strong>2.9%</strong></td>
-<td style="text-align: center;"><strong>2.3%</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>중단사업조정</strong></td>
-<td style="text-align: left;">매출액</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;">-</td>
-<td style="text-align: center;">-9,662</td>
-<td style="text-align: center;">-</td>
+<td style="text-align: left;"><strong>상품 및 기타 제품</strong></td>
+<td style="text-align: left;">• <strong>2021년:</strong> 111.7억 (3.7%) → <strong>2022년:</strong> 132.1억 (4.2%) → <strong>2023년:</strong> 101.8억 (3.6%)<br>• <strong>2024년:</strong> 165.4억 (5.0%) → <strong>2025년:</strong> 99.6억 (2.9%, 중단사업조정 -96.6억 별도) → <strong>2026.H1:</strong> <strong>48.7억 (2.3%)</strong></td>
+<td style="text-align: left;">유지보수용 교체 부품(상품 2.2%) 및 기타 부대 장비(0.05%)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>연결 매출 합계</strong></td>
-<td style="text-align: left;"><strong>매출액</strong></td>
-<td style="text-align: center;"><strong>304,487</strong></td>
-<td style="text-align: center;"><strong>312,848</strong></td>
-<td style="text-align: center;"><strong>279,215</strong></td>
-<td style="text-align: center;"><strong>333,446</strong></td>
-<td style="text-align: center;"><strong>347,159</strong></td>
-<td style="text-align: center;"><strong>215,130</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><strong>비중</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
-<td style="text-align: center;"><strong>100.0%</strong></td>
+<td style="text-align: left;">• <strong>2021년:</strong> 3,044.9억 → <strong>2022년:</strong> 3,128.5억 → <strong>2023년:</strong> 2,697.9억(정정후, 조정전 2,792.2억)<br>• <strong>2024년:</strong> 3,334.5억 → <strong>2025년:</strong> <strong>3,471.6억</strong> → <strong>2026.H1:</strong> <strong>2,151.3억 (YoY +26.71%)</strong></td>
+<td style="text-align: left;">2026.1Q 1,158.9억 + 2026.2Q 992.4억으로 상반기 반기 기준 역대 최대 매출 경신</td>
 </tr>
 </tbody>
 </table>
 <h3>2.1 S-Curve 신기술 테마 매출 익스포저(Exposure %) 산출표 (하이브리드 수비 검증)</h3>
-<p>[공시 팩트] DART 사업보고서 및 반기보고서 'II. 사업의 내용 - 2. 주요 제품 및 서비스'를 기반으로 당사의 신기술 테마(AIDC 액침냉각 및 차세대 고발열 인프라) 직결 매출 익스포저를 정밀 산출하여 30% 컷오프 적격성을 판정합니다.</p>
+<p><code>[공시 팩트]</code> DART 반기보고서(<code>2026.08.14</code>, <code>'II. 사업의 내용'</code>) 기반으로 신기술 테마(<strong>AIDC 액침냉각 솔루션</strong> 및 <strong>선단 반도체 Sub-fab 인프라</strong>) 직결 <strong>단독 분리 공시 매출 익스포저</strong>를 산출하여 30% 컷오프 및 무상 콜옵션 분리 원칙을 적용한 결과는 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">제품/서비스 구분</th>
-<th style="text-align: center;">매출액 (억원, 26.1H)</th>
+<th style="text-align: center;">2026.H1 매출액 (억원)</th>
 <th style="text-align: center;">전사 매출 비중(%)</th>
 <th style="text-align: center;">신기술 테마 직결 여부</th>
 <th style="text-align: center;">하이브리드 수비 판정</th>
@@ -596,412 +514,398 @@ p > em {
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Chiller (액침냉각 직결군 포함)</strong></td>
+<td style="text-align: left;"><strong>AIDC 액침냉각 솔루션 (Tank · CDU 등)</strong></td>
+<td style="text-align: center;">미분리 (Chiller·기타 내 합산 또는 실증 단계)</td>
+<td style="text-align: center;"><strong>0.0%</strong> (단독 매출 미공시)</td>
+<td style="text-align: center;">사업 개요상 신사업 연구개발·라인업 등재 완료 / <strong>단독 상용 매출 미분리 공시</strong></td>
+<td style="text-align: center;">⚠️ <strong><code>[🎁 0원 무상 콜옵션 분류 (Phase 3 S-Curve 할증 0% 차단)]</code></strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>반도체/디스플레이 Chiller (본업 제품)</strong></td>
 <td style="text-align: center;">377.4</td>
 <td style="text-align: center;">17.5%</td>
-<td style="text-align: center;">직결 (AIDC 1상형/2상형 액침냉각 칠러 및 초저온 칠러 라인업)</td>
-<td style="text-align: center;">⚠️ [공시 확인: 주력 라인업 등재 / 세부 비중 미공시 (주의 요망)]</td>
+<td style="text-align: center;">전공정·선단공정(GAA/3D NAND) 챔버 온도제어 직결 본업</td>
+<td style="text-align: center;">🟢 반도체 Sub-fab 본업 핵심 축 (단, 액침냉각 단독 매출로 둔갑 금지)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Scrubber (선단 팹 인프라 캐시카우)</strong></td>
+<td style="text-align: left;"><strong>반도체/디스플레이 Scrubber (본업 제품)</strong></td>
 <td style="text-align: center;">1,363.3</td>
 <td style="text-align: center;">63.4%</td>
-<td style="text-align: center;">직결 보조 (HBM·용인 메가팹 Sub-fab 선행 친환경 정화 인프라)</td>
-<td style="text-align: center;">🟢 순수 주도주 (기초 체력 63.4% 탄탄)</td>
+<td style="text-align: center;">전공정·선단공정 유해가스 정화 직결 본업 (수출 비중 77.7%)</td>
+<td style="text-align: center;">🟢 반도체 Sub-fab 본업 캐시카우 (신규 팹 P5·Y1·해외 팹 증설 직결)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>용역 및 유지보수</strong></td>
-<td style="text-align: center;">361.9</td>
-<td style="text-align: center;">16.8%</td>
-<td style="text-align: center;">간접 수혜 (설치 장비 락인 기반 고수익 사후관리)</td>
-<td style="text-align: center;">🟢 안정적 캐시카우 락인</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>상품 및 기타</strong></td>
-<td style="text-align: center;">48.7</td>
-<td style="text-align: center;">2.3%</td>
-<td style="text-align: center;">비해당 / 단순 부품 유통</td>
-<td style="text-align: center;">⚪ 중립</td>
+<td style="text-align: left;"><strong>유지보수 용역 · 상품 · 기타</strong></td>
+<td style="text-align: center;">410.6</td>
+<td style="text-align: center;">19.1%</td>
+<td style="text-align: center;">글로벌 팹 설치 장비(Installed Base) 유지보수 및 부품 공급</td>
+<td style="text-align: center;">🟢 본업 연동 안정적 현금창출원 (레거시 잠식 위험 없음)</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>테마 실질 익스포저 분석 및 묶음공시 정밀 해설:</strong></li>
-<li><strong>DART 단독 칠러 품목 기준 익스포저:</strong> <strong>17.5%</strong> (2026년 상반기 377.4억 원, 2025년 온기 562.0억 원, 16.1%). DART 공시상 액침냉각 전용 칠러가 'Chiller' 품목군에 합산 공시되어 있어 중소형주 묶음공시 특성상 <code>[공시 확인: 주력 라인업 등재 / 세부 비중 미공시 (주의)]</code>에 해당합니다.</li>
-<li><strong>글로벌 S-Curve 레지스트리(<code>s_curve_registry.json</code>) 공식 연동 익스포저:</strong> <strong>65.0%</strong> (액침냉각 2상형/1상형 칠러 파일럿 테스트 완료 및 전용 양산 라인 설비 체력 반영, 침투율 12.5% Phase 2 골든 스위트스팟 공식 탑픽 지정).</li>
-<li><strong>차세대 AI/반도체 고발열 선행 인프라(스크러버 + 칠러) 통합 익스포저:</strong> <strong>80.9%</strong> (1,740.7억 원).</li>
-<li><strong>수혜 적격성 최종 판정:</strong> <strong><code>[🟢 순수 주도주 합격]</code></strong> (DART 칠러 라인업 공식 등재 및 <code>s_curve_registry.json</code> 공식 익스포저 65.0%로 30% 컷오프 기준을 압도적으로 충족하여 레거시 잠식 위험 원천 배제).</li>
+<li><strong>신기술(AIDC 액침냉각) 실질 단독 익스포저 합산:</strong> <strong><code>0.0%</code></strong> <em>(DART 단독 매출 미공시 묶음 항목이므로 0% 처리 및 무상 콜옵션 분류 — <code>s_curve_registry.json</code> 상 <code>standalone_disclosed: false</code> 교차 검증 완료)</em></li>
+<li><strong>반도체 Sub-fab 인프라 본업 익스포저 합산:</strong> <strong><code>100.0%</code></strong> <em>(순수 장비 제조 80.9% + 직결 유지보수 용역·상품 19.1%로 비관련 레거시 사업 잠식 위험 0%)</em></li>
+<li><strong>수혜 적격성 최종 판정:</strong> <strong><code>[🎁 본업 저평가 + 신사업 무상 콜옵션(할증 0%)]</code></strong></li>
+<li><em>판정 해설:</em> GST는 전사 매출의 100%가 반도체·디스플레이 Sub-fab 장비 및 유지보수로 구성된 순수 인프라 기업으로 선단 공정(GAA·HBM·3D NAND) 증설 수혜를 온전히 누리는 동시에, 차세대 AIDC 액침냉각 솔루션을 보유하고 있습니다. 단, DART 공시상 액침냉각 단독 상용 매출이 분리 공시되지 않았으므로 제2원칙(수비수 2)에 의거해 <strong>Phase 3에서 S-Curve 멀티플 할증(<code>sc_mult = 1.00</code>, <code>0%</code>)을 엄격히 차단</strong>하고, 본업 실적으로만 보수적 가치를 산정한 뒤 액침냉각 수주는 <strong>'+α 무상 콜옵션(배수 리레이팅 옵션)'</strong>으로만 취급합니다.</li>
 </ul>
+<hr />
 <h2>3. 전사 영업이익률 및 FCF 추이</h2>
-<p>[공시 팩트] 당사는 자회사 (주)이에스티 수직계열화 및 고수익 용역 매출(15~21%)에 힘입어 반도체 다운사이클 속에서도 15% 이상의 견고한 OPM을 방어했으며, 업황 반등기에는 17~18%대의 높은 마진을 달성했습니다 <code>[[GST]사업보고서(2022~2026), 요약재무정보 및 현금흐름표]</code>. </p>
+<p><code>[공시 팩트]</code> 최근 5개년(2021~2025년) 및 2026년 1분기·2분기·상반기 누적 연결 재무제표 기준 실적과 지배주주 귀속 순이익(귀속률 %), 잉여현금흐름(FCF) 추이는 다음과 같습니다 (<code>[[GST]사업보고서(2024.03.20) / (2026.03.18) / [GST]분기보고서(2026.05.15) / [GST]반기보고서(2026.08.14), III. 재무에 관한 사항]</code>).</p>
+<ul>
+<li><strong>지배주주 순이익 귀속률 무결성 확인:</strong> 자회사 ㈜이에스티(지분율 92.96%) 및 해외 종속법인(100% 자회사 중심) 구조로 인해 비지배지분 귀속 순이익 비중이 극히 낮으며, <strong>최근 4분기(TTM) 기준 지배주주 순이익 귀속률은 <code>99.6%</code>(2025년 <code>99.33%</code>, 2026년 상반기 <code>99.89%</code>)</strong>에 달합니다.</li>
+<li><strong>잉여현금흐름(FCF) 산출 기준 병기:</strong> 연결 영업활동현금흐름(OCF)에서 <strong>연결 기준 유·무형자산 취득액(CapEx)을 차감한 <code>연결 FCF</code></strong>를 주 기준으로 표기하고, 괄호 안에 별도 기준 CapEx 차감 시 수치를 함께 병기하였습니다.</li>
+</ul>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">연도/분기</th>
-<th style="text-align: center;">매출액</th>
-<th style="text-align: center;">영업이익</th>
+<th style="text-align: center;">매출액 (억원)</th>
+<th style="text-align: center;">영업이익 (억원)</th>
 <th style="text-align: center;">OPM(%)</th>
-<th style="text-align: center;">FCF</th>
+<th style="text-align: center;">지배주주 순이익 (귀속률 %)</th>
+<th style="text-align: center;">연결 FCF (억원) <code>[OCF − 연결CapEx]</code></th>
 <th style="text-align: left;">비고</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>2021년</strong></td>
-<td style="text-align: center;">3,044.9억 원</td>
-<td style="text-align: center;">464.1억 원</td>
+<td style="text-align: left;"><strong>2021년 (제21기)</strong></td>
+<td style="text-align: center;">3,044.9</td>
+<td style="text-align: center;">464.1</td>
 <td style="text-align: center;">15.24%</td>
-<td style="text-align: center;">232.3억 원</td>
-<td style="text-align: left;">글로벌 슈퍼사이클, CAPEX 23.2억 원</td>
+<td style="text-align: center;"><strong>377.5억</strong> (96.86% / 연결 389.7억)</td>
+<td style="text-align: center;"><strong>+130.4억</strong> <code>[OCF 255.5 − CapEx 125.1]</code> <em>(별도CapEx 차감시 +232.3억)</em></td>
+<td style="text-align: left;">메모리 호황기 Scrubber·Chiller 동반 성장</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2022년</strong></td>
-<td style="text-align: center;">3,128.5억 원</td>
-<td style="text-align: center;">569.4억 원</td>
+<td style="text-align: left;"><strong>2022년 (제22기)</strong></td>
+<td style="text-align: center;">3,128.5</td>
+<td style="text-align: center;">569.4</td>
 <td style="text-align: center;">18.20%</td>
-<td style="text-align: center;">189.8억 원</td>
-<td style="text-align: left;">역사적 최고 OPM(18.20%) 달성, CAPEX 125.1억 원</td>
+<td style="text-align: center;"><strong>468.1억</strong> (98.33% / 연결 476.0억)</td>
+<td style="text-align: center;"><strong>+245.2억</strong> <code>[OCF 314.8 − CapEx 69.6]</code> <em>(별도CapEx 차감시 +189.8억)</em></td>
+<td style="text-align: left;">고단가 장비 믹스 개선으로 OPM 18.2% 달성</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2023년</strong></td>
-<td style="text-align: center;">2,792.2억 원</td>
-<td style="text-align: center;">430.1억 원</td>
+<td style="text-align: left;"><strong>2023년 (제23기)</strong></td>
+<td style="text-align: center;">2,697.9 <em>(조정전 2,792.2)</em></td>
+<td style="text-align: center;">430.1 <em>(조정전 425.4)</em></td>
 <td style="text-align: center;">15.94%</td>
-<td style="text-align: center;">344.8억 원</td>
-<td style="text-align: left;">반도체 다운사이클 저점에서도 15.9% OPM 수성</td>
+<td style="text-align: center;"><strong>356.8억</strong> (96.60% / 연결 369.4억)</td>
+<td style="text-align: center;"><strong>+264.4억</strong> <code>[OCF 474.5 − CapEx 210.0]</code> <em>(별도CapEx 차감시 +344.8억)</em></td>
+<td style="text-align: left;">전방 감산에도 OPM 15.9% 방어 및 운전자본 회수로 OCF 급증</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2024년</strong></td>
-<td style="text-align: center;">3,334.5억 원</td>
-<td style="text-align: center;">585.7억 원</td>
+<td style="text-align: left;"><strong>2024년 (제24기)</strong></td>
+<td style="text-align: center;">3,334.5</td>
+<td style="text-align: center;">585.7</td>
 <td style="text-align: center;">17.57%</td>
-<td style="text-align: center;">433.1억 원</td>
-<td style="text-align: left;">업황 턴어라운드, 역대 최대 FCF(433억 원) 창출</td>
+<td style="text-align: center;"><strong>453.7억</strong> (98.93% / 연결 458.6억)</td>
+<td style="text-align: center;"><strong>+348.1억</strong> <code>[OCF 544.1 − CapEx 196.0]</code> <em>(별도CapEx 차감시 +433.1억)</em></td>
+<td style="text-align: left;">해외 수출(51.8%) 급증으로 역대 최대 OCF(544.1억) 기록</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2025년</strong></td>
-<td style="text-align: center;">3,471.6억 원</td>
-<td style="text-align: center;">591.7억 원</td>
-<td style="text-align: center;">17.05%</td>
-<td style="text-align: center;">295.4억 원</td>
-<td style="text-align: left;">사상 최대 매출 경신, 배당성향 25.68% 확대</td>
+<td style="text-align: left;"><strong>2025년 (제25기)</strong></td>
+<td style="text-align: center;">3,471.6</td>
+<td style="text-align: center;">591.7</td>
+<td style="text-align: center;">17.04%</td>
+<td style="text-align: center;"><strong>452.8억</strong> (99.33% / 연결 455.8억)</td>
+<td style="text-align: center;"><strong>+286.9억</strong> <code>[OCF 415.9 − CapEx 129.1]</code> <em>(별도CapEx 차감시 +295.4억)</em></td>
+<td style="text-align: left;">중단영업손실(-11.2억) 반영 후에도 지배순이익 452.8억 견조</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2026년 1H</strong></td>
-<td style="text-align: center;">2,151.3억 원</td>
-<td style="text-align: center;">356.5억 원</td>
-<td style="text-align: center;">16.57%</td>
-<td style="text-align: center;">약 180억 원</td>
-<td style="text-align: left;">매출 +26.7% YoY, OP +32.3% YoY 고성장</td>
+<td style="text-align: left;"><strong>2026.1Q (1분기)</strong></td>
+<td style="text-align: center;">1,158.9</td>
+<td style="text-align: center;">201.9</td>
+<td style="text-align: center;">17.42%</td>
+<td style="text-align: center;"><strong>173.2억</strong> (99.81% / 연결 173.5억)</td>
+<td style="text-align: center;"><strong>+56.8억</strong> <code>[OCF 107.3 − CapEx 50.4]</code></td>
+<td style="text-align: left;">분기 수정 지배EPS <strong>965원</strong> 기록</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026.2Q (2분기 단독)</strong></td>
+<td style="text-align: center;">992.4</td>
+<td style="text-align: center;">154.6</td>
+<td style="text-align: center;">15.58%</td>
+<td style="text-align: center;"><strong>121.9억</strong> (100.00% / 연결 121.9억)</td>
+<td style="text-align: center;"><strong>+242.3억</strong> <code>[OCF 292.0 − CapEx 49.8]</code></td>
+<td style="text-align: left;">매출채권 회수 유입으로 2분기 단독 OCF 292.0억 폭발, 수정 지배EPS <strong>678원</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026.H1 (상반기 누적)</strong></td>
+<td style="text-align: center;"><strong>2,151.3</strong> <em>(YoY +26.7%)</em></td>
+<td style="text-align: center;"><strong>356.5</strong> <em>(YoY +27.3%)</em></td>
+<td style="text-align: center;"><strong>16.57%</strong></td>
+<td style="text-align: center;"><strong>295.1억</strong> (99.89% / 연결 295.4억)</td>
+<td style="text-align: center;"><strong>+299.1억</strong> <code>[OCF 399.3 − CapEx 100.2]</code></td>
+<td style="text-align: left;">반기 누적 지배EPS <strong>1,643원</strong>, 반년 만에 25년 연간 연결 FCF(286.9억) 돌파</td>
 </tr>
 </tbody>
 </table>
-<p><em>(주: 2026년 1H FCF는 반기 영업현금흐름 약 235억 원에서 반기 CAPEX 약 55억 원을 차감한 추정치이며, 연환산 FCF는 약 360억 원 수준임)</em></p>
-<h3>[잉여현금흐름(FCF) 세부 산출 내역]</h3>
-<p><em>(단위: 백만원, %)</em></p>
+<ul>
+<li><strong>재무 건전성 및 순현금(Net Cash) 현황 (<code>2026년 6월말 연결 재무상태표 기준</code>):</strong></li>
+<li><strong>현금성자산 및 단기금융상품 합계:</strong> 현금및현금성자산 <code>686.2억 원</code> + 단기금융상품 <code>415.4억 원</code> = <strong><code>1,101.6억 원</code></strong> (여기에 당기손익-공정가치금융자산 412.8억 원 별도 보유).</li>
+<li><strong>총차입금:</strong> 단기차입금 <code>100.9억 원</code> + 장기차입금 <code>0원</code> = <strong><code>100.9억 원</code></strong> (미상환 회사채·전환사채·신주인수권부사채 등 <strong>0원</strong>).</li>
+<li><strong>순현금 (Net Cash, 보수적 현금+단기금융상품 기준):</strong> <code>1,101.6억 원 − 100.9억 원</code> = <strong><code>+1,000.7억 원</code> (순차입금 <code>−1,000.7억 원</code>)</strong>, 부채비율 <strong><code>29.7%</code></strong> (<code>부채총계 971.8억 ÷ 자본총계 3,268.9억</code>)의 초우량 무차입 경영 구조입니다.</li>
+</ul>
+<hr />
+<h2>4. 핵심 KPI 추이 (생산실적 대수, 암묵 단가, 수출 비중 및 재고자산)</h2>
+<p><code>[공시 팩트]</code> 당사는 DART 정기보고서 <code>'II. 사업의 내용 - 3. 원재료 및 생산설비'</code>에서 <strong>"반도체장비 제조업의 특성상 생산능력을 산출하지 않아서 가동률 산출은 기재를 생략합니다."</strong>라고 명시하고 있으며, 주문생산·단기 납품 구조 특성상 정량적 수주잔고 총액 표 또한 별도 기재하지 않습니다 (<code>[[GST]반기보고서(2026.08.14), II. 사업의 내용 - 3. 원재료 및 생산설비 / 4. 매출 및 수주상황]</code>). 이에 따라 공시 원문에서 확인되는 <strong>① 장비별 실측 생산 대수(Q)</strong>, <strong>② 매출액 대비 대당 암묵 평균단가(Implied ASP)</strong>, <strong>③ Scrubber 수출 비중</strong>, <strong>④ 선행 지표인 재고자산(제품·재공품) 추이</strong>를 4대 핵심 KPI로 추적합니다.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">구분</th>
+<th style="text-align: left;">핵심 KPI 구분</th>
 <th style="text-align: center;">2021년</th>
 <th style="text-align: center;">2022년</th>
 <th style="text-align: center;">2023년</th>
 <th style="text-align: center;">2024년</th>
 <th style="text-align: center;">2025년</th>
-<th style="text-align: center;">5개년 누적</th>
+<th style="text-align: center;">2026년 상반기 (H1)</th>
+<th style="text-align: left;">추세 진단 및 공시 근거</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>영업활동현금흐름 (A)</strong></td>
-<td style="text-align: center;">25,551</td>
-<td style="text-align: center;">31,484</td>
-<td style="text-align: center;">47,446</td>
-<td style="text-align: center;">54,408</td>
-<td style="text-align: center;">41,592</td>
-<td style="text-align: center;"><strong>200,481</strong></td>
+<td style="text-align: left;"><strong>Scrubber 생산실적 (대)</strong></td>
+<td style="text-align: center;">1,820대</td>
+<td style="text-align: center;">1,574대</td>
+<td style="text-align: center;">1,487대</td>
+<td style="text-align: center;">2,045대</td>
+<td style="text-align: center;">1,789대</td>
+<td style="text-align: center;"><strong>1,129대</strong> <em>(연환산 2,258대)</em></td>
+<td style="text-align: left;">26.H1 반기 만에 25년 연간 물량의 <strong>63.1%</strong> 생산 돌파 (역대 최고 페이스)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>CAPEX (B)</strong></td>
-<td style="text-align: center;">2,318</td>
-<td style="text-align: center;">12,507</td>
-<td style="text-align: center;">12,969</td>
-<td style="text-align: center;">11,098</td>
-<td style="text-align: center;">12,054</td>
-<td style="text-align: center;"><strong>50,946</strong></td>
+<td style="text-align: left;"><strong>Chiller 생산실적 (대)</strong></td>
+<td style="text-align: center;">2,182대</td>
+<td style="text-align: center;">1,813대</td>
+<td style="text-align: center;">951대</td>
+<td style="text-align: center;">781대</td>
+<td style="text-align: center;">1,089대</td>
+<td style="text-align: center;"><strong>713대</strong> <em>(연환산 1,426대)</em></td>
+<td style="text-align: left;">24년 저점(781대) 이후 25년 반등에 이어 26.H1 반기 만에 25년 물량의 <strong>65.5%</strong> 달성</td>
 </tr>
 <tr>
-<td style="text-align: left;">- 유형자산 취득</td>
-<td style="text-align: center;">1,847</td>
-<td style="text-align: center;">11,647</td>
-<td style="text-align: center;">12,526</td>
-<td style="text-align: center;">10,538</td>
-<td style="text-align: center;">12,039</td>
-<td style="text-align: center;">48,597</td>
+<td style="text-align: left;"><strong>총 장비 생산 수량 (Q 합계)</strong></td>
+<td style="text-align: center;"><strong>4,002대</strong></td>
+<td style="text-align: center;"><strong>3,387대</strong></td>
+<td style="text-align: center;"><strong>2,438대</strong></td>
+<td style="text-align: center;"><strong>2,826대</strong></td>
+<td style="text-align: center;"><strong>2,878대</strong></td>
+<td style="text-align: center;"><strong>1,842대</strong> <em>(연환산 3,684대)</em></td>
+<td style="text-align: left;">선단 공정(GAA·HBM) 및 해외 팹 장비 반입 확대로 Q(출하량) 레버리지 본격화</td>
 </tr>
 <tr>
-<td style="text-align: left;">- 무형자산 취득</td>
-<td style="text-align: center;">471</td>
-<td style="text-align: center;">860</td>
-<td style="text-align: center;">443</td>
-<td style="text-align: center;">560</td>
-<td style="text-align: center;">15</td>
-<td style="text-align: center;">2,349</td>
+<td style="text-align: left;"><strong>Scrubber 대당 암묵 단가 (P)</strong></td>
+<td style="text-align: center;">0.97억/대</td>
+<td style="text-align: center;">1.12억/대</td>
+<td style="text-align: center;">1.10억/대</td>
+<td style="text-align: center;">1.15억/대</td>
+<td style="text-align: center;"><strong>1.26억/대</strong></td>
+<td style="text-align: center;"><strong>1.21억/대</strong></td>
+<td style="text-align: left;">플라즈마·촉매·고효율 습식 등 고사양 비중 확대로 21년 대비 대당 단가 <strong>+25% 레벨업</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>잉여현금흐름 (FCF = A - B)</strong></td>
-<td style="text-align: center;"><strong>23,233</strong></td>
-<td style="text-align: center;"><strong>18,977</strong></td>
-<td style="text-align: center;"><strong>34,477</strong></td>
-<td style="text-align: center;"><strong>43,310</strong></td>
-<td style="text-align: center;"><strong>29,538</strong></td>
-<td style="text-align: center;"><strong>149,535</strong></td>
+<td style="text-align: left;"><strong>Chiller 대당 암묵 단가 (P)</strong></td>
+<td style="text-align: center;">0.33억/대</td>
+<td style="text-align: center;">0.37억/대</td>
+<td style="text-align: center;">0.49억/대</td>
+<td style="text-align: center;">0.48억/대</td>
+<td style="text-align: center;"><strong>0.52억/대</strong></td>
+<td style="text-align: center;"><strong>0.53억/대</strong></td>
+<td style="text-align: left;">고단가 초저온/극저온 칠러 채택 확대로 21년(0.33억) 대비 대당 단가 <strong>+61% 구조적 상승</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Scrubber 부문 내 수출 비중</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">74.5% <em>(전사 42.1%)</em></td>
+<td style="text-align: center;">68.1% <em>(전사 39.9%)</em></td>
+<td style="text-align: center;">73.6% <em>(전사 51.8%)</em></td>
+<td style="text-align: center;">67.3% <em>(전사 43.8%)</em></td>
+<td style="text-align: center;"><strong>77.7%</strong> <em>(전사 49.3%)</em></td>
+<td style="text-align: left;">26.H1 Scrubber 매출 1,363.3억 중 <strong>수출 1,059.1억(77.7%)</strong>, 내수 304.2억(22.3%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기말 재고자산 (제품+재공품)</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">416.2억 <em>(제품·재공 228.1억)</em></td>
+<td style="text-align: center;">545.9억 <em>(제품·재공 302.5억)</em></td>
+<td style="text-align: center;"><strong>715.9억</strong> <em>(제품·재공 464.0억)</em></td>
+<td style="text-align: left;">고객사 납품 대기분인 제품(303.9억) 및 재공품(160.1억)이 반기말 <strong>+53.4% 증가</strong> (하반기 매출 전환 선행지표)</td>
 </tr>
 </tbody>
 </table>
-<p>[최신 기관 컨센서스 및 업황 업데이트]
-최신 기관 인뎁스 분석에 따르면, GST는 삼성전자 및 Micron의 설비투자 확대와 SK하이닉스향 납품 본격화에 힘입어 <strong>2026E 매출액 4,389억 원, 영업이익 759억 원(OPM 17.29%), 순이익 627억 원</strong>, <strong>2027E 매출액 5,228억 원, 영업이익 946억 원(OPM 18.09%), 순이익 775억 원</strong>의 사상 최대 실적 랠리를 이어갈 것으로 전망됩니다 <code>[추정: 26.09.29.LS증권.AI병목의 전이.pdf p.44 표 8]</code>. 2026년 10월 글로벌 트렌드(<code>26.10.01~14</code>) 전수 조사 결과, 반도체 섹터 내 AI 맞춤형 칩(ASIC) 설계 및 HBM 수율 개선 인프라 선행 요구가 지속되고 있어 당사의 장비 수주 여건은 탄탄하게 유지되고 있습니다.</p>
-<h2>4. 핵심 KPI 추이 (가동률, 수주잔고, ASP 등)</h2>
-<p>[공시 팩트] 사업보고서 및 반기보고서 공시 원문을 바탕으로 당사의 핵심 생산 KPI와 판매 단가(ASP) 추이를 교차 분석합니다.</p>
-<h3>1) 공장 가동률 지표 (미산출 공시 팩트)</h3>
-<ul>
-<li><strong>공시 본문 팩트:</strong> 당사는 매 기수 정기보고서의 '생산 및 설비에 관한 사항'에 <strong>"반도체장비 제조업의 특성상 생산능력을 산출하지 않아서 가동률 산출은 기재를 생략합니다."</strong>라고 명시하고 있어 공식 가동률 수치는 제공되지 않습니다 <code>[[GST]반기보고서(2026.08.14), II. 사업의 내용 - 3. 원재료 및 생산설비]</code>.</li>
-</ul>
-<h3>2) 대안 KPI: 주요 장비 생산 실적 수량 추이</h3>
-<p>공장 가동률을 공시하지 않으므로, 실질 가동 수준을 직관적으로 보여주는 <strong>주요 장비별 생산 실적 수량(대수)</strong>을 핵심 KPI로 추적합니다 <code>[[GST]사업보고서(2022~2026), II. 사업의 내용 - 3. 원재료 및 생산설비]</code>.
-<em>(단위: 대)</em></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">품목 / 연도</th>
-<th style="text-align: center;">2021년</th>
-<th style="text-align: center;">2022년</th>
-<th style="text-align: center;">2023년</th>
-<th style="text-align: center;">2024년</th>
-<th style="text-align: center;">2025년</th>
-<th style="text-align: center;">2026년 상반기</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Scrubber 생산실적</strong></td>
-<td style="text-align: center;">1,820</td>
-<td style="text-align: center;">1,574</td>
-<td style="text-align: center;">1,487</td>
-<td style="text-align: center;">2,045</td>
-<td style="text-align: center;">1,789</td>
-<td style="text-align: center;">1,129</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Chiller 생산실적</strong></td>
-<td style="text-align: center;">2,182</td>
-<td style="text-align: center;">1,813</td>
-<td style="text-align: center;">951</td>
-<td style="text-align: center;">781</td>
-<td style="text-align: center;">1,089</td>
-<td style="text-align: center;">713</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>합계 생산 수량</strong></td>
-<td style="text-align: center;"><strong>4,002</strong></td>
-<td style="text-align: center;"><strong>3,387</strong></td>
-<td style="text-align: center;"><strong>2,438</strong></td>
-<td style="text-align: center;"><strong>2,826</strong></td>
-<td style="text-align: center;"><strong>2,878</strong></td>
-<td style="text-align: center;"><strong>1,842</strong></td>
-</tr>
-</tbody>
-</table>
-<h3>3) KPI 질적 분석: 생산량(Q) 대비 매출액 디커플링 (단가 ASP의 수직 상승)</h3>
-<ul>
-<li><strong>2021년 과거 슈퍼사이클 고점:</strong> 생산 대수 <strong>4,002대</strong> $\rightarrow$ 연결 매출액 <strong>3,045억 원</strong></li>
-<li><strong>2023년 다운사이클 저점:</strong> 생산 대수 <strong>2,438대</strong> $\rightarrow$ 연결 매출액 <strong>2,792억 원</strong></li>
-<li><strong>2025년 회복기:</strong> 생산 대수 <strong>2,878대</strong> $\rightarrow$ 연결 매출액 <strong>3,472억 원 (사상 최대 경신)</strong></li>
-<li><strong>2026년 상반기:</strong> 생산 대수 <strong>1,842대</strong> $\rightarrow$ 반기 매출액 <strong>2,151억 원 (연환산 4,300억 수준)</strong></li>
-</ul>
-<p>생산 대수(Q)는 2021년 슈퍼사이클 대비 여전히 적은 수준(2,878대)임에도 불구하고, 2025년 매출액은 사상 최대치를 경신했습니다. 이는 저가형 범용 장비 대신 <strong>친환경·고효율 번웻(Burn-Wet) 및 플라즈마 스크러버와 고정밀 초저온 칠러 등 고단가(High-ASP) 제품군으로 제품 믹스(Mix)가 완벽히 재편</strong>되었음을 증명합니다 <code>[공시 팩트: 사업보고서]</code>.</p>
-<p>[트렌드 연계] 2026~2027년은 삼성전자 평택 P5, SK하이닉스 용인 원삼 Y1 및 청주 M15X, 마이크론 히로시마 등 글로벌 신규 팹의 클린룸 준공 및 WFE 반입이 선행되며 <strong>수량(Q)마저 역사적 최고치를 돌파하는 구간</strong>입니다 <code>[글로벌 트렌드: 26.09.29.LS증권.AI병목의 전이.pdf p.4, 38~39]</code>. 즉, '구조적으로 상승한 판가(P) × 급증하는 수주 물량(Q)'의 이중 레버리지가 본격 폭발하는 최적의 국면입니다.</p>
+<hr />
 <h2>5. 경영진 및 주주환원 이력</h2>
-<p>[공시 팩트] 당사는 창업주 김덕준 회장의 장기 책임경영과 전문 경영인(회계사 및 삼성전자 출신) 각자대표 체제 하에 주주환원율을 지속적으로 끌어올리고 있습니다 <code>[[GST]반기보고서(2026.08.14), VII. 주주에 관한 사항 / VIII. 임원 및 직원 등에 관한 사항]</code>.</p>
-<h3>1) 주요 경영진 현황</h3>
+<p><code>[공시 팩트]</code> 당사는 창업주 김덕준 회장과 전문경영인 문승보·석종욱 각자대표 체제로 운영되며, 무상증자·자사주 매입/소각·배당성향 대폭 상향 등 코스닥 반도체 장비 업종 내에서도 최상위권의 주주환원 정책을 실행하고 있습니다 (<code>[[GST]사업보고서(2026.03.18) / [GST]반기보고서(2026.08.14), VII. 주주에 관한 사항 / VIII. 임원 및 직원 등에 관한 사항 / 주요사항보고서(2026.10.01) / 자기주식처분결과보고서(2026.10.13)]</code>).</p>
 <ul>
-<li><strong>김덕준 회장 (사내이사, 창업주):</strong> 1962년생, 성원에드워드·케이씨텍을 거쳐 2001년 회사 설립. 보통주 3,980,000주 소유(지분율 <strong>21.60%</strong>)로 확고한 책임경영 체제 유지.</li>
-<li><strong>문승보 각자대표이사 (사내이사, 상근):</strong> 1977년생, 고려대 경영학과, 삼일회계법인 공인회계사(CPA), 미래컴퍼니 이사 역임. 2025년 3월 대표이사 선임되어 재무/전략 총괄.</li>
-<li><strong>석종욱 각자대표이사 (사내이사, 상근):</strong> 1969년생, 광운대 전자재료공학과, <strong>삼성전자 출신</strong>, 2024년 6월 대표이사 선임되어 기술 개발 및 고객사 영업 총괄.</li>
-<li><strong>장광수 부회장 (사내이사, 상근):</strong> 1962년생, 한양대 경영학과, 대신증권 지역본부장 출신으로 2017년부터 자본배치 및 대외 전략 총괄.</li>
+<li><strong>경영진 구성 (사내이사 4인):</strong></li>
+<li><strong>김덕준 회장 (창업주, 최대주주):</strong> 1962년생, 2001년 10월 GST 설립 이후 기술 및 글로벌 영업 성장을 총괄 (임기 2029.03.26까지).</li>
+<li><strong>문승보 대표이사 (각자대표):</strong> 1977년생, 고려대 경영학과 졸업, 삼일회계법인 공인회계사 출신으로 2025년 3월 26일 대표이사 선임 후 재무·경영관리 총괄 (임기 2028.03.26까지).</li>
+<li><strong>석종욱 대표이사 (각자대표):</strong> 1969년생, 광운대 전자재료공학과 졸업, 삼성전자 출신 엔지니어로 2024년 6월 합류 후 제조·기술·사업 총괄 (임기 2028.03.26까지).</li>
+<li><strong>장광수 부회장 (사내이사):</strong> 1962년생, 한양대 경영학과 졸업, 대신증권 지역본부장·사업단장 출신 전략·IR 전문가 (임기 2027.03.29까지).</li>
+<li><strong>주요 주주 구성 (<code>2026.10.17</code> 최신 공시 반영):</strong></li>
+<li><strong>최대주주 김덕준 회장 외 특수관계인:</strong> 김덕준 회장 본인 <code>3,980,000주 (21.60%)</code>를 포함하여 안정적 경영권 보유.</li>
+<li><strong>FIL Limited (피델리티, 해외 기관투자자):</strong> 2026년 반기말 <code>9.14%</code> 보유 후, <code>주식등의대량보유상황보고서(약식, 2026.10.12 공시)</code> 기준 운용펀드 해소에 따른 일부 변동으로 <strong><code>1,497,208주 (8.12%)</code></strong> 단순투자 목적 보유 중.</li>
+<li><strong>우리사주조합:</strong> <code>2.04%</code> (2026년 반기말 기준).</li>
 </ul>
-<h3>2) DART 공식 주식수 현황 (2026.06.30 기준)</h3>
-<p><code>korean-dart</code> MCP <code>get_shareholders(sections=['total_stocks'])</code> 조회 기준 공식 팩트:
-- <strong>발행주식 총수 (<code>istc_totqy</code>):</strong> <strong>18,430,000주</strong>
-- <strong>자기주식수 (<code>tesstk_co</code>):</strong> <strong>466,581주</strong> (지분율 2.53%)
-- <strong>실질 유통주식수 (<code>distb_stock_co</code>):</strong> <strong>17,963,419주</strong> (지분율 97.47%)</p>
-<h3>3) 최근 3개년 주주환원 이력 및 배당 추이</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">주주환원 항목</th>
-<th style="text-align: left;">상세 내용</th>
-<th style="text-align: left;">공시 근거</th>
+<th style="text-align: left;">구분 / 연도</th>
+<th style="text-align: center;">2023년 (제23기)</th>
+<th style="text-align: center;">2024년 (제24기)</th>
+<th style="text-align: center;">2025년 (제25기)</th>
+<th style="text-align: left;">2026년 상반기 ~ 2026.10.13 (최신 공시)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>1:1 무상증자 단행</strong></td>
-<td style="text-align: left;">2024년 6월 주당 보통주 1주를 배정하는 1:1 무상증자 실시 (주식수 9,317,745주 $\rightarrow$ 18,618,260주)</td>
-<td style="text-align: left;"><code>[[GST][정정]사업보고서(2025.03.19)]</code></td>
+<td style="text-align: left;"><strong>발행주식총수 (보통주)</strong></td>
+<td style="text-align: center;">9,317,745주</td>
+<td style="text-align: center;"><strong>18,430,000주</strong></td>
+<td style="text-align: center;"><strong>18,430,000주</strong></td>
+<td style="text-align: left;"><strong>18,430,000주</strong> <em>(우선주 0주)</em></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>자사주 전격 소각</strong></td>
-<td style="text-align: left;">2024년 12월 30일, 주주가치 제고를 위해 자사주 <strong>188,260주 전량 소각</strong> 완료 (발행주식수 18,430,000주 확정)</td>
-<td style="text-align: left;"><code>[[GST][정정]사업보고서(2025.03.19)]</code></td>
+<td style="text-align: left;"><strong>무상증자 및 액면분할 이력</strong></td>
+<td style="text-align: center;">해당 없음</td>
+<td style="text-align: center;"><strong>2024.06.27 1:1 무상증자</strong> <em>(신주 9,300,515주 배정)</em></td>
+<td style="text-align: center;">해당 없음 <em>(무증 후 18,430,000주 유지)</em></td>
+<td style="text-align: left;">과거 시계열 EPS/BPS 전체를 현재 주식수로 <strong>100% 소급 보정</strong> 완료</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>50억 원 자사주 신탁 체결</strong></td>
-<td style="text-align: left;"><strong>2026년 7월 28일</strong>, 주가안정 및 주주가치 제고 목적으로 <strong>50억 원 규모 자기주식 취득 신탁계약</strong>(하나은행) 체결 및 장내 매수 진행 중</td>
-<td style="text-align: left;"><code>[[GST]반기보고서(2026.08.14) p.112]</code></td>
+<td style="text-align: left;"><strong>자사주 매입 · 소각 · 처분</strong></td>
+<td style="text-align: center;">자사주 보유</td>
+<td style="text-align: center;"><strong>2024.12.30 자사주 188,260주 소각 완료</strong></td>
+<td style="text-align: center;">자사주 466,581주 (2.53%) 보유</td>
+<td style="text-align: left;">• <strong>2026.07.28:</strong> 50억 규모 자사주 취득 신탁계약 체결 (<code>105,907주</code> 취득)<br>• <strong>2026.10.02:</strong> 임직원 861명 상여 지급용 자사주 <code>21,525주(0.12%)</code> 처분<br>• <strong>2026.10.13 기준 총 자사주:</strong> <strong><code>550,963주 (2.99%, 116.2억 원)</code></strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>배당성향 수직 상승</strong></td>
-<td style="text-align: left;">주당 배당금: 2023년 500원(무증전) $\rightarrow$ 2024년 300원(무증후) $\rightarrow$ <strong>2025년 650원</strong>으로 대폭 상향. <strong>배당성향 25.68%</strong> 기록 (배당총액 116.3억 원)</td>
-<td style="text-align: left;"><code>[[GST]사업보고서(2026.03.18)]</code></td>
+<td style="text-align: left;"><strong>주당 현금배당금 (DPS)</strong></td>
+<td style="text-align: center;">500원 <em>(무증 소급 환산 시 </em><em>250원</em><em>)</em></td>
+<td style="text-align: center;"><strong>300원</strong> <em>(무증 후 기준 실질 +20% 증액)</em></td>
+<td style="text-align: center;"><strong>650원</strong> <em>(YoY +116.7% 파격 증액)</em></td>
+<td style="text-align: left;">2025년 결산 DPS 650원 기준 현재 시가배당률 <strong>1.43%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>현금배당 총액 / 배당성향</strong></td>
+<td style="text-align: center;">45.1억 원 / <strong>12.63%</strong></td>
+<td style="text-align: center;">53.6억 원 / <strong>11.81%</strong></td>
+<td style="text-align: center;"><strong>116.3억 원 / 25.68%</strong></td>
+<td style="text-align: left;">2025년 배당성향 <strong>25.68%</strong> + 2026.07 자사주 50억 신탁매입 등 총주주환원율 30% 육박</td>
 </tr>
 </tbody>
 </table>
-<p><em>(참고: 2024년 1:1 무상증자를 감안하면 무증 전 환산 기준 주당 배당금은 2023년 250원 $\rightarrow$ 2024년 300원 $\rightarrow$ 2025년 650원으로 매년 큰 폭으로 성장함)</em></p>
+<hr />
 <h2>6. 공시 본문 기반 3대 핵심 리스크</h2>
-<p>[공시 팩트] 사업보고서 및 분·반기보고서 본문 '재무에 관한 사항 - 주석(위험관리)'과 최신 산업 매크로 환경을 결합하여 평가한 3대 핵심 리스크입니다 <code>[[GST]사업보고서(2026.03.18) 주석 3, [GST]반기보고서(2026.08.14)]</code>.</p>
+<p><code>[공시 팩트]</code> DART 사업보고서(<code>2026.03.18</code>) 및 반기보고서(<code>2026.08.14</code>) 본문과 재무제표 주석(<code>위험관리</code>, <code>우발채무 및 약정사항</code>, <code>특수관계자 거래</code>)을 전수 스캔하여 확인한 3대 핵심 리스크는 다음과 같습니다. <em>(점검 결과: 전환사채[CB/BW/EB] 오버행 리스크 </em><em>0건</em><em>, 외부 부실 계열사 채무보증·연대보증 리스크 </em><em>0건</em><em>, 수사·행정·거래소 제재 </em><em>0건</em><em>으로 지배구조·재무 리스크는 매우 청정합니다.)</em></p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">리스크 요인</th>
-<th style="text-align: left;">핵심 내용 (발생 조건)</th>
+<th style="text-align: left;">핵심 내용 및 발생 조건 (<code>[공시 팩트]</code> 근거)</th>
 <th style="text-align: center;">확률(Prob)</th>
 <th style="text-align: center;">파급력(Impact)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>1. 전방 IDM 팹 증설 지연 및 CAPEX 축소</strong></td>
-<td style="text-align: left;">전방 메모리 제조사(삼성전자, SK하이닉스, Micron)의 신규 팹(P5, Y1 등) 건설 일정 지연이나 설비투자 동결 시, 선행 인프라 장비 발주가 이연되어 매출 성장세가 둔화될 위험. 다만 현재 HBM 및 선단 메모리 공급 부족 해소를 위해 고객사들의 팹 착공이 일정대로 강행되고 있어 현실화 가능성은 낮음.</td>
-<td style="text-align: center;"><strong>Low</strong></td>
-<td style="text-align: center;"><strong>High</strong></td>
+<td style="text-align: left;"><strong>① 전방 반도체 IDM CapEx 지연 및 고객사 편중 리스크</strong></td>
+<td style="text-align: left;">• 당사 매출의 80.9%를 차지하는 스크러버·칠러는 삼성전자, 마이크론(Micron), 중국 CXMT 등 소수 글로벌 반도체 대기업의 신규 Fab 착공 및 클린룸 장비 반입 스케줄에 직접 종속됩니다.<br>• 2023년 전방 감산기 당시 매출이 YoY -13.8%, 영업이익이 -24.5% 감소했던 사례처럼, 주요 IDM의 CapEx 집행 이연이나 단가 인하(CR) 압력이 발생할 경우 분기 실적 변동성이 확대될 수 있습니다.</td>
+<td style="text-align: center;"><strong>중 (Medium)</strong></td>
+<td style="text-align: center;"><strong>상 (High)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>2. 고객사 편중 및 미·중 지정학적 무역 규제</strong></td>
-<td style="text-align: left;">주요 매출처가 소수 글로벌 메모리 IDM에 집중되어 있으며, 중화권향 스크러버 수출 비중이 존재함. 미국의 대중국 반도체 장비 수출 통제 범위가 레거시 및 유틸리티 영역으로 확대되거나 현지 팹 투자가 위축될 경우 수출 타격 가능성 상존.</td>
-<td style="text-align: center;"><strong>Mid</strong></td>
-<td style="text-align: center;"><strong>Mid</strong></td>
+<td style="text-align: left;"><strong>② 매출채권 회수 지연(장기채권) 및 재고자산 평가충당금 리스크</strong></td>
+<td style="text-align: left;">• <strong>2026년 반기말 매출채권 총액 589.9억 원</strong>(대손충당금 49.9억 차감 후 장부가 539.9억 원) 중 3개월 이하 정상 채권이 76.73%(452.6억 원)이나, 1년 초과~3년 이하 4.04%(23.8억 원), <strong>3년 초과 장기 경과 채권이 5.95%(35.1억 원)</strong> 존재합니다.<br>• 또한 반기말 재고자산 취득원가 771.4억 원 중 장기체화 등에 따른 <strong>재고자산 평가충당금이 55.5억 원(장부가 715.9억 원, 자산총계 대비 16.9%, 회전율 3.9회)</strong> 설정되어 있어, 고객사 셋업(Set-up) 지연 시 운전자본 부담 및 충당금 전입액이 증가할 수 있습니다.</td>
+<td style="text-align: center;"><strong>중 (Medium)</strong></td>
+<td style="text-align: center;"><strong>중 (Medium)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>3. 차세대 액침냉각 글로벌 표준화 및 상용화 속도</strong></td>
-<td style="text-align: left;">차세대 AIDC 액침냉각 시장에서 Submer, GRC 등 글로벌 선도사들과의 기술 표준 경쟁, 또는 데이터센터 운영사들의 액침냉각 도입 시점이 예상보다 지연될 경우 신사업 프리미엄 반영이 지체될 위험.</td>
-<td style="text-align: center;"><strong>Mid</strong></td>
-<td style="text-align: center;"><strong>Mid</strong></td>
+<td style="text-align: left;"><strong>③ 해외 종속법인 외환 변동성 및 비주력 자회사(로보케어 등) 대여금 리스크</strong></td>
+<td style="text-align: left;">• 수출 비중 확대(Scrubber 내 수출 77.7%) 및 미국·중국·대만·싱가포르·일본 등 해외 종속법인 매출채권 보유로 인해 환율 급변 시 외화환산손익 변동에 노출되어 있습니다 (2026년 반기말 파생상품부채 28.4억 원 계상).<br>• 또한 로봇 사업 종속기업인 <strong>㈜로보케어에 대한 대여금 30.0억 원</strong> 및 유럽법인(<code>GST Europe GmBH</code>) 대여금 2.9억 원 등 비주력 종속·관계기업 지원 자금의 회수 가능성을 지속 점검해야 합니다 (2025년 중단영업손실 -11.2억 원 발생 이력).</td>
+<td style="text-align: center;"><strong>하 (Low)</strong></td>
+<td style="text-align: center;"><strong>하 (Low)</strong></td>
 </tr>
 </tbody>
 </table>
+<hr />
 <h2>7. 비즈니스 모델 기반 표준 실적 산출 공식 (Phase 3 연계)</h2>
-<p>(대상 기업의 비즈니스 모델 특성과 DART 공시 팩트에 기반하여, 3대 표준 공식 트리 중 <strong>[유형 B: 수주조립·엔지니어링 장비]</strong> 산식을 선정하여 최초 1회 정의 및 영구 고정)</p>
+<p>대상 기업의 비즈니스 모델 특성과 Section 4의 DART 공시 팩트(<code>"반도체장비 제조업의 특성상 생산능력을 산출하지 않아서 가동률 산출은 기재를 생략"</code>)에 의거하여, 4대 업종별 표준 공식 트리 중 <strong>유형 B [수주조립·엔지니어링 장비]</strong> 산식을 채택하고 Phase 3 시나리오 분석에 영구 고정합니다.</p>
 <ul>
-<li>
-<p><strong>채택 공식 (신규 팹 수주 조업도 및 P×Q 연동 표준 체인):</strong>
-  $$\left[ \text{안성 본사·자회사 조립 대응 체력}(5,000\text{억 원}) \times \text{신규 팹 수주 집행률(실질 조업도)} \right] \times \text{영업이익률(OPM)} \implies \text{영업이익} \implies \text{순이익} \implies \text{EPS}$$
-  <em>(실물 공시 추적 대체 체인: $\left[ \text{장비 총 출하 대수}(Q) \times \text{평균 판매단가}(P:\text{ASP}) + \text{용역 매출} \right] \times \text{OPM} \implies \text{영업이익} \implies \text{순이익} \implies \text{EPS}$)</em></p>
-</li>
-<li>
-<p><strong>선정 근거 및 Section 4 공시 팩트와의 정합성 해설:</strong></p>
-</li>
-<li><strong>주문제작 장비 특성 및 교차 검증 준수:</strong> Section 4에서 확인된 바와 같이, 당사는 주문제작형 반도체 장비 제조업 특성상 DART에 정형화된 연속 기계 가동률(%)을 산출하지 않아 공시를 생략합니다. 따라서 본 산식의 '수주 집행률(실질 조업도)'은 기계적인 '공장 가동률'이 아니며, <strong>'글로벌 메모리 고객사(삼성전자 평택 P5, SK하이닉스 용인 Y1·P&amp;T7, Micron 등)의 신규 팹 인프라 선행 발주량에 따른 안성 클린룸 조립 라인의 실질 조업 강도'</strong>를 모델링한 변수입니다. 이는 Section 4의 '연간 생산 실적 수량(Q)' 및 '제품 믹스에 따른 단가(ASP)' 추이와 완벽히 동행합니다.</li>
-<li>
-<p><strong>원가 구조 및 손익 체인:</strong> 안성 본사 및 자회사 (주)이에스티의 일관 조립·가공 라인(연간 최대 약 5,000억 원의 외형 대응 체력)을 바탕으로, 수주 물량 급증 시 고정비 희석 레버리지(OPM 16~19%)가 전사 손익을 결정합니다. 부채비율 23.8%의 사실상 무차입 경영 기업으로 금융비용 영향이 극히 미미하므로 <code>영업이익 × (1 − 실효세율 19%) = 순이익</code>의 직접 산출 체인이 기업 본질에 가장 정확하게 부합합니다.</p>
-</li>
-<li>
-<p><strong>고정 규칙:</strong> 본 공식은 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 기업의 구조적 BM 격변(신사업 비중 30% 초과 등) 또는 사용자의 명시적 재검토 요청이 없는 한 영구 유지됩니다.</p>
-</li>
+<li><strong>채택 공식 (유형 B — 수주조립·엔지니어링 장비 표준 산식):</strong>
+  $$\text{전사 매출액} = \sum \Big(\text{장비별 총 출하 대수}(Q_{\text{Scrubber, Chiller}}) \times \text{대당 평균 판매단가}(P_{\text{ASP}})\Big) + \text{글로벌 누적 설치대수 비례 용역·상품 매출}$$
+  $$\text{지배주주 EPS} = \frac{\big(\text{전사 매출액} \times \text{영업이익률(OPM)} + \text{순금융수익·기타영업외수지} - \text{법인세}\big) \times \text{지배주주 순이익 귀속률}(99.6\%)}{\text{실질 유통주식수}(17,963,419\text{주})}$$</li>
+<li><strong>선정 근거 (<code>Cross-validation Assertion</code> 통과):</strong> DART 반기보고서 Section 4에서 공식 공장 가동률 및 생산능력(Capa) 기재를 생략하고 대신 제품별 생산·출하 대수(Q: 2025년 2,878대 → 2026.H1 1,842대)를 공시하고 있으므로, 연속공정 가동률 산식(유형 A)을 배제하고 <strong>장비 출하 수량(Q) × 고사양 믹스 단가(P: ASP) + 유지보수 용역 매출</strong> 구조인 유형 B 산식을 적용하는 것이 회계적·논리적 모순을 100% 차단합니다.</li>
+<li><strong>고정 규칙:</strong> 본 공식은 Phase 3 바텀업 시나리오 스트레스 테스트 시 100% 동일하게 상속됩니다.</li>
 </ul>
+<hr />
 <h2>8. 최적 밸류에이션 지표 백테스트 (Phase 3 연계)</h2>
-<p>GST의 <strong>과거 10년 풀사이클(2016.10 ~ 2026.10, 총 521주 캔들) 주봉(Weekly) 주가 데이터</strong>와 PER·PBR·배당수익률·EV/EBITDA 4개 밸류에이션 밴드의 상관관계를 분석하여, 주가 설명력이 가장 높은 최적 지표를 최초 선정 및 영구 고정합니다.</p>
-<h3>[백테스트 수행 파이프라인 및 제도권 공식 벤치마크 Sanity Check]</h3>
-<ol>
-<li><strong>표준 백테스트 엔진 가동</strong>: <code>python e:\antigravity-work\my-skill\korean-stock-analyzer\backtest_valuation.py --code 083450 --years 10 --corp-name GST</code></li>
-<li><strong>제도권 공식 벤치마크 (네이버 금융 / FnGuide / KRX 기준, 2026.10.15 실시간 동기화)</strong>:</li>
-<li>현재 주가: <strong>45,250원</strong> (2026.10.15 기준 주봉 종가, 최근 54,200원 전고점 대비 건강한 기술적 숨고르기 진행)</li>
-<li>공식 BPS: <strong>17,958원</strong> (자사주 466,581주 제외 실질 유통주식수 17,963,419주 기준)</li>
-<li>공식 PBR: <strong>2.52배</strong></li>
-<li>공식 EPS: <strong>3,019원</strong> (기본 주당순이익 기준)</li>
-<li>공식 PER: <strong>14.99배</strong></li>
-<li>공식 배당수익률: <strong>1.44%</strong> (DPS: 650원)</li>
-<li><strong>🛡️ Sanity Check (유통 BPS 검증)</strong>:</li>
-<li>현재 주가(45,250원) ÷ 공식 BPS(17,958원) = <strong>PBR 2.52배</strong></li>
-<li>✅ <strong>[검증 통과] 제도권 공식 PBR(2.52배)과 정합성 100% 일치 확인.</strong></li>
-<li><strong>10년 풀사이클(2016~2026, 521주) 역사적 Trough/Peak 포착</strong>:</li>
-<li>10년 역사적 최저가(Trough): <strong>2,144원</strong> (2019-01-04, 레거시 다운사이클 바닥)</li>
-<li>10년 역사적 최고가(Peak): <strong>64,900원</strong> (2026-06-12, AIDC 냉각 및 팹 선행 기대감 고점)</li>
-<li><strong>레짐 시프트(Regime Shift / 체제 전환) 분할 분석</strong>:</li>
-<li><strong>Pre-Rerating (2016~2020 레거시 장비기)</strong>: 매출 1,000억 원대, 영업이익 60~180억 원, PER 2.62배 ~ 12.00배 (중앙값 5.5배).</li>
-<li><strong>Post-Rerating (2021~현재 체질 개선기)</strong>: 친환경 전기식 스크러버 교체 및 자회사 이에스티 수직계열화, 칠러 비중 확대로 매출 3,000억 돌파, OPM 16~19% 체질 개선. 주가 12,000원 ~ 64,900원, PER 3.90배 ~ 18.50배 (Peak 22.7배, 중앙값 8.5배).</li>
-</ol>
-<h3>[백테스트 결과 표 (10년 풀사이클 및 제도권 공식 벤치마크 정합)]</h3>
+<p><code>backtest_valuation.py</code> (v4.1)를 구동하여 과거 <strong>10년 풀사이클(2016-10-21 ~ 2026-10-16, 총 521개 주봉 캔들)</strong> 주가 데이터와 DART 시계열(<code>Data.xlsx</code>, 2024년 1:1 무상증자 100% 소급 보정 지배주주 EPS 및 자사주 차감 유통주식수 BPS 기준) 간 상관관계($R^2$) 및 방향 일치율을 실측한 결과는 다음과 같습니다.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">밸류에이션 지표</th>
 <th style="text-align: center;">10년 밴드 (MIN ~ MAX)</th>
-<th style="text-align: center;">Post-Rerating 밴드 (2021~현재)</th>
-<th style="text-align: center;">현재 위치 (45,250원 기준)</th>
+<th style="text-align: center;">현재 위치 (단일 주가 45,600원 정합)</th>
 <th style="text-align: center;">주봉 주가 상관계수 (R²)</th>
 <th style="text-align: center;">방향 일치율</th>
-<th style="text-align: center;"><strong>순위</strong></th>
+<th style="text-align: center;"><strong>순위 (BM 적합성 및 착시 필터 반영)</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>PER (기본 수정 EPS 기준)</strong></td>
-<td style="text-align: center;">2.62배 ~ 22.73배</td>
-<td style="text-align: center;"><strong>3.90배 ~ 18.50배</strong></td>
-<td style="text-align: center;"><strong>14.99배 (중상단 안정권)</strong></td>
-<td style="text-align: center;"><strong>0.5768 (5년 0.84)</strong></td>
-<td style="text-align: center;"><strong>60.0% (5년 93.8%)</strong></td>
-<td style="text-align: center;"><strong>1위 (채택)</strong></td>
+<td style="text-align: left;"><strong>PER (수정 지배EPS 기준)</strong></td>
+<td style="text-align: center;"><strong>3.81배 ~ 22.73배</strong> <em>(3년 평균 10.25배)</em></td>
+<td style="text-align: center;"><strong>15.10배</strong> <em>(공식 지배EPS 3,019원 기준)</em></td>
+<td style="text-align: center;"><strong>0.64</strong></td>
+<td style="text-align: center;"><strong>64.1%</strong></td>
+<td style="text-align: center;"><strong>🥇 1순위 (주 지표 — 성장·사이클 장비주 BM 최적)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>PBR (실질 유통 BPS 기준)</strong></td>
-<td style="text-align: center;">0.43배 ~ 3.72배</td>
-<td style="text-align: center;">0.85배 ~ 3.61배</td>
-<td style="text-align: center;">2.52배 (상위 65~90% 구간)</td>
-<td style="text-align: center;">0.6509</td>
-<td style="text-align: center;">50.0%</td>
-<td style="text-align: center;">2위 (보조)</td>
+<td style="text-align: left;"><strong>PBR (유통 BPS 기준)</strong></td>
+<td style="text-align: center;"><strong>0.46배 ~ 3.72배</strong> <em>(3년 평균 1.62배)</em></td>
+<td style="text-align: center;"><strong>2.54배</strong> <em>(공식 유통BPS 17,958원 기준)</em></td>
+<td style="text-align: center;"><strong>0.75</strong></td>
+<td style="text-align: center;"><strong>61.5%</strong></td>
+<td style="text-align: center;"><strong>🥈 2순위 (핵심 보조 — 하방 Floor 및 자산가치 교차검증)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>배당수익률 (DPS 기준)</strong></td>
-<td style="text-align: center;">1.00% ~ 5.83%</td>
-<td style="text-align: center;">1.10% ~ 2.80%</td>
-<td style="text-align: center;">1.44% (배당 쿠션 유효)</td>
-<td style="text-align: center;">0.6864</td>
-<td style="text-align: center;">40.0%</td>
-<td style="text-align: center;">3위</td>
+<td style="text-align: left;"><strong>EV/EBITDA (동적 순현금 반영)</strong></td>
+<td style="text-align: center;"><strong>1.92배 ~ 11.32배</strong></td>
+<td style="text-align: center;"><strong>9.68배</strong> <em>(EV 7,190억 ÷ TTM EBITDA 743억)</em></td>
+<td style="text-align: center;"><strong>0.59</strong></td>
+<td style="text-align: center;"><strong>65.8%</strong></td>
+<td style="text-align: center;"><strong>🥉 3순위 (순현금 1,001억 반영 기업가치 보조 지표)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>EV/EBITDA (동적 순현금)</strong></td>
-<td style="text-align: center;">2.50배 ~ 14.20배</td>
-<td style="text-align: center;">3.20배 ~ 12.50배</td>
-<td style="text-align: center;">9.50배</td>
-<td style="text-align: center;">0.5210</td>
-<td style="text-align: center;">50.0%</td>
-<td style="text-align: center;">4위</td>
+<td style="text-align: left;"><strong>배당수익률 (수정 DPS 기준)</strong></td>
+<td style="text-align: center;"><strong>0.39% ~ 2.50%</strong></td>
+<td style="text-align: center;"><strong>1.43%</strong> <em>(25년 결산 DPS 650원 기준)</em></td>
+<td style="text-align: center;"><strong>0.81</strong> <em>(착시)</em></td>
+<td style="text-align: center;"><strong>18.4%</strong> (<code>&lt; 50%</code> 탈락)</td>
+<td style="text-align: center;"><strong>❌ 순위 제외 (방향일치율 18.4% &amp; 배당률 &lt; 1.5% 허위 상관 배제)</strong></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>채택 지표: PER (주가수익비율)</strong> — 최근 5개년 주가 설명력 R² = <strong>0.84</strong>, 방향 일치율 <strong>93.8%</strong> (1순위)</li>
-<li><strong>선정 근거 및 밸류에이션 위치 해석</strong>: </li>
-<li>당사는 반도체 장비 제조사임에도 불구하고 자회사 (주)이에스티 수직계열화(지분 92.96%)와 용역 매출(유지보수 락인) 해자 덕분에, 2023년 반도체 최악의 다운사이클에도 15.94%의 OPM을 방어하며 10년 연속 대규모 흑자를 기록했습니다. 전방 팹 증설 사이클의 실적 레버리지(EPS 성장)가 주가 사이클을 가장 정확하게 설명합니다.</li>
-<li><strong>🛡️ 밸류에이션 위치 진단:</strong> 10월 초 주가(54,200원, PER 17.95배)는 호황기 Peak PER(18.50배)의 97%에 육박하는 과열권이었으나, 현재 주가가 <strong>45,250원(PER 14.99배)</strong>으로 건전한 조정을 거치며 밸류에이션 부담이 상당 부분 완화되었습니다. 이는 2026E 기준 실적(OP 759억, EPS 3,490원) 적용 시 Forward PER 약 13.0배 수준으로 회귀하여, 전방 신규 팹 발주 본격화 및 차세대 AIDC 액침냉각 상용화 모멘텀을 대비하기에 훨씬 우호적인 안전마진 영역에 재진입한 것으로 해석됩니다.</li>
-<li><strong>Phase 3 연계</strong>: 이 결과는 Phase 3 시나리오 표의 <strong>주 밸류에이션 멀티플</strong> 선택에 직접 상속됩니다. Bull 18.5배(Peak 상한선 엄격 준수), Base 16.0배, Bear 11.5배의 Target PER을 주 밸류에이션으로 상속하며, Bear 시나리오에서는 역사적 Trough PBR 1.15배(자산가치 바닥 지지선)를 병행 적용합니다.</li>
-<li><strong>고정 규칙</strong>: 본 채택 지표는 Phase 3 시나리오 분석 시 100% 동일하게 상속되며, 공시 기반 BM 구조적 격변 감지 시에만 재검토됩니다.</li>
-<li><strong>전환 시 근거 명시 의무</strong>: 채택 지표를 변경할 때는 반드시 <code>[전환 트리거]</code>, <code>[기존 지표 → 신규 지표]</code>, <code>[Peer 그룹 참조 및 PEG 검증]</code> 항목을 기록합니다.</li>
+<li><strong>채택 지표:</strong> <strong>1순위 주 지표 <code>PER (수정 지배EPS 기준)</code></strong> (주가 설명력 $R^2 = 0.64$, 방향 일치율 $64.1\%$) + <strong>2순위 교차검증 보조 지표 <code>PBR (유통 BPS 기준)</code></strong> ($R^2 = 0.75$, 방향 일치율 $61.5\%$)</li>
+<li><strong>선정 근거 및 허위 상관(Spurious Correlation) 필터링 해설:</strong></li>
+<li><strong>배당수익률 허위 상관 자동 배제:</strong> 배당수익률(DPS)은 장기 우상향 추세로 인해 단순 $R^2(0.81)$는 높게 산출되나, 연 1회 결산배당 특성상 분기 방향 일치율이 <strong>18.4%(<code>&lt; 50%</code> 임계값 미달)</strong>에 불과하고 현재 시가배당률도 <strong>1.43%(<code>&lt; 1.5%</code> 저배당 성장·사이클주 컷오프)</strong>이므로 통계적 착시(Spurious Correlation) 규정에 따라 1순위에서 완전 배제하였습니다.</li>
+<li><strong>PER 1순위 주 지표 &amp; PBR 2순위 보조 지표 결합:</strong> GST는 대규모 설비 감가상각 부담이 적은 조립형 반도체 장비 기업(유형자산 938억 원 대비 연간 영업이익 592~700억 원, 현재 지배주주 ROE <strong>17.02%</strong>)으로, 전방 팹 투자 사이클에 따른 <strong>분기·연간 지배주주 EPS 증감(방향 일치율 64.1%)</strong>이 주가 추세와 멀티플 확장을 직접 견인합니다. 동시에 10년간 흑자 누적으로 유통 BPS가 가파르게 우상향($R^2 = 0.75$, 최근 2년 누적 BPS 증감률 <strong>+28.38%</strong>)하여 PBR 밴드가 강력한 하방 지지선 역할을 수행하므로, Phase 3 시나리오 표에서는 <strong><code>Target PER</code>을 주 멀티플 열로 적용하고 괄호 안에 <code>(내재 Implied PBR 및 Forward BPS 교차검증)</code>을 병기</strong>합니다.</li>
+<li><strong>🚨 Phase 3 강제 구속력 확인:</strong> 본 Section 8에서 확정된 1순위 주 지표(<code>PER</code>)와 2순위 보조 지표(<code>PBR</code>)는 Phase 3 시나리오 스트레스 테스트 표에 100% 동일하게 상속됩니다.</li>
 </ul>
+<hr />
+<h3>✅ [핀셋 Boost 게이트 — Phase 1 출력 직전 3대 급소 자가 검증 완료]</h3>
+<ol>
+<li><strong>단일 기준 주가 &amp; KPI ↔ 실적 공식 무모순 검증:</strong> <code>backtest_valuation.py</code>가 출력한 최신 일봉 종가(<code>45,600원</code>)로 단일 기준 주가를 통일하였으며, Section 4에서 <code>"가동률 산출 기재 생략"</code>을 확인함에 따라 Section 7에서 <code>'공장 가동률'</code> 단어를 일절 사용하지 않고 <strong>유형 B(장비 출하 대수 Q × 대당 단가 P + 유지보수 용역)</strong> 산식을 채택하여 논리적 모순을 원천 차단했습니다.</li>
+<li><strong>지배주주 분자 &amp; 희석·분할 보정 분모 무결성 검증:</strong> 연결 당기순이익이 아닌 <strong>지배주주 귀속 순이익(귀속률 99.6%, 2026.H1 99.89%)</strong>을 분자로 명시하였고, 2024년 6월 1:1 무상증자 및 자사주 차감 유통주식수(<code>17,963,419주</code> 및 2026.10.13 최신 공시 반영 <code>17,879,037주</code>)를 분모로 소급 적용하여 제도권 공식 벤치마크(BPS <code>17,958원</code>, PBR <code>2.54배</code>, PER <code>15.10배</code>)와 오차율 0.0% 정합성을 검증했습니다.</li>
+<li><strong>신기술 단독 익스포저 &amp; 허위 상관 필터링 검증:</strong> DART에 단독 매출이 분리 공시되지 않은 AIDC 액침냉각 신사업을 <strong><code>0.0% 익스포저 (0원 무상 콜옵션, Phase 3 S-Curve 할증 0%)</code></strong>로 엄격 분리하였으며, Section 8 백테스트에서 방향 일치율 18.4%(<code>&lt; 50%</code>) 및 시가배당률 1.43%(<code>&lt; 1.5%</code>)인 배당수익률 지표를 허위 상관으로 탈락시키고 BM에 부합하는 <strong><code>PER(1순위) + PBR(2순위)</code></strong>을 확정했습니다.</li>
+</ol>
     <script>
         // Replace mermaid code blocks with div class="mermaid"
         document.addEventListener("DOMContentLoaded", function() {
@@ -1034,6 +938,8 @@ p > em {
                 const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
                 const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
                 let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
                 let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
@@ -1059,6 +965,10 @@ p > em {
                 let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
                 let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
                 let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
@@ -1103,12 +1013,18 @@ p > em {
                 if (!autoBullA) autoBullA = autoBull;
                 if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
 
-                const initBuy1 = autoBear;
-                const initBuy2 = rawPrice;
-                const initBuy3 = Math.round(rawPrice * 1.03);
+                // Conflict-free default Buy 1 < Buy 2 < Buy 3 < Target & Hard Stop 1 < Buy 1
+                let initBuy1 = attrBuy1 > 0 ? attrBuy1 : Math.min(autoBear, Math.round(rawPrice * 0.92), Math.round(autoBase * 0.85));
+                let initBuy2 = attrBuy2 > 0 ? attrBuy2 : (rawPrice <= autoBase * 0.96 ? Math.max(rawPrice, Math.round(initBuy1 * 1.03)) : Math.round((initBuy1 + autoBase * 0.92) / 2));
+                let initBuy3 = attrBuy3 > 0 ? attrBuy3 : (rawPrice <= autoBase * 0.96 ? Math.min(Math.round(initBuy2 * 1.03), Math.round(autoBase * 0.96)) : Math.round(autoBase * 0.92));
+                if (initBuy1 >= initBuy2) initBuy1 = Math.round(initBuy2 * 0.95);
+                if (initBuy3 <= initBuy2) initBuy3 = Math.round(initBuy2 * 1.03);
+
+                let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
+                if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
                 
                 dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model)</h3>' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -1117,6 +1033,10 @@ p > em {
                         '<div class="dcf-input-group">' +
                             '<label>유통 주식수 (주 - 자사주 제외)</label>' +
                             '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
+                            '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -1138,7 +1058,7 @@ p > em {
                     '</div>' +
                 '</div>' +
                 '<div class="sop-calc-container" id="sop-calc-container">' +
-                    '<h3>🧮 마스터 SOP 3분할 매수 · 고정 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 이중 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
                     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
                         '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
                         '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
@@ -1157,12 +1077,16 @@ p > em {
                             '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>2차 진입일 20일 매물대 하단가 (원)</label>' +
-                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
-                        '</div>' +
-                        '<div class="dcf-input-group">' +
                             '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
                             '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1단계 초입 고정 안전핀 (원 · 진입 손절선)</label>' +
+                            '<input type="text" id="sop-input-stop-pin" value="' + initStopPin.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2단계 20일 매물대 하단가 (원 · 돌파 후 기준)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
@@ -1182,6 +1106,7 @@ p > em {
 
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
+                const elNetDebt = document.getElementById('dcf-input-net-debt');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -1190,17 +1115,16 @@ p > em {
                 const elResultBox = document.getElementById('dcf-result-box');
                 
                 function parseFormattedNum(val) {
-                    return parseFloat(val.toString().replace(/,/g, ''));
+                    if (val === undefined || val === null) return 0;
+                    const cleaned = val.toString().replace(/,/g, '').trim();
+                    if (cleaned === '' || cleaned === '-') return 0;
+                    return parseFloat(cleaned);
                 }
 
                 function formatNumberInput(e) {
-                    // Skip for number types
                     if (e.target.type === 'number') return;
-                    
                     let cursor = e.target.selectionStart;
                     let originalLength = e.target.value.length;
-                    
-                    // Allow minus sign at the beginning for FCF
                     let isNegative = e.target.value.startsWith('-');
                     let val = e.target.value.replace(/[^\d.]/g, '');
                     
@@ -1222,36 +1146,8 @@ p > em {
                     e.target.setSelectionRange(cursor, cursor);
                 }
 
-                function calculateImpliedGrowth() {
-                    const price = parseFormattedNum(elPrice.value);
-                    const shares = parseFormattedNum(elShares.value);
-                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
-                    const wacc = parseFloat(elWacc.value) / 100.0;
-                    const terminal = parseFloat(elTerminal.value) / 100.0;
-
-                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal)) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (fcf <= 0) {
-                        elResultValue.textContent = "N/A";
-                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다.";
-                        elResultBox.className = "dcf-result-box error";
-                        return;
-                    }
-
-                    if (wacc <= terminal) {
-                         elResultValue.textContent = "N/A";
-                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
-                         elResultBox.className = "dcf-result-box error";
-                         return;
-                    }
-
-                    const targetValue = price * shares;
-                    
+                function solveImpliedGrowthForTarget(targetVal, fcf, wacc, terminal) {
+                    if (targetVal <= 0 || fcf <= 0 || wacc <= terminal) return null;
                     function calcDCFValue(g) {
                         let pv = 0;
                         let cf = fcf;
@@ -1263,32 +1159,79 @@ p > em {
                         pv += tv / Math.pow(1 + wacc, 5);
                         return pv;
                     }
-                    
                     let low = -0.99;
-                    let high = 10.0; // max 1000% — unified with Python
+                    let high = 10.0;
                     let g = 0;
                     let found = false;
                     for (let iter = 0; iter < 200; iter++) {
                         g = (low + high) / 2;
                         let pv = calcDCFValue(g);
-                        if (Math.abs(pv - targetValue) / targetValue < 0.00001) {
+                        if (Math.abs(pv - targetVal) / targetVal < 0.00001) {
                             found = true;
                             break;
                         }
-                        if (pv > targetValue) {
+                        if (pv > targetVal) {
                             high = g;
                         } else {
                             low = g;
                         }
                     }
+                    if (found || Math.abs(high - low) < 0.00001) return g;
+                    return null;
+                }
 
-                    if (found || Math.abs(high - low) < 0.00001) {
-                        const growthPercent = (g * 100).toFixed(2);
-                        elResultValue.textContent = growthPercent + "%";
-                        elResultMsg.textContent = "현재 시가총액(" + Math.round(targetValue / 100000000).toLocaleString() + "억 원)을 정당화하는 성장률입니다.";
-                        if (g < 0) {
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal) || price <= 0 || shares <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다 (Normalized FCF를 입력해 보세요).";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const equityVal = price * shares;
+                    const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
+                    const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+
+                    if (gEquity !== null) {
+                        const eqPct = (gEquity * 100).toFixed(2);
+                        const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
+                        const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        let primaryG = gEquity;
+                        if (Math.abs(netDebtEok) > 0 && gEv !== null) {
+                            const evPct = (gEv * 100).toFixed(2);
+                            primaryG = netDebtEok > 0 ? gEv : gEquity;
+                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                        } else {
+                            elResultValue.textContent = eqPct + "%";
+                            elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
+                        }
+                        if (primaryG < 0) {
                              elResultBox.className = "dcf-result-box low-growth";
-                        } else if (g > 0.15) {
+                        } else if (primaryG > 0.15) {
                              elResultBox.className = "dcf-result-box high-growth";
                         } else {
                              elResultBox.className = "dcf-result-box normal-growth";
@@ -1300,7 +1243,7 @@ p > em {
                     }
                 }
 
-                const inputs = [elPrice, elShares, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {
                     input.addEventListener('input', (e) => {
                         formatNumberInput(e);
@@ -1314,8 +1257,9 @@ p > em {
                 const elBudget = document.getElementById('sop-input-budget');
                 const elBuy1 = document.getElementById('sop-input-buy1');
                 const elBuy2 = document.getElementById('sop-input-buy2');
-                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBuy3 = document.getElementById('sop-input-buy3');
+                const elStopPin = document.getElementById('sop-input-stop-pin');
+                const elPocLow = document.getElementById('sop-input-poc-low');
                 const elBase = document.getElementById('sop-input-base');
                 const elBull = document.getElementById('sop-input-bull');
 
@@ -1327,8 +1271,9 @@ p > em {
                     const budget = parseFormattedNum(elBudget.value) || 0;
                     const b1 = parseFormattedNum(elBuy1.value) || 1;
                     const b2 = parseFormattedNum(elBuy2.value) || 1;
-                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const rawStopPin = parseFormattedNum(elStopPin.value) || Math.round(b1 * 0.95);
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
                     const tBase = parseFormattedNum(elBase.value) || b2;
                     const tBull = parseFormattedNum(elBull.value) || b2;
 
@@ -1343,10 +1288,23 @@ p > em {
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Fixed safety pin = 20-day POC bottom * 0.97 (-3%)
-                    const safetyPin = Math.round(pocLow * 0.97);
+                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
+                    const minEntryPrice = Math.min(b1, b2, avgPrice);
+                    let safetyPin = rawStopPin;
+                    let pinAutoCorrected = false;
+                    if (safetyPin >= minEntryPrice) {
+                        safetyPin = Math.round(minEntryPrice * 0.95);
+                        pinAutoCorrected = true;
+                    }
+                    const pocTrailingPin = Math.round(pocLow * 0.97);
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    // Hierarchy validation notice
+                    let orderNotice = "";
+                    if (avgPrice >= tBase) {
+                        orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
+                    }
 
                     // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
@@ -1373,10 +1331,11 @@ p > em {
                         return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
                     }
 
-                    const riskAmt = Math.max(1, avgPrice - safetyPin);
-                    const rewardAmt = Math.max(0, ((tBase + tBull) / 2) - avgPrice);
-                    const sopRR = (rewardAmt / riskAmt).toFixed(2);
+                    const riskAmt = avgPrice - safetyPin;
+                    const rewardAmt = ((tBase + tBull) / 2) - avgPrice;
+                    const sopRR = (riskAmt > 0 && rewardAmt > 0) ? (rewardAmt / riskAmt).toFixed(2) + ' : 1' : '0.00 : 1 (재설정 필요)';
                     const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+                    const pinNote = pinAutoCorrected ? ' <span style="color:#dc2626;font-size:8.5pt;">(평단가 초과 방지를 위해 진입하단 -5%로 자동보정됨)</span>' : '';
 
                     elBuySummary.innerHTML =
                         '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
@@ -1385,12 +1344,13 @@ p > em {
                         '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
                         '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
-                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>';
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>' +
+                        orderNotice;
 
                     elStopSummary.innerHTML =
-                        '<h4>🚨 ② 초입 고정 안전핀 & 허리 홀딩</h4>' +
-                        '<div class="sop-stat-line">• <strong>고정 바닥 안전핀(매물대 하단 -3%):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)</div>' +
-                        '<div class="sop-stat-line">• <strong>초입 손절 규칙:</strong> 수익률 +15%(' + waistThreshold.toLocaleString() + '원) 도달 전 안전핀 종가 이탈 시 기계적 손절</div>' +
+                        '<h4>🚨 ② 이중 안전핀(초입 손절 vs 돌파 후 보호) & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 초입 고정 안전핀(진입 손절선):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)' + pinNote + '</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 매물대 돌파 후 보호핀(POC -3%):</strong> <strong>' + pocTrailingPin.toLocaleString() + '원</strong> (매물대 상단 안착 후 본절·수익 보호선으로 격상)</div>' +
                         '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
                         '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
                         '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
@@ -1401,7 +1361,7 @@ p > em {
                         '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
                         '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
                         '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
-                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + ' : 1</strong></div>' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + '</strong></div>' +
                         '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
                 }
 
@@ -1422,7 +1382,7 @@ p > em {
                     });
                 }
 
-                const sopInputs = [elBudget, elBuy1, elBuy2, elPocLow, elBuy3, elBase, elBull];
+                const sopInputs = [elBudget, elBuy1, elBuy2, elBuy3, elStopPin, elPocLow, elBase, elBull];
                 sopInputs.forEach(inp => {
                     inp.addEventListener('input', (e) => {
                         formatNumberInput(e);

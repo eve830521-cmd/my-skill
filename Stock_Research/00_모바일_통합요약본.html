@@ -3,43 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본</title>
+    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.1)</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --border: #334155;
+            --bg: #0b1120;
+            --card: #151e32;
+            --border: #24324f;
             --text: #f8fafc;
             --muted: #94a3b8;
             --accent: #38bdf8;
             --bull: #34d399;
             --base: #60a5fa;
             --bear: #f87171;
+            --gold: #fbbf24;
+            --purple: #c084fc;
         }
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            padding: 14px;
-            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Malgun Gothic", sans-serif;
+            padding: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
         .top-bar {
             max-width: 760px;
-            margin: 0 auto 16px auto;
+            margin: 0 auto 14px auto;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .top-bar h1 {
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             font-size: 1.25rem;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .top-bar .sub {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--muted);
             margin-bottom: 12px;
         }
@@ -48,9 +55,14 @@
             padding: 10px 14px;
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: #0f172a;
+            background: #0b1120;
             color: var(--text);
             font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
         }
         .container {
             max-width: 760px;
@@ -64,7 +76,7 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.28);
         }
         .card-header {
             display: flex;
@@ -76,40 +88,105 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+        .title-wrap {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
         .stock-title {
-            font-size: 1.2rem;
+            font-size: 1.22rem;
             font-weight: 800;
             color: #fff;
-            margin-right: 8px;
+            letter-spacing: -0.02em;
+        }
+        .chip-metric {
+            background: rgba(96, 165, 250, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .chip-free-opt {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
         }
         .update-date {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--muted);
         }
         .price-pill {
-            background: #0f172a;
+            background: #0b1120;
             border: 1px solid var(--accent);
             color: var(--accent);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.88rem;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
         }
         .badges-row {
-            font-size: 0.82rem;
-            background: rgba(15, 23, 42, 0.6);
+            font-size: 0.8rem;
+            background: rgba(11, 17, 32, 0.7);
             padding: 8px 10px;
             border-radius: 8px;
             margin-bottom: 10px;
+            border: 1px solid rgba(36, 50, 79, 0.6);
         }
-        .badge-line { margin-bottom: 4px; }
+        .badge-line { margin-bottom: 4px; line-height: 1.4; }
         .badge-line:last-child { margin-bottom: 0; }
         .code-badge {
             background: rgba(56, 189, 248, 0.15);
             color: #7dd3fc;
             padding: 1px 6px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
+        }
+        /* Core Action Bar: Safety Pin & Target */
+        .core-action-bar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .action-card {
+            border-radius: 10px;
+            padding: 9px 11px;
+            border: 1px solid var(--border);
+        }
+        .stop-card {
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+        .target-card {
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+        .act-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .act-val {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin: 2px 0;
+            letter-spacing: -0.01em;
+        }
+        .stop-val { color: var(--bear); }
+        .target-val { color: var(--base); }
+        .act-sub {
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            word-break: keep-all;
+            line-height: 1.3;
         }
         .metrics-grid {
             display: grid;
@@ -118,31 +195,55 @@
             margin-bottom: 10px;
         }
         .metric-box {
-            background: #0f172a;
+            background: #0b1120;
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 8px 10px;
         }
-        .m-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }
-        .m-val { font-size: 0.9rem; font-weight: 700; }
+        .m-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 2px; }
+        .m-val { font-size: 0.9rem; font-weight: 700; line-height: 1.35; }
         .bull .m-val { color: var(--bull); }
         .base .m-val { color: var(--base); }
         .bear .m-val { color: var(--bear); }
-        .rr-sub { font-size: 0.78rem; color: var(--muted); font-weight: normal; }
+        .growth-chips-row {
+            display: flex;
+            gap: 5px;
+            margin: 3px 0 2px 0;
+            flex-wrap: wrap;
+        }
+        .growth-chip {
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .growth-chip.eq {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .growth-chip.ev {
+            background: rgba(192, 132, 252, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+        .rr-line { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+        .rr-sub { font-size: 0.75rem; color: var(--muted); font-weight: normal; }
         .triggers-box {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             border-top: 1px dashed var(--border);
             padding-top: 8px;
         }
-        .t-row { margin-bottom: 7px; }
+        .t-row { margin-bottom: 7px; line-height: 1.45; }
         .buy-t { color: #93c5fd; }
         .sell-t { color: #fca5a5; }
         .thesis-details {
             margin-top: 8px;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(11, 17, 32, 0.6);
             border-radius: 8px;
             padding: 8px 10px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
+            border: 1px solid rgba(36, 50, 79, 0.5);
         }
         .thesis-details summary {
             cursor: pointer;
@@ -154,50 +255,72 @@
             padding-left: 18px;
         }
         .thesis-details li { margin-bottom: 5px; color: #cbd5e1; }
+        @media (max-width: 480px) {
+            .core-action-bar { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <h1>📱 내 투자 종목 모바일 1페이지 통합 요약본</h1>
-        <div class="sub">총 14개 분석 종목 | 최종 갱신: 2026-10-15 22:11 | Phase 3 & S-Curve 연동</div>
-        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 티씨케이, 리노공업...)" oninput="filterCards()">
+        <div class="sub">총 14개 분석 종목 | 최종 갱신: 2026-10-21 15:00 | v4.1 회계·수리 무결성 & S-Curve 연동</div>
+        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 하나머티리얼즈, GST...)" oninput="filterCards()">
     </div>
     <div class="container" id="cardContainer">
         
         <div class="stock-card" data-name="GST">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">GST</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PER 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.21)</span>
                 </div>
-                <div class="price-pill">현재가: 45,250원</div>
+                <div class="price-pill">현재가: 45,600원</div>
             </div>
             <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 12.5% | 적극 매수 & 추세추종)]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 DART 검증 순수 주도주]</span> (칠러 라인업 등재 및 글로벌 레지스트리 탑픽 익스포저 65% ≥ 30% 컷오프 통과)</div>
+                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🎁 본업 저평가 + 신사업 무상 콜옵션(단독 매출 미공시·할증 0%)]</span> *(AIDC 액체냉각 장비 시장 내 액침냉각 비중 약 7.0% 선택적 틈새, DART 단독 매출 미공시로 <span class='code-badge'>sc_mult = 1.00</span>)*</div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[💎 병목 밸류체인 히든 챔피언 (반도체 Sub-fab 본업 100%)]</span> + <span class='code-badge'>[🎁 무상 콜옵션 보유주 (AIDC 액침냉각)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">29,040원</div>
+                    <div class="act-sub">분할매수가: 1차 31,570원 | 2차 33,540원 | 3차 35,510원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong><span class='code-badge'>50,780원</span> (대안B)</strong> (<strong><span class='code-badge'>+11.4%</span> (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 음수 | G2 1.32:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>74,600원 (대안B)</strong> (<strong>+64.9% (대안B)</strong>)<br>🚀A: <strong>83,550원 (대안A)</strong> (<strong>+84.6% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong><span class='code-badge'>55,190원</span> (대안B)</strong> (<strong><span class='code-badge'>+21.0%</span> (대안B)</strong>)<br>🚀A: <strong><span class='code-badge'>55,190원</span> (대안A)</strong> (<strong><span class='code-badge'>+21.0%</span> (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>55,800원 (대안B)</strong> (<strong>+23.3% (대안B)</strong>)<br>🚀A: <strong>61,380원 (대안A)</strong> (<strong>+35.6% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): <strong>50,780원 (대안B·A 공통)</strong> (<strong>+12.2% (대안B·A 공통)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong><span class='code-badge'>39,460원</span> (대안B)</strong> (<strong><span class='code-badge'>-13.5%</span> (대안B)</strong>)<br>🚀A: <strong><span class='code-badge'>39,460원</span> (대안A)</strong> (<strong><span class='code-badge'>-13.5%</span> (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong><span class='code-badge'>50,780원</span> (대안B)</strong> (<strong><span class='code-badge'>+11.4%</span> (대안B)</strong>)<br>🚀A: <strong><span class='code-badge'>50,780원</span> (대안A)</strong> (<strong><span class='code-badge'>+11.4%</span> (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>23,000원 (대안B·A 공통)</strong> (<strong>-49.2% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong><span class='code-badge'>20,710원</span> (대안B·A 공통)</strong> (<strong><span class='code-badge'>-54.6%</span> (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 17.54% <span class="rr-sub">(R:R G1 0.47:1 | G2 3.24:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 +18.46% <span class="rr-sub">(R:R G1 음수 | G2 1.32:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>조건부 추세 트레이딩 분할 매수 (Trading Buy on Dips — 안전핀 42,000원/50,906원 엄수)</strong></div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 눌림목 지지선 진입):</strong><br>현재 주가 <strong>44,000원 ~ 46,000원 구간(일봉 60일선 46,548원 하단 및 일봉 Slow Stochastic(12,5,5) %K=46.9% 조정 구간)</strong>에서 1차 정찰병 30% 선진입.<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong><br>일봉 종가가 <strong>20일 매물대(5칸 POC: 52,480원 ~ 55,690원, 비중 28.8%) 하단 돌파</strong> 및 <strong>일봉 20일 이동평균선(50,548원)</strong>을 <strong>20일 평균 거래량 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 0.50배) 이상</strong> 거래량으로 동시 돌파할 때 40% 본대 투입.<br>➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(52,480원)에서 -3%인 <strong><span class='code-badge'>50,906원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong><br>주봉 종가가 <strong>주봉 20주 이동평균선(48,515원)</strong> 위에 완전히 재안착하고 <strong>주봉 MACD Histogram(현재 -249.6)이 양(+) 전환</strong>될 때 잔여 30% 투입 완성.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>50,906원</span>)</strong> 또는 전저점 지지선(42,000원)을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 단기 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>48,515원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br><strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 55,800원 / 🚀대안A 61,380원</span>)</strong> 또는 단기 <strong>TP1(<span class='code-badge'>50,780원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 54.2) < 50</strong>(수급 고갈)이면 즉시 50% 기계적 익절.<br>만약 <strong>주봉 MFI(14) ≥ 50</strong>으로 스마트머니 수급이 살아있다면 익절을 보류하고 <strong>Bull 목표가(<span class='code-badge'>🛡️대안B 74,600원 / 🚀대안A 83,550원</span>)</strong>까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI 54.2, 최근 12주 최고 61.2).</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong><span class='code-badge'>⏳ 보유 및 눌림목 대기 (Hold & Wait for Pullback — 현재가 45,600원 추격매수 금지)</span></strong></div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Base 대비 -20% 눌림목 / 주봉 장기 지지권):</strong> 주가 <strong><span class='code-badge'>31,570원</span></strong> (주가가 <span class='code-badge'>Base 적정주가 39,460원</span>의 80% 안전마진 구간까지 충분히 조정받고, 일봉 Slow Stochastic(12,5,5)이 침체권 <span class='code-badge'>%K ≤ 20</span>에서 골든크로스를 발생할 때 30% 선진입. <strong>현재 일봉 Slow Stochastic <span class='code-badge'>%K = 31.5% / %D = 61.1%</span> 데드크로스 조정 중으로 대기</strong>).<br><strong>2차 본대 투입 (비중 40% — Base 대비 -15% 중심 지지 / 거래량 동반 반등):</strong> 주가 <strong><span class='code-badge'>33,540원</span></strong> (1차 진입 후 주봉 60주 이동평균선(<span class='code-badge'>36,868원</span>) 하단 언더슈팅 구간에서 <strong>20일 평균 거래량(<span class='code-badge'>155,337주</span>) 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 <span class='code-badge'>0.86배</span>) 이상</strong> 거래량을 동반한 양봉 반등 및 지지 확인 시 40% 본대 투입).<br><strong>3차 확인사살 (비중 30% — Base 대비 -10% 추세 복귀 안착):</strong> 주가 <strong><span class='code-badge'>35,510원</span></strong> (주봉 볼린저밴드 하단(<span class='code-badge'>36,914원</span>) 및 주봉 60주 이동평균선(<span class='code-badge'>36,868원</span>) 회복 흐름 속에서 <strong>주봉 MACD(12,26,9) Histogram(현재 <span class='code-badge'>-227.3</span> 음전환 조정 중)이 음(-) 축소 및 양(+) 전환</strong>될 때 잔여 30% 투입 완성. <strong>3분할 완성 평균단가 <span class='code-badge'>33,540원</span> < 1차 목표가 Base <span class='code-badge'>39,460원</span>[기대수익 <span class='code-badge'>+17.7%</span>] 및 TP1 <span class='code-badge'>50,780원</span>[<span class='code-badge'>+51.4%</span>] 수리적 검증 완료</strong>).</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (<span class='code-badge'>Hard Stop 1</span>, 진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(<span class='code-badge'>31,570원</span>, <span class='code-badge'>-8.0%</span>) 및 3분할 완성 평단가(<span class='code-badge'>33,540원</span>, <span class='code-badge'>-13.4%</span>) 아래로 엄격히 설정된 <strong><span class='code-badge'>29,040원</span></strong>을 일봉 종가 기준 하향 이탈 시 조건 없이 기계적 손절합니다.<br><strong>🔒 2단계 매물대 돌파 후 트레일링 보호핀 (<span class='code-badge'>Trailing Stop 2</span>):</strong> 향후 주가가 상승 추세로 복귀하여 <strong>일봉 20일 매물대(5칸 POC: <span class='code-badge'>52,480원 ~ 55,690원</span>, 거래비중 <span class='code-badge'>27.7%</span>) 상단인 <span class='code-badge'>55,690원</span></strong>을 완전히 돌파·안착한 이후에만 보호핀을 20일 매물대 하단(<span class='code-badge'>52,480원</span>) -3%인 <strong><span class='code-badge'>50,906원</span></strong>으로 격상하여 수익을 방어합니다.<br><strong>상승 허리 홀딩 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선(<span class='code-badge'>50,582원</span>) 이탈이나 단기 음봉 노이즈에 흔들리지 않고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>48,532원</span>)을 하향 이탈하기 전까지 추세 홀딩</strong>합니다. *(단, 현재 주가 <span class='code-badge'>45,600원</span>은 주봉 20주선 <span class='code-badge'>48,532원</span> 및 일봉 60일선 <span class='code-badge'>46,532원</span>을 소폭 하향 이탈한 단기 조정 국면이므로 신규 추격 매수를 삼가고 눌림목 지지를 기다립니다.)*<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br><strong>눌림목 신규 진입자 (완성 평단 <span class='code-badge'>33,540원</span> 기준):</strong> <strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 39,460원 / 🚀대안A 39,460원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <span class='code-badge'>53.0</span>) < 50</strong>(수급 고갈)이면 즉시 보유 물량의 50%를 분할 익절하고, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 <strong>TP1(<span class='code-badge'>50,780원</span>) 및 Bull 목표가(<span class='code-badge'>🛡️대안B 55,190원 / 🚀대안A 55,190원</span>)</strong>까지 추세 추종합니다.<br><strong>현재가(<span class='code-badge'>45,600원</span>) 인근 기존 보유자:</strong> 단기 기술적 반등 시 <strong>1차 저항선인 TP1(<span class='code-badge'>50,780원</span>, 일봉 20일선 <span class='code-badge'>50,582원</span> 부근)</strong> 도달 구간에서 주봉 MFI(14) 수급 강도를 점검하여 비중 30~50%를 선제 축소하고, 잔여 물량은 20일 매물대 POC 상단 및 <strong>Bull 목표가(<span class='code-badge'>55,190원</span>)</strong> 도달 시 분할 익절합니다.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong></div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (0건)</summary>
@@ -207,38 +330,56 @@
         
         <div class="stock-card" data-name="JW생명과학">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">JW생명과학</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 배당수익률 1위</span>
+                    
+                    <span class="update-date">(26.10.19)</span>
                 </div>
-                <div class="price-pill">현재가: 10,670원</div>
+                <div class="price-pill">현재가: 10,520원</div>
             </div>
             <div class="badges-row">
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve N/A: 전통 시클리컬 / 성숙기 BM]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[⚪ 전통 필수 헬스케어 과점 BM (CAPEX 해자 & 정부 배당소득 분리과세 적격)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">10,050원</div>
+                    <div class="act-sub">분할매수가: 1차 10,520원 | 2차 10,860원 | 3차 11,170원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>13,150원 (대안B)</strong> (<strong>+25.0% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 33.98:1 | G2 3.39:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>18,980원 (대안B)</strong> (<strong>+77.9% (대안B)</strong>)<br>🚀A: <strong>18,980원 (대안A)</strong> (<strong>+77.9% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>18,960원 (대안B)</strong> (<strong>+80.2% (대안B)</strong>)<br>🚀A: <strong>18,960원 (대안A)</strong> (<strong>+80.2% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>15,460원 (대안B)</strong> (<strong>+44.9% (대안B)</strong>)<br>🚀A: <strong>15,460원 (대안A)</strong> (<strong>+44.9% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>13,200원 (대안B)</strong> (<strong>+23.7% (대안B)</strong>)<br>🚀A: <strong>13,200원 (대안A)</strong> (<strong>+23.7% (대안A)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>15,280원 (대안B)</strong> (<strong>+45.2% (대안B)</strong>)<br>🚀A: <strong>15,280원 (대안A)</strong> (<strong>+45.2% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>13,150원 (대안B)</strong> (<strong>+25.0% (대안B)</strong>)<br>🚀A: <strong>13,150원 (대안A)</strong> (<strong>+25.0% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>8,400원 (대안B·A 공통)</strong> (<strong>-21.3% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong>10,520원 (대안B·A 공통)</strong> (<strong>+0.0% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -22.24% <span class="rr-sub">(R:R G1 2.11:1 | G2 4.74:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -17.32% <span class="rr-sub">(R:R G1 33.98:1 | G2 3.39:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>박스권 하단 분할 매수 (Buy on Box-Bottom — TP1 50% 반타작)</strong> (확정 배당수익률 5.27% & 10년 최저 PBR 0.71배 지지, 듀얼 R:R 게이트 동시 통과)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선):</strong> 주가 <strong>10,380원 ~ 10,700원</strong> (10년 역사적 최저가 10,380원 부근이자 배당수익률 5.27% 절대 바닥권에서 30% 선진입. 현재 일봉 Slow Stochastic(12,5,5) <span class='code-badge'>%K=23.1% / %D=23.9%</span> 침체권 바닥 형성 중)<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong> 일봉 종가가 <strong>20일 매물대(5칸 POC: 10,884원 ~ 11,126원, 비중 48.3%) 상단</strong> 및 <strong>일봉 20일 이동평균선(10,946원)</strong>을 <strong>20일 평균 거래량(13,358주) 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 1.66배 충족) 이상</strong> 거래량으로 동시 돌파할 때 40% 본대 투입. ➡️ <strong>🚨 [고정 바닥 안전핀]: 2차 본대 진입이 체결되는 순간, 손절 라인을 매물대 하단(10,884원) 대비 -3% 아래인 <span class='code-badge'>10,557원</span>에 영구 고정</strong>하고 절대 하향하지 않는다.<br><strong>3차 불타기 (비중 30% — 주봉 20주선 안착):</strong> 주봉 종가가 <strong>주봉 20주선(11,180원)</strong> 및 <strong>일봉 60일선(11,133원)</strong> 위로 종가 안착 시 잔여 30%를 불타기하여 100% 비중 완성.<br><strong>분할 익절 및 고점경보 청산 트리거:</strong><br><strong>[추세 홀딩 원칙]:</strong><br>평단가 대비 수익률 +15% 도달 시 일봉 노이즈를 무시하고 <strong>주봉 20주선(11,180원)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>저변동 박스권주 특성에 따라 <strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>🛡️대안B 13,200원 / 🚀대안A 13,200원</span>, +23.7%) 도달 시 50% 기계적 분할 익절</strong>하여 현금 회전율을 극대화.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br>전방 JW중외제약의 2개 분기 연속 수액 매출 역성장 또는 당진공장 가동률 80% 미만 추락 시<br>정부의 수액제 급여 상한가 10% 이상 기습 직권 인하 공시 발생 시</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>👑 적극 매수 (Strong Buy — 압도적 안전마진)</strong> (확정 배당수익률 5.23% & 10년 최저 PBR 0.72배 지지, 듀얼 R:R 게이트 동시 통과)</div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 가치/눌림목 선취매):</strong> 주가 <strong>10,520원</strong> (10년 역사적 최저가 10,380원 부근이자 배당수익률 5.23% 절대 바닥권에서 30% 선진입. 현재 일봉 Slow Stochastic(12,5,5) <span class='code-badge'>%K=24.4% / %D=24.0%</span> 침체권 골든크로스 상승우위 확인 완료)<br><strong>2차 본대 투입 (비중 40% — 1차 추세선/매물대 돌파):</strong> 주가 <strong>10,860원</strong> (일봉 종가가 <strong>20일 매물대(5칸 POC: 10,610원 ~ 10,860원, 거래비중 42.0%) 상단</strong> 및 일봉 20일선(10,906원)을 돌파하거나 안착 확인 시 40% 본대 투입).<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 주가 <strong>11,170원</strong> (주봉 종가가 <strong>주봉 20주선(11,167원)</strong> 및 일봉 60일선(11,111원) 위로 안착 시 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>10,851원</span> < 1차 목표가 <span class='code-badge'>13,150원</span> 검증 완료</strong>).</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (Hard Stop 1 — 진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(10,520원) 및 완성 평단가(10,851원) 아래로 설정된 <strong><span class='code-badge'>10,050원</span></strong>(1차 매수가 대비 -4.5%, 완성 평단 대비 -7.4%)을 일봉 종가 기준 하향 이탈 시 기계적 손절. (<span class='code-badge'>10,050원 < min(10,520, 10,851)</span> 위계 엄수)<br><strong>🔒 2단계 매물대 돌파 후 트레일링 보호핀 (Trailing Stop 2):</strong> 주가가 20일 매물대 상단(10,860원)을 돌파 안착 성공 시에만 손절 라인을 <strong><span class='code-badge'>10,292원</span></strong>으로 격상하여 본절 및 수익 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 단기 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주선(11,167원)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>저변동 박스권주 특성에 따라 <strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>🛡️대안B 13,150원 / 🚀대안A 13,150원</span>, +25.0%) 도달 시 50% 기계적 분할 익절</strong>하여 현금 회전율을 극대화.<br>이후 잔여 물량은 <strong>Base 2차 목표가(<span class='code-badge'>🛡️대안B 15,280원 / 🚀대안A 15,280원</span>, +45.2%)</strong>까지 홀딩.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong></div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (0건)</summary>
@@ -248,9 +389,11 @@
         
         <div class="stock-card" data-name="LG생활건강">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">LG생활건강</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.15)</span>
                 </div>
                 <div class="price-pill">현재가: 267,500원</div>
             </div>
@@ -258,6 +401,20 @@
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⭐ S-Curve Phase 2: K-뷰티 골든 스위트스팟 (침투율 18.0% | 사이클 우회 진단)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🚫 수혜 제외 (레거시 잠식 탈락 - DART 테마 익스포저 10.8% < 30%)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">280,524원</div>
+                    <div class="act-sub">일봉 종가 이탈 시 기계적 손절</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>311,620원 (대안B)</strong> (<strong>+16.5% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 5.50:1 | G2 차단</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -272,8 +429,10 @@
                     <div class="m-val"><strong>253,180원 (대안B·A 공통)</strong> (<strong>-5.4% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -0.50% <span class="rr-sub">(R:R G1 5.50:1 | G2 차단)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -0.50% <span class="rr-sub">(R:R G1 5.50:1 | G2 차단)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
@@ -289,9 +448,11 @@
         
         <div class="stock-card" data-name="NAVER">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">NAVER</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PER 1위</span>
+                    
+                    <span class="update-date">(26.10.15)</span>
                 </div>
                 <div class="price-pill">현재가: 172,100원</div>
             </div>
@@ -299,6 +460,20 @@
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve N/A: 성숙기 종합 플랫폼 BM (신기술 테마 익스포저 11.45% < 30% 컷오프 미달로 전통 밸류에이션 준용)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[⚪ 성숙기 레거시 캐시카우 기반 플랫폼 주도주 (검색광고·핀테크 전사의 75%+)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">188,083원</div>
+                    <div class="act-sub">일봉 종가 이탈 시 기계적 손절</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>247,500원 (대안B)</strong> (<strong>+43.8% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 바닥권 | G2 14.98:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -313,8 +488,10 @@
                     <div class="m-val"><strong>242,420원 (대안B·A 공통)</strong> (<strong>+40.9% (대안B·A 공통)</strong> *(PBR 0.87배 절대바닥선 172,100원 기준 시 0.0%)*)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 +13.97% <span class="rr-sub">(R:R G1 바닥권 | G2 14.98:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 +13.97% <span class="rr-sub">(R:R G1 바닥권 | G2 14.98:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
@@ -330,9 +507,11 @@
         
         <div class="stock-card" data-name="두산테스나">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">두산테스나</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 EV/EBITDA 1위</span>
+                    
+                    <span class="update-date">(26.10.15)</span>
                 </div>
                 <div class="price-pill">현재가: 121,200원</div>
             </div>
@@ -340,6 +519,20 @@
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 27.8% | 적극 매수 & 추세추종)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[💎 병목 밸류체인 히든 챔피언 / 🟢 DART 검증 부분 수혜 합격 (실질 익스포저 35.0%)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">82,663원</div>
+                    <div class="act-sub">일봉 종가 이탈 시 기계적 손절</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>128,470 원 (대안B)</strong> (<strong>+6.0% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 음수 | G2 0.19:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -354,8 +547,10 @@
                     <div class="m-val"><strong>17,580 원 (대안B·A 공통)</strong> (<strong>-85.5% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 +23.33% <span class="rr-sub">(R:R G1 음수 | G2 0.19:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 +23.33% <span class="rr-sub">(R:R G1 음수 | G2 0.19:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
@@ -371,9 +566,11 @@
         
         <div class="stock-card" data-name="리노공업">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">리노공업</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 EV/EBITDA 1위</span>
+                    
+                    <span class="update-date">(26.10.15)</span>
                 </div>
                 <div class="price-pill">현재가: 68,400원</div>
             </div>
@@ -381,6 +578,20 @@
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 28.5% | 적극 매수 & 추세추종)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 DART 검증 순수 주도주]</span> (DART 테마 직결 매출 익스포저 91.73%)</div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">71,567원</div>
+                    <div class="act-sub">일봉 종가 이탈 시 기계적 손절</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>104,600원 (대안B)</strong> (<strong>+52.9% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 0.56:1 | G2 3.58:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -395,8 +606,10 @@
                     <div class="m-val"><strong>46,380원 (대안B·A 공통)</strong> (<strong>-32.2% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 29.70% <span class="rr-sub">(R:R G1 0.56:1 | G2 3.58:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 29.70% <span class="rr-sub">(R:R G1 0.56:1 | G2 3.58:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
@@ -412,50 +625,70 @@
         
         <div class="stock-card" data-name="매커스">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">매커스</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.17)</span>
                 </div>
-                <div class="price-pill">현재가: 28,500원</div>
+                <div class="price-pill">현재가: 27,550원</div>
             </div>
             <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 AI 반도체(HBM·메가팹 증설) 병목 전이 & K-방산 다층 방공망 복합 수혜: 1차 HBM 웨이퍼 잠식(36.5%, Phase 2 후반부) 발 웨이퍼 테스터(와이씨) 증설 사이클 + 2차 K-방산 레이더·유도무기용 고마진 FPGA 확산 (보유 & 눌림목 분할 매수)]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🟢 비메모리 FPGA 기술솔루션 순수 주도주 (DART 상품매출 익스포저 95.31%, AI 스토리지 포함 시 98.76%)]</span> / <span class='code-badge'>[💎 웨이퍼 테스터(와이씨)·방산 제어보드 Design-in 독점 병목 밸류체인 히든 챔피언]</span></div>
+                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🎁 본업 저평가 + 신사업 무상 콜옵션 (HBM 침투율 36.5% Phase 2 후반부 | DART 단독 매출 미공시 0원 무상 콜옵션 분류, S-Curve 할증 0% 차단)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🟢 비메모리 FPGA 기술솔루션 순수 주도주]</span> / <span class='code-badge'>[💎 와이씨 웨이퍼 테스터 및 K-방산 제어보드 독점 병목 밸류체인 히든 챔피언]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">16,910원</div>
+                    <div class="act-sub">분할매수가: 1차 18,380원 | 2차 19,530원 | 3차 20,680원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>29,200원 (대안B)</strong> (<strong>+6.0% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 음수 | G2 1.32:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val"><strong>40,000원</strong> (<strong>+40.4%</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>27,100원 (대안B)</strong> (<strong>−1.6% (대안B)</strong>)<br>🚀A: <strong>29,270원 (대안A)</strong> (<strong>+6.2% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val"><strong>33,000원</strong> (<strong>+15.8%</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): <strong>30,210원</strong> (<strong>+6.0%</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>22,980원 (대안B)</strong> (<strong>−16.6% (대안B)</strong>)<br>🚀A: <strong>24,820원 (대안A)</strong> (<strong>−9.9% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>29,200원 (대안B)</strong> (<strong>+6.0% (대안B)</strong>)<br>🚀A: <strong>31,540원 (대안A)</strong> (<strong>+14.5% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>21,000원</strong> (<strong>-26.3%</strong>)</div>
+                    <div class="m-val"><strong>9,820원 (대안B·A 공통)</strong> (<strong>−64.4% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -27.07% <span class="rr-sub">(R:R G1 0.60:1 | G2 3.16:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -27.74% <span class="rr-sub">(R:R G1 음수 | G2 1.32:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>보유 및 눌림목 분할 매수 (Hold & Buy on Dips)</strong> (가치함정 0개 & <span class='code-badge'>유형 A: 일시적 사이클 저점</span> 정상 확인 / 단, 현재 PBR <span class='code-badge'>1.85배</span> 및 주봉 MFI <span class='code-badge'>81.8</span> 단기 과열권 감안) | 목표밴드: <strong>33,000원 (Base) ~ 40,000원 (Bull)</strong> (단기 실전 1차 저항 목표가 <strong>TP1 30,210원</strong>, 중기 기본 목표가 <strong>33,000원</strong>, 호황 상단 목표가 <strong>40,000원</strong> — LS증권 목표가 40,000원 일치)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지지선 및 낙폭과대 눌림목 포착):</strong> 주가가 <strong>일봉 60일선(<span class='code-badge'>24,680원</span>, 손익비 2.0:1 확보 타점) ~ Bear 하방 지지선(<span class='code-badge'>21,000원</span>, 배당수익률 5.7% 쿠션)</strong> 구간으로 조정받거나, <strong>일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K ≤ 20</span> 골든크로스</strong> 확인 시 30% 선진입합니다. (현재 실측값: <strong><span class='code-badge'>%K = 77.8% / %D = 80.1%</span></strong> 데드크로스 조정 진입 초입이므로 1차 정찰병은 성급한 추격 대신 스토캐스틱 침체권 진입 또는 <span class='code-badge'>24,680원 ~ 26,400원</span> 눌림목 대기)<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong> 일봉 종가가 <strong>최근 20일 최대 매물대(5칸 POC: <span class='code-badge'>28,200원 ~ 29,100원</span>, 거래비중 <span class='code-badge'>43.8%</span> | 전체 분포: <span class='code-badge'>[25,500~26,400원: 4.1%]</span>, <span class='code-badge'>[26,400~27,300원: 19.9%]</span>, <span class='code-badge'>[27,300~28,200원: 12.4%]</span>, <span class='code-badge'>[28,200~29,100원: 43.8%]</span>, <span class='code-badge'>[29,100~30,000원: 19.7%]</span>) 상단(<span class='code-badge'>29,100원</span>, 일봉 5일선 일치)</strong> 및 <strong>일봉 20일 이동평균선(<span class='code-badge'>27,858원</span>)</strong>을 <strong>20일 평균 거래량(<span class='code-badge'>16,702주</span>) 대비 1.25배(<span class='code-badge'>20,878주</span> 이상, 현재 당일 거래량 <span class='code-badge'>4,263주</span>, <span class='code-badge'>vol_ratio = 0.26배</span>) 이상</strong> 거래량으로 동시 돌파할 때 40% 본대를 투입합니다. ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(<span class='code-badge'>28,200원</span>)에서 -3%인 <strong><span class='code-badge'>27,354원</span>을 고정 바닥 안전핀으로 영구 기록</strong>합니다.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 금요일 주봉 종가가 <strong>주봉 20주 이동평균선(<span class='code-badge'>23,111원</span>) 및 주봉 10주선(<span class='code-badge'>26,940원</span>)</strong> 위에 확고히 안착하고 <strong>주봉 MACD(12,26,9) Histogram(현재 <span class='code-badge'>+807.8</span>, MACD <span class='code-badge'>1,646.5</span> / Signal <span class='code-badge'>838.7</span> 양(+) 추세 유지 중 ✅)</strong>이 양(+)을 유지하며 단기 저항선 <span class='code-badge'>29,100원 ~ 30,000원</span>을 돌파 안착할 때 잔여 30%를 투입 완성합니다.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>27,354원</span>, 20일 매물대 하단 <span class='code-badge'>28,200원</span> -3%)</strong>을 일봉 종가 기준 하향 이탈 시 지체 없이 기계적 손절합니다. (펀더멘털 손절: 핵심 공급사 AMD 자일링스 대리점 계약 해지 또는 와이씨 테스터 보드 내 FPGA 이탈 공시 시 즉시 전량 매도)<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선(<span class='code-badge'>27,858원</span>) 이탈이나 단기 음봉 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>23,111원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>합니다.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]:</strong><br>성장·사이클 추세주(<span class='code-badge'>52주 등락폭 97.1% ≥ 36%</span>)로서 단기 1차 저항선인 <strong>TP1(<span class='code-badge'>30,210원</span>)</strong> 및 주봉 볼린저밴드 상단(<span class='code-badge'>31,689원</span>) 돌파 후, <strong>Base 1차 목표가(<span class='code-badge'>33,000원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <span class='code-badge'>81.8</span>) < 50</strong>(수급 고갈)이면 즉시 50%를 익절하고, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 <strong>Bull 목표가(<span class='code-badge'>40,000원</span>, 10년 Peak PBR <span class='code-badge'>2.29배</span>)</strong>까지 추세를 추종합니다.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈 — 현재 최우선 경계!):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 즉시 잔여 물량 차익 실현. *(⚠️ 현재 실측값: <strong>주봉 MFI <span class='code-badge'>81.8</span></strong>, <strong>최근 12주 최고 <span class='code-badge'>84.8</span></strong>로 <strong>현재 80 이상 과열권 내부 진입 상태</strong>입니다! 아직 80을 하향 이탈하지 않아 경보 미발동 상태이나, 차주 이후 주봉 MFI가 <span class='code-badge'>80.0</span> 아래로 꺾여 내려올 경우 즉시 고점경보 1호가 발동됩니다.)*<br><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스 괴리):</strong> 주가는 52주 신고가(<span class='code-badge'>32,450원 ~ 33,850원</span>) 또는 Bull 목표가(<span class='code-badge'>40,000원</span>)를 경신하고 <strong>주봉 RSI(14)(현재 <span class='code-badge'>61.5</span>) ≥ 70</strong>인데, <strong>주봉 MFI(14) < 70</strong>에 머물며 스마트머니 유입이 멈추는 다이버전스 발생 시 (현재 판독: <span class='code-badge'>정상</span>).</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong><span class='code-badge'>[⏳ 보유 및 눌림목 대기 (Hold & Wait for Pullback — 현재가 추격매수 금지)]</span></strong> | 목표밴드: - <strong>🛡️ 대안 B (보수적 주 닻)</strong>: <strong>22,980원 (Base 1차)</strong> ~ <strong>27,100원 (Bull)</strong> *(TP1 단기 실전: <strong>29,200원</strong>)*</div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 눌림목 1차 선취매):</strong> 주가 <strong><span class='code-badge'>18,380원</span></strong> (Base 대비 -20% 할인 구간이자 일봉 Slow Stochastic 침체권 <span class='code-badge'>%K ≤ 20</span> 확인 시 30% 선진입. 현재 <span class='code-badge'>%K=36.1% / %D=47.3%</span> 조정 중)<br><strong>2차 본대 투입 (비중 40% — 중심 지지선):</strong> 주가 <strong><span class='code-badge'>19,530원</span></strong> (Base 대비 -15% 할인선이자 직전 매물대 지지 확인 시 40% 본대 투입)<br><strong>3차 확인사살 (비중 30% — 상단 매물대 안착):</strong> 주가 <strong><span class='code-badge'>20,680원</span></strong> (Base 대비 -10% 안전마진 구간이자 주봉 20주선 지지 확인 시 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>19,530원</span> < 1차 목표가 <span class='code-badge'>22,980원</span> 검증 완료</strong>)</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br>🚨 <strong>1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(<span class='code-badge'>18,380원</span>) 및 완성 평단가(<span class='code-badge'>19,530원</span>) 아래로 설정된 <strong><span class='code-badge'>16,910원</span></strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br>🔒 <strong>2단계 상단 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 일봉 20일 매물대 상단(<span class='code-badge'>29,000원</span>, 거래비중 29.0%)을 완전히 돌파·안착한 이후에는 손절선을 20일 매물대 하단 -3%인 <strong><span class='code-badge'>27,160원</span></strong>으로 격상하여 본절 및 수익 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선 이탈 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>23,374원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]:</strong><br><strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 22,980원 / 🚀대안A 24,820원</span>)</strong> 또는 단기 실전 <strong>TP1(<span class='code-badge'>🛡️대안B 29,200원 / 🚀대안A 31,540원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 79.5) < 50</strong>이면 50% 분할 익절, <strong>MFI ≥ 50</strong>이면 Bull 목표가까지 추세 완주.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]:</strong><br>🚨 <strong>고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈 시 즉시 매도</strong> (현재 주봉 MFI <span class='code-badge'>79.5</span>로 12주 최고 <span class='code-badge'>84.8</span> 찍고 80 이탈 🚨경보 발생 상태!).</div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (3건)</summary>
-                <ul><li>[**26.09.16**] <strong>가설 1: AI 병목의 전이와 웨이퍼 테스터향 FPGA 실적 폭발</strong>: IDM 메가팹(삼성 P5, 하이닉스 M15X·Y1) 증설 및 와이씨(1H26 OP +566%) 웨이퍼 테스터 수주 폭증으로 매커스 1H26 OPM 19.00% 신고점 달성</li><li>[**26.09.16**] <strong>가설 2: K-방산 다층 방공망(레이더/유도무기) 확대 고마진 안착</strong>: 중동·유럽향 천궁-Ⅱ 레이더 및 안티드론 체계 양산으로 내방사선 고부가 FPGA 믹스 확대, 전사 OPM 18~20% 구조적 안착</li><li>[**26.10.08**] <strong>가설 3: 26% 자사주 소각 & 실질 유통 BPS 기반 리레이팅</strong>: 누적 426만 주(26.36%) 영구 소각 완료, 실질 유통 BPS 15,415원(PBR 1.85배) 및 유형 A 우량 자산축적 추세주(Base 33,000~Bull 40,000원) 확인</li></ul>
+                <ul><li>[**26.10.17**] <strong>가설 1: AI 병목의 전이와 웨이퍼 테스터향 FPGA 실적 폭발</strong>: 와이씨 1H26 영업익 190억(+566%) 및 2026E 551억 폭증 확증(LS증권 p.54), 매커스 1H26 OPM 19.00% 신고점 달성</li><li>[**26.10.17**] <strong>가설 2: K-방산 다층 방공망(레이더/유도무기) 확대 고마진 안착</strong>: 천궁-Ⅱ 레이더 및 안티드론 요격 체계 양산 납품으로 고신뢰성 FPGA 수요 확장, 전사 OPM 19% 안착 견인</li><li>[**26.10.17**] <strong>가설 3: 26% 자사주 소각 & 실질 유통 BPS 기반 리레이팅</strong>: 426만 주 소각 완료, 실질 유통 BPS 15,415원(PBR 1.79배, 상위 78% 분위수). 진입은 눌림목 안전마진(Base 이하) 대응</li></ul>
             </details>
         </div>
         
         <div class="stock-card" data-name="삼성전자">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">삼성전자</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    
+                    <span class="update-date">(26.10.15)</span>
                 </div>
                 <div class="price-pill">현재가: 206,500원</div>
             </div>
@@ -463,6 +696,20 @@
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 36.5% | 적극 매수 & 추세추종)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 DART 검증 순수 주도 대장주 (테마 익스포저 64.1%)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">262,288원</div>
+                    <div class="act-sub">일봉 종가 이탈 시 기계적 손절</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: <strong>275,000원 (대안B)</strong> </div>
+                    <div class="act-sub">실전 손익비: G1 3.62:1 | G2 3.62:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
@@ -477,8 +724,10 @@
                     <div class="m-val"><strong>172,000원 (공통)</strong> (<strong>-16.7% (공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -20.23% <span class="rr-sub">(R:R G1 3.62:1 | G2 3.62:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -20.23% <span class="rr-sub">(R:R G1 3.62:1 | G2 3.62:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
@@ -494,120 +743,174 @@
         
         <div class="stock-card" data-name="이노션">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">이노션</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 배당수익률 1위</span>
+                    
+                    <span class="update-date">(26.10.20)</span>
                 </div>
-                <div class="price-pill">현재가: 18,040원</div>
+                <div class="price-pill">현재가: 18,010원</div>
             </div>
             <div class="badges-row">
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve N/A: 전통 지식서비스 / 성숙기 박스권 BM]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 현대차그룹 글로벌 전속 캡티브 IMC 에이전시 (독점적 매체 바잉파워 & CX 해자)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 현대차그룹 글로벌 전속 캡티브 IMC 에이전시 (독점적 바잉파워 & 피지컬 CX 해자)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">14,650원</div>
+                    <div class="act-sub">분할매수가: 1차 15,920원 | 2차 16,710원 | 3차 17,410원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>19,420원 (대안B)</strong> (<strong>+7.8% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: 2.76 : 1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>40,400원 (대안B)</strong> (<strong>+123.9% (대안B)</strong>)<br>🚀A: <br><strong>40,400원 (대안A)</strong> (<br><strong>+123.9% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>29,920원 (대안B)</strong> (<strong>+66.1% (대안B)</strong>)<br>🚀A: <br><strong>29,920원 (대안A)</strong> (<br><strong>+66.1% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>28,300원 (대안B)</strong> (<strong>+56.9% (대안B)</strong>)<br>🚀A: <br><strong>28,300원 (대안A)</strong> (<br><strong>+56.9% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>19,420원 (대안B)</strong> (<strong>+7.6% (대안B)</strong>)<br>🚀A: <br><strong>19,420원 (대안A)</strong> (<br><strong>+7.6% (대안A)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>26,930원 (대안B)</strong> (<strong>+49.5% (대안B)</strong>)<br>🚀A: <br><strong>26,930원 (대안A)</strong> (<br><strong>+49.5% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>19,420원 (대안B)</strong> (<strong>+7.8% (대안B)</strong>)<br>🚀A: <br><strong>19,420원 (대안A)</strong> (<br><strong>+7.8% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>16,800원 (대안B·A 공통)</strong><br>*(하방 안전마진 할증 금지)* (<strong>-6.9% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong>17,000원 (대안B·A 공통)</strong><br>*(하방 안전마진 할증 금지)* (<strong>-5.6% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -20.6% <span class="rr-sub">(R:R G1 8.25:1 | G2 11.38:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -20.60% <span class="rr-sub">(R:R 2.76 : 1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy / 박스권 바닥)</strong> (확정 배당수익률 6.52% & PBR 0.63배 하방 지지, 듀얼 R:R 게이트 동시 통과)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선):</strong> 주가 <strong>16,800원 ~ 17,500원</strong> (Bear 하방 지지선 부근 또는 일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K ≤ 20</span> 골든크로스 확인 시 30% 선진입. 현재 <span class='code-badge'>%K=51.0% / %D=43.4%</span> 상승 우위).<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong> 일봉 종가가 <strong>20일 매물대(5칸 POC: 18,016원 ~ 18,244원, 비중 60.8%) 상단(18,244원)</strong> 및 <strong>일봉 20일선(18,140원)</strong>을 <strong>20일 평균 거래량 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 1.59배로 충족) 이상</strong> 거래량으로 동시 돌파할 때 40% 본대 투입. ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(18,016원)에서 -3%인 <strong><span class='code-badge'>17,470원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 주봉 종가가 <strong>주봉 20주선(18,814원)</strong> 위에 안착하고 <strong>주봉 MACD Histogram(현재 -128.3)이 양(+) 전환</strong>될 때 잔여 30% 투입 완성.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>17,470원</span>, 20일 매물대 하단 -3%)</strong>을 일봉 종가 기준 하향 이탈 시 지체 없이 기계적 손절.<br><strong>상승 허리 (수익률 $\ge +15\%$ & 주봉 20주선 위):</strong> 일봉 단기 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>18,814원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]:</strong><br>저변동 박스권주 특성에 따라 <strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>19,420원</span>, +7.6%)</strong> 또는 일봉 60일선(<span class='code-badge'>18,687원</span>) 도달 시 <strong>50% 기계적 분할 익절</strong>.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <span class='code-badge'>64.0</span>, 최근 12주 최고 <span class='code-badge'>71.4</span>).<br><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스 괴리):</strong> 주가는 52주 신고가(또는 Base 목표가 <span class='code-badge'>28,300원</span>)를 경신하고 <strong>주봉 RSI(14)(현재 43.2) $\ge 70$</strong>인데, <strong>주봉 MFI(14) < 70</strong>에 머물며 수급이 이탈하는 다이버전스 발생 시.</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> -</div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br>-</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br>-</div>
             </div>
             <details class="thesis-details">
-                <summary>💡 핵심 투자 가설 로그 보기 (4건)</summary>
-                <ul><li>[2026.09.17] <strong>"YouTube 등 지상파 대체 플랫폼의 등장으로 과거 광고대행사의 매체 독점 해자가 붕괴되었고, 그 결과 상장 초반 20배에 달하던 멀티플이 깨지며 주가가 장기 우하향 디레이팅된 것 아닌가?"</strong>: Phase 3 투자전략 수립 중 사용자가 제기한 구조적 밸류에이션 훼손 가설. 플랫폼 시프트에 따른 전통 매체 통행세 해자의 소멸과 P/E 멀티플 압축(20x → 6x) 역학 지적.</li><li>[2026.09.17] <strong>"배당주 투자의 함정(주의점)은 무엇이며, 이노션의 P/E 멀티플이 재평가(Re-rating)받을 수 있는 현실적으로 실현 가능한 기회는 구체적으로 무엇인가?"</strong>: 배당주 투자 시의 원금 손실 및 기회비용 위험 점검과, 밸류트랩 탈출을 위한 현실적 리레이팅 트리거(자사주 소각, 피지컬 AI 브랜딩 등) 유무 검증.</li><li>[2026.10.15] <strong>"글로벌 자동차 빙하기(피크아웃) 우려 속에서 현대차그룹 캡티브 광고 집행이 위축되어 이노션의 4분기 실적이 훼손될 위험은 없는가?"</strong>: 10월 Global Trend 업데이트 과정에서 제기된 전방 완성차 업황 피크아웃 우려 검증.</li></ul>
+                <summary>💡 핵심 투자 가설 로그 보기 (6건)</summary>
+                <ul><li>[2026.10.15] <strong>"글로벌 자동차 빙하기(피크아웃) 우려 속에서 현대차그룹 캡티브 광고 집행이 위축되어 이노션의 4분기 실적이 훼손될 위험은 없는가?"</strong>: 10월 Global Trend 업데이트 과정에서 제기된 전방 완성차 업황 피크아웃 우려 검증.</li><li>[2026.10.20] <strong>"한국에서 테슬라 Model Y 급성장으로 현대·기아차 점유율이 하락하고 로봇 테마도 꺾이고 있는데 이노션에 부정적 타격이 불가피한 것 아닌가?"</strong>: 국내 전기차 시장 판도 변화 및 로봇 테마 둔화가 현대차그룹 캡티브 에이전시의 마케팅 수주와 주가에 미치는 실질 익스포저 점검.</li><li>[2026.10.20] <strong>"세계적으로 고금리 환경이 구조적으로 진행 중인데 고금리가 이노션에 어떤 악영향을 미칠 것인가?"</strong>: 글로벌 고금리 장기화(H4L) 및 금리 인상 국면이 무차입 순현금 광고대행사의 재무·영업·밸류에이션에 미치는 실질 영향 점검.</li></ul>
             </details>
         </div>
         
         <div class="stock-card" data-name="코미코">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">코미코</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    
+                    <span class="update-date">(26.10.20)</span>
                 </div>
-                <div class="price-pill">현재가: 24,200원</div>
+                <div class="price-pill">현재가: 23,300원</div>
             </div>
             <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> 🚀 <strong>S-Curve Phase 2 (침투율 10~40% 골든 스위트스팟)</strong> — 선단 파운드리·HBM 초정밀 세정·코팅 (침투율 36.5%, 3개년 CAGR +38.2%) <span class='code-badge'>[출처: 26.09.16.IM증권.소나기 피할 반도체.pdf / s_curve_registry.json]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> -</div>
+                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 36.5% | 적극 매수 & 추세추종)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 DART 검증 순수 주도주]</span> (테마 직결 익스포저 77.6% & ⚡ 2026.10.19 미코세라믹스 1,500억 신규 부지 취득 CapEx 선행 발화 확인)</div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">16,490원</div>
+                    <div class="act-sub">분할매수가: 1차 17,920원 | 2차 19,040원 | 3차 20,160원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>31,010원 (대안B)</strong> (<strong>+33.1% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 1.0:1 | G2 1.32:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>30,380원 (대안B)</strong> (<strong>+25.5% (대안B)</strong>)<br>🚀A: <strong>30,380원 (대안A)</strong> (<strong>+25.5% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>30,380원 (대안B)</strong> (<strong>+30.4% (대안B)</strong>)<br>🚀A: <strong>34,030원 (대안A)</strong> (<strong>+46.1% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>22,400원 (대안B)</strong> (<strong>-7.4% (대안B)</strong>)<br>🚀A: <strong>22,400원 (대안A)</strong> (<strong>-7.4% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>31,050원 (대안B)</strong> (<strong>+28.3% (대안B)</strong>)<br>🚀A: <strong>31,050원 (대안A)</strong> (<strong>+28.3% (대안A)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>22,400원 (대안B)</strong> (<strong>-3.9% (대안B)</strong>)<br>🚀A: <strong>24,640원 (대안A)</strong> (<strong>+5.8% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>31,010원 (대안B)</strong> (<strong>+33.1% (대안B)</strong>)<br>🚀A: <strong>31,010원 (대안A)</strong> (<strong>+33.1% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>4,260원 (대안B·A 공통)</strong> (<strong>-82.4% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong>9,240원 (대안B·A 공통)</strong> (<strong>-60.3% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 4.92% <span class="rr-sub">(R:R G1 음수 | G2 음수)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 +3.69% <span class="rr-sub">(R:R G1 1.0:1 | G2 1.32:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>매수 보류 (Avoid / Hold) — 분기 EPS QoQ 흑자 반등 및 20일선 돌파 확인 시까지 관망</strong> (가치함정 유형 B 해소 전 매수 차단)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선 또는 과매도 골든크로스):</strong><br>주가 <strong>4,260원 ~ 15,366원</strong> (Bear 하방 지지선 부근 또는 주봉 볼린저밴드 하단 15,366원), 또는 일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K ≤ 20</span> 골든크로스 확인 시 30% 선진입. (현재 <span class='code-badge'>%K = 24.0% / %D = 49.9%</span>로 침체권 진입 직전 조정 중).<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 동시 돌파 & 고정 바닥 안전핀 메모):</strong><br>일봉 종가가 <strong>20일 매물대 POC 상단(31,280원, 5칸 비중 35.0%)</strong> 및 <strong>일봉 20일 이동평균선(30,930원)</strong>을 <strong>20일 평균 거래량 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 1.25배)</strong> 이상 거래량으로 동시 돌파할 때 40% 본대 투입.<br>➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(28,820원)에서 -3%인 <strong><span class='code-badge'>27,955원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong><br>주봉 종가가 <strong>주봉 20주 이동평균선(30,744원)</strong> 위에 안착하고, <strong>주봉 MACD Histogram(현재 -157.9)이 양(+) 전환</strong>될 때 잔여 30% 투입 완성.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>27,955원</span>)</strong>을 일봉 종가 기준 하향 이탈 시 지체 없이 기계적 손절.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선 이탈이나 단기 음봉 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>30,744원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>성장·사이클 추세주: <strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 22,400원 / 🚀대안A 22,400원</span>)</strong> 또는 <strong>TP1 단기 목표가(<span class='code-badge'>🛡️대안B 31,050원 / 🚀대안A 31,050원</span>)</strong> 도달 시, <strong>주봉 MFI(14)(현재 73.7) < 50</strong>(수급 고갈)이면 즉시 50% 익절, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>🛡️대안B 30,380원 / 🚀대안A 30,380원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <span class='code-badge'>73.7</span>, 최근 12주 최고 <span class='code-badge'>73.7</span>).<br><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스):</strong> 주가는 52주 신고가(또는 Bull 목표가 30,380원)를 경신하고 <strong>주봉 RSI(14)(현재 44.3) ≥ 70</strong>인데, <strong>주봉 MFI(14) < 70</strong>에 머물며 스마트머니 유입이 멈추는 다이버전스 발생 시.</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>보유 및 눌림목 대기 (Hold & Wait for Pullback — 현재가 추격매수 금지)</strong> | 목표밴드: - <strong>🛡️ 대안 B (보수적 주 닻):</strong> <strong>22,400원 (Base) / 31,010원 (TP1) ~ 30,380원 (Bull)</strong></div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 눌림목 1차 지지):</strong> 주가 <strong><span class='code-badge'>17,920원</span></strong><br>(일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K ≤ 20</span> 골든크로스 확인 시 30% 선진입. 현재 <span class='code-badge'>%K=6.3% / %D=17.9%</span> 침체 조정 중)<br><strong>2차 본대 투입 (비중 40% — 중심 지지선 안착):</strong> 주가 <strong><span class='code-badge'>19,040원</span></strong><br>(일봉 종가가 하방 지지 매물대 안착 및 거래량 반등 확인 시 40% 투입)<br><strong>3차 확인사살 (비중 30% — 추세 전환 안착):</strong> 주가 <strong><span class='code-badge'>20,160원</span></strong><br>(주가 바닥 확인 후 주봉 MACD Histogram 음(-)폭 축소 시 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>19,040원</span> < 1차 목표가 <span class='code-badge'>22,400원</span> 대비 기대수익 +17.6% 검증 완료</strong>)</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(17,920원) 및 완성 평단가(19,040원) 아래로 설정된 <strong><span class='code-badge'>16,490원</span></strong>을 일봉 종가 기준 하향 이탈 시 기계적 전량 손절 (1차 매수가 대비 -8.0%, 완성 평단 대비 -13.4%).<br><strong>🛡️ 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 20일 매물대 상단(33,460원)을 완전히 돌파·안착한 이후에는 손절선을 20일 매물대 하단 -3%인 <strong><span class='code-badge'>29,798원</span></strong>으로 격상하여 본절 및 수익 방어.<br><strong>상승 허리 (수익률 ≥ +15% & 주봉 20주선 위):</strong> 단기 노이즈를 무시하고 <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>29,763원</span>)을 깨기 전까지 추세 완주 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]:</strong><br><strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 22,400원 / 🚀대안A 24,640원</span>)</strong> 또는 단기 실전 <strong>TP1 목표가(<span class='code-badge'>31,010원</span>)</strong> 도달 시, <strong>주봉 MFI(14)(현재 67.7) < 50</strong>(수급 고갈)이면 50% 즉시 익절, <strong>주봉 MFI ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>30,380원 / 34,030원</span>)까지 추세 완주.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]:</strong><br><strong>🚨 고점경보 1호:</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI 67.7, 최근 12주 최고 72.4).</div>
             </div>
             <details class="thesis-details">
-                <summary>💡 핵심 투자 가설 로그 보기 (5건)</summary>
-                <ul><li>[2026.10.01] <strong>"오스틴법인은 세정 가동률이 92.3%로 풀가동인데, 코팅 가동률만 41.1%로 급락한 원인은 무엇인가? 세정 특성상 70%가 한계라는 논리와 상반되지 않는가?" [검증 완료]</strong>: 오스틴(S2 팹 전담 라인의 타이트한 Capa 운영)과 안성(매머드 메모리 마더팹)의 산출 단위 차이를 짚어내고, 오스틴 코팅 41.1%가 삼성 테일러 팹 대응 선제 증설 자산('Ready to R...</li><li>[2026.10.15] <strong>"HBM & 선단 반도체 침투율(36.5%) 골든 스위트스팟 후반부 진입 및 글로벌 신규 선단 팹 인프라 증설 사이클 하에서, 코미코의 초도 장착(First Install) 및 8개국 거점 세정·코팅(Recurring) 비대칭 레버리지가 유효한가?" [진행 중]</strong>: Global S-Curve 레이더(<span class='code-badge'>s_curve_registry.json</span>) 침투율 36.5% 확인 및 LS증권 딥리서치 인프라 증설 사이클 연동. 테마 직결 매출 익스포저 77.6%(순수 주도주...</li><li>[2026.10.15] <strong>"역DCF 요구성장률(4.92%)은 합리적 영역이나, 최근 2년 누적 EPS 급감(-31.2%)과 2026.2Q 적자 전환으로 '유형 B(구조적 버블 붕괴)' 경보가 발동됨에 따라, 분기 EPS QoQ 흑자 반등 공시 확인 전까지 신규 매수 보류 및 고정 바닥 안전핀 관망이 타당한가?" [진행 중]</strong>: 과거 3년 최고 PBR 9.19배 버블 붕괴 후 멀티플 정상화 과정과 총차입금(4,892억 원)에 따른 이자비용 부담을 감안하여 분기 실적 턴어라운드를 진입의 1차 안전핀으로 삼는 실전 가설.</li></ul>
+                <summary>💡 핵심 투자 가설 로그 보기 (7건)</summary>
+                <ul><li>[2026.10.15] <strong>"역DCF 요구성장률(4.92%)은 합리적 영역이나, 최근 2년 누적 EPS 급감(-31.2%)과 2026.2Q 적자 전환으로 '유형 B(구조적 버블 붕괴)' 경보가 발동됨에 따라, 분기 EPS QoQ 흑자 반등 공시 확인 전까지 신규 매수 보류 및 고정 바닥 안전핀 관망이 타당한가?" [검증 완료]</strong>: 과거 3년 최고 PBR 9.19배 버블 붕괴 후 멀티플 정상화 과정과 총차입금(4,892억 원)에 따른 이자비용 부담을 감안하여 분기 실적 턴어라운드를 진입의 1차 안전핀으로 삼는 실전 가설.</li><li>[2026.10.20] <strong>"미국 테일러 팹 가동률(코미코 오스틴 코팅 41.1%)이 낮은 이유가 선단 팹 중심 때문인데, 현재 삼성전자 및 SK하이닉스가 실제로 신규 선단 팹을 증설 중인가? 각 팹별 진행률 및 가동 시점은 어떠하며 코미코 및 미코세라믹스의 1,500억 신규 부지 취득과 어떻게 직결되는가?" [검증 완료]</strong>: 미국 테일러 1·2공장, 평택 P4·P5, SK하이닉스 청주 M15X 및 용인 클러스터의 실제 공정률과 가동 일정을 전수 추적하여, 코미코 오스틴의 턴어라운드 시점과 미코세라믹스 1,500억 부지 ...</li><li>[2026.10.20] <strong>"2026.4Q~2027.1Q 삼성 테일러 팹 본격 가동으로 OPM이 급상승하는 영업레버리지 진입이 확실시되는데, 선제 투자로 FCF가 줄어든 시기를 기준으로 한 Base 적정주가(22,400원~24,640원)가 너무 가혹한 것 아닌가? 예상 주가가 낮게 나오는 합리적 이유가 있는가?" [진행 중]</strong>: FCF 적자 착시가 적정주가 산출에 미친 영향 여부 및 영업이익 폭발 대비 지배주주 순이익(이자비용 200억, 미코세라믹스 비지배지분 52.1%, 감가상각비) 3대 누수와 역사적 PBR 밴드(현재 ...</li></ul>
             </details>
         </div>
         
         <div class="stock-card" data-name="티씨케이">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">티씨케이</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    
+                    
+                    <span class="update-date">(26.10.20)</span>
                 </div>
-                <div class="price-pill">현재가: 222,000원</div>
+                <div class="price-pill">현재가: 225,000원</div>
             </div>
             <div class="badges-row">
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 더블 S-Curve Phase 2: 골든 스위트스팟 (복합 침투율 28.5% | 적극 매수 & 추세추종)]</span></div>
                 <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 DART 검증 순수 주도 대장주 (Solid SiC 익스포저 89.8%)]</span> / <span class='code-badge'>[💎 식각 공정 병목 밸류체인 히든 챔피언]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">143,460원</div>
+                    <div class="act-sub">분할매수가: 1차 155,940원 | 2차 165,680원 | 3차 175,430원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>278,000원 (대안B)</strong> (<strong>+23.6% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 음수 | G2 1.32:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>293,390원 (대안B)</strong> (<strong>+32.2% (대안B)</strong>)<br>🚀A: <strong>354,880원 (대안A)</strong> (<strong>+59.9% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>293,390원 (대안B)</strong> (<strong>+30.4% (대안B)</strong>)<br>🚀A: <strong>362,480원 (대안A)</strong> (<strong>+61.1% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>194,920원 (대안B)</strong> (<strong>-12.2% (대안B)</strong>)<br>🚀A: <strong>231,560원 (대안A)</strong> (<strong>+4.3% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>278,000원 (대안B)</strong> (<strong>+25.2% (대안B)</strong>)<br>🚀A: <strong>300,240원 (대안A)</strong> (<strong>+35.2% (대안A)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>194,920원 (대안B)</strong> (<strong>-13.4% (대안B)</strong>)<br>🚀A: <strong>231,560원 (대안A)</strong> (<strong>+2.9% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>278,000원 (대안B)</strong> (<strong>+23.6% (대안B)</strong>)<br>🚀A: <strong>300,240원 (대안A)</strong> (<strong>+33.4% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>115,140원 (대안B·A 공통)</strong> (<strong>-48.1% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong>99,230원 (대안B·A 공통)</strong> (<strong>-55.9% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 27.33% <span class="rr-sub">(R:R G1 0.52:1 | G2 5.04:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 +24.25% <span class="rr-sub">(R:R G1 음수 | G2 1.32:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>조건부 추세 트레이딩 분할 매수 (Trading Buy in 60MA Zone — 60주선 21.4만 / 안전핀 24.8만 엄수)</strong></div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 과매도 및 60주선 지지선 진입)</strong>: 주가 <strong>214,000원 ~ 222,000원</strong> (현재가 222,000원은 주봉 60주선 <span class='code-badge'>214,293원</span> 지지선 직상단이며, 일봉 Slow Stochastic(12,5,5)이 <span class='code-badge'>%K = 27.2% / %D = 46.2%</span>로 침체권 진입 중이므로, %K ≤ 20 침체권 골든크로스 또는 22만 원 지지 확인 시 30% 선진입).<br><strong>2차 본대 투입 (비중 40% — 20일 매물대 POC 돌파 & 고정 바닥 안전핀 메모)</strong>: 일봉 종가가 <strong>20일 매물대 POC 상단(276,000원)</strong> 및 <strong>일봉 20일 이동평균선(277,525원)</strong>을 <strong>20일 평균 거래량(64,007주) 대비 1.25배(80,000주 이상, 현재 2.07배)</strong> 거래량으로 동시 상향 돌파할 때 40% 본대 투입. ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 시점의 20일 매물대 하단가(<span class='code-badge'>256,000원</span>)에서 -3%인 <strong><span class='code-badge'>248,320원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착)</strong>: 주봉 종가가 <strong>주봉 20주 이동평균선(242,800원)</strong> 위에 안착하고 <strong>주봉 MACD Histogram(+1,802.8 양(+) 추세 확장)</strong> 지속 시 잔여 30% 투입 완성.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 안전핀 손절 vs 허리 20주선 홀딩)]</strong>:<br><strong>초입부 (평단가 대비 수익률 < +15%)</strong>: 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>248,320원</span>)</strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위)</strong>: 일봉 20일선 이탈 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>242,800원</span>)을 깨기 전까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]</strong>:<br><strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>🛡️대안 B 278,000원 / 🚀대안 A 300,240원</span>)</strong> 또는 Base 적정가(<span class='code-badge'>231,560원</span>) 도달 시 <strong>50% 기계적 분할 익절</strong>.<br><strong>주봉 MFI(14)(현재 59.7) ≥ 50</strong> 유지 시 잔여 물량 익절을 보류하고 Bull 목표가(<span class='code-badge'>🛡️대안 B 293,390원 / 🚀대안 A 354,880원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]</strong>:<br><strong>🚨 고점경보 1호 (수급 과열 이탈)</strong>: 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 59.7, 12주 최고 66.7 → 정상 ✅).</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>보유 및 눌림목 대기 (Hold & Wait for Pullback — 현재가 추격매수 금지 / 눌림목 분할 진입)</strong></div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 가치/눌림목 선취매):</strong> 주가 <strong>155,940원</strong> (Base 적정가 대비 -20% 안전마진 구간 및 주봉 볼린저 하단 165,739원 지지 확인 시 30% 선진입).<br><strong>2차 본대 투입 (비중 40% — 1차 추세선 지지 확인):</strong> 주가 <strong>165,680원</strong> (눌림목 반등 후 일봉 5일선 골든크로스 및 거래량 증가 확인 시 40% 투입).<br><strong>3차 확인사살 (비중 30% — 상단 매물대/추세 안착):</strong> 주가 <strong>175,430원</strong> (일봉 20일선 안착 확인 시 잔여 30% 투입 완성).<br>▶ <strong>3분할 완성 평균단가: <span class='code-badge'>165,683원</span> < 1차 목표가 <span class='code-badge'>194,920원</span> (기대수익 +17.6% 확보 완료)</strong></div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 허리 주봉 20주선 홀딩)]</strong>:<br><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가 및 완성 평단가 아래로 설정된 <strong><span class='code-badge'>143,460원</span></strong>(1차 매수가 대비 -8.0%)을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>🔒 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 향후 20일 매물대 상단(<span class='code-badge'>296,000원</span>)을 완전히 돌파·안착한 이후에는 보호핀을 20일 매물대 하단 -3%인 <strong><span class='code-badge'>267,720원</span></strong>으로 격상하여 본절·수익 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선 이탈 노이즈는 무시하고, <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>241,650원</span>)을 깨기 전까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]</strong>:<br><strong>1차 목표가(<span class='code-badge'>대안 B Base 194,920원</span> 또는 단기 실전 <span class='code-badge'>TP1 278,000원</span>)</strong> 도달 시 <strong>보유 물량의 50% 기계적 분할 익절</strong>.<br><strong>주봉 MFI(14)(현재 62.5) ≥ 50</strong> 유지 시 잔여 50% 익절을 보류하고 Bull 목표가(<span class='code-badge'>대안 B 293,390원 / 대안 A 362,480원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]</strong>:</div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (5건)</summary>
@@ -617,120 +920,178 @@
         
         <div class="stock-card" data-name="하나머티리얼즈">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">하나머티리얼즈</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.17)</span>
                 </div>
-                <div class="price-pill">현재가: 51,800원</div>
+                <div class="price-pill">현재가: 53,400원</div>
             </div>
             <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🟢 다중 S-Curve & 가동률 시클리컬 복합 수혜: 1차 대구경 Si 부품(88.87%) 가동률 83.7% 회복 캐시카우 + 2차 Solid/Hybrid SiC 링(10.11%) Phase 2 스위트스팟 & 실리콘 음극재(702억 투자) Phase 1 태동기 (적극 매수 & 추세추종)]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🟢 전공정 식각 소모품 순수 주도주 (Si+SiC 합산 익스포저 98.98%)]</span> / <span class='code-badge'>[⚠️ Solid SiC 단일 테마 기준 부분 노출 (DART 실측 10.11% < 30% 컷오프)]</span> / <span class='code-badge'>[💎 TEL 캡티브 & 대구경 Ingot 내재화 히든 챔피언]</span></div>
+                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[🎁 본업 저평가 + 신사업 무상 콜옵션(단독 매출 미공시·할증 0%)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[💎 병목 밸류체인 히든 챔피언]</span> *(반도체 식각 챔버용 대구경 Si/SiC 파츠 본업 매출 비중 98.98% + 차세대 SiC 파츠[기타 부품 묶음 10.11%] & 실리콘 음극재[702억 투자·매출 0%] 무상 콜옵션 보유)*</div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">48,690원</div>
+                    <div class="act-sub">분할매수가: 1차 53,400원 | 2차 56,170원 | 3차 66,500원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>63,320원 (대안B)</strong> (<strong>+18.6% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 4.45:1 | G2 2.31:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>103,000원 (대안B)</strong> (<strong>+98.8% (대안B)</strong>)<br>🚀A: <strong>115,400원 (대안A)</strong> (<strong>+122.8% (대안A)</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>114,100원 (대안B)</strong> (<strong>+113.7% (대안B)</strong>)<br>🚀A: <strong>114,100원 (대안A)</strong> (<strong>+113.7% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>78,000원 (대안B)</strong> (<strong>+50.6% (대안B)</strong>)<br>🚀A: <strong>85,800원 (대안A)</strong> (<strong>+65.6% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>63,320원 (대안B)</strong> (<strong>+22.2% (대안B)</strong>)<br>🚀A: <strong>63,320원 (대안A)</strong> (<strong>+22.2% (대안A)</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>80,940원 (대안B)</strong> (<strong>+51.6% (대안B)</strong>)<br>🚀A: <strong>80,940원 (대안A)</strong> (<strong>+51.6% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>63,320원 (대안B)</strong> (<strong>+18.6% (대안B)</strong>)<br>🚀A: <strong>63,320원 (대안A)</strong> (<strong>+18.6% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>47,000원 (대안B·A 공통)</strong> (<strong>-9.3% (대안B·A 공통)</strong>)</div>
+                    <div class="m-val"><strong>47,210원 (대안B·A 공통)</strong> (<strong>-11.6% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 6.46% <span class="rr-sub">(R:R G1 5.44:1 | G2 5.44:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="growth-chips-row">
+                <span class="growth-chip eq">주주(Eq) +7.19%</span>
+                <span class="growth-chip ev">실질(EV) +8.81%</span>
+            </div>
+            <div class="rr-line">손익비: <strong>G1 4.45:1 | G2 2.31:1</strong></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진)</strong> *(가치함정 경보 0개 & 유형 A 사이클 업턴 확인)*</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선 하회 과매도 진입):</strong> 현재 주가 <strong><span class='code-badge'>51,800원</span></strong>은 과거 3년 PBR 하위 20% Bear 지지선(<span class='code-badge'>54,450원</span>, PBR 1.49배)마저 하회하여 PBR <span class='code-badge'>1.63배</span>에 진입한 상태이므로, <strong>현재가(51,800원 부근)에서 지체 없이 1차 30% 선진입</strong>합니다. 일봉 Slow Stochastic(12,5,5) <span class='code-badge'>%K = 57.1% / %D = 74.8%</span> 조정 마무리 국면입니다.<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선 돌파 & 고정 바닥 안전핀 메모):</strong> 일봉 종가가 <strong>일봉 20일 이동평균선(<span class='code-badge'>58,605원</span>)</strong> 및 <strong>20일 매물대 POC 하단(<span class='code-badge'>63,160원</span>, 거래비중 36.9%)</strong>을 <strong>20일 평균 거래량(<span class='code-badge'>139,926주</span>) 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 <span class='code-badge'>186,295주</span>로 <span class='code-badge'>1.33배</span> 돌파 충족 ✅) 이상</strong> 거래량으로 돌파할 때 40% 본대를 투입합니다. ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 시 20일 매물대 하단가(<span class='code-badge'>63,160원</span>)에서 -3%인 <strong><span class='code-badge'>61,265원</span>을 고정 바닥 안전핀으로 영구 기록</strong>합니다.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 주봉 종가가 <strong>주봉 20주 이동평균선(<span class='code-badge'>57,460원</span>, 10주선 <span class='code-badge'>56,010원</span>, 60주선 <span class='code-badge'>54,379원</span>)</strong> 위에 재안착하고 <strong>주봉 MACD Histogram(현재 <span class='code-badge'>+2.5</span>, MACD <span class='code-badge'>-570.4</span> > Signal <span class='code-badge'>-573.0</span>)이 양(+) 추세를 확장</strong>하며, <strong>2026년 10월 28일 임시주총 비과세 감액배당 통과</strong>가 공식 확인될 때 잔여 30%를 투입하여 매수를 완성합니다.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>61,265원</span>, 20일 매물대 하단 63,160원 -3%)</strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절하여 계좌 손실을 통제합니다.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 평단가 대비 +15% 이상 수익 구간(<span class='code-badge'>60,000원+</span>) 안착 시 일봉 20일선 이탈이나 단기 음봉 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>57,460원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>합니다.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>성장·사이클 추세주(<span class='code-badge'>52주 등락폭 117.7% ≥ 36%</span>) 규칙에 따라, 단기 1차 목표가인 <strong>TP1(<span class='code-badge'>63,320원</span>)</strong> 돌파 후 <strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 78,000원 / 🚀대안A 85,800원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <span class='code-badge'>60.7</span>) < 50</strong>(수급 고갈)이면 즉시 50% 기계적 분할 익절하고, <strong>주봉 MFI(14) ≥ 50</strong>(현재 <span class='code-badge'>60.7</span>로 충족 ✅)이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>🛡️대안B 103,000원 / 🚀대안A 115,400원</span>)까지 추세 추종합니다.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <span class='code-badge'>60.7</span>, 최근 12주 최고 <span class='code-badge'>61.1</span> ➔ <strong>현재 정상 ✅</strong>).<br><strong>🚨 고점경보 2호 (신고가 가격-수급 다이버전스 괴리):</strong> 주가는 52주 신고가(<span class='code-badge'>81,100원</span> 또는 Bull 목표가 <span class='code-badge'>🛡️대안B 103,000원 / 🚀대안A 115,400원</span>)를 경신하고 <strong>주봉 RSI(14)(현재 <span class='code-badge'>44.7</span>) ≥ 70</strong>인데, <strong>주봉 MFI(14) < 70</strong>에 머물며 스마트머니 유입이 멈추는 다이버전스 발생 시 (현재 <strong>정상 ✅</strong>).</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong><span class='code-badge'>👑 적극 매수 (Strong Buy — 압도적 안전마진 & 신사업 무상 콜옵션)</span></strong> | 목표밴드: <strong>🛡️대안 B(보수적 주 닻): 80,940원(Base) ~ 114,100원(Bull) <span class='code-badge'>[단기 TP1: 63,320원]</span> | 🚀대안 A(업황·S-Curve 할증): 80,940원(Base) ~ 114,100원(Bull) <span class='code-badge'>[신사업 단독 매출 30% 미달로 무상 콜옵션 0% 할증 적용 → 대안 B·A 동일]</span></strong></div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 현재가 / 가치 저평가 눌림목 선취매):</strong> 주가 <strong>53,400원</strong> (현재 PBR <span class='code-badge'>1.68배</span> 역사적 하단권 및 일봉 60일선 <span class='code-badge'>55,318원</span>·주봉 60주선 <span class='code-badge'>54,406원</span> 인근 눌림목 구간에서 30% 선진입. 일봉 Slow Stochastic(12,5,5) 현재 <span class='code-badge'>%K = 42.8% / %D = 65.7%</span> 조정 국면 활용).<br><strong>2차 본대 투입 (비중 40% — 주봉 10주선 및 일봉 60일선 탈환 확인):</strong> 주가 <strong>56,170원</strong> (일봉 종가가 일봉 60일선(<span class='code-badge'>55,318원</span>) 및 <strong>주봉 10주 이동평균선(<span class='code-badge'>56,170원</span>)</strong>을 <strong>20일 평균 거래량(<span class='code-badge'>144,066주</span>) 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 현재 <span class='code-badge'>1.04배</span>) 이상</strong>의 거래량으로 돌파·지지 확인 시 40% 본대 투입. *1~2차 합산 70% 투입 시 평단가 <span class='code-badge'>54,983원</span>*).<br><strong>3차 확인사살 (비중 30% — 일봉 20일 핵심 매물대 상단 돌파 안착):</strong> 주가 <strong>66,500원</strong> (주봉 20주선(<span class='code-badge'>57,540원</span>) 및 일봉 20일선(<span class='code-badge'>58,695원</span>)을 넘어, 거래비중 <span class='code-badge'>35.9%</span>가 집중된 <strong>일봉 20일 최대 매물대(5칸 POC: <span class='code-badge'>63,240원 ~ 66,500원</span>) 상단인 <span class='code-badge'>66,500원</span></strong>을 거래량 실린 양봉으로 완전 돌파·안착하고 <strong>주봉 MACD(12,26,9) Histogram(현재 <span class='code-badge'>+104.6</span> 양(+) 추세)</strong>이 확장될 때 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>58,438원</span> < 1차 목표가 Base <span class='code-badge'>80,940원</span> [기대수익률 <span class='code-badge'>+38.5%</span>] 검증 완료</strong>).</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(<span class='code-badge'>53,400원</span>) 대비 <span class='code-badge'>-8.8%</span>, 3분할 완성 평단가(<span class='code-badge'>58,438원</span>) 대비 <span class='code-badge'>-16.7%</span> 아래로 설정된 <strong><span class='code-badge'>48,690원</span></strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>🛡️ 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 20일 매물대 상단(<span class='code-badge'>66,500원</span>)을 완전히 돌파·안착한 이후에는 손절 보호핀을 20일 매물대 하단(<span class='code-badge'>63,240원</span>) <span class='code-badge'>-3%</span>인 <strong><span class='code-badge'>61,343원</span></strong>으로 격상하여 본절 및 수익을 완벽히 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선(<span class='code-badge'>58,695원</span>) 이탈이나 단기 음봉 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>57,540원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>단기 매물대 돌파 전 부분 회전이 필요한 경우 <strong>TP1 단기 실전 목표가(<span class='code-badge'>63,320원</span>, 현재가 대비 <span class='code-badge'>+18.6%</span>)</strong>에서 일부 비중 조절 가능하며, 정석 추세 추종 시 <strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 80,940원 / 🚀대안A 80,940원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <span class='code-badge'>59.8</span>) < 50</strong>(수급 고갈)이면 즉시 50% 기계적 익절, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>🛡️대안B 114,100원 / 🚀대안A 114,100원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <span class='code-badge'>59.8</span>, 최근 12주 최고 <span class='code-badge'>61.1</span>로 과열 전 안전 구간).</div>
             </div>
             <details class="thesis-details">
-                <summary>💡 핵심 투자 가설 로그 보기 (0건)</summary>
-                <ul><li>등록된 가설 로그 없음</li></ul>
+                <summary>💡 핵심 투자 가설 로그 보기 (3건)</summary>
+                <ul><li>[26.10.17] <strong>가설 6: 실리콘 음극재(702억) 무상 콜옵션 및 초기 상각비 반영</strong> <span class='code-badge'>[진행 중]</span>: 슬러지 정제·음극활물질 특허 기반 <span class='code-badge'>27.06.30</span> 준공. 현재 매출 <span class='code-badge'>0%</span>로 무상 콜옵션(<span class='code-badge'>sc_mult=1.00</span>) 분류 및 12M Fwd 영업이익에서 초기 상각·고정비(<span class='code-badge'>-60억/6M</span>) ...</li><li>[26.10.17] <strong>가설 7: 2027 GAA 전환·P4/M15X Q 확장 & 10.28 비과세 배당 촉매</strong> <span class='code-badge'>[진행 중]</span>: 2Q26 가동률 <span class='code-badge'>87.77%</span>·OPM <span class='code-badge'>28.88%</span> 달성 + GAA 식각 스텝 증가(<span class='code-badge'>26.10.15 유안타</span>) + <span class='code-badge'>10.28</span> 임시주총 <span class='code-badge'>364.96억</span> 비과세 감액배당 확정 vs 베트남 계...</li><li>[26.10.17] <strong>가설 8: 단일 주가(53,400원) 기준 마스터 SOP 3분할 매수 & 이중 안전핀</strong> <span class='code-badge'>[검증 완료]</span>: <span class='code-badge'>Hard Stop 1(48,690원) < Buy1(53,400원) < Buy2(56,170원) < 평단(58,438원) < Buy3(66,500원) < Base(80,940원)</span> 위계질서 및 듀얼...</li></ul>
             </details>
         </div>
         
         <div class="stock-card" data-name="하이록코리아">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">하이록코리아</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PER 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.17)</span>
                 </div>
-                <div class="price-pill">현재가: 33,000원</div>
+                <div class="price-pill">현재가: 32,450원</div>
             </div>
             <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve 기본 N/A (전통 에너지·조선 시클리컬 필수재 — 피팅 가동률 95% 풀가동 & 북투빌 1.13배 호황) + 🟢 2차 신성장 전방(AI 반도체 클린룸 10.0% · AIDC 온사이트 발전/FDC 4.8%) 다중 침투 초입]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🟢 고압·초저온 유체제어 계장기자재 순수 주도주 (Fitting·Valve 본업 익스포저 100.0%)]</span> / <span class='code-badge'>[⚠️ AI·AIDC 단일 신기술 테마 기준 부분 노출 (14.8% < 30% 컷오프)]</span> / <span class='code-badge'>[💎 친환경 DF엔진·FLNG·반도체 유틸리티 병목 밸류체인 히든 챔피언]</span></div>
+                <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve 기본 N/A: 전통 에너지·조선 시클리컬 필수재 (피팅 가동률 95.0% 풀가동 & B/B 1.13배 대호황)]</span> + <span class='code-badge'>[🎁 본업 저평가 + 신사업 무상 콜옵션 (반도체·AIDC 발전향 DART 단독 매출 미공시 / IR 합산 14.8% < 30% 컷오프 ➡️ S-Curve 할증 0% 차단)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[👑 고압·초저온 유체제어 계장기자재 본업 순수 주도주 (익스포저 100.0%)]</span> / <span class='code-badge'>[💎 친환경 DF엔진·FLNG·한미 에너지 프로젝트·반도체 클린룸 병목 밸류체인 히든 챔피언]</span> / <span class='code-badge'>[🎁 무상 콜옵션 보유주]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">30,360원</div>
+                    <div class="act-sub">분할매수가: 1차 32,450원 | 2차 33,410원 | 3차 37,580원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>37,480원 (대안B)</strong> (<strong>+15.5% (대안B)</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 3.76:1 | G2 2.21:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>50,810원 (대안B)</strong> (<strong>+54.0% (대안B)</strong>)<br>🚀A: <strong>56,910원 (대안A)</strong> (<strong>+72.5% (대안A)</strong><br>*(종가 31,800원 대비 +59.8%)</div>
+                    <div class="m-val">🛡️B: <strong>50,810원 (대안B)</strong> (<strong>+56.6% (대안B)</strong>)<br>🚀A: <br><strong>50,810원 (대안A)</strong> (<br><strong>+56.6% (대안A)</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>42,720원 (대안B)</strong> (<strong>+29.5% (대안B)</strong>)<br>🚀A: <strong>46,990원 (대안A)</strong> (<strong>+42.4% (대안A)</strong><br>*(종가 31,800원 대비 +34.3%)<br><span class='rr-sub'>🎯 TP1(단기1차): <strong>37,480원 (공통)</strong> (<strong>+13.6% (공통)</strong><br>*(종가 31,800원 대비 +17.9%)*)</span></div>
+                    <div class="m-val">🛡️B: <strong>43,240원 (대안B)</strong> (<strong>+33.3% (대안B)</strong>)<br>🚀A: <br><strong>43,240원 (대안A)</strong> (<br><strong>+33.3% (대안A)</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>37,480원 (대안B)</strong> (<strong>+15.5% (대안B)</strong>)<br>🚀A: <br><strong>37,480원 (대안A)</strong> (<br><strong>+15.5% (대안A)</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>34,560원 (공통)</strong><br>*(극단 침체 락바텀: 30,000원)* (<strong>+4.7% (공통)</strong><br>*(극단 침체 30,000원 시 -9.1%)*)</div>
+                    <div class="m-val"><strong>29,580원 (대안B·A 공통)</strong> (<strong>-8.8% (대안B·A 공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -11.09% <span class="rr-sub">(R:R G1 3.24:1 | G2 3.24:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 -10.30% <span class="rr-sub">(R:R G1 3.76:1 | G2 2.21:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진)</strong> (<span class='code-badge'>유형 A: 사이클 저점</span> / <span class='code-badge'>성장·추세주</span> / 손익비 듀얼 게이트 동시 통과)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선 & Stochastic 과매도):</strong><br>주가 <strong>30,000원 ~ 34,560원</strong> 대역 (현재가 <span class='code-badge'>33,000원</span> / 종가 <span class='code-badge'>31,800원</span>은 이미 3Y 하위 20% 보호막 <span class='code-badge'>34,560원</span> 아래에 위치).<br><strong>일봉 Slow Stochastic(12,5,5)</strong> 침체권 <span class='code-badge'>%K ≤ 20</span> 진입 완료 (현재 실측: <strong><span class='code-badge'>%K = 11.7% / %D = 19.2%</span></strong>) ➔ <strong>골든크로스 발생 시 30% 즉시 선진입</strong>.<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong><br>일봉 종가가 <strong>20일 매물대 POC 상단(<span class='code-badge'>37,580원</span>, 5칸 POC: 36,010~37,580원, 비중 38.2%)</strong> 및 <strong>일봉 20일 이동평균선(<span class='code-badge'>35,390원</span>)</strong>을 <strong>20일 평균 거래량(<span class='code-badge'>32,857주</span>) 대비 1.25배(<span class='code-badge'>vol_ratio ≥ 1.25</span>, 41,071주 이상)</strong> 거래량으로 동시 돌파할 때 40% 본대 투입.<br>➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(<span class='code-badge'>36,010원</span>)에서 -3%인 <strong><span class='code-badge'>34,930원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong><br>주봉 종가가 <strong>주봉 20주선(<span class='code-badge'>33,378원</span>, 볼린저 중심선)</strong> 위에 안착하고 <strong>주봉 MACD Histogram(현재 <span class='code-badge'>+119.4</span>)이 양(+) 추세를 유지</strong>하며 10주선(<span class='code-badge'>34,300원</span>) 돌파 시 잔여 30% 완결.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>34,930원</span>)</strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 단기 노이즈를 100% 무시하고, <strong>주봉 종가가 주봉 20주선(<span class='code-badge'>33,378원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A)]:</strong><br><strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>37,480원</span>)</strong> 돌파 후, <strong>Base 목표가(<span class='code-badge'>🛡️대안B 42,720원 / 🚀대안A 46,990원</span>)</strong> 도달 시점에 <strong>주봉 MFI(14) < 50</strong>이면 50% 분할 익절. 만약 <strong>주봉 MFI(14) ≥ 50</strong>(현재 <span class='code-badge'>62.4</span>로 양호)이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>🛡️대안B 50,810원 / 🚀대안A 56,910원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 실측: <span class='code-badge'>62.4</span>, 최근 12주 최고 <span class='code-badge'>66.6</span>).<br><strong>🚨 고점경보 2호 (가격-수급 다이버전스):</strong> 주가는 신고가/Bull 영역 진입 및 <strong>주봉 RSI(14) ≥ 70</strong>인데 <strong>주봉 MFI(14) < 70</strong>에 머물 때 (현재: RSI <span class='code-badge'>43.9</span>, MFI <span class='code-badge'>62.4</span>).</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진 & 피팅 Peer 밸류에이션 역전 해소)</strong></div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — 과매도 침체권 눌림목 선취매):</strong> 주가 <strong>32,450원</strong> (현재 일봉 종가 <span class='code-badge'>32,450원</span>은 일봉 Slow Stochastic(12,5,5) <strong><span class='code-badge'>%K = 14.3% / %D = 15.6%</span></strong>로 기준치인 <span class='code-badge'>%K ≤ 20</span> 과매도 침체권에 진입한 상태이며, PBR 0.81배·PER 6.71배의 역사적 저평가 구간이므로 현재가 부근 및 <span class='code-badge'>%K</span> 골든크로스 확인 시 30% 선진입).<br><strong>2차 본대 투입 (비중 40% — 주봉 20주선 & 일봉 60일선 돌파 안착):</strong> 주가 <strong>33,410원</strong> (일봉 및 주봉 종가가 핵심 중심 추세선인 <strong>주봉 20주 이동평균선(<span class='code-badge'>33,410원</span>)</strong> 및 <strong>일봉 60일 이동평균선(<span class='code-badge'>33,458원</span>)</strong>을 <strong>20일 평균 거래량(<span class='code-badge'>32,224주</span>) 대비 1.25배(<span class='code-badge'>40,280주</span> 이상, 현재 당일 거래량 <span class='code-badge'>11,759주</span>로 <span class='code-badge'>vol_ratio = 0.36배</span> 거래량 바닥권) 이상</strong> 거래량으로 돌파하거나 돌파 후 지지 확인 시 40% 본대 투입).<br><strong>3차 확인사살 (비중 30% — 일봉 20일 최다 매물대 상단 돌파 안착):</strong> 주가 <strong>37,580원</strong> (일봉 20일移動평균선(<span class='code-badge'>35,318원</span>)을 넘어 <strong>일봉 20일 최다 매물대(5칸 POC: <span class='code-badge'>36,010원 ~ 37,580원</span>, 거래비중 <span class='code-badge'>39.0%</span>) 상단인 <span class='code-badge'>37,580원</span></strong>을 거래량 실린 양봉으로 돌파 안착하고 <strong>주봉 MACD(12,26,9) Histogram(현재 <span class='code-badge'>+160.9</span> 양(+) 추세 유지 중, MACD <span class='code-badge'>-224.0</span> / Signal <span class='code-badge'>-384.9</span>)</strong>이 확장될 때 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>34,373원</span> < 1차 목표가 <span class='code-badge'>43,240원</span> 검증 완료 ✅</strong>).</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(<span class='code-badge'>32,450원</span>, <span class='code-badge'>-6.4%</span>) 및 3분할 완성 평단가(<span class='code-badge'>34,373원</span>, <span class='code-badge'>-11.7%</span>) 아래로 설정된 <strong><span class='code-badge'>30,360원</span></strong>(Bear 지지선 <span class='code-badge'>29,580원</span> 직상단 방어선)을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>🛡️ 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 일봉 20일 매물대 상단(<span class='code-badge'>37,580원</span>)을 완전히 돌파·안착한 이후에만 보호핀을 20일 매물대 하단(<span class='code-badge'>36,010원</span>) -3%인 <strong><span class='code-badge'>34,930원</span></strong>으로 격상하여 완성 평단가(<span class='code-badge'>34,373원</span>) 이상의 본절·수익을 철벽 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 5일선(<span class='code-badge'>32,830원</span>)·20일선(<span class='code-badge'>35,318원</span>) 이탈이나 단기 음봉 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>33,410원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br>성장·사이클 추세주(<span class='code-badge'>유효 52주 등락폭 43.2% ≥ 36%</span>): 단기 회전이 필요할 경우 <strong>TP1(<span class='code-badge'>37,480원</span>, +15.5%)</strong>에서 일부 비중을 조절할 수 있으며, 주력 <strong>Base 1차 목표가(<span class='code-badge'>🛡️대안B 43,240원 / 🚀대안A 43,240원</span>, +33.3%)</strong> 도달 시 <strong>주봉 MFI(14)(현재 <span class='code-badge'>62.1</span>) < 50</strong>(수급 고갈)이면 즉시 50% 분할 익절하고, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 <strong>Bull 목표가(<span class='code-badge'>🛡️대안B 50,810원 / 🚀대안A 50,810원</span>, +56.6%)</strong>까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널 (하나라도 발생 시 즉시 매도)]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI <strong><span class='code-badge'>62.1</span></strong>, 최근 12주 최고 <strong><span class='code-badge'>66.6</span></strong>으로 과열 징후 전혀 없음 — <strong>정상 ✅</strong>).</div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (3건)</summary>
-                <ul><li>[**26.09.01**] <strong>가설 1: 환율 하락(원화 강세) 수혜 여부</strong>: 원재료 국내 매입 98.7%(수입 1.3%) 및 직수출 40.5% 구조로 환율 10% 하락 시 세후손익 -43.6억 원 노출(Net Negative)이나, OPM 28.8% 마진 쿠션으로 방어</li><li>[**26.10.06**] <strong>가설 2: 피팅 섹터 내 OPM 1위(28.8%) vs PER 최하위(7.1배) 역전 해소</strong>: 피팅 3사 중 OPM(28.8%)·주주환원(자사주 13.55% 소각) 압도적 1위임에도 PER 7.1배 저평가. 3Y 상위 65~90% 밴드(Base 44,700원~Bull 52,000원) 리레이팅...</li><li>[**26.10.08**] <strong>가설 3: S-Curve 적합성 & 다중 전방(조선·FLNG + 반도체·AIDC) 수혜</strong>: 본업 피팅 가동률 95% 풀가동(B/B 1.13배) + 2차 S-Curve(반도체 10.0%·발전 4.8% = 14.8% < 30% 컷오프) 침투 초입. 유형 A 사이클 저점 & 추세주 판정</li></ul>
+                <ul><li>[**26.09.01**] <strong>가설 1: 환율 하락(원화 강세) 수혜 여부</strong>: 원재료 국내 매입 98.7%(수입 1.3%) 및 직수출 40.5% 구조로 환율 10% 하락 시 세후손익 -43.6억 원 노출(Net Negative)이나, OPM 28.82% 마진 쿠션으로 방어</li><li>[**26.10.17**] <strong>가설 2: 피팅 섹터 내 OPM 1위(28.8%) vs PER 최하위(6.71배) 역전 해소 & 행동주의·승계 배당 모멘텀</strong>: 피팅 3사 중 OPM(28.82%)·주주환원(자사주 13.55% 소각) 1위임에도 단일 기준가(32,450원) 기준 PER 6.71배·PBR 0.81배 최저. 한화리서치 '행동주의 수혜주 12선' ...</li><li>[**26.10.17**] <strong>가설 3: 본업 시클리컬 대호황(정유·조선·한미 에너지) + 신성장(반도체·AIDC) 무상 콜옵션(할증 0%)</strong>: 본업 피팅 가동률 95% 풀가동(B/B 1.13배) + 국내 정유 4사 윤활 호황(OPM 35~52%) 및 한미 3대 에너지 프로젝트(<span class='code-badge'>Project Star·Power·North</span>) 수혜. 반도체...</li></ul>
             </details>
         </div>
         
         <div class="stock-card" data-name="헥토이노베이션">
             <div class="card-header">
-                <div>
+                <div class="title-wrap">
                     <span class="stock-title">헥토이노베이션</span>
-                    <span class="update-date">업데이트: 26.10.15</span>
+                    <span class="chip-metric">👑 PBR 1위</span>
+                    <span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>
+                    <span class="update-date">(26.10.19)</span>
                 </div>
-                <div class="price-pill">현재가: 12,930원</div>
+                <div class="price-pill">현재가: 13,380원</div>
             </div>
             <div class="badges-row">
                 <div class="badge-line">🧭 <strong>S-Curve:</strong> <span class='code-badge'>[⚪ S-Curve N/A: 플랫폼·지식서비스 / 안정적 독점 구독 캐시카우 BM]</span></div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[❌ 제외 종목 (단순 테마 편승 배제 / 실질 P&L 익스포저 30% 미달)]</span></div>
+                <div class="badge-line">🛡️ <strong>밸류체인:</strong> <span class='code-badge'>[🎁 본업 저평가 + 신사업 무상 콜옵션 보유주 (단독 미공시·할증 0%)]</span></div>
             </div>
+            
+            <div class="core-action-bar">
+                <div class="action-card stop-card">
+                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                    <div class="act-val stop-val">12,490원</div>
+                    <div class="act-sub">분할매수가: 1차 13,380원 | 2차 13,750원 | 3차 14,110원</div>
+                </div>
+                <div class="action-card target-card">
+                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                    <div class="act-val target-val">TP1: 🛡️B: <strong>18,410원</strong> (<strong>+37.6%</strong>)</div>
+                    <div class="act-sub">실전 손익비: G1 15.16:1 | G2 5.67:1</div>
+                </div>
+            </div>
+            
             <div class="metrics-grid">
                 <div class="metric-box bull">
                     <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">🛡️B: <strong>23,460원</strong> (<strong>+81.4%</strong>)<br>🚀A: <strong>23,460원</strong> (<strong>+81.4%</strong>)</div>
+                    <div class="m-val">🛡️B: <strong>23,460원</strong> (<strong>+75.3%</strong>)<br>🚀A: <strong>23,460원</strong> (<strong>+75.3%</strong>)</div>
                 </div>
                 <div class="metric-box base">
                     <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">🛡️B: <strong>20,880원</strong> (<strong>+61.5%</strong>)<br>🚀A: <strong>20,880원</strong> (<strong>+61.5%</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>18,410원</strong> (<strong>+42.4%</strong>)<br>🚀A: <strong>18,410원</strong> (<strong>+42.4%</strong>)</span></div>
+                    <div class="m-val">🛡️B: <strong>20,880원</strong> (<strong>+56.1%</strong>)<br>🚀A: <strong>20,880원</strong> (<strong>+56.1%</strong>)<br><span class='rr-sub'>🎯 TP1(단기1차): 🛡️B: <strong>18,410원</strong> (<strong>+37.6%</strong>)<br>🚀A: <strong>18,410원</strong> (<strong>+37.6%</strong>)</span></div>
                 </div>
                 <div class="metric-box bear">
                     <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val"><strong>10,500원 (공통)</strong> (<strong>-18.8% (공통)</strong>)</div>
+                    <div class="m-val"><strong>12,880원 (공통)</strong> (<strong>−3.7% (공통)</strong>)</div>
                 </div>
                 <div class="metric-box dcf">
-                    <div class="m-label">역DCF 요구성장률 / 손익비</div>
-                    <div class="m-val">연간 -19.43% <span class="rr-sub">(R:R G1 3.27:1 | G2 8.54:1)</span></div>
+                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                    
+            <div class="m-val">연간 −18.73% <span class="rr-sub">(R:R G1 15.16:1 | G2 5.67:1)</span></div>
+            
                 </div>
             </div>
             <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진)</strong> (가치함정 경보 0개 & 유형 A 저점, 듀얼 R:R 게이트 동시 통과)</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지하실 지지선):</strong> 주가 <strong>10,500원 ~ 12,930원</strong> (Bear 하방 지지선 부근 또는 일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K ≤ 20</span> 골든크로스 확인 시 30% 선진입. 현재 <span class='code-badge'>%K=20.7% / %D=39.1%</span>로 바닥권 근접)<br><strong>2차 본대 투입 (비중 40% — 매물대+20일선+거래량 돌파 & 고정 바닥 안전핀 메모):</strong> 일봉 종가가 <strong>20일 매물대 POC 상단(14,416원)</strong> 및 <strong>일봉 20일선(13,858원)</strong>을 <strong>20일 평균 거래량 대비 1.25배(현재 1.57배로 충족)</strong> 이상 거래량으로 동시 돌파할 때 40% 본대 투입. ➡️ <strong>🚨 [고정 바닥 안전핀(Hard Stop) 수첩 메모]:</strong> 2차 진입 당일의 20일 매물대 하단가(13,992원)에서 -3%인 <strong><span class='code-badge'>13,572원</span>을 고정 바닥 안전핀으로 영구 기록</strong>.<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 주봉 종가가 <strong>주봉 20주 이동평균선(14,178원)</strong> 위에 안착하고 <strong>주봉 MACD Histogram(현재 +16.0)이 양(+) 확장</strong>될 때 잔여 30% 투입 완성.</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (초입 고정 안전핀 손절 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>초입부 (평단가 대비 수익률 < +15%):</strong> 주가가 2차 진입 시 메모한 <strong>고정 바닥 안전핀(<span class='code-badge'>13,572원</span>, 20일 매물대 하단 -3%)</strong>을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선 이탈 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>14,178원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br><strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>18,410원</span>)</strong> 또는 <strong>Base 목표가(<span class='code-badge'>20,880원</span>)</strong> 도달 시 <strong>주봉 MFI(14)(현재 57.3) < 50</strong>(수급 고갈)이면 50% 기계적 분할 익절, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>23,460원</span>)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 80 아래로 하향 이탈 시 (현재 57.3, 최근 12주 최고 61.7).<br><strong>🚨 고점경보 2호 (신고가 다이버전스):</strong> 주가는 Bull 목표가(23,460원)를 돌파하고 주봉 RSI(현재 37.0) ≥ 70인데, 주봉 MFI < 70에 머물며 자금 유입이 멈출 때.</div>
+                <div class="t-row"><strong>🎯 의견/밴드:</strong> <strong>적극 매수 (Strong Buy — 압도적 안전마진)</strong> (가치함정 경보 0개 & 유형 A 판정, 듀얼 R:R 게이트 압도적 통과)</div>
+                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br><strong>1차 정찰병 (비중 30% — Bear 지지선 / 1차 눌림목 선취매):</strong> 주가 <strong>13,380원</strong> (현재 단일 기준 주가이자 일봉 Slow Stochastic(12,5,5) 침체권 <span class='code-badge'>%K=19.9% / %D=25.3%</span> 바닥권 안착 시 30% 선진입).<br><strong>2차 본대 투입 (비중 40% — 중심 지지선 / 매물대+20일선 돌파):</strong> 주가 <strong>13,750원</strong> (일봉 종가가 <strong>20일 매물대 POC(13,568~13,992원)</strong> 및 <strong>일봉 20일 이동평균선(13,754원)</strong>을 <strong>20일 평균 거래량(40,232주) 대비 1.25배 이상 거래량</strong>으로 돌파하거나 눌림목 지지 확인 시 40% 본대 투입).<br><strong>3차 확인사살 (비중 30% — 주봉 추세 안착):</strong> 주가 <strong>14,110원</strong> (주봉 종가가 <strong>주봉 20주 이동평균선(14,105원)</strong> 위에 안착하고 <strong>주봉 MACD Histogram(+34.2)이 양(+) 확장</strong>될 때 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <span class='code-badge'>13,747원</span> < 1차 목표가 <span class='code-badge'>18,410원 / 20,880원</span> 검증 완료</strong>).</div>
+                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><br><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(13,380원) 및 완성 평단가(13,747원) 아래로 설정된 <strong><span class='code-badge'>12,490원</span></strong>(1차 대비 −6.7%, 완성 평단 대비 −9.1%)을 일봉 종가 기준 하향 이탈 시 기계적 손절.<br><strong>🛡️ 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 20일 매물대 상단(13,992원)을 완전히 돌파·안착한 이후에는 보호핀을 20일 매물대 하단 −3%인 <strong><span class='code-badge'>13,161원</span></strong>으로 격상하여 본절·수익 방어.<br><strong>상승 허리 (평단가 대비 수익률 ≥ +15% & 주봉 20주선 위):</strong> 일봉 20일선 이탈 노이즈는 <strong>100% 무시</strong>하고, <strong>주봉 종가가 주봉 20주 이동평균선(<span class='code-badge'>14,105원</span>)을 깨기 전까지 끝까지 추세 홀딩</strong>.<br><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현 — 🛡️대안 B vs 🚀대안 A 병기)]:</strong><br><strong>TP1 단기 실전 1차 목표가(<span class='code-badge'>18,410원</span>, +37.6%)</strong> 또는 <strong>Base 목표가(<span class='code-badge'>20,880원</span>, +56.1%)</strong> 도달 시 <strong>주봉 MFI(14)(현재 59.7) < 50</strong>(수급 고갈)이면 <strong>50% 기계적 분할 익절</strong>, <strong>주봉 MFI(14) ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<span class='code-badge'>23,460원</span>, +75.3%)까지 추세 추종.<br><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]:</strong><br><strong>🚨 고점경보 1호 (수급 과열 이탈):</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 80 아래로 하향 이탈 시 (현재 59.7, 최근 12주 최고 61.7).</div>
             </div>
             <details class="thesis-details">
                 <summary>💡 핵심 투자 가설 로그 보기 (0건)</summary>
