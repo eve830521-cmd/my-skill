@@ -1,21 +1,22 @@
 ---
 name: korean-stock-analyzer
-description: 한국 상장기업 DART 사업보고서·분기보고서 및 글로벌 산업 딥리서치 기반 3-Phase 심층 가치평가·SOTP·레짐체크·사이클함정차단·반증가설·마스터SOP 스킬 (v4.2)
+description: 한국 상장기업 DART 사업보고서·분기보고서 및 글로벌 산업 딥리서치 기반 3-Phase 심층 가치평가·SOTP·레짐체크·사이클함정차단·반증가설·마스터SOP 스킬 (v4.2.2)
 ---
 
-# 🏛️ Korean Stock Analyzer 마스터 워크플로우 & 템플릿 규격서 (`SKILL.md` v4.2)
+# 🏛️ Korean Stock Analyzer 마스터 워크플로우 & 템플릿 규격서 (`SKILL.md` v4.2.2)
 
-이 스킬은 한국 상장기업의 본원적 가치와 매매 타점을 도출하기 위한 **단일 표준 규격서**입니다. 모든 분석은 아래 정의된 **코드(숫자 연산) vs AI(맥락 해석) 분업 파이프라인**과 **Phase 1~3 필수 게이트**를 100% 준수해야 합니다.
+이 스킬은 한국 상장기업의 본원적 가치와 매매 타점을 도출하기 위한 **단일 표준 규격서**입니다. 모든 분석은 아래 정의된 **코드(숫자 연산) vs AI(맥락 해석) 분업 파이프라인**, **구버전 자동 감지 클린 리빌드**, 그리고 **Phase 1~3 필수 게이트**를 100% 준수해야 합니다.
 
 ---
 
-## ⚙️ 제0원칙: 파이프라인 아키텍처 — "숫자 연산은 100% 코드, 맥락 해석은 100% AI" (Pipeline SSOT)
+## ⚙️ 제0원칙: 파이프라인 아키텍처 — "숫자 연산은 100% 코드, 맥락 해석은 100% AI" & 구버전 자동 감지 클린 리빌드
 
-단계(Phase 1 ➔ Phase 2 ➔ Phase 3 ➔ HTML ➔ 모바일 요약본)마다 동일한 숫자가 다르게 적히는 **AI 수동 이기(Transcription) 오류**를 원천 차단하기 위해 다음 파이프라인 규칙을 강제합니다:
+단계(Phase 1 ➔ Phase 2 ➔ Phase 3 ➔ HTML ➔ 모바일 요약본)마다 동일한 숫자가 다르게 적히는 **AI 수동 이기(Transcription) 오류**와 **구버전 모델(3.1 Pro / 3.8 Flash)의 얕은 골격 관성(Anchoring Bias)**을 원천 차단하기 위해 다음 5대 파이프라인 규칙을 강제합니다:
 
 1. **단일 진실 공급원 (`2_Translated_DB/valuation_metrics.json` & `auto_tables.md`)**:
    - Phase 1 및 Phase 3 시작 전 반드시 터미널에서 `backtest_valuation.py`와 `calc_reverse_dcf.py`에 `--export-json "Stock_Research/[기업명]/2_Translated_DB/valuation_metrics.json"` 인자를 부여하여 실행합니다.
    - 스크립트가 자동 생성한 `2_Translated_DB/auto_tables.md`의 마크다운 표와 `<div id="dcf-calculator-root" ...>` 태그(브래킷 플레이스홀더 0건)는 **단 1원도 AI가 임의로 고치거나 재타이핑하지 않고 그대로 보고서에 삽입**합니다.
+
 2. **코드와 AI의 엄격한 역할 분담 (Strict Role Segregation)**:
    - **💻 파이썬 코드 전담 영역 (AI 암산·수정 금지)**:
      - 단일 기준 주가(최신 일봉 종가), 총발행주식수, 유통주식수, 지배주주 순이익 귀속률(%)
@@ -29,6 +30,28 @@ description: 한국 상장기업 DART 사업보고서·분기보고서 및 글�
      - 사이클 국면(초입/확장/피크/수축)에서 전방 고객사 재고(원재료/제공품/완제품) 및 판가(ASP) 역학 해석
      - 리스크 간 `1차 촉발 ➔ 2차 영업/운전자본 전이 ➔ 3차 재무/자본 타격` 인과 도미노 설계
      - 투자 가설 수립 및 해당 기업 맞춤형 반증 조건(Kill-Switch 숫자)의 산업적 타당성 논증
+
+3. **♻️ 구버전(3.1 Pro / 3.8 Flash) 보고서 자동 감지 및 무프롬프트 자동 클린 리빌드 (Auto-Detect Zero-Inertia Rule)**:
+   - 사용자가 긴 지시문 없이 단순히 **`"[기업명] Phase 1 분석해줘"`**, **`"[기업명] Phase 1~3 분석해줘"`**, 또는 **`"[기업명] 업데이트해줘"`**라고 짧게 명령하더라도, 에이전트는 작업 시작 즉시 해당 기업 폴더(`Stock_Research/[기업명]/`)를 스캔하여 다음 **구버전 판별 조건**을 자동 검사합니다:
+     - ① `3_Final_Reports/Phase1_Report.md` 내에 `Step 1.5(장부가 해부 & SOTP 20% 게이트)`, `Step 2.0(4대 레짐 변화 고정 체크)`, `Step 3.5(리스크 1➔2➔3차 도미노 사슬)` 중 하나라도 누락되어 있거나,
+     - ② `2_Translated_DB/valuation_metrics.json` 및 `auto_tables.md`가 존재하지 않거나,
+     - ③ `Weekly_Trend/thesis_log.md`가 6열 포퍼식 반증 규격(`📊 직전 분기 대비 QoQ` + `🚨 반증/약화 조건 Kill-Switch`)이 아닌 구버전 4열 표인 경우.
+   - **자동 발동 액션 (구버전 앵커링 차단 & 히스토리 계승)**:
+     - 위 조건 중 하나라도 해당되면 에이전트는 **부분 수정(Delta Patch) 모드를 즉시 금지**하고 자동으로 **`[v4.2 클린 리빌드(Clean Rebuild) 모드]`**로 전환합니다.
+     - 기존 `3_Final_Reports/Phase1~3.md`의 구버전 본문 문장·논리 골격·과거 계산치는 **절대 참조하거나 복사하지 않고 100% 폐기(Ignore)**합니다.
+     - 오직 **`1_Raw_Data/`(DART 공시 원본)**, **`Global_Trend/`(거시 리포트)**, 그리고 **`Weekly_Trend/thesis_log.md` 및 `company_timeline.md`(과거 누적 가설 및 타임라인 이력)**만 읽어들여, 기존 가설은 삭제 없이 **6열 반증 규격으로 승격**하고 보고서 본문은 **백지상태에서 최신 4.0 추론 깊이로 전면 재작성하여 덮어쓰기**합니다.
+     - 이미 v4.2 이상으로 클린 리빌드가 완료된 기업에 한해서만 기존 4.0 골격을 유지한 채 신규 공시/트렌드를 반영하는 **델타 업데이트(Delta Update)**를 수행합니다.
+
+4. **🚫 단일 턴 묶음 실행 시 출력 요약 편향 원천 차단 (Anti-Summarization Gate)**:
+   - 사용자가 **`"[기업명] Phase 1~3 분석해줘"`**와 같이 단일 턴에 복수 Phase 작성을 명령할 때, AI가 출력 토큰을 아끼기 위해 스스로 본문을 축약하는 '출력 요약 편향(Output Summarization Bias)'을 엄격히 금지합니다.
+   - 반드시 `Phase1_Report.md`, `Phase2_Story.md`, `thesis_log.md`, `Phase3_DCF.md`를 **각각 독립된 `write_to_file` 도구 호출로 분리하여 작성**하며, 각 파일의 모든 섹션·표·수식·Mermaid 다이어그램을 개별 Phase 단독 실행 시와 100% 동일한 분량과 깊이로 무생략 작성합니다.
+
+5. **📁 신규 기업 분석 시 4대 표준 폴더 자동 초기화 (Auto-Folder Initialization)**:
+   - 사용자가 `"[기업명] 폴더 만들어줘"`라고 명령하거나, 아직 폴더가 없는 신규 기업에 대해 분석을 요청하면 `Stock_Research/[기업명]/` 하위에 다음 4대 표준 폴더와 초기 장부 파일을 자동으로 생성합니다:
+     - `1_Raw_Data/` (DART 사업·분기보고서 PDF 보관소)
+     - `2_Translated_DB/` (`valuation_metrics.json`, `auto_tables.md` 코드 SSOT 보관소)
+     - `3_Final_Reports/` (`Phase1~3.md` 및 `.html` 최종 보고서 보관소)
+     - `Weekly_Trend/` (`thesis_log.md` [6열 표준 헤더 세팅], `company_timeline.md` 초기 파일 자동 생성)
 
 ---
 

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity 시나리오별 실전 이용방법 & 액션플랜 (v4.2.2)</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        :root {
+            --bg-color: #0b0f17;
+            --surface-color: #121824;
+            --surface-hover: #1a2233;
+            --border-color: #232d40;
+            --text-primary: #e6edf3;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --code-bg: #070a10;
+            --table-header-bg: #182234;
+            --table-row-even: #121824;
+            --table-row-odd: #0e131d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.75;
+            font-size: 15px;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Header / Hero */
+        .doc-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-primary {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+
+        .badge-version {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.35);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 14px;
+            line-height: 1.35;
+        }
+
+        /* Headings */
+        h2 {
+            font-size: 21px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 44px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-top: 32px;
+            margin-bottom: 14px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 22px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-bottom: 18px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Callouts */
+        .callout {
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 24px 0;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-left-width: 4px;
+        }
+
+        .callout.callout-tip {
+            background: rgba(6, 182, 212, 0.08);
+            border-left-color: var(--accent-cyan);
+            border-color: rgba(6, 182, 212, 0.2);
+            border-left-width: 4px;
+        }
+
+        .callout-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #22d3ee;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .callout-body p {
+            margin-bottom: 0;
+            color: var(--text-primary);
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 24px 0;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+            line-height: 1.65;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-even);
+        }
+
+        tr:nth-child(odd) {
+            background-color: var(--table-row-odd);
+        }
+
+        tr:hover {
+            background-color: var(--surface-hover);
+        }
+
+        /* Code & Pre */
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: rgba(148, 163, 184, 0.15);
+            color: #f87171;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 20px;
+            overflow-x: auto;
+            margin: 16px 0 20px 0;
+            position: relative;
+        }
+
+        pre code {
+            background: none;
+            color: #4ade80;
+            padding: 0;
+            font-size: 13.5px;
+            line-height: 1.6;
+            display: block;
+        }
+
+        /* Horizontal Rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 36px 0;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #1e293b !important;
+                padding: 0 !important;
+                font-size: 11pt !important;
+            }
+            .container {
+                max-width: 100% !important;
+                border: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                background: #ffffff !important;
+            }
+            h1 {
+                font-size: 18pt !important;
+                color: #1e3a8a !important;
+                page-break-after: avoid;
+            }
+            h2 {
+                font-size: 14pt !important;
+                color: #1e3a8a !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+                page-break-after: avoid;
+                margin-top: 24pt !important;
+            }
+            h3 {
+                font-size: 12pt !important;
+                color: #2563eb !important;
+                page-break-after: avoid;
+                margin-top: 16pt !important;
+            }
+            .badge {
+                border: 1px solid #cbd5e1 !important;
+                color: #334155 !important;
+                background: #f1f5f9 !important;
+            }
+            .callout {
+                background: #f8fafc !important;
+                border-left: 4px solid #0284c7 !important;
+                color: #1e293b !important;
+                border: 1px solid #e2e8f0 !important;
+                border-left-width: 4px !important;
+            }
+            .callout-header { color: #0369a1 !important; }
+            .callout-body p { color: #1e293b !important; }
+            .table-wrapper {
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+            }
+            table {
+                font-size: 9pt !important;
+            }
+            th {
+                background-color: #f1f5f9 !important;
+                color: #0f172a !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+            td {
+                border-bottom: 1px solid #e2e8f0 !important;
+                color: #334155 !important;
+            }
+            tr:nth-child(even), tr:nth-child(odd) {
+                background-color: #ffffff !important;
+            }
+            pre {
+                background-color: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+            }
+            pre code {
+                color: #15803d !important;
+            }
+            code {
+                background-color: #f1f5f9 !important;
+                color: #b91c1c !important;
+                border: 1px solid #e2e8f0 !important;
+            }
+            tr, .callout, pre {
+                page-break-inside: avoid;
+            }
+            @page {
+                size: A4;
+                margin: 12mm 15mm 12mm 15mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="doc-header">
+            <div class="badge-row">
+                <span class="badge badge-primary">Antigravity Guide</span>
+                <span class="badge badge-version">korean-stock-analyzer v4.2.2</span>
+                <span class="badge badge-success">Gemini 4.0 Argon</span>
+            </div>
+        </div>
+        <div class="content">
+            <h1 id="antigravity-gemini-40-argon-md">🧭 Antigravity (Gemini 4.0 Argon) 시나리오별 실전 이용방법 &amp; 액션플랜 (<code>이용방법.md</code>)</h1>
+<p>이 문서는 <code>korean-stock-analyzer (v4.2.2)</code> 시스템을 운영할 때 <strong>① 신규 기업 폴더 생성부터 ② 최초 보고서 작성, ③ 모델 업그레이드(3.1/3.8 ➔ 4.0 Argon), ④ Global/Weekly Trend 업데이트, ⑤ DART 정기 보고서(분기·반기·사업보고서) 공시 대응</strong>까지 각 상황별로 <strong>사용자가 무엇을 준비하고 어떤 한 줄 명령어를 입력해야 하는지</strong> 정리한 마스터 액션플랜입니다.</p>
+<div class="callout callout-tip"><div class="callout-header"><span class="callout-icon">💡</span><strong> 핵심 자동화 원리 (긴 프롬프트 입력 불필요)</strong></div><div class="callout-body"><p><br />
+<code>SKILL.md</code>와 <code>GEMINI.md</code>에 <strong>[구버전 보고서 자동 감지 클린 리빌드]</strong> 및 <strong>[단일 턴 요약 편향 차단]</strong> 규칙이 영구 내장되어 있습니다. 따라서 사용자께서는 어떤 상황에서든 복잡한 조건을 길게 치실 필요 없이, 아래 표에 적힌 <strong>한 줄 명령어</strong>만 입력하시면 에이전트가 알아서 구버전 여부와 데이터 상태를 감지해 처리합니다.</p></div></div>
+<hr />
+<h2 id="1-6-quick-cheat-sheet">📊 1. 한눈에 보는 6대 시나리오별 액션플랜 요약표 (Quick Cheat Sheet)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">시나리오 상황</th>
+<th style="text-align: left;">[Step 1] 내 사전 준비 (파일 배치)</th>
+<th style="text-align: left;">[Step 2] 안티그래비티에 입력할 한 줄 명령어</th>
+<th style="text-align: left;">[Step 3] 4.0 Argon 내부 자동 작동 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>① 최초 기업 폴더 생성</strong><br>(신규 종목 분석 준비)</td>
+<td style="text-align: left;">준비물 없음</td>
+<td style="text-align: left;"><strong><code>"[기업명] 기업 폴더 생성해줘"</code></strong></td>
+<td style="text-align: left;"><code>Stock_Research/[기업명]/</code> 하위 4대 폴더(<code>1_Raw_Data</code>, <code>2_Translated_DB</code>, <code>3_Final_Reports</code>, <code>Weekly_Trend</code>) 및 6열 <code>thesis_log.md</code> 초안 자동 생성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>② 최초 기업 분석 작성</strong><br>(처음 분석하는 신규 기업)</td>
+<td style="text-align: left;"><code>1_Raw_Data/</code>에 사업·분기보고서 PDF 넣기<br>(<code>my-stock</code>에 DART 시계열 수집)</td>
+<td style="text-align: left;">• <strong>[2스텝 정석]</strong>: <strong><code>"[기업명(코드)] Phase 1 분석해줘"</code></strong> 확인 후 <strong><code>"Phase 2, 3 진행해줘"</code></strong><br>• <strong>[1턴 원샷]</strong>: <strong><code>"[기업명(코드)] Phase 1~3 분석해줘"</code></strong></td>
+<td style="text-align: left;">SSOT 스크립트(<code>backtest_valuation.py</code>, <code>calc_reverse_dcf.py</code>) 선행 실행 ➔ <code>valuation_metrics.json</code> 생성 ➔ Phase 1~3 마크다운·HTML·모바일 통합요약본 일괄 생성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>③ 추론 모델 변경 시</strong><br>(기존 3.1/3.8 기업 ➔ 4.0 승격)</td>
+<td style="text-align: left;"><strong>기존 파일 절대 삭제 금지!</strong><br>모델 드롭다운만 <strong><code>4.0 Argon</code></strong> 선택</td>
+<td style="text-align: left;"><strong><code>"[기업명] Phase 1~3 분석해줘"</code></strong><br>(또는 <strong><code>"[기업명] Phase 1 분석해줘"</code></strong>)</td>
+<td style="text-align: left;">기존 보고서가 3.8 구버전임을 <strong>자동 감지</strong> ➔ 구버전 본문 앵커링 차단(무시) ➔ <code>1_Raw_Data</code>와 <code>thesis_log.md</code> 가설 이력만 계승(6열 승격)하여 백지상태에서 4.0 골격으로 전면 덮어쓰기</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>④ Global Trend 업데이트</strong><br>(2주 주기 산업·거시 리포트)</td>
+<td style="text-align: left;"><code>Stock_Research/Global_Trend/[날짜폴더]/</code>에 증권사 딥리서치 PDF 넣기</td>
+<td style="text-align: left;"><strong><code>"[기업명] 최신 Global Trend 반영해서 업데이트해줘"</code></strong></td>
+<td style="text-align: left;">• <strong>구버전(3.8) 기업이면</strong>: 자동으로 전체 클린 리빌드 수행<br>• <strong>4.0 완료 기업이면</strong>: 기존 골격 유지 + Global Trend 3대 게이트·S-Curve 앵커 검증(<code>parse_pdf.py</code>)·최신 주가 타점 델타 업데이트</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>⑤ Weekly Trend 업데이트</strong><br>(기업 IR·종목리포트·수주공시)</td>
+<td style="text-align: left;"><code>Stock_Research/[기업명]/Weekly_Trend/</code>에 IR/리포트 PDF 넣기</td>
+<td style="text-align: left;"><strong><code>"[기업명] Weekly Trend 새 자료 반영해서 업데이트해줘"</code></strong></td>
+<td style="text-align: left;"><code>company_timeline.md</code> 미시 이벤트 추가 ➔ <code>thesis_log.md</code> 6열 가설 검증 갱신 ➔ 목표가/수주 변동 시 <code>Phase 2, 3</code> 및 모바일 요약본 즉시 동기화</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>⑥ 분기·반기·사업보고서 공시</strong><br>(연 4회 DART 정기 실적 발표)</td>
+<td style="text-align: left;"><code>1_Raw_Data/</code>에 신규 보고서 PDF 추가<br>(<code>my-stock</code> DART 분기 데이터 갱신)</td>
+<td style="text-align: left;"><strong><code>"[기업명] 신규 분기보고서(또는 사업보고서) 반영해서 Phase 1~3 업데이트해줘"</code></strong></td>
+<td style="text-align: left;">코드로 <strong>직전 분기 대비(QoQ) 실적</strong> 자동 산출 ➔ <code>thesis_log.md</code>의 <strong>🚨반증 숫자(Kill-Switch)</strong>와 실제 실적 대조하여 <code>[검증 완료 / 약화 / 폐기]</code> 판정 ➔ SOTP·4대 레짐·목표가·SOP 전면 재산출</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">🛠️ 2. 시나리오별 상세 절차 및 작동 메커니즘</h2>
+<h3 id="1">📌 시나리오 1: 최초 기업 분석 전 해당 기업 폴더 만들기</h3>
+<p>새로운 관심 종목(예: <code>삼양식품</code> 또는 <code>테크윙</code>)이 생겼을 때 가장 먼저 물리적 금고(폴더)를 세팅하는 단계입니다.</p>
+<ol>
+<li><strong>사용자 명령어 입력</strong>:<br />
+<code>text
+   삼양식품(003230) 기업 폴더 생성해줘</code></li>
+<li><strong>에이전트 자동 처리</strong>:</li>
+<li><code>e:\antigravity-work\my-skill\Stock_Research\삼양식품\</code> 경로에 아래 4개 하위 폴더와 기본 파일을 자동 생성합니다:<ul>
+<li><code>1_Raw_Data/</code> : DART 사업보고서·분기보고서 PDF를 넣을 폴더</li>
+<li><code>2_Translated_DB/</code> : 파이썬 코드가 계산한 <code>valuation_metrics.json</code>과 <code>auto_tables.md</code>가 저장될 폴더</li>
+<li><code>3_Final_Reports/</code> : <code>Phase1_Report.md/html</code>, <code>Phase2_Story.md/html</code>, <code>Phase3_DCF.md/html</code>이 생성될 폴더</li>
+<li><code>Weekly_Trend/</code> : 6열 규격 헤더가 세팅된 <code>thesis_log.md</code>, <code>company_timeline.md</code>, 개별 IR PDF 보관 폴더</li>
+</ul>
+</li>
+<li><strong>사용자가 폴더 생성 직후 할 일</strong>:</li>
+<li>DART에서 다운로드한 최근 사업보고서 및 분기보고서 PDF를 <code>1_Raw_Data/</code> 폴더에 넣습니다.</li>
+<li>(권장) <code>my-stock</code> 대시보드에서 해당 종목의 DART 재무 시계열(<code>Data.xlsx</code> 또는 <code>cache.db</code>)을 1회 불러와 둡니다.</li>
+</ol>
+<hr />
+<h3 id="2_1">📌 시나리오 2: 최초 기업 분석 보고서 작성 (신규 기업 첫 분석)</h3>
+<p><code>1_Raw_Data/</code>에 보고서 PDF를 넣은 후 첫 분석을 실행하는 단계입니다. 종목 숙련도에 따라 <strong>2스텝 방식</strong>과 <strong>1턴 원샷 방식</strong> 중 편한 것을 골라 쓰시면 됩니다.</p>
+<h4 id="a-2">방법 A: 2스텝 검증 방식 (완전 초면인 신규 종목에 가장 추천)</h4>
+<p>BM 해부와 업종 분류(유형 A~D), 비영업자산 SOTP 규모를 먼저 눈으로 확인한 뒤 밸류에이션으로 넘어가는 가장 안전한 방식입니다.<br />
+- <strong>1차 명령</strong>:<br />
+<code>text
+  삼양식품(003230) Phase 1 분석해줘</code><br />
+<em>(결과 확인: Step 1.5 SOTP 비영업자산 비중, Step 2.0 4대 레짐 변화, Step 3.5 리스크 도미노, Section 8 1순위 채택 지표 확인)</em><br />
+- <strong>2차 명령 (수정이 필요 없으면 바로 입력)</strong>:<br />
+<code>text
+  삼양식품 Phase 2, 3 이어서 작성해줘</code></p>
+<h4 id="b-1-60">방법 B: 1턴 원샷 방식 (토큰 60% 절약 &amp; 한 번에 전 과정 완성)</h4>
+<p>이미 비즈니스 모델을 잘 알고 있거나 한 번에 결과를 보고 싶을 때 사용합니다. <code>SKILL.md</code>의 <strong>요약 편향 차단 게이트</strong> 덕분에 한 번에 명령해도 Phase 1, 2, 3 어느 하나도 요약되지 않고 풀 버전으로 작성됩니다.<br />
+- <strong>통합 명령</strong>:<br />
+<code>text
+  삼양식품(003230) Phase 1~3 분석해줘</code></p>
+<hr />
+<h3 id="3-31-pro-38-flash-40-argon">📌 시나리오 3: 추론 모델 변경 시 (기존 3.1 Pro / 3.8 Flash 작성 기업 ➔ 4.0 Argon 승격)</h3>
+<p>현재 보유하신 14~15개 기업처럼 과거 3.1 Pro나 3.8 Flash로 작성된 기업들을 4.0 Argon의 추론 깊이와 v4.2.2 규격으로 업그레이드할 때의 절차입니다.</p>
+<ol>
+<li><strong>절대 주의사항 (삭제 금지)</strong>:</li>
+<li>기존 기업 폴더를 통째로 삭제하시면 <strong>절대 안 됩니다.</strong> <code>1_Raw_Data/</code>의 공시 파일과 <code>Weekly_Trend/thesis_log.md</code>에 누적된 과거 투자 가설 이력은 지우면 복구할 수 없는 핵심 자산입니다.</li>
+<li><strong>언제 실행하는가? (토큰 절약 운영 팁)</strong>:</li>
+<li>보유 종목 전체를 하루에 다 돌리실 필요가 없습니다.</li>
+<li><strong>평소 루틴대로 신규 분기실적 공시가 뜨거나, Global Trend가 나오거나, 매수/매도 타점을 다시 점검하고 싶은 종목부터 하나씩 순차적으로</strong> 실행하시면 됩니다.</li>
+<li><strong>사용자 액션 및 명령어</strong>:</li>
+<li>안티그래비티 상단 모델 선택창에서 <strong><code>Gemini 4.0 Argon</code></strong>을 선택합니다.</li>
+<li>평소와 똑같이 짧게 명령합니다:<br />
+<code>text
+     하나머티리얼즈 Phase 1~3 분석해줘</code><br />
+<em>(또는 단계별로 <code>하나머티리얼즈 Phase 1 분석해줘</code> ➔ <code>Phase 2, 3 진행해줘</code>)</em></li>
+<li><strong>4.0 Argon 내부 자동 작동 (<code>SKILL.md</code> 제0원칙 3항 자동 발동)</strong>:</li>
+<li>Argon이 <code>하나머티리얼즈/3_Final_Reports/Phase1_Report.md</code>를 열어보고 v4.2 필수 섹션(<code>Step 1.5 SOTP</code>, <code>Step 2.0 4대 레짐</code> 등)이 없는 <strong>3.8 구버전임을 스스로 감지</strong>합니다.</li>
+<li>즉시 <strong>구버전 문맥 관성(Anchoring)을 차단</strong>하여 기존 3.8 보고서 본문을 무시하고, <code>1_Raw_Data/</code> 원문과 <code>thesis_log.md</code> 가설 이력만 읽어들인 뒤 백지상태에서 4.0 Argon의 깊은 인과 추론으로 <code>Phase 1~3</code> 전체를 새로 작성해 덮어씁니다.</li>
+<li>기존 4열이었던 <code>thesis_log.md</code> 역시 과거 가설들을 하나도 잃어버리지 않고 <strong><code>[📊 직전 분기 QoQ 추이 + 🚨 반증 Kill-Switch 숫자]</code>가 포함된 6열 표로 자동 승격</strong>시킵니다.</li>
+</ol>
+<hr />
+<h3 id="4-global_trend-2">📌 시나리오 4: <code>Global_Trend</code> (2주 주기 산업·거시 딥리서치) 업데이트 시</h3>
+<p>2주마다 증권사 산업 인뎁스 리포트(80p+ 등)나 매크로 리포트가 새로 나왔을 때의 절차입니다.</p>
+<ol>
+<li><strong>내 사전 준비</strong>:</li>
+<li><code>Stock_Research/Global_Trend/</code> 아래에 날짜 폴더(예: <code>26.10.16~31/</code>)를 만들고 신규 증권사 PDF 파일들을 넣습니다.</li>
+<li><strong>사용자 명령어 입력</strong>:</li>
+<li><strong>개별 종목에 반영할 때</strong>:<br />
+<code>text
+     리노공업 최신 Global Trend 반영해서 업데이트해줘</code></li>
+<li><strong>새 리포트에서 수혜주 스캔부터 하고 싶을 때</strong>:<br />
+<code>text
+     Global_Trend/26.10.16~31 폴더의 신규 리포트들을 스캔해서 핵심 S-Curve 침투율 변화를 정리하고, 관련 보유종목(리노공업, 코미코) 업데이트해줘</code></li>
+<li><strong>4.0 Argon 내부 자동 작동</strong>:</li>
+<li><code>parse_pdf.py --verify-page &lt;쪽&gt; --anchor "&lt;키워드&gt;"</code>를 실행하여 신규 PDF의 침투율·시장규모 팩트를 실측 검증합니다(<code>No-Blind-Citation</code>).</li>
+<li>대상 기업이 <strong>아직 3.8 구버전</strong>이면 자동으로 <strong>v4.2.2 전면 클린 리빌드</strong>를 수행하고, <strong>이미 4.0으로 리빌드된 기업</strong>이면 기존 4.0 골격 위에서 Global Trend 3대 게이트, <code>Phase2_Story.md</code>, <code>thesis_log.md</code>, 그리고 최신 주가 기준 <code>Phase3_DCF.md</code> 매매 타점을 빠르게 <strong>델타 업데이트</strong>합니다.</li>
+</ol>
+<hr />
+<h3 id="5-weekly_trend-ir">📌 시나리오 5: <code>Weekly_Trend</code> (기업 IR · 종목 리포트 · 수시 수주/증설 공시) 업데이트 시</h3>
+<p>특정 기업의 IR 발표자료, 증권사 기업 분석 리포트, 또는 DART 단일판매·공급계약/신규시설투자 공시가 떴을 때의 절차입니다.</p>
+<ol>
+<li><strong>내 사전 준비</strong>:</li>
+<li><code>Stock_Research/[기업명]/Weekly_Trend/</code> 폴더에 해당 기업 IR PDF나 종목 리포트 PDF를 넣습니다. (DART 수시 공시는 파일 없이 명령만 내려도 MCP가 자동 조회합니다.)</li>
+<li><strong>사용자 명령어 입력</strong>:<br />
+<code>text
+   코미코 Weekly Trend 새 자료(및 최근 공시) 반영해서 업데이트해줘</code></li>
+<li><strong>4.0 Argon 내부 자동 작동</strong>:</li>
+<li><code>Weekly_Trend/company_timeline.md</code>에 신규 수주·증설·IR 핵심 팩트를 날짜순으로 누적 기록합니다.</li>
+<li><code>Weekly_Trend/thesis_log.md</code>의 6열 가설 표에서 해당 가설의確認 근거를 업데이트하고, 만약 선행 발화(<code>Early Ignition</code>: 수주잔고 YoY +30%↑ &amp; 본업 마진 방어) 요건이 새로 충족되었다면 <code>backtest_valuation.py --early-ignition</code>을 재실행하여 <code>Phase 3</code> 목표가와 모바일 요약본을 즉시 갱신합니다.</li>
+</ol>
+<hr />
+<h3 id="6-4-dart">📌 시나리오 6: 분기 / 반기 / 사업보고서 (연 4회 DART 정기 공시) 발표 시 ★가장 중요</h3>
+<p>1분기(5월 중순), 반기(8월 중순), 3분기(11월 중순), 사업보고서(3월 말)가 DART에 공식 발표되었을 때의 <strong>핵심 펀더멘털 점검 루틴</strong>입니다.</p>
+<ol>
+<li><strong>내 사전 준비</strong>:</li>
+<li>DART에서 최신 분기/반기/사업보고서 PDF를 다운로드하여 <code>Stock_Research/[기업명]/1_Raw_Data/</code>에 넣습니다. <em>(사업보고서 추가 시 5개년보다 오래된 가장 옛날 사업보고서는 삭제)</em></li>
+<li><code>my-stock</code>에서 해당 기업의 DART 분기 시계열 데이터를 최신 분기까지 갱신합니다.</li>
+<li><strong>사용자 명령어 입력</strong>:<br />
+<code>text
+   이노션 3분기 보고서 공시 반영해서 Phase 1~3 업데이트해줘</code></li>
+<li><strong>4.0 Argon 내부 자동 작동 (포퍼식 가설 심판 &amp; 4대 레짐 재점검)</strong>:</li>
+<li><strong>① 코드 SSOT 재연산</strong>: <code>backtest_valuation.py</code>와 <code>calc_reverse_dcf.py</code>를 새로 돌려 신규 분기 <strong>매출·영업이익·수정EPS의 직전 분기 대비(QoQ) 및 전년 동기 대비(YoY) 실측치</strong>를 <code>valuation_metrics.json</code>에 확정합니다.</li>
+<li><strong>② 포퍼식 가설 Kill-Switch 심판</strong>: 직전 분기에 <code>thesis_log.md</code> 5번째 열(<code>🚨 반증/약화 조건</code>)에 미리 적어두었던 임계치 숫자(예: <em>"차기 분기 영업이익 &lt; 350억 원 기록 시 [약화] 강등"</em>)와 이번 실제 공시 실적을 냉정하게 대조합니다.<ul>
+<li>기준 통과 시 ➔ <code>[검증 완료]</code> 또는 <code>[진행 중(강화)]</code> 유지 및 차기 분기 신규 Kill-Switch 숫자 설정</li>
+<li>기준 미달 시 ➔ 변명 없이 즉시 <strong><code>[약화]</code> 또는 <code>[폐기]</code>로 강등</strong>하고 Phase 3의 성장 할증(<code>대안 A</code>) 박탈</li>
+</ul>
+</li>
+<li><strong>③ 장부 SOTP(<code>Step 1.5</code>) · 4대 레짐(<code>Step 2.0</code>) · 피크아웃(<code>Step 3.0</code>) 재점검</strong>:<ul>
+<li>신규 분기에 비영업자산 비중이 20%를 넘었는지, 유형자산(CapEx)이나 차입금/CB 희석이 발생했는지, 고점 이익에서 영업이익 QoQ가 <code>-15%</code> 이상 꺾였는지(피크아웃 캡 발동) 코드가 자동 판정합니다.</li>
+</ul>
+</li>
+<li><strong>④ 전 파일 및 모바일 요약본 일괄 동기화</strong>: <code>Phase1~3.md</code>, <code>phase1~3.html</code>, <code>00_모바일_통합요약본.html</code>(로컬 및 구글 드라이브)까지 한 번에 최신화합니다.</li>
+</ol>
+<hr />
+<h2 id="3-github">🔄 3. 분석 완료 후 마무리: 히스토리 기록 및 GitHub 자동 백업</h2>
+<p>분석이나 업데이트 작업이 끝난 후 PC와 구글 드라이브, GitHub 원격 저장소를 동기화할 때는 언제든 아래 한 줄만 입력하시면 됩니다:</p>
+<pre><code class="language-text">오늘 작업 내용 히스토리.md에 반영하고 GitHub에 커밋 &amp; 푸시해줘
+</code></pre>
+<ul>
+<li>에이전트가 자동으로 <code>e:\antigravity-work\히스토리.md</code>에 업데이트 내역을 기록하고, <code>python e:\antigravity-work\sync_history.py</code>를 실행해 5대 워크스페이스 폴더에 <code>히스토리.md</code>를 1초 만에 동기화한 뒤 GitHub에 커밋 &amp; 푸시까지 완료합니다.</li>
+</ul>
+        </div>
+    </div>
+    <script>
+        // Wrap tables with responsive wrapper
+        document.querySelectorAll('table').forEach(tbl => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            tbl.parentNode.insertBefore(wrapper, tbl);
+            wrapper.appendChild(tbl);
+        });
+    </script>
+</body>
+</html>
