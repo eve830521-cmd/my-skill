@@ -396,7 +396,13 @@ p > em {
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -451,14 +457,14 @@ p > em {
     end
 
     subgraph S2[&quot;NAVER 플랫폼 본체 &amp; AI 팩토리&quot;]
-        B1[&quot;NAVER 본체&lt;br&gt;(검색·커머스·페이·콘텐츠)&quot;]
-        SPV[&quot;인프라 SPV&lt;br&gt;(데이터센터 상면·GPU 소유)&quot;]
-        B2[&quot;네이버 AI 팩토리 운영사&lt;br&gt;(100% 운영 자회사)&quot;]
+        B1[&quot;NAVER 본체&lt;br/&gt;(검색·커머스·페이·콘텐츠)&quot;]
+        SPV[&quot;인프라 SPV&lt;br/&gt;(데이터센터 상면·GPU 소유)&quot;]
+        B2[&quot;네이버 AI 팩토리 운영사&lt;br/&gt;(100% 운영 자회사)&quot;]
     end
 
     subgraph S3[&quot;최종 수요자 생태계&quot;]
-        C1[&quot;4,000만 국민 유저 &amp; 쇼핑 소비자&lt;br&gt;(Agent N 능동 탐색 &amp; Npay 결제)&quot;]
-        C2[&quot;B2B 엔터프라이즈 &amp; 정부 공공기관&lt;br&gt;(소버린 AI 인프라 &amp; GPUaaS 구독)&quot;]
+        C1[&quot;4,000만 국민 유저 &amp; 쇼핑 소비자&lt;br/&gt;(Agent N 능동 탐색 &amp; Npay 결제)&quot;]
+        C2[&quot;B2B 엔터프라이즈 &amp; 정부 공공기관&lt;br/&gt;(소버린 AI 인프라 &amp; GPUaaS 구독)&quot;]
     end
 
     A1 --&gt;|&quot;마케팅 예산 &amp; 판매 수수료&quot;| B1
@@ -1186,7 +1192,7 @@ p > em {
 </code></pre>
     <script>
         const SSOT_DATA = {"version": "4.2", "generated_at": "2026-10-22 01:38:25", "stock_code": "035420", "corp_name": "NAVER", "anchor_price": 179300, "primary_metric": "PBR", "bench": {"stock_name": "NAVER", "close": 178000.0, "bps": 197188.0, "pbr": 0.91, "eps": 12885.0, "per": 13.92, "div_yield": 1.47, "dps": 2630.0, "market_cap_str": "27조 2,731억"}, "sotp": {"sotp_triggered": true, "book_eq_eok": 295396.17, "mcap_eok": 268599.17, "non_op_assets_eok": 228487.0, "recognized_non_op_eok": 159940.9, "non_op_haircut": 0.3, "non_op_ratio_book_pct": 77.35, "non_op_ratio_mcap_pct": 85.07, "non_op_max_ratio_pct": 85.07, "core_bps": 44664, "nopat_eok": 17498.13, "core_roic_pct": 26.15, "core_profit_sustainable": true, "implied_core_op_ev_eok": 63588.27}, "regime": {"regime_changed": true, "ppe_chg_2y_pct": null, "debt_ratio_chg_2y_pctp": null, "opm_shift_pctp": -1.13, "flags": ["③ 비영업자산레짐(비영업자산 비중 85.1% ≥ 20% — 명목 PBR 저평가 착시 주의)"]}, "section8": {"primary_metric": "PBR", "pbr_min": 0.93, "pbr_max": 10.17, "pbr_r2": 0.17, "pbr_dir": 48.7, "per_min": 15.68, "per_max": 79.22, "per_r2": 0.64, "per_dir": 48.7, "official_pbr": 0.91, "official_per": 13.92, "official_div": 1.47}, "section2": {"is_type_b": false, "verdict": "🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal)]", "controlling_ratio_pct": 100.0, "qoq_eps_positive": true, "qoq_eps_detail": "[액분·무증 소급보정 지배주주 EPS] 2026.1Q 1,889.0원 → 2026.2Q 4,684.0원 (QoQ 반등/흑자유지 ✅)", "qoq_rev_pct": 4.6, "qoq_op_pct": -4.0, "qoq_summary_str": "[2026.1Q → 2026.2Q] 매출액 32,410.6억→33,887.6억(QoQ +4.6%) | 영업이익 5,417.6억→5,203.1억(QoQ -4.0%) | 수정EPS 1,889원→4,684원", "kill_switch_guide": "차기 분기 영업이익 < 4,422.6억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS < 3,747원 기록 시 핵심 가설 즉시 [약화] 강등", "eps_2y_chg": 32.79534504331218, "bps_2y_chg": 23.897399592677328, "op_yoy_q": -0.23862088614683474, "op_yoy_ttm": 7.1251001593628365, "op_yoy_used": -0.23862088614683474, "op_yoy_detail": "분기(2025.2Q→2026.2Q) -0.2% (5,215.5억 → 5,203.1억) | TTM 영업이익 YoY: +7.1%", "curr_roe": 6.521274726976937, "mid_cycle_roe": 6.154136639228723, "mid_cycle_eps": 10638.261825764897, "pbr_cycle_max": 10.16619962909752, "pbr_3y_max": 1.466183809736165, "pbr_3y_mean": 1.1811750255016462, "pbr_3y_p20": 1.038071894177211, "pbr_3y_p65": 1.2390568666238104, "pbr_3y_p90": 1.3785022469646704, "per_3y_max": 31.24018876799365, "per_3y_mean": 22.17805030235942, "per_3y_p20": 18.814328957830632, "per_3y_p65": 23.3656650982608, "per_3y_p90": 27.25553996201095, "curr_eps_used": 12885.0, "curr_bps_used": 197188.0}, "section3": {"is_low_vol_box": false, "nature_badge": "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]", "range_52w_pct": 53.37, "median_52w_range_pct": 46.65, "effective_52w_range": 46.65, "forward_bps": 197188.0, "is_peak_trap": false, "peak_trap_reason": "", "op_mult": 1.0, "sc_base_mult": 1.0, "sc_bull_mult": 1.0, "base_mult_a": 1.0, "bull_mult_a": 1.0, "scurve_info": {"is_phase2": false, "is_early_ignition": false, "theme_name": "DART 신기술 단독 익스포저 미달 (11.4% < 30% 컷오프 → 무상 콜옵션 0% 처리)", "exposure_pct": 11.45, "source_pdf": null}, "tp1_price": 247500, "tp1_price_a": 247500, "tp1_upside": 38.04, "tp1_upside_a": 38.04, "bear_auto": 179300, "base_auto": 272700, "bull_auto": 311510, "base_auto_a": 272700, "bull_auto_a": 311510}, "cyclical_guard": {"is_peak_trap": false, "peak_trap_reason": ""}, "risk_causal_chain": {"stage1_trigger": "전방 산업 수요 둔화 / 고객사 재고 조정 또는 경쟁사 단가 인하(ASP 하락)", "stage2_operational": "수주/출하(Q) 둔화 ➔ 고정비(감가상각·인건비) 디레버리지로 영업이익 급감(현재 QoQ -4.0%, YoY -0.2%) 및 재고/매출채권 회전일수 상승", "stage3_financial": "영업현금흐름(OCF) 둔화 ➔ 순현금(45,070.0억) 버퍼 소진 및 S-Curve/성장 멀티플 프리미엄 박탈 ➔ PBR/배당 하단 지지선 테스트"}, "section4": {"d_close": 179300, "d_low20": 171000, "poc_low": 197000, "poc_high": 203500, "poc_pct": 32.0, "poc_trail_pin": 191090, "d_ma5": 178080, "d_ma20": 187595, "d_ma60": 205177, "vol_ma20": 658774, "vol_ratio": 0.55, "stoch_k": 28.4, "stoch_d": 20.2, "w_close": 179300, "w_ma10": 199100, "w_ma20": 204725, "w_ma60": 227517, "bb_upper": 240719, "bb_lower": 168731, "w_macd": -10092.4, "w_macd_sig": -7312.1, "w_macd_hist": -2780.3, "w_mfi14": 60.2, "w_rsi14": 35.6, "w_mfi14_12w_max": 60.2, "buy1": 168540, "buy2": 179300, "buy3": 182890, "avg_buy_price": 177149, "init_stop_pin": 160110, "breakout_trail_pin": 191090, "gate1_rr": 52.09, "exec_rr": 5.61, "is_overvalued": false, "is_track2": false}, "reverse_dcf": {"status": "success", "price": 179300.0, "fcf_eok": 10077.0, "norm_fcf_eok": null, "distb_shares": 149804333, "total_shares": 156944242, "treasury_shares": 7139909, "wacc": 0.09, "terminal_g": 0.02, "years": 5, "net_debt_eok": -45070.0, "pref_mcap_eok": 0.0, "market_cap_distb_eok": 268599.17, "market_cap_total_eok": 281401.03, "ev_distb_eok": 223529.17, "non_op_assets_eok": 228487.0, "non_op_haircut": 0.3, "recognized_non_op_eok": 159940.9, "non_op_ratio_mcap_pct": 85.07, "non_op_ratio_book_pct": 77.35, "sotp_triggered": true, "core_op_ev_eok": 63588.27, "implied_g_distb_pct": 16.69, "implied_g_total_pct": 17.89, "implied_g_ev_pct": 12.07, "implied_g_core_ev_pct": -16.32, "norm_g_distb_pct": null, "norm_g_ev_pct": null, "norm_g_core_ev_pct": null}, "canonical_html_tag": "<div id=\"dcf-calculator-root\" data-price=\"179300\" data-shares=\"149804333\" data-total-shares=\"156944242\" data-fcf=\"10077.0\" data-net-debt=\"-45070.0\" data-non-op-assets=\"159940.9\" data-bear=\"179300\" data-base=\"272700\" data-bull=\"311510\" data-base-a=\"272700\" data-bull-a=\"311510\" data-tp1=\"247500\" data-tp1-a=\"247500\" data-buy1=\"168540\" data-buy2=\"179300\" data-buy3=\"182890\" data-stop-pin=\"160110\" data-poc-low=\"197000\"></div>"};
-        // Replace mermaid code blocks with div class="mermaid"
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -1196,6 +1202,24 @@ p > em {
                 div.textContent = block.textContent;
                 parent.parentNode.replaceChild(div, parent);
             });
+            
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
             
             // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");

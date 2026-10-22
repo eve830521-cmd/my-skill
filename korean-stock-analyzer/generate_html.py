@@ -43,6 +43,73 @@ except Exception as e:
     print(f"Error reading CSS {css_file}: {e}")
     css_text = ""
 
+def sanitize_mermaid_code(code: str) -> str:
+    """Sanitize Mermaid code to comply strictly with Mermaid v10.9.8+ syntax rules."""
+    lines = code.split("\n")
+    sanitized_lines = []
+    subgraph_idx = 1
+
+    for line in lines:
+        # 1. Dotted arrow legacy syntax: A -. "Label" .-> B or A -. Label .-> B  ==>  A -.->|"Label"| B
+        line = re.sub(
+            r'(-\.)\s*(".*?"|\'.*?\'|[^\-\.\n]+?)\s*(\.->)',
+            lambda m: f'-.->|"{m.group(2).strip("\'\"")}"|',
+            line
+        )
+
+        # 2. Pipe labels: quote if contains special chars and not yet quoted
+        def quote_pipe_label(m):
+            arrow = m.group(1)
+            content = m.group(2).strip()
+            if (content.startswith('"') and content.endswith('"')) or (content.startswith("'") and content.endswith("'")):
+                return f'{arrow}|{content}|'
+            clean_c = content.replace('"', "'")
+            return f'{arrow}|"{clean_c}"|'
+
+        line = re.sub(r'(-->|-\.->)\s*\|([^\|\n]+)\|', quote_pipe_label, line)
+
+        # 3. Subgraph syntax cleanup:
+        # 3-1: Remove space between ID and [ : subgraph Macro ["..."] -> subgraph Macro["..."]
+        line = re.sub(r'subgraph\s+([a-zA-Z0-9_-]+)\s+\[', r'subgraph \1[', line)
+
+        # 3-2: Subgraph without valid English ID (starts with Korean/number/quote/space)
+        m_sub = re.match(r'^(\s*subgraph)\s+([^\[\n]+)$', line)
+        if m_sub:
+            indent = m_sub.group(1)[:len(m_sub.group(1)) - len('subgraph')]
+            raw_title = m_sub.group(2).strip()
+            if not re.match(r'^[a-zA-Z0-9_-]+$', raw_title):
+                clean_title = raw_title.strip('"\'')
+                line = f'{indent}subgraph SG_{subgraph_idx}["{clean_title}"]'
+                subgraph_idx += 1
+
+        # 4. Node labels: Auto-quote if parentheses, colons, slashes, or % are present without quotes
+        def fix_node_label(match):
+            node_id = match.group(1)
+            inner = match.group(2)
+            if (inner.startswith('"') and inner.endswith('"')) or (inner.startswith("'") and inner.endswith("'")):
+                return f'{node_id}[{inner}]'
+            if any(c in inner for c in '():/%,\''):
+                clean_inner = inner.replace('"', "'")
+                return f'{node_id}["{clean_inner}"]'
+            return f'{node_id}[{inner}]'
+
+        line = re.sub(r'(\b[a-zA-Z0-9_-]+)\s*\[([^\]\n]+)\]', fix_node_label, line)
+
+        # 5. Standardize line breaks: <br> -> <br/>
+        line = re.sub(r'<br\s*>', '<br/>', line, flags=re.IGNORECASE)
+
+        sanitized_lines.append(line)
+
+    return "\n".join(sanitized_lines)
+
+def sanitize_mermaid_in_markdown(md: str) -> str:
+    """Pre-process all mermaid blocks in markdown before HTML conversion."""
+    def replacer(match):
+        code_body = match.group(1)
+        fixed_code = sanitize_mermaid_code(code_body)
+        return f"```mermaid\n{fixed_code}\n```"
+    return re.sub(r'```mermaid\s*\n(.*?)\n```', replacer, md, flags=re.DOTALL)
+
 # Locate Single Source of Truth JSON (valuation_metrics.json) if available
 ssot_data = {}
 candidate_ssot_paths = []
@@ -90,6 +157,9 @@ if ssot_data:
 if pipeline_audit_warnings:
     for w in pipeline_audit_warnings:
         print(f"⚠️ {w}")
+
+# Pre-process Mermaid diagrams to ensure strict Mermaid v10.9.8+ syntax compliance
+md_text = sanitize_mermaid_in_markdown(md_text)
 
 html_body = markdown.markdown(md_text, extensions=["tables", "fenced_code"])
 ssot_json_inline = json.dumps(ssot_data, ensure_ascii=False) if ssot_data else "null"
@@ -167,14 +237,20 @@ html_template = f"""<!DOCTYPE html>
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({{ startOnLoad: true }});
+        mermaid.initialize({{ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        }});
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
     {html_body}
     <script>
         const SSOT_DATA = {ssot_json_inline};
-        // Replace mermaid code blocks with div class="mermaid"
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {{
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {{
@@ -184,6 +260,24 @@ html_template = f"""<!DOCTYPE html>
                 div.textContent = block.textContent;
                 parent.parentNode.replaceChild(div, parent);
             }});
+            
+            async function renderMermaidSafe() {{
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {{
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }}
+                if (window.mermaid) {{
+                    try {{
+                        await window.mermaid.run({{
+                            querySelector: '.mermaid'
+                        }});
+                    }} catch (e) {{
+                        console.warn("Mermaid execution error caught:", e);
+                    }}
+                }}
+            }}
+            renderMermaidSafe();
             
             // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");

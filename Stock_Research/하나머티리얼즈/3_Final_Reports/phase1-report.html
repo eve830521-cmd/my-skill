@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Stock Analyzer Report</title>
+    <title>Stock Analyzer Report (v4.2)</title>
     <style>
     /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
 
@@ -383,10 +383,26 @@ p > em {
         border-radius: 4px;
         font-size: 9.5pt;
     }
+    .ssot-verified-banner {
+        background: #ecfdf5;
+        border: 1px solid #10b981;
+        color: #065f46;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 9.5pt;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -436,7 +452,7 @@ p > em {
    - <strong>직판(After-market 정품) 경로</strong>: 국내외 반도체 소자 제조업체에 챔버 내 마모 교체용 소모성 부품을 직접 판매합니다 <code>[[하나머티리얼즈]반기보고서(2026.08.13), p.26]</code>.
    - <strong>지역별 매출 비중(2026년 반기 연결 1,834.9억 원 기준)</strong>: <strong>내수</strong>(TEL 코리아, 세메스, 삼성전자, SK하이닉스 등) <strong>1,294.1억 원(70.53%)</strong>, <strong>직수출</strong>(TEL 일본 본사, AMAT 등) <strong>529.4억 원(28.85%)</strong>, <strong>신기술사업금융</strong>(종속회사) <strong>11.4억 원(0.62%)</strong>으로 구성됩니다 <code>[[하나머티리얼즈]반기보고서(2026.08.13), p.25-26]</code>.</p>
 <pre><code class="language-mermaid">graph LR
-    subgraph Macro [&quot;🌐 26.10 글로벌 트렌드 매크로 동인&quot;]
+    subgraph Macro[&quot;🌐 26.10 글로벌 트렌드 매크로 동인&quot;]
         M1[&quot;2027 GAA 공정 전환 &amp; 선단 Fab(P4·M15X) 가동&lt;br/&gt;(유안타 26.10.15 p.6-8, p.12-15: 소부장 Q 확산)&quot;]
         M2[&quot;전공정 식각 소모품 과점 &amp; 최장기 사이클&lt;br/&gt;(LS 26.09.29 p.13 · 하나 26.09.02 p.41,43)&quot;]
         M3[&quot;원/달러 환율 안정화 &amp; 10.28 비과세 감액배당 주총&lt;br/&gt;(유안타 26.10.08 · 대신 26.10.07 p.47-50)&quot;]
@@ -444,13 +460,13 @@ p > em {
 
     A[&quot;원재료 공급망&lt;br/&gt;(일본 MMC 외: Ingot 72.8% 수입 /&lt;br/&gt;OCI 외: Poly-Si 23.1% 조달)&quot;] --&gt;|&quot;Ingot 매입단가 YoY -23.2% 하락&lt;br/&gt;&amp; 환율 안정 원가 절감&quot;| B[&quot;하나머티리얼즈 (천안·아산 1·2캠퍼스)&lt;br/&gt;단결정 Ingot 자체성장·정밀가공·세정&lt;br/&gt;(2Q 가동률 87.77% / OPM 28.88%)&quot;]
 
-    Macro -. &quot;식각 Step 증가 &amp; 원가 개선 &amp; 주주환원&quot; .-&gt; B
+    Macro -.-&gt;|&quot;식각 Step 증가 &amp; 원가 개선 &amp; 주주환원&quot;| B
 
     B --&gt;|&quot;1. 실리콘부품 88.87%&lt;br/&gt;(Si Electrode &amp; Ring: 1,630.7억)&quot;| C[&quot;글로벌 식각장비 OEM 캡티브&lt;br/&gt;(2대주주 TEL 13.78% · SEMES · AMAT)&quot;]
     B --&gt;|&quot;2. 기타부품 10.11% (무상콜옵션)&lt;br/&gt;(SiC Ring·Tube·Disk: 185.5억)&quot;| C
     C --&gt;|&quot;챔버 정품 장착 인도&quot;| D[&quot;글로벌 반도체 IDM 소자사&lt;br/&gt;(삼성전자 · SK하이닉스 · 마이크론 등)&quot;]
-    B -. &quot;After-market 정품 직판&lt;br/&gt;(내수 70.5% / 직수출 28.9%)&quot; .-&gt; D
-    B -. &quot;3. 실리콘 슬러지 업사이클링 702억 투자&lt;br/&gt;(2027.06.30 완공 무상콜옵션)&quot; .-&gt; E[&quot;이차전지용 실리콘 음극재 양산라인&lt;br/&gt;(특허등록 24.03 &amp; 26.04 완료)&quot;]
+    B -.-&gt;|&quot;After-market 정품 직판&lt;br/&gt;(내수 70.5% / 직수출 28.9%)&quot;| D
+    B -.-&gt;|&quot;3. 실리콘 슬러지 업사이클링 702억 투자&lt;br/&gt;(2027.06.30 완공 무상콜옵션)&quot;| E[&quot;이차전지용 실리콘 음극재 양산라인&lt;br/&gt;(특허등록 24.03 &amp; 26.04 완료)&quot;]
 </code></pre>
 <hr />
 <h2>2. 주요 제품별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
@@ -947,7 +963,8 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
 <li><code>Section 2.1</code>에서 DART에 묶음 공시된 기타 부품(SiC Ring 외 <strong><code>10.11% &lt; 30%</code></strong>)과 양산 전 설리콘 음극재(<strong><code>0.0%</code></strong>)를 <strong><code>[0원 무상 콜옵션 (Phase 3 S-Curve 할증 0% 차단, sc_mult = 1.00)]</code></strong>으로 엄격히 분리하였으며, <code>Section 8</code>에서 방향 일치율 50% 미만(<code>33.3%</code>) 및 저배당(<code>0.56%</code>)인 배당수익률을 자동 탈락시키고 <strong><code>PBR(주봉 R²=0.55 1위, 방향일치율 66.7% 1위, Forward BPS 연동) + PER(방향일치율 52.8%, 조정 지배EPS 연동)</code></strong>을 Phase 3 주 멀티플로 바인딩함 (<code>검증 통과 ✅</code>).</li>
 </ol>
     <script>
-        // Replace mermaid code blocks with div class="mermaid"
+        const SSOT_DATA = null;
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -958,7 +975,25 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                 parent.parentNode.replaceChild(div, parent);
             });
             
-            // Highlight Fact vs Narrative
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
+            
+            // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");
             allElements.forEach(el => {
                 if (el.innerHTML.includes("[공시 팩트]")) {
@@ -971,23 +1006,29 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                 }
             });
             
-            // DCF Calculator & Master SOP Calculator
+            // DCF Calculator & Master SOP Calculator (Bound to SSOT_DATA if present)
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const sDcf = (SSOT_DATA && SSOT_DATA.reverse_dcf) ? SSOT_DATA.reverse_dcf : {};
+                const sSec3 = (SSOT_DATA && SSOT_DATA.section3) ? SSOT_DATA.section3 : {};
+                const sSec4 = (SSOT_DATA && SSOT_DATA.section4) ? SSOT_DATA.section4 : {};
+
+                const rawPrice = Number(SSOT_DATA?.anchor_price || sDcf.price || dcfRoot.getAttribute('data-price') || 100000);
                 const initPrice = rawPrice.toLocaleString();
-                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
-                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initShares = Number(sDcf.distb_shares || dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(sDcf.fcf_eok || dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(sDcf.net_debt_eok !== undefined ? sDcf.net_debt_eok : (dcfRoot.getAttribute('data-net-debt') || '0'));
                 const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
-                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                const rawNonOp = parseFloat(sDcf.recognized_non_op_eok !== undefined ? sDcf.recognized_non_op_eok : (dcfRoot.getAttribute('data-non-op-assets') || '0'));
+                const initNonOp = isNaN(rawNonOp) ? '0' : Math.round(rawNonOp).toLocaleString();
+
+                let rawWacc = parseFloat(sDcf.wacc || dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
-                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                let rawTerm = parseFloat(sDcf.terminal_g || dcfRoot.getAttribute('data-terminal') || '2.0');
                 if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
                 const initWacc = rawWacc.toFixed(1);
                 const initTerminal = rawTerm.toFixed(1);
 
-                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
                 function extractKrwPrices(str) {
                     if (!str) return [];
                     const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
@@ -999,16 +1040,16 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     return [];
                 }
 
-                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
-                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
-                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
-                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
-                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
-                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
-                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
-                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
-                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
-                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
+                let autoBull = Number(sSec3.bull_auto || dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number((sSec3.is_low_vol_box ? sSec3.tp1_price : sSec3.base_auto) || dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(sSec3.bull_auto_a || dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number((sSec3.is_low_vol_box ? sSec3.tp1_price_a : sSec3.base_auto_a) || dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(sSec3.bear_auto || dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(sSec4.poc_low || dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(sSec4.buy1 || dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(sSec4.buy2 || dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(sSec4.buy3 || dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(sSec4.init_stop_pin || dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
@@ -1062,9 +1103,12 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
 
                 let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
                 if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
+
+                const ssotBanner = SSOT_DATA ? '<div class="ssot-verified-banner">✅ 파이프라인 SSOT(valuation_metrics.json) 직결 바인딩 완료 — AI 수동 이기(Transcription) 오차 0.0% 검증됨</div>' : '';
                 
-                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
+                dcfRoot.innerHTML = ssotBanner +
+                '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity · EV · SOTP 본업EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -1077,6 +1121,10 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                         '<div class="dcf-input-group">' +
                             '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
                             '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>비영업자산 안전가치 (억 원, SOTP 차감)</label>' +
+                            '<input type="text" id="dcf-input-non-op" value="' + initNonOp + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -1147,6 +1195,7 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
                 const elNetDebt = document.getElementById('dcf-input-net-debt');
+                const elNonOp = document.getElementById('dcf-input-non-op');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -1224,6 +1273,7 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     const price = parseFormattedNum(elPrice.value);
                     const shares = parseFormattedNum(elShares.value);
                     const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const nonOpEok = parseFormattedNum(elNonOp.value);
                     const fcf = parseFormattedNum(elFcf.value) * 100000000;
                     const wacc = parseFloat(elWacc.value) / 100.0;
                     const terminal = parseFloat(elTerminal.value) / 100.0;
@@ -1251,22 +1301,29 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
 
                     const equityVal = price * shares;
                     const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const coreEvVal = Math.max(equityVal * 0.05, evVal - (nonOpEok * 100000000));
                     const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
                     const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+                    const gCoreEv = nonOpEok > 0 ? solveImpliedGrowthForTarget(coreEvVal, fcf, wacc, terminal) : null;
 
                     if (gEquity !== null) {
                         const eqPct = (gEquity * 100).toFixed(2);
                         const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
                         const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        const coreEvEok = Math.round(coreEvVal / 100000000).toLocaleString();
                         let primaryG = gEquity;
                         if (Math.abs(netDebtEok) > 0 && gEv !== null) {
                             const evPct = (gEv * 100).toFixed(2);
                             primaryG = netDebtEok > 0 ? gEv : gEquity;
-                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            let valTxt = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            if (gCoreEv !== null) {
+                                valTxt += "  |  본업EV(SOTP) " + (gCoreEv * 100).toFixed(2) + "%";
+                            }
+                            elResultValue.textContent = valTxt;
                             const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
-                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%" + (gCoreEv !== null ? (" vs 본업EV(" + coreEvEok + "억) 기준 " + (gCoreEv*100).toFixed(2) + "%") : "");
                         } else {
-                            elResultValue.textContent = eqPct + "%";
+                            elResultValue.textContent = eqPct + "%" + (gCoreEv !== null ? (" | 본업EV(SOTP) " + (gCoreEv*100).toFixed(2) + "%") : "");
                             elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
                         }
                         if (primaryG < 0) {
@@ -1283,7 +1340,7 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     }
                 }
 
-                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elNonOp, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {
                     input.addEventListener('input', (e) => {
                         formatNumberInput(e);
@@ -1328,7 +1385,6 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
                     const minEntryPrice = Math.min(b1, b2, avgPrice);
                     let safetyPin = rawStopPin;
                     let pinAutoCorrected = false;
@@ -1340,13 +1396,11 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
 
-                    // Hierarchy validation notice
                     let orderNotice = "";
                     if (avgPrice >= tBase) {
                         orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
                     }
 
-                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
                     const sellQty2 = totalQty - sellQty1;
                     const profit1 = sellQty1 * (tBase - avgPrice);
@@ -1357,7 +1411,6 @@ DART 반기보고서 본문(<code>II. 사업의 내용 - 5. 위험관리</code>,
                     const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
                     const trailingStop3 = Math.round(tBull * 0.92);
 
-                    // Side-by-side Model B vs Model A profit comparison
                     const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
                     const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
                     const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));

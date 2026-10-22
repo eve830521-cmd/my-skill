@@ -396,7 +396,13 @@ p > em {
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -434,13 +440,13 @@ p > em {
 <pre><code class="language-mermaid">graph TD
     A[&quot;(주)미코 (지배회사, 지분 41.85%)&quot;] --&gt;|&quot;핵심 원재료 독점 공급 (코팅 파우더 Y2O3, AlN 분말)&quot;| B[&quot;코미코 (KoMiCo &amp; 미코세라믹스)&quot;]
     C[&quot;국내외 부품 가공사 / 유틸리티 원자재&quot;] --&gt;|&quot;원자재 및 보조 유틸리티 조달&quot;| B
-    FX[&quot;매크로 변수: 원/달러 환율 1,300원대 안착&quot;] -. &quot;해외 8개국 매출(60%) 원화 환산 극대화 &amp; 외환차익&quot; .-&gt; B
-    OIL[&quot;글로벌 에너지 변수: 브렌트유 107$&quot;] -. &quot;세정/코팅 챔버 전력 유틸리티 비용 압박&quot; .-&gt; B
+    FX[&quot;매크로 변수: 원/달러 환율 1,300원대 안착&quot;] -.-&gt;|&quot;해외 8개국 매출(60%) 원화 환산 극대화 &amp; 외환차익&quot;| B
+    OIL[&quot;글로벌 에너지 변수: 브렌트유 107$&quot;] -.-&gt;|&quot;세정/코팅 챔버 전력 유틸리티 비용 압박&quot;| B
     CAPEX[&quot;2026.10.19 공시: 미코세라믹스 1,500억 신규 부지 취득&quot;] ==&gt;|&quot;반도체 Heater/ESC 생산능력(CAPA) 대폭 확충&quot;| B
-    GT_LS[&quot;글로벌 트렌드: LS증권 딥리서치&quot;] -. &quot;AI/HBM 선단 팹 인프라 증설 선행 수혜 (p.33~35)&quot; .-&gt; D
-    GT_TAY[&quot;미국 테일러 팹 2나노 부분 양산 돌입&quot;] -. &quot;오스틴 코팅 라인 턴어라운드 직결&quot; .-&gt; E
-    B -. &quot;1단계: 신규 팹 초기 장비 셋업 시 세라믹 히터/ESC 초도 장착(First Install)&quot; .-&gt; D[&quot;글로벌 신규 팹 인프라 (삼성 P4·P5·테일러, 하이닉스 M15X·용인)&quot;]
-    B -. &quot;2단계: 팹 양산 가동 후 부품 마모에 따른 주기적 정밀 세정·특수코팅(Recurring Service)&quot; .-&gt; E[&quot;글로벌 8개국 거점 네트워크 (안성, 오스틴, 신주, 무석 등)&quot;]
+    GT_LS[&quot;글로벌 트렌드: LS증권 딥리서치&quot;] -.-&gt;|&quot;AI/HBM 선단 팹 인프라 증설 선행 수혜 (p.33~35)&quot;| D
+    GT_TAY[&quot;미국 테일러 팹 2나노 부분 양산 돌입&quot;] -.-&gt;|&quot;오스틴 코팅 라인 턴어라운드 직결&quot;| E
+    B -.-&gt;|&quot;1단계: 신규 팹 초기 장비 셋업 시 세라믹 히터/ESC 초도 장착(First Install)&quot;| D[&quot;글로벌 신규 팹 인프라 (삼성 P4·P5·테일러, 하이닉스 M15X·용인)&quot;]
+    B -.-&gt;|&quot;2단계: 팹 양산 가동 후 부품 마모에 따른 주기적 정밀 세정·특수코팅(Recurring Service)&quot;| E[&quot;글로벌 8개국 거점 네트워크 (안성, 오스틴, 신주, 무석 등)&quot;]
     E --&gt;|&quot;부품 수명 3~5배 연장, 파티클 제어 및 공정 수율 극대화&quot;| F[&quot;글로벌 Top-tier 칩 메이커 (Samsung, SK hynix, TSMC, Intel, Micron)&quot;]
     D --&gt;|&quot;양산 램프업 가동 개시&quot;| F
 </code></pre>
@@ -881,18 +887,18 @@ DART 2026년 반기보고서 연결 재무상태표(BS)를 바탕으로, 자산 
 </tbody>
 </table>
 <pre><code class="language-mermaid">graph TD
-    subgraph &quot;1차 촉발 단계 (Macro/Demand Trigger)&quot;
+    subgraph SG_1[&quot;1차 촉발 단계 (Macro/Demand Trigger)&quot;]
         T1[&quot;삼성 테일러 2나노 램프업 지연 또는 전방 팹 가동률 둔화&quot;]
         T2[&quot;고객사 챔버 부품 세정/코팅 단가(ASP) 인하 압박&quot;]
     end
 
-    subgraph &quot;2차 영업 전이 단계 (Operational Domino)&quot;
+    subgraph SG_2[&quot;2차 영업 전이 단계 (Operational Domino)&quot;]
         O1[&quot;오스틴 코팅 가동률 40% 미만 정체 &amp; 안성 가동률 하락&quot;]
         O2[&quot;고정비 디레버리지 (연 700억 감가상각비 부담)&quot;]
         O3[&quot;분기 영업이익 급감 (QoQ -15% 이상 하회)&quot;]
     end
 
-    subgraph &quot;3차 재무·자본 타격 단계 (Financial Impact)&quot;
+    subgraph SG_3[&quot;3차 재무·자본 타격 단계 (Financial Impact)&quot;]
         F1[&quot;순차입금 4,300억 원에 대한 연 200억 이자비용 부담 가중&quot;]
         F2[&quot;FCF 적자 심화 및 CB 210억 전환가액 리픽싱 압박&quot;]
         F3[&quot;멀티플 디레이팅 발생 ➔ Bear 지하실 (9,240원) 회귀&quot;]
@@ -1035,7 +1041,7 @@ DART 2026년 반기보고서 연결 재무상태표(BS)를 바탕으로, 자산 
 </ul>
     <script>
         const SSOT_DATA = {"version": "4.2", "generated_at": "2026-10-22 00:53:12", "stock_code": "183300", "corp_name": "코미코", "anchor_price": 26350, "primary_metric": "PBR", "bench": {"stock_name": "코미코", "close": 23300.0, "bps": 5686.0, "pbr": 4.63, "eps": 623.0, "per": 42.3, "div_yield": 1.08, "dps": 285.0, "market_cap_str": "1조 3,534억"}, "sotp": {"sotp_triggered": false, "book_eq_eok": 2867.06, "mcap_eok": 13286.49, "non_op_assets_eok": 143.5, "recognized_non_op_eok": 100.45, "non_op_haircut": 0.3, "non_op_ratio_book_pct": 5.01, "non_op_ratio_mcap_pct": 1.08, "non_op_max_ratio_pct": 5.01, "core_bps": 5401, "nopat_eok": 757.15, "core_roic_pct": 27.8, "core_profit_sustainable": true, "implied_core_op_ev_eok": 17486.04}, "regime": {"regime_changed": true, "ppe_chg_2y_pct": null, "debt_ratio_chg_2y_pctp": null, "opm_shift_pctp": -6.39, "flags": ["④ 사업구성레짐(OPM 과거중위 21.2% → 현재 14.8%, -6.4%p [본업 마진 훼손/경쟁 심화])", "⑤ 지정 리레이팅 분기점(2023-07-01) 이후 Post-Rerating 멀티플 우선 적용"]}, "section8": {"primary_metric": "PBR", "pbr_min": 1.48, "pbr_max": 9.19, "pbr_r2": 0.58, "pbr_dir": 59.5, "per_min": 10.39, "per_max": 68.96, "per_r2": 0.25, "per_dir": 45.9, "official_pbr": 4.63, "official_per": 42.3, "official_div": 1.08}, "section2": {"is_type_b": false, "verdict": "🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal)]", "controlling_ratio_pct": 52.23, "qoq_eps_positive": false, "qoq_eps_detail": "[액분·무증 소급보정 지배주주 EPS] 2026.1Q 169.2원 → 2026.2Q -45.6원 (적자 전환/지속 🚨)", "qoq_rev_pct": 12.0, "qoq_op_pct": 32.3, "qoq_summary_str": "[2026.1Q → 2026.2Q] 매출액 1,570.6억→1,759.6억(QoQ +12.0%) | 영업이익 204.5억→270.5억(QoQ +32.3%) | 수정EPS 169원→-46원", "kill_switch_guide": "차기 분기 영업이익 < 229.9억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS < 0원 기록 시 핵심 가설 즉시 [약화] 강등", "eps_2y_chg": -23.295740593640836, "bps_2y_chg": 20.16934834264438, "op_yoy_q": -10.323012417179452, "op_yoy_ttm": -11.130150335218634, "op_yoy_used": -10.323012417179452, "op_yoy_detail": "분기(2025.2Q→2026.2Q) -10.3% (301.6억 → 270.5억) | TTM 영업이익 YoY: -11.1%", "curr_roe": 8.028792708095175, "mid_cycle_roe": 14.348520168901196, "mid_cycle_eps": 718.8396364950722, "pbr_cycle_max": 9.187384943114267, "pbr_3y_max": 9.187384943114267, "pbr_3y_mean": 3.570640191007251, "pbr_3y_p20": 2.3445377060654784, "pbr_3y_p65": 3.97544158218075, "pbr_3y_p90": 5.445187022279882, "per_3y_max": 68.95720814269178, "per_3y_mean": 28.90003501468767, "per_3y_p20": 14.834752900922958, "per_3y_p65": 35.73861607591433, "per_3y_p90": 45.50255631411484, "curr_eps_used": 623.0, "curr_bps_used": 5686.0}, "section3": {"is_low_vol_box": false, "nature_badge": "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]", "range_52w_pct": 197.62, "median_52w_range_pct": 177.09, "effective_52w_range": 177.09, "forward_bps": 5686.0, "is_peak_trap": false, "peak_trap_reason": "", "op_mult": 1.0, "sc_base_mult": 1.0, "sc_bull_mult": 1.0, "base_mult_a": 1.0, "bull_mult_a": 1.0, "scurve_info": {"is_phase2": true, "is_early_ignition": true, "theme_name": "DART 선행 발화(Early Ignition: 수주잔고 YoY +30%↑/자기자본 10%↑ 증설 & 본업 마진 방어)", "exposure_pct": 77.6, "source_pdf": "DART 단일판매·공급계약 / 신규시설투자 공시 실측"}, "tp1_price": 31010, "tp1_price_a": 31010, "tp1_upside": 17.69, "tp1_upside_a": 17.69, "bear_auto": 9240, "base_auto": 22430, "bull_auto": 29650, "base_auto_a": 22430, "bull_auto_a": 29650}, "cyclical_guard": {"is_peak_trap": false, "peak_trap_reason": ""}, "risk_causal_chain": {"stage1_trigger": "전방 산업 수요 둔화 / 고객사 재고 조정 또는 경쟁사 단가 인하(ASP 하락)", "stage2_operational": "수주/출하(Q) 둔화 ➔ 고정비(감가상각·인건비) 디레버리지로 영업이익 급감(현재 QoQ +32.3%, YoY -10.3%) 및 재고/매출채권 회전일수 상승", "stage3_financial": "영업현금흐름(OCF) 축소 ➔ 순차입금(+4,300.0억) 이자부담 가중·CB 리픽싱/풋옵션 또는 배당 축소 ➔ 멀티플 하단(Bear) 회귀"}, "section4": {"d_close": 26350, "d_low20": 22500, "poc_low": 30720, "poc_high": 33460, "poc_pct": 30.3, "poc_trail_pin": 29798, "d_ma5": 24640, "d_ma20": 30390, "d_ma60": 26443, "vol_ma20": 498654, "vol_ratio": 1.25, "stoch_k": 10.9, "stoch_d": 12.8, "w_close": 26350, "w_ma10": 28695, "w_ma20": 29916, "w_ma60": 25646, "bb_upper": 44120, "bb_lower": 15712, "w_macd": 148.3, "w_macd_sig": 450.1, "w_macd_hist": -301.8, "w_mfi14": 66.0, "w_rsi14": 47.0, "w_mfi14_12w_max": 72.4, "buy1": 17940, "buy2": 19070, "buy3": 20190, "avg_buy_price": 19067, "init_stop_pin": 17040, "breakout_trail_pin": 29798, "gate1_rr": 0.0, "exec_rr": 1.66, "is_overvalued": true, "is_track2": false}, "reverse_dcf": {"status": "deficit", "price": 26350.0, "fcf_eok": -1755.0, "norm_fcf_eok": 750.0, "distb_shares": 50423130, "total_shares": 51363275, "treasury_shares": 940145, "wacc": 0.09, "terminal_g": 0.02, "years": 5, "net_debt_eok": 4300.0, "pref_mcap_eok": 0.0, "market_cap_distb_eok": 13286.49, "market_cap_total_eok": 13534.22, "ev_distb_eok": 17586.49, "non_op_assets_eok": 143.5, "non_op_haircut": 0.3, "recognized_non_op_eok": 100.45, "non_op_ratio_mcap_pct": 1.08, "non_op_ratio_book_pct": 5.01, "sotp_triggered": false, "core_op_ev_eok": 17486.04, "implied_g_distb_pct": null, "implied_g_total_pct": null, "implied_g_ev_pct": null, "implied_g_core_ev_pct": null, "norm_g_distb_pct": 6.6, "norm_g_ev_pct": 13.45, "norm_g_core_ev_pct": null}, "canonical_html_tag": "<div id=\"dcf-calculator-root\" data-price=\"26350\" data-shares=\"50423130\" data-total-shares=\"51363275\" data-fcf=\"-1755.0\" data-net-debt=\"4300.0\" data-non-op-assets=\"100.5\" data-bear=\"9240\" data-base=\"22430\" data-bull=\"29650\" data-base-a=\"22430\" data-bull-a=\"29650\" data-tp1=\"31010\" data-tp1-a=\"31010\" data-buy1=\"17940\" data-buy2=\"19070\" data-buy3=\"20190\" data-stop-pin=\"17040\" data-poc-low=\"30720\"></div>"};
-        // Replace mermaid code blocks with div class="mermaid"
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -1045,6 +1051,24 @@ DART 2026년 반기보고서 연결 재무상태표(BS)를 바탕으로, 자산 
                 div.textContent = block.textContent;
                 parent.parentNode.replaceChild(div, parent);
             });
+            
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
             
             // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");

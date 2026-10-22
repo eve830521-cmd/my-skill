@@ -396,7 +396,13 @@ p > em {
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -576,7 +582,7 @@ p > em {
 3. <strong>결론</strong>: 가동률 57.8% 회복으로 손익분기점을 이미 넘어섰으며, 고정비 레버리지와 전장 믹스 개선에 따라 <strong>2026F 영업흑자 안착 $\rightarrow$ 2027F 순이익 800억~900억 원대로 정상화되는 정통 턴어라운드 가치주</strong>로서 실적화 신뢰도는 매우 높게 평가됩니다.</p>
     <script>
         const SSOT_DATA = {"version": "4.2", "generated_at": "2026-10-21 18:19:09", "stock_code": "131970", "corp_name": "두산테스나", "anchor_price": 111600, "primary_metric": "PBR", "bench": {"stock_name": "두산테스나", "close": 102400.0, "bps": 23439.0, "pbr": 4.77, "eps": 1771.0, "per": 63.07, "div_yield": 0.14, "dps": 160.0, "market_cap_str": "2조 1,589억"}, "sotp": {"sotp_triggered": false, "book_eq_eok": 4510.98, "mcap_eok": 21478.12, "non_op_assets_eok": 364.0, "recognized_non_op_eok": 254.8, "non_op_haircut": 0.3, "non_op_ratio_book_pct": 8.07, "non_op_ratio_mcap_pct": 1.69, "non_op_max_ratio_pct": 8.07, "core_bps": 21548, "nopat_eok": 278.03, "core_roic_pct": 6.7, "core_profit_sustainable": false, "implied_core_op_ev_eok": 22021.32}, "regime": {"regime_changed": true, "ppe_chg_2y_pct": null, "debt_ratio_chg_2y_pctp": null, "opm_shift_pctp": -12.06, "flags": ["④ 사업구성레짐(OPM 과거중위 23.0% → 현재 10.9%, -12.1%p [본업 마진 훼손/경쟁 심화])"]}, "section8": {"primary_metric": "PBR", "pbr_min": 1.01, "pbr_max": 7.72, "pbr_r2": 0.44, "pbr_dir": 59.0, "per_min": 8.2, "per_max": 139.47, "per_r2": 0.16, "per_dir": 59.0, "official_pbr": 4.76, "official_per": 63.02, "official_div": 0.14}, "section2": {"is_type_b": true, "verdict": "🔴 [유형 B: 구조적 버블 붕괴 가치함정 (Structural Value Trap)]", "controlling_ratio_pct": 100.0, "qoq_eps_positive": false, "qoq_eps_detail": "[액분·무증 소급보정 지배주주 EPS] 2026.1Q 439.0원 → 2026.2Q 366.0원 (흑자 지속(소폭조정) 🟢)", "qoq_rev_pct": 5.3, "qoq_op_pct": 79.6, "qoq_summary_str": "[2026.1Q → 2026.2Q] 매출액 768.3억→809.3억(QoQ +5.3%) | 영업이익 54.8억→98.5억(QoQ +79.6%) | 수정EPS 439원→366원", "kill_switch_guide": "차기 분기 영업이익 < 83.7억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS < 293원 기록 시 핵심 가설 즉시 [약화] 강등", "eps_2y_chg": -43.289767293592604, "bps_2y_chg": 4.753174873220825, "op_yoy_q": 100.0, "op_yoy_ttm": 414.0653593498301, "op_yoy_used": 100.0, "op_yoy_detail": "분기(2025.2Q→2026.2Q) +100.0% (-21.2억 → 98.5억) | TTM 영업이익 YoY: +414.1%", "curr_roe": 7.588003778809716, "mid_cycle_roe": 12.8562227345639, "mid_cycle_eps": 2831.0, "pbr_cycle_max": 7.723357748659835, "pbr_3y_max": 7.723357748659835, "pbr_3y_mean": 2.46282642514275, "pbr_3y_p20": 1.2983157145248534, "pbr_3y_p65": 2.574209068603606, "pbr_3y_p90": 4.236679529649758, "per_3y_max": 182.8714796411989, "per_3y_mean": 38.701453511401816, "per_3y_p20": 13.930260255064226, "per_3y_p65": 19.52467399116934, "per_3y_p90": 90.36651500887393, "curr_eps_used": 1771.0, "curr_bps_used": 23439.0}, "section3": {"is_low_vol_box": false, "nature_badge": "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]", "range_52w_pct": 334.19, "median_52w_range_pct": 127.15, "effective_52w_range": 127.15, "forward_bps": 23439.0, "is_peak_trap": false, "peak_trap_reason": "", "op_mult": 1.0, "sc_base_mult": 1.0, "sc_bull_mult": 1.0, "base_mult_a": 1.0, "bull_mult_a": 1.0, "scurve_info": {"is_phase2": true, "is_early_ignition": false, "theme_name": "차량용·온디바이스 AI SoC 웨이퍼 테스트 (Phase 2 스위트스팟)", "exposure_pct": 35.0, "source_pdf": "26.08.28_신한_생성형AI와 온디바이스AI.pdf"}, "tp1_price": 118300, "tp1_price_a": 118300, "tp1_upside": 6.0, "tp1_upside_a": 6.0, "bear_auto": 17580, "base_auto": 47460, "bull_auto": 129670, "base_auto_a": 47460, "bull_auto_a": 129670}, "cyclical_guard": {"is_peak_trap": false, "peak_trap_reason": ""}, "risk_causal_chain": {"stage1_trigger": "전방 산업 수요 둔화 / 고객사 재고 조정 또는 경쟁사 단가 인하(ASP 하락)", "stage2_operational": "수주/출하(Q) 둔화 ➔ 고정비(감가상각·인건비) 디레버리지로 영업이익 급감(현재 QoQ +79.6%, YoY +100.0%) 및 재고/매출채권 회전일수 상승", "stage3_financial": "영업현금흐름(OCF) 축소 ➔ 순차입금(+798.0억) 이자부담 가중·CB 리픽싱/풋옵션 또는 배당 축소 ➔ 멀티플 하단(Bear) 회귀"}, "section4": {"d_close": 111600, "d_low20": 81800, "poc_low": 115340, "poc_high": 126520, "poc_pct": 35.4, "poc_trail_pin": 111880, "d_ma5": 110740, "d_ma20": 108025, "d_ma60": 86697, "vol_ma20": 529066, "vol_ratio": 1.23, "stoch_k": 37.2, "stoch_d": 59.0, "w_close": 111600, "w_ma10": 95490, "w_ma20": 98125, "w_ma60": 82075, "bb_upper": 151621, "bb_lower": 44629, "w_macd": 2750.5, "w_macd_sig": 325.1, "w_macd_hist": 2425.4, "w_mfi14": 50.8, "w_rsi14": 54.9, "w_mfi14_12w_max": 61.6, "buy1": 37970, "buy2": 40340, "buy3": 42710, "avg_buy_price": 40340, "init_stop_pin": 36070, "breakout_trail_pin": 111880, "gate1_rr": 0.0, "exec_rr": 1.67, "is_overvalued": true, "is_track2": false}, "reverse_dcf": {"status": "success", "price": 111600.0, "fcf_eok": 150.0, "norm_fcf_eok": null, "distb_shares": 19245628, "total_shares": 19327238, "treasury_shares": 81610, "wacc": 0.09, "terminal_g": 0.02, "years": 5, "net_debt_eok": 798.0, "pref_mcap_eok": 0.0, "market_cap_distb_eok": 21478.12, "market_cap_total_eok": 21569.2, "ev_distb_eok": 22276.12, "non_op_assets_eok": 364.0, "non_op_haircut": 0.3, "recognized_non_op_eok": 254.8, "non_op_ratio_mcap_pct": 1.69, "non_op_ratio_book_pct": 8.07, "sotp_triggered": false, "core_op_ev_eok": 22021.32, "implied_g_distb_pct": 66.7, "implied_g_total_pct": 66.84, "implied_g_ev_pct": 67.96, "implied_g_core_ev_pct": null, "norm_g_distb_pct": null, "norm_g_ev_pct": null, "norm_g_core_ev_pct": null}, "canonical_html_tag": "<div id=\"dcf-calculator-root\" data-price=\"111600\" data-shares=\"19245628\" data-total-shares=\"19327238\" data-fcf=\"150.0\" data-net-debt=\"798.0\" data-non-op-assets=\"254.8\" data-bear=\"17580\" data-base=\"47460\" data-bull=\"129670\" data-base-a=\"47460\" data-bull-a=\"129670\" data-tp1=\"118300\" data-tp1-a=\"118300\" data-buy1=\"37970\" data-buy2=\"40340\" data-buy3=\"42710\" data-stop-pin=\"36070\" data-poc-low=\"115340\"></div>"};
-        // Replace mermaid code blocks with div class="mermaid"
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -586,6 +592,24 @@ p > em {
                 div.textContent = block.textContent;
                 parent.parentNode.replaceChild(div, parent);
             });
+            
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
             
             // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");

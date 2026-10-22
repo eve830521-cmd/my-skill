@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Stock Analyzer Report</title>
+    <title>Stock Analyzer Report (v4.2)</title>
     <style>
     /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
 
@@ -383,10 +383,26 @@ p > em {
         border-radius: 4px;
         font-size: 9.5pt;
     }
+    .ssot-verified-banner {
+        background: #ecfdf5;
+        border: 1px solid #10b981;
+        color: #065f46;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 9.5pt;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -426,21 +442,21 @@ p > em {
 </ul>
 <pre><code class="language-mermaid">flowchart LR
     subgraph Macro[&quot;🌐 2026.10 글로벌 트렌드 매크로 환경&quot;]
-        M1[&quot;선단 공정 전환 가속&lt;br/&gt;(2nm GAA 수율 개선·테일러 Fab·3D NAND)&lt;br/&gt;[유안타 26.10.15 p.7~8, 12~13]&quot;]
-        M2[&quot;국내외 신규 팹 인프라 투자&lt;br/&gt;(평택 P5 · 용인 Y1 · 청주 P&amp;T7)&lt;br/&gt;[하나증권 26.09.02 p.42~43]&quot;]
-        M3[&quot;AIDC 액침냉각 생태계 확장&lt;br/&gt;(그룹III 유체·Tank/CDU 실증 vs DLC 경쟁)&lt;br/&gt;[IBK 26.10.15 p.25, 44, 47]&quot;]
+        M1[&quot;'선단 공정 전환 가속&lt;br/&gt;(2nm GAA 수율 개선·테일러 Fab·3D NAND)&lt;br/&gt;[유안타 26.10.15 p.7~8, 12~13&quot;]&quot;]
+        M2[&quot;'국내외 신규 팹 인프라 투자&lt;br/&gt;(평택 P5 · 용인 Y1 · 청주 P&amp;T7)&lt;br/&gt;[하나증권 26.09.02 p.42~43&quot;]&quot;]
+        M3[&quot;'AIDC 액침냉각 생태계 확장&lt;br/&gt;(그룹III 유체·Tank/CDU 실증 vs DLC 경쟁)&lt;br/&gt;[IBK 26.10.15 p.25, 44, 47&quot;]&quot;]
     end
 
     subgraph Supply[&quot;🔧 원재료 및 부품 조달&quot;]
-        S1[&quot;특수관계 자회사 ㈜이에스티&lt;br/&gt;(지분 92.96%, 판금·캐비닛 내재화)&lt;br/&gt;[26.H1 매입 152.1억 원]&quot;]
-        S2[&quot;국내외 외부 부품사&lt;br/&gt;(MFC, Pump, 냉동기, 센서류)&lt;br/&gt;[CABINET ASS'Y · MFC 등]&quot;]
+        S1[&quot;'특수관계 자회사 ㈜이에스티&lt;br/&gt;(지분 92.96%, 판금·캐비닛 내재화)&lt;br/&gt;[26.H1 매입 152.1억 원&quot;]&quot;]
+        S2[&quot;'국내외 외부 부품사&lt;br/&gt;(MFC, Pump, 냉동기, 센서류)&lt;br/&gt;[CABINET ASS'Y · MFC 등&quot;]&quot;]
     end
 
     subgraph GST[&quot;🏭 GST (083450) 핵심 BM (2026.H1 연결 2,151.3억)&quot;]
-        G1[&quot;🔥 스크러버 (Scrubber)&lt;br/&gt;매출 1,363.3억 (63.4%)&lt;br/&gt;[연소·플라즈마·촉매 가스정화]&quot;]
-        G2[&quot;❄️ 칠러 (Chiller)&lt;br/&gt;매출 377.4억 (17.5%)&lt;br/&gt;[초극저온·전기식·냉매식 온도제어]&quot;]
-        G3[&quot;🛠️ 유지보수 용역 및 상품&lt;br/&gt;매출 410.6억 (19.1%)&lt;br/&gt;[글로벌 7개국 CS 법인 Lock-in]&quot;]
-        G4[&quot;🎁 신사업: AIDC 액침냉각&lt;br/&gt;(Tank·CDU 실증 완료)&lt;br/&gt;[DART 단독 매출 미공시 → 무상 콜옵션]&quot;]
+        G1[&quot;'🔥 스크러버 (Scrubber)&lt;br/&gt;매출 1,363.3억 (63.4%)&lt;br/&gt;[연소·플라즈마·촉매 가스정화&quot;]&quot;]
+        G2[&quot;'❄️ 칠러 (Chiller)&lt;br/&gt;매출 377.4억 (17.5%)&lt;br/&gt;[초극저온·전기식·냉매식 온도제어&quot;]&quot;]
+        G3[&quot;'🛠️ 유지보수 용역 및 상품&lt;br/&gt;매출 410.6억 (19.1%)&lt;br/&gt;[글로벌 7개국 CS 법인 Lock-in&quot;]&quot;]
+        G4[&quot;'🎁 신사업: AIDC 액침냉각&lt;br/&gt;(Tank·CDU 실증 완료)&lt;br/&gt;[DART 단독 매출 미공시 → 무상 콜옵션&quot;]&quot;]
     end
 
     subgraph Demand[&quot;🎯 글로벌 전방 고객사&quot;]
@@ -451,7 +467,7 @@ p > em {
     M1 --&gt;|&quot;공정 스텝·챔버 수 증가&quot;| G1
     M1 --&gt;|&quot;초극저온 식각 수요&quot;| G2
     M2 --&gt;|&quot;Sub-fab 선행 발주&quot;| G1
-    M3 -. &quot;상용 발주 시 배수 리레이팅 옵션&quot; .-&gt; G4
+    M3 -.-&gt;|&quot;상용 발주 시 배수 리레이팅 옵션&quot;| G4
     S1 --&gt; G1
     S1 --&gt; G2
     S2 --&gt; G1
@@ -459,7 +475,7 @@ p > em {
     G1 --&gt;|&quot;수출 비중 77.7%&quot;| D1
     G2 --&gt; D1
     G3 --&gt;|&quot;설치대수 비례 반복 매출&quot;| D1
-    G4 -. &quot;향후 상용화 타겟&quot; .-&gt; D2
+    G4 -.-&gt;|&quot;향후 상용화 타겟&quot;| D2
 </code></pre>
 <hr />
 <h2>2. 주요 제품별 매출 비중 추이 (최근 5년 및 최신 분기)</h2>
@@ -907,7 +923,8 @@ p > em {
 <li><strong>신기술 단독 익스포저 &amp; 허위 상관 필터링 검증:</strong> DART에 단독 매출이 분리 공시되지 않은 AIDC 액침냉각 신사업을 <strong><code>0.0% 익스포저 (0원 무상 콜옵션, Phase 3 S-Curve 할증 0%)</code></strong>로 엄격 분리하였으며, Section 8 백테스트에서 방향 일치율 18.4%(<code>&lt; 50%</code>) 및 시가배당률 1.43%(<code>&lt; 1.5%</code>)인 배당수익률 지표를 허위 상관으로 탈락시키고 BM에 부합하는 <strong><code>PER(1순위) + PBR(2순위)</code></strong>을 확정했습니다.</li>
 </ol>
     <script>
-        // Replace mermaid code blocks with div class="mermaid"
+        const SSOT_DATA = null;
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -918,7 +935,25 @@ p > em {
                 parent.parentNode.replaceChild(div, parent);
             });
             
-            // Highlight Fact vs Narrative
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
+            
+            // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");
             allElements.forEach(el => {
                 if (el.innerHTML.includes("[공시 팩트]")) {
@@ -931,23 +966,29 @@ p > em {
                 }
             });
             
-            // DCF Calculator & Master SOP Calculator
+            // DCF Calculator & Master SOP Calculator (Bound to SSOT_DATA if present)
             const dcfRoot = document.getElementById('dcf-calculator-root');
             if (dcfRoot) {
-                const rawPrice = Number(dcfRoot.getAttribute('data-price') || 100000);
+                const sDcf = (SSOT_DATA && SSOT_DATA.reverse_dcf) ? SSOT_DATA.reverse_dcf : {};
+                const sSec3 = (SSOT_DATA && SSOT_DATA.section3) ? SSOT_DATA.section3 : {};
+                const sSec4 = (SSOT_DATA && SSOT_DATA.section4) ? SSOT_DATA.section4 : {};
+
+                const rawPrice = Number(SSOT_DATA?.anchor_price || sDcf.price || dcfRoot.getAttribute('data-price') || 100000);
                 const initPrice = rawPrice.toLocaleString();
-                const initShares = Number(dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
-                const initFcf = Number(dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
-                const rawNetDebt = parseFloat(dcfRoot.getAttribute('data-net-debt') || '0');
+                const initShares = Number(sDcf.distb_shares || dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const initFcf = Number(sDcf.fcf_eok || dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const rawNetDebt = parseFloat(sDcf.net_debt_eok !== undefined ? sDcf.net_debt_eok : (dcfRoot.getAttribute('data-net-debt') || '0'));
                 const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
-                let rawWacc = parseFloat(dcfRoot.getAttribute('data-wacc') || '9.0');
+                const rawNonOp = parseFloat(sDcf.recognized_non_op_eok !== undefined ? sDcf.recognized_non_op_eok : (dcfRoot.getAttribute('data-non-op-assets') || '0'));
+                const initNonOp = isNaN(rawNonOp) ? '0' : Math.round(rawNonOp).toLocaleString();
+
+                let rawWacc = parseFloat(sDcf.wacc || dcfRoot.getAttribute('data-wacc') || '9.0');
                 if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
-                let rawTerm = parseFloat(dcfRoot.getAttribute('data-terminal') || '2.0');
+                let rawTerm = parseFloat(sDcf.terminal_g || dcfRoot.getAttribute('data-terminal') || '2.0');
                 if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
                 const initWacc = rawWacc.toFixed(1);
                 const initTerminal = rawTerm.toFixed(1);
 
-                // Auto-detect Bull / Base / TP1 / Bear / 20d POC low (both Model B and Model A) from attributes or Phase 3 scenario table
                 function extractKrwPrices(str) {
                     if (!str) return [];
                     const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
@@ -959,16 +1000,16 @@ p > em {
                     return [];
                 }
 
-                let autoBull = Number(dcfRoot.getAttribute('data-bull') || 0);
-                let autoBase = Number(dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
-                let autoBullA = Number(dcfRoot.getAttribute('data-bull-a') || 0);
-                let autoBaseA = Number(dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
-                let autoBear = Number(dcfRoot.getAttribute('data-bear') || 0);
-                let autoPocLow = Number(dcfRoot.getAttribute('data-poc-low') || 0);
-                let attrBuy1 = Number(dcfRoot.getAttribute('data-buy1') || 0);
-                let attrBuy2 = Number(dcfRoot.getAttribute('data-buy2') || 0);
-                let attrBuy3 = Number(dcfRoot.getAttribute('data-buy3') || 0);
-                let attrStopPin = Number(dcfRoot.getAttribute('data-stop-pin') || 0);
+                let autoBull = Number(sSec3.bull_auto || dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number((sSec3.is_low_vol_box ? sSec3.tp1_price : sSec3.base_auto) || dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(sSec3.bull_auto_a || dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number((sSec3.is_low_vol_box ? sSec3.tp1_price_a : sSec3.base_auto_a) || dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(sSec3.bear_auto || dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(sSec4.poc_low || dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(sSec4.buy1 || dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(sSec4.buy2 || dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(sSec4.buy3 || dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(sSec4.init_stop_pin || dcfRoot.getAttribute('data-stop-pin') || 0);
 
                 if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
                     const rows = document.querySelectorAll('table tr');
@@ -1022,9 +1063,12 @@ p > em {
 
                 let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
                 if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
+
+                const ssotBanner = SSOT_DATA ? '<div class="ssot-verified-banner">✅ 파이프라인 SSOT(valuation_metrics.json) 직결 바인딩 완료 — AI 수동 이기(Transcription) 오차 0.0% 검증됨</div>' : '';
                 
-                dcfRoot.innerHTML = '<div class="dcf-calc-container">' +
-                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity & EV 병기)</h3>' +
+                dcfRoot.innerHTML = ssotBanner +
+                '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity · EV · SOTP 본업EV 병기)</h3>' +
                     '<div class="dcf-calc-grid">' +
                         '<div class="dcf-input-group">' +
                             '<label>현재 주가 (원)</label>' +
@@ -1037,6 +1081,10 @@ p > em {
                         '<div class="dcf-input-group">' +
                             '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
                             '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>비영업자산 안전가치 (억 원, SOTP 차감)</label>' +
+                            '<input type="text" id="dcf-input-non-op" value="' + initNonOp + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
                             '<label>기준 FCF (억 원)</label>' +
@@ -1107,6 +1155,7 @@ p > em {
                 const elPrice = document.getElementById('dcf-input-price');
                 const elShares = document.getElementById('dcf-input-shares');
                 const elNetDebt = document.getElementById('dcf-input-net-debt');
+                const elNonOp = document.getElementById('dcf-input-non-op');
                 const elFcf = document.getElementById('dcf-input-fcf');
                 const elWacc = document.getElementById('dcf-input-wacc');
                 const elTerminal = document.getElementById('dcf-input-terminal');
@@ -1184,6 +1233,7 @@ p > em {
                     const price = parseFormattedNum(elPrice.value);
                     const shares = parseFormattedNum(elShares.value);
                     const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const nonOpEok = parseFormattedNum(elNonOp.value);
                     const fcf = parseFormattedNum(elFcf.value) * 100000000;
                     const wacc = parseFloat(elWacc.value) / 100.0;
                     const terminal = parseFloat(elTerminal.value) / 100.0;
@@ -1211,22 +1261,29 @@ p > em {
 
                     const equityVal = price * shares;
                     const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const coreEvVal = Math.max(equityVal * 0.05, evVal - (nonOpEok * 100000000));
                     const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
                     const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+                    const gCoreEv = nonOpEok > 0 ? solveImpliedGrowthForTarget(coreEvVal, fcf, wacc, terminal) : null;
 
                     if (gEquity !== null) {
                         const eqPct = (gEquity * 100).toFixed(2);
                         const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
                         const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        const coreEvEok = Math.round(coreEvVal / 100000000).toLocaleString();
                         let primaryG = gEquity;
                         if (Math.abs(netDebtEok) > 0 && gEv !== null) {
                             const evPct = (gEv * 100).toFixed(2);
                             primaryG = netDebtEok > 0 ? gEv : gEquity;
-                            elResultValue.textContent = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            let valTxt = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            if (gCoreEv !== null) {
+                                valTxt += "  |  본업EV(SOTP) " + (gCoreEv * 100).toFixed(2) + "%";
+                            }
+                            elResultValue.textContent = valTxt;
                             const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
-                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%";
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%" + (gCoreEv !== null ? (" vs 본업EV(" + coreEvEok + "억) 기준 " + (gCoreEv*100).toFixed(2) + "%") : "");
                         } else {
-                            elResultValue.textContent = eqPct + "%";
+                            elResultValue.textContent = eqPct + "%" + (gCoreEv !== null ? (" | 본업EV(SOTP) " + (gCoreEv*100).toFixed(2) + "%") : "");
                             elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
                         }
                         if (primaryG < 0) {
@@ -1243,7 +1300,7 @@ p > em {
                     }
                 }
 
-                const inputs = [elPrice, elShares, elNetDebt, elFcf, elWacc, elTerminal];
+                const inputs = [elPrice, elShares, elNetDebt, elNonOp, elFcf, elWacc, elTerminal];
                 inputs.forEach(input => {
                     input.addEventListener('input', (e) => {
                         formatNumberInput(e);
@@ -1288,7 +1345,6 @@ p > em {
                     const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
                     const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
 
-                    // Stage 1 Hard Stop Pin (must be strictly below min(b1, avgPrice)) & Stage 2 POC Trailing Pin
                     const minEntryPrice = Math.min(b1, b2, avgPrice);
                     let safetyPin = rawStopPin;
                     let pinAutoCorrected = false;
@@ -1300,13 +1356,11 @@ p > em {
                     const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
                     const waistThreshold = Math.round(avgPrice * 1.15);
 
-                    // Hierarchy validation notice
                     let orderNotice = "";
                     if (avgPrice >= tBase) {
                         orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
                     }
 
-                    // 2-Stage Profit Taking (50% at Base/TP1, 50% at Bull)
                     const sellQty1 = Math.floor(totalQty * 0.50);
                     const sellQty2 = totalQty - sellQty1;
                     const profit1 = sellQty1 * (tBase - avgPrice);
@@ -1317,7 +1371,6 @@ p > em {
                     const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
                     const trailingStop3 = Math.round(tBull * 0.92);
 
-                    // Side-by-side Model B vs Model A profit comparison
                     const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
                     const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
                     const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));

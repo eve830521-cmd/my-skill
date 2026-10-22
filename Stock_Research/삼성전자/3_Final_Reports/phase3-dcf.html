@@ -396,7 +396,13 @@ p > em {
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
     </script>
 </head>
 <body>
@@ -738,7 +744,7 @@ p > em {
 </code></pre>
     <script>
         const SSOT_DATA = {"version": "4.2", "generated_at": "2026-10-21 21:33:14", "stock_code": "005930", "corp_name": "삼성전자", "anchor_price": 223500, "primary_metric": "PER", "bench": {"stock_name": "삼성전자", "close": 211500.0, "bps": 86052.0, "pbr": 2.6, "eps": 22292.0, "per": 10.03, "div_yield": 0.75, "dps": 1668.0, "market_cap_str": "1,306조 6,433억"}, "sotp": {"sotp_triggered": false, "book_eq_eok": 4913183.26, "mcap_eok": 12760847.62, "non_op_assets_eok": 538413.0, "recognized_non_op_eok": 376889.1, "non_op_haircut": 0.3, "non_op_ratio_book_pct": 10.96, "non_op_ratio_mcap_pct": 4.22, "non_op_max_ratio_pct": 10.96, "core_bps": 76622, "nopat_eok": 1395926.46, "core_roic_pct": 31.91, "core_profit_sustainable": true, "implied_core_op_ev_eok": 10708515.52}, "regime": {"regime_changed": true, "ppe_chg_2y_pct": null, "debt_ratio_chg_2y_pctp": null, "opm_shift_pctp": 21.68, "flags": ["④ 사업구성레짐(OPM 과거중위 15.2% → 현재 36.9%, +21.7%p [고마진 신사업 믹스 개선])"]}, "section8": {"primary_metric": "PER", "pbr_min": 0.88, "pbr_max": 4.82, "pbr_r2": 0.54, "pbr_dir": 46.2, "per_min": 5.29, "per_max": 119.95, "per_r2": 0.72, "per_dir": 53.8, "official_pbr": 2.6, "official_per": 10.03, "official_div": 0.75}, "section2": {"is_type_b": false, "verdict": "🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal)]", "controlling_ratio_pct": 99.3, "qoq_eps_positive": true, "qoq_eps_detail": "[액분·무증 소급보정 지배주주 EPS] 2026.1Q 7,123.0원 → 2026.2Q 10,827.0원 (QoQ 반등/흑자유지 ✅)", "qoq_rev_pct": 28.1, "qoq_op_pct": 56.4, "qoq_summary_str": "[2026.1Q → 2026.2Q] 매출액 1,338,734.4억→1,714,994.7억(QoQ +28.1%) | 영업이익 572,328.0억→894,924.1억(QoQ +56.4%) | 수정EPS 7,123원→10,827원", "kill_switch_guide": "차기 분기 영업이익 < 760,685.5억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS < 8,662원 기록 시 핵심 가설 즉시 [약화] 강등", "eps_2y_chg": 453.0677096064532, "bps_2y_chg": 51.04808082564875, "op_yoy_q": 1813.8434796667361, "op_yoy_ttm": 561.9161278174535, "op_yoy_used": 1813.8434796667361, "op_yoy_detail": "분기(2025.2Q→2026.2Q) +1813.8% (46,760.6억 → 894,924.1억) | TTM 영업이익 YoY: +561.9%", "curr_roe": 25.83577992921354, "mid_cycle_roe": 10.029883955329545, "mid_cycle_eps": 5203.5, "pbr_cycle_max": 4.816513781116516, "pbr_3y_max": 4.816513781116516, "pbr_3y_mean": 1.759153420381043, "pbr_3y_p20": 0.9915540250368412, "pbr_3y_p65": 1.5087252491816436, "pbr_3y_p90": 3.3369794396909405, "per_3y_max": 119.9529554676312, "per_3y_mean": 40.26883944396293, "per_3y_p20": 16.847922044612822, "per_3y_p65": 38.21854420067954, "per_3y_p90": 82.01788522188882, "curr_eps_used": 22292.0, "curr_bps_used": 86052.0}, "section3": {"is_low_vol_box": false, "nature_badge": "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]", "range_52w_pct": 273.42, "median_52w_range_pct": 96.85, "effective_52w_range": 96.85, "forward_bps": 86052.0, "is_peak_trap": true, "peak_trap_reason": "현재/추정 EPS(22,292원) ≥ 5년 Mid-Cycle 중위 EPS(5,204원) × 1.35배", "op_mult": 1.0, "sc_base_mult": 1.1, "sc_bull_mult": 1.12, "base_mult_a": 1.1, "bull_mult_a": 1.12, "scurve_info": {"is_phase2": true, "is_early_ignition": false, "theme_name": "AI HBM3E/HBM4 및 선단 메모리 턴어라운드 (Phase 2 스위트스팟)", "exposure_pct": 64.1, "source_pdf": "26.09.16.IM증권.소나기 피할 반도체.pdf"}, "tp1_price": 273500, "tp1_price_a": 273500, "tp1_upside": 22.37, "tp1_upside_a": 22.37, "bear_auto": 85330, "base_auto": 185400, "bull_auto": 637340, "base_auto_a": 203940, "bull_auto_a": 713820}, "cyclical_guard": {"is_peak_trap": true, "peak_trap_reason": "현재/추정 EPS(22,292원) ≥ 5년 Mid-Cycle 중위 EPS(5,204원) × 1.35배"}, "risk_causal_chain": {"stage1_trigger": "전방 산업 수요 둔화 / 고객사 재고 조정 또는 경쟁사 단가 인하(ASP 하락)", "stage2_operational": "수주/출하(Q) 둔화 ➔ 고정비(감가상각·인건비) 디레버리지로 영업이익 급감(현재 QoQ +56.4%, YoY +1813.8%) 및 재고/매출채권 회전일수 상승", "stage3_financial": "영업현금흐름(OCF) 둔화 ➔ 순현금(1,675,443.0억) 버퍼 소진 및 S-Curve/성장 멀티플 프리미엄 박탈 ➔ PBR/배당 하단 지지선 테스트"}, "section4": {"d_close": 223500, "d_low20": 204500, "poc_low": 270100, "poc_high": 286500, "poc_pct": 44.9, "poc_trail_pin": 261997, "d_ma5": 216100, "d_ma20": 253450, "d_ma60": 253083, "vol_ma20": 18899910, "vol_ratio": 0.88, "stoch_k": 15.4, "stoch_d": 12.1, "w_close": 223500, "w_ma10": 257950, "w_ma20": 273125, "w_ma60": 197348, "bb_upper": 344981, "bb_lower": 201269, "w_macd": 3523.3, "w_macd_sig": 13223.1, "w_macd_hist": -9699.8, "w_mfi14": 28.6, "w_rsi14": 43.8, "w_mfi14_12w_max": 43.9, "buy1": 148320, "buy2": 157590, "buy3": 166860, "avg_buy_price": 157590, "init_stop_pin": 140900, "breakout_trail_pin": 261997, "gate1_rr": 0.0, "exec_rr": 1.67, "is_overvalued": true, "is_track2": false}, "reverse_dcf": {"status": "success", "price": 223500.0, "fcf_eok": 2282408.0, "norm_fcf_eok": 1800000.0, "distb_shares": 5709551509, "total_shares": 5846278608, "treasury_shares": 136727099, "wacc": 0.09, "terminal_g": 0.02, "years": 5, "net_debt_eok": -1675443.0, "pref_mcap_eok": 0.0, "market_cap_distb_eok": 12760847.62, "market_cap_total_eok": 13066432.69, "ev_distb_eok": 11085404.62, "non_op_assets_eok": 538413.0, "non_op_haircut": 0.3, "recognized_non_op_eok": 376889.1, "non_op_ratio_mcap_pct": 4.22, "non_op_ratio_book_pct": 9.53, "sotp_triggered": false, "core_op_ev_eok": 10708515.52, "implied_g_distb_pct": -18.81, "implied_g_total_pct": -18.33, "implied_g_ev_pct": -21.67, "implied_g_core_ev_pct": null, "norm_g_distb_pct": -13.89, "norm_g_ev_pct": -16.82, "norm_g_core_ev_pct": null}, "canonical_html_tag": "<div id=\"dcf-calculator-root\" data-price=\"223500\" data-shares=\"5709551509\" data-total-shares=\"5846278608\" data-fcf=\"2282408.0\" data-net-debt=\"-1675443.0\" data-non-op-assets=\"376889.1\" data-bear=\"85330\" data-base=\"185400\" data-bull=\"637340\" data-base-a=\"203940\" data-bull-a=\"713820\" data-tp1=\"273500\" data-tp1-a=\"273500\" data-buy1=\"148320\" data-buy2=\"157590\" data-buy3=\"166860\" data-stop-pin=\"140900\" data-poc-low=\"270100\"></div>"};
-        // Replace mermaid code blocks with div class="mermaid"
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
         document.addEventListener("DOMContentLoaded", function() {
             const blocks = document.querySelectorAll("code.language-mermaid");
             blocks.forEach(block => {
@@ -748,6 +754,24 @@ p > em {
                 div.textContent = block.textContent;
                 parent.parentNode.replaceChild(div, parent);
             });
+            
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
             
             // Highlight Fact vs Narrative & Falsification Kill-Switch
             const allElements = document.querySelectorAll("p, li, blockquote, td");
