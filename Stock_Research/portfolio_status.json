@@ -1,0 +1,76 @@
+{
+  "updated_at": "2026-10-23T15:05:06.661127",
+  "description": "Korean Stock Analyzer Portfolio Tracking SSOT (holding vs watchlist)",
+  "items": {
+    "GST": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "JW생명과학": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "LG생활건강": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "NAVER": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "두산테스나": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "리노공업": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "매커스": {
+      "status": "watchlist",
+      "status_changed_at": "2026-10-23T15:05:06.661127",
+      "last_updated": "2026-10-20"
+    },
+    "삼성전자": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "이노션": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "코미코": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "티씨케이": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "하나머티리얼즈": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "하이록코리아": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    },
+    "헥토이노베이션": {
+      "status": "holding",
+      "status_changed_at": "2026-10-22T00:00:00",
+      "last_updated": "2026-10-22"
+    }
+  }
+}

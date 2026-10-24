@@ -186,9 +186,12 @@ def analyze_reverse_dcf(
 
 def update_ssot_json(json_path, dcf_res):
     """
-    Writes or merges Reverse DCF calculation output into the Single Source of Truth JSON file
-    so that AI never has to re-type numbers manually across phases.
+    [v4.3] Writes or merges Reverse DCF calculation output into the Single Source of Truth JSON file
+    and synchronizes canonical_html_tag (and auto_tables.md) so that if reported FCF <= 0 due to expansion
+    CapEx but Owner Normalized FCF > 0, data-fcf is automatically bound to norm_fcf_eok.
     """
+    import re
+
     payload = {}
     if os.path.exists(json_path):
         try:
@@ -198,6 +201,37 @@ def update_ssot_json(json_path, dcf_res):
             payload = {}
 
     payload["reverse_dcf"] = dcf_res
+    fcf_v = float(dcf_res.get("fcf_eok") or 0.0)
+    norm_fcf_v = float(dcf_res.get("norm_fcf_eok") or 0.0)
+    eff_fcf_v = norm_fcf_v if (fcf_v <= 0 and norm_fcf_v > 0) else fcf_v
+
+    tag = payload.get("canonical_html_tag", "")
+    if tag and 'id="dcf-calculator-root"' in tag:
+        tag = re.sub(r'data-fcf="[^"]*"', f'data-fcf="{eff_fcf_v:.1f}"', tag)
+        if "data-reported-fcf=" in tag:
+            tag = re.sub(r'data-reported-fcf="[^"]*"', f'data-reported-fcf="{fcf_v:.1f}"', tag)
+        else:
+            tag = tag.replace(
+                f'data-fcf="{eff_fcf_v:.1f}"',
+                f'data-fcf="{eff_fcf_v:.1f}" data-reported-fcf="{fcf_v:.1f}"',
+            )
+        payload["canonical_html_tag"] = tag
+
+        auto_md_path = os.path.join(os.path.dirname(os.path.abspath(json_path)), "auto_tables.md")
+        if os.path.exists(auto_md_path):
+            try:
+                with open(auto_md_path, "r", encoding="utf-8") as mf:
+                    md_txt = mf.read()
+                md_txt = re.sub(
+                    r'<div id="dcf-calculator-root"[^>]*></div>',
+                    tag,
+                    md_txt,
+                )
+                with open(auto_md_path, "w", encoding="utf-8") as mf:
+                    mf.write(md_txt)
+            except Exception:
+                pass
+
     os.makedirs(os.path.dirname(os.path.abspath(json_path)), exist_ok=True)
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
@@ -208,7 +242,7 @@ if __name__ == "__main__":
         sys.stdout.reconfigure(encoding="utf-8")
 
     parser = argparse.ArgumentParser(
-        description="Reverse DCF calculation tool (v4.2 — Equity, EV & SOTP Core EV Mode + SSOT JSON Export)"
+        description="Reverse DCF calculation tool (v4.3 — Equity, EV & SOTP Core EV Mode + SSOT JSON Export)"
     )
     parser.add_argument("--price", type=float, required=True, help="Current stock price (KRW, latest daily close)")
     parser.add_argument("--distb-shares", type=int, required=True, help="Floating shares (distb_stock_co, excluding treasury)")

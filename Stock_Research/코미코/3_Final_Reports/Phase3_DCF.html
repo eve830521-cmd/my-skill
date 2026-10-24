@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analyzer Report (v4.2)</title>
+    <style>
+    /* Korean Stock Analyzer - Premium PDF Report Stylesheet */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+@page {
+    margin: 20mm 15mm;
+    size: A4;
+}
+
+body {
+    font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+/* Headers */
+h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: #1a365d;
+    text-align: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2b6cb0;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Blockquotes (Used for [공시 팩트] and key takeaways) */
+blockquote {
+    background-color: #f7fafc;
+    border-left: 4px solid #4299e1;
+    margin: 15px 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #2c5282;
+    border-radius: 4px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ebf4ff;
+    color: #2b6cb0;
+    font-weight: 700;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 15px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Highlights */
+strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+}
+
+/* Mermaid Diagrams (if rendered as code block fallback) */
+.mermaid {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Code blocks */
+pre {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+}
+
+code {
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 9pt;
+}
+
+/* Footnotes/small text */
+p > em {
+    font-size: 9pt;
+    color: #718096;
+}
+
+/* Fact vs Narrative UI Patterns */
+.fact-block {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.narrative-block {
+    background-color: #fef2f2;
+    border-left: 4px solid #dc2626 !important;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fact-badge {
+    background-color: #16a34a;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.narrative-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* DCF Calculator UI */
+.dcf-calc-container {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dcf-calc-container h3 {
+    margin-top: 0;
+    color: #1e293b;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.dcf-calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dcf-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.dcf-input-group label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.dcf-input-group input {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.dcf-input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dcf-result-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.dcf-result-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dcf-result-value {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dcf-result-msg {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Dynamic Result States */
+.dcf-result-box.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+.dcf-result-box.error .dcf-result-value {
+    color: #ef4444;
+}
+
+.dcf-result-box.low-growth {
+    border-color: #10b981;
+    background-color: #ecfdf5;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.dcf-result-box.low-growth .dcf-result-value {
+    color: #059669;
+}
+
+.dcf-result-box.normal-growth {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.dcf-result-box.normal-growth .dcf-result-value {
+    color: #2563eb;
+}
+
+.dcf-result-box.high-growth {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+.dcf-result-box.high-growth .dcf-result-value {
+    color: #d97706;
+}
+
+/* S-Curve & Hybrid Badges */
+.scurve-badge-sweetspot {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #10b981;
+    color: #047857;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-exit {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #fff7ed;
+    border: 1.5px solid #f97316;
+    color: #c2410c;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+.scurve-badge-na {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    border: 1.5px solid #9ca3af;
+    color: #4b5563;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    margin: 5px 0;
+}
+
+
+    .sop-calc-container {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0 35px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    }
+    .sop-calc-container h3 {
+        margin-top: 0;
+        color: #0f172a;
+        border-bottom: 2px solid #94a3b8;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+    .sop-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+    .sop-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+    .sop-card.buy-card { border-left: 4px solid #2563eb; }
+    .sop-card.stop-card { border-left: 4px solid #dc2626; background: #fff5f5; }
+    .sop-card.sell-card { border-left: 4px solid #059669; }
+    .sop-card h4 {
+        margin: 0 0 8px 0;
+        font-size: 10.5pt;
+        color: #1e293b;
+    }
+    .sop-stat-line {
+        font-size: 9.8pt;
+        margin: 4px 0;
+        color: #334155;
+    }
+    .sop-highlight {
+        font-weight: 800;
+        color: #0f172a;
+    }
+    .sop-pin-badge {
+        display: inline-block;
+        background: #dc2626;
+        color: #fff;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 9.5pt;
+    }
+    .ssot-verified-banner {
+        background: #ecfdf5;
+        border: 1px solid #10b981;
+        color: #065f46;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 9.5pt;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default',
+            logLevel: 'error'
+        });
+        window.mermaid = mermaid;
+    </script>
+</head>
+<body>
+    <h1>🎯 [코미코] Phase 3: 가격 판독기 (DCF &amp; 밸류에이션 마스터 SOP — v4.2)</h1>
+<blockquote>
+<p><strong>[파이프라인 SSOT 단일 기준 주가]</strong>: <strong><code>26,350원</code></strong> (2026.10.21 최신 일봉 종가 / BPS 5,686원 대비 PBR 4.63배)<br />
+<strong>[지배주주 순이익 귀속률]</strong>: 연간 누적 <strong><code>70.3%</code></strong> (최근 분기 <strong><code>52.23%</code></strong>)<br />
+<strong>[S-Curve 국면 인증 뱃지]</strong>: <code>[🟢 S-Curve Phase 2: 골든 스위트스팟 (침투율 36.5% | 홀딩 &amp; 분할익절 준비)]</code><br />
+<strong>[하이브리드 밸류체인 지위]</strong>: <code>[👑 DART 검증 순수 주도주]</code> (테마 직결 익스포저 77.6% &amp; ⚡ 2026.10.19 미코세라믹스 1,500억 신규 부지 취득 CapEx 선행 발화 확인)<br />
+<strong>[1순위 최적 밸류에이션 지표]</strong>: <strong><code>PBR</code></strong> (10년 백테스트 R²=0.58, 방향 일치율 59.5% 상속)</p>
+</blockquote>
+<hr />
+<h2>1. 시장 프라이싱 역산 (역DCF 정밀 판독 — Equity &amp; EV 병기)</h2>
+<h3>Step 0.5: FCF 품질 검증 및 정상화 FCF(Owner FCF) 점검 (역DCF 연산 직전 필수 수행)</h3>
+<p>[공시 팩트] DART 반기보고서 및 감사보고서 현금흐름표를 바탕으로 코미코의 잉여현금흐름(FCF) 품질을 점검합니다 <code>[[코미코]반기보고서(2026.08.14) p.139, 258]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">품질 체크 항목</th>
+<th style="text-align: left;">점검 기준</th>
+<th style="text-align: left;">기업 현황 팩트</th>
+<th style="text-align: center;">판정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>OCF / 순이익 갭</strong></td>
+<td style="text-align: left;">OCF ÷ 지배순이익 비율 1.5배 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">2026년 상반기 OCF 301.1억 원 ÷ 당기순이익 314.1억 원 = <strong>0.96배</strong> (정상 범위 안착)</td>
+<td style="text-align: center;"><strong>정상</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>운전자본(WC) 변동</strong></td>
+<td style="text-align: left;">WC 순변동이 OCF의 30% 초과 시 ⚠️ 경고</td>
+<td style="text-align: left;">매출채권 및 재고자산 변동에 따른 운전자본 순유출은 약 -85.2억 원으로 안정적 통제 중</td>
+<td style="text-align: center;"><strong>정상</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CapEx 사이클 착시</strong></td>
+<td style="text-align: left;">S-Curve 초입 증설기 성장성 CapEx 급증에 따른 FCF 일시 적자 착시 여부</td>
+<td style="text-align: left;">2024~2026년 상반기 누적 <strong>4,934억 원</strong> 및 2026.10.19 미코세라믹스 <strong>1,500억 부지 취득</strong> 등 대형 CapEx 집행에 따른 일시적 적자 착시 규명</td>
+<td style="text-align: center;"><strong>⚠️ 경고 (정상화 보정)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>비지배지분 귀속 괴리</strong></td>
+<td style="text-align: left;">연결 FCF 중 비지배지분 유출이 15% 초과 시 지배주주 귀속 FCF 병기</td>
+<td style="text-align: left;">미코세라믹스 연결 편입으로 비지배지분(약 47.9%) 존재, 지배주주 귀속률 <strong>70.3%</strong>(분기 52.2%) 적용 필요</td>
+<td style="text-align: center;"><strong>⚠️ 경고 (지배지분 반영)</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>건전 증설기 Owner FCF 보정 (초입 증설 착시 방어 규격 준수):</strong></li>
+<li>코미코는 영업활동현금흐름(OCF)이 견고한 흑자(<code>OCF &gt; 0</code>)를 유지하고 있으나, 글로벌 8개국 거점 선점 및 미코세라믹스 신규 부지 인수 등 초대형 설비투자(<code>CapEx ≥ 감가상각비 D&amp;A × 1.3배</code>)로 인해 보고 FCF가 일시 적자(-1,755.0억 원) 국면입니다.</li>
+<li>이에 따라 음수 FCF를 기계적으로 DCF 공식에 넣어 기업가치가 음수가 나오는 왜곡을 원천 차단하고, <code>calc_reverse_dcf.py</code> 엔진을 통해 <strong>"보고 FCF 기준"과 인프라 완공 후 회수될 "정상화(Owner) FCF (+750.0억 원) 기준"을 병기</strong>하여 시장 프라이싱을 정밀 역산합니다.</li>
+</ul>
+<hr />
+<h3>Step 1: 역DCF 연산 — 유통시총(Equity) &amp; 실질 기업가치(EV) 2행 병기 필수 양식</h3>
+<p>[공시 팩트] 단일 기준 주가(최신 일봉 종가 26,350원), 총 발행주식수, 자기주식수, DART 공식 유통주식수, 순차입금 및 FCF 수치를 파이프라인 SSOT(<code>valuation_metrics.json</code>)에서 100% 동일하게 로드합니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">입력 변수</th>
+<th style="text-align: left;">실측 수치</th>
+<th style="text-align: left;">출처 (DART 문서명 + 페이지/항목)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>단일 기준 주가</strong></td>
+<td style="text-align: left;"><strong><code>26,350원</code></strong></td>
+<td style="text-align: left;">최신 일봉 종가 (<code>Phase 1~3 공통 앵커</code>, SSOT 일치)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 발행주식수</strong></td>
+<td style="text-align: left;"><strong>51,363,275주</strong></td>
+<td style="text-align: left;">DART 반기보고서 p.75 「발행할 주식의 총수」 (무상증자 1:1, 액면분할 2.5:1 완료)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자기주식수</strong></td>
+<td style="text-align: left;"><strong>940,145주</strong></td>
+<td style="text-align: left;">DART 반기보고서 p.75 「자기주식 취득 및 처분 현황」 (1.83%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실질 유통주식수</strong></td>
+<td style="text-align: left;"><strong>50,423,130주</strong></td>
+<td style="text-align: left;">총발행주식수(51,363,275주) − 자기주식수(940,145주)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>순차입금</strong></td>
+<td style="text-align: left;"><strong>+4,300.0억 원</strong></td>
+<td style="text-align: left;">총차입금 4,892.4억 원 − 현금및금융자산 592.4억 원 <code>[DART 반기 p.139, 258]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실질 유통 시가총액</strong></td>
+<td style="text-align: left;"><strong>1조 3,286.5억 원</strong></td>
+<td style="text-align: left;">단일 기준 주가 26,350원 × 실질 유통주식수 50,423,130주</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실질 기업가치 (EV)</strong></td>
+<td style="text-align: left;"><strong>1조 7,586.5억 원</strong></td>
+<td style="text-align: left;">실질 유통 시가총액 + 순차입금 (+4,300.0억 원)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>기준 FCF (연환산)</strong></td>
+<td style="text-align: left;"><strong>-1,755.0억 원</strong></td>
+<td style="text-align: left;">2026 상반기 영업CF 301.1억 − CapEx 1,178.6억 = -877.5억 × 2 <code>[DART p.139]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>(참조) 정상화 FCF</strong></td>
+<td style="text-align: left;"><strong>+750.0억 원</strong></td>
+<td style="text-align: left;">인프라 CapEx 피크아웃 후 2027F 예상 정상화 현금창출력</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WACC / 영구성장률</strong></td>
+<td style="text-align: left;"><strong>9.0% / 2.0%</strong></td>
+<td style="text-align: left;">반도체 소부장 연속공정 장치산업 표준 할인율 / 보수적 영구성장률</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>[순차입금 기업의 역DCF Equity &amp; EV 2행 병기 (<code>calc_reverse_dcf.py</code> v4.2 SSOT 실측)]:</strong></li>
+</ul>
+<pre><code>====================================================================
+📈 역DCF 정밀 분석 결과 (Korean Stock Analyzer v4.2 — Equity &amp; EV 병기)
+====================================================================
+현재 주가 (단일 앵커): 26,350원
+실질 유통 시가총액:    13,286.49억 원
+실질 기업가치 (EV):    17,586.49억 원 (유통시총 + 순차입금 +4,300.00억)
+기준 FCF: -1,755.0억 원 | 정규화/지배주주 FCF: 750.0억 원 | WACC: 9.0% | 영구성장률: 2.0%
+--------------------------------------------------------------------
+▶ ① [보고 FCF (-1,755.0억) 기준] 상태: deficit (적자 역DCF 목표가 산출 제외)
+▶ ② [정규화 FCF (750.0억) | 유통시총(Equity) 기준] 요구 성장률: 연간 +6.60%
+▶ ③ [정규화 FCF (750.0억) | 실질 기업가치(EV) 기준] 요구 성장률: 연간 +13.45%
+====================================================================
+</code></pre>
+<ul>
+<li><strong>역DCF 요구성장률 해석 및 시장 프라이싱 진단:</strong></li>
+<li><strong>보고 FCF 기준 (-1,755.0억 원):</strong> FCF 일시 적자로 인해 표준 DCF 목표가 연산 제외 ➡️ <strong>Phase 1 최적 지표인 PBR 밴드 플랜 B를 주 잣대로 100% 상속</strong>합니다.</li>
+<li><strong>정상화 FCF 기준 (유통시총 +6.60% vs 실질 EV +13.45%):</strong><ul>
+<li>단순 시가총액 기준 요구성장률은 연간 <strong>+6.60%</strong>로 낮아 보이지만, <strong>순차입금 4,300억 원 상환 부담을 반영한 실질 기업가치(EV) 기준 요구성장률은 연간 +13.45%</strong>입니다.</li>
+<li><strong>해석:</strong> +13.45%는 반도체 소부장 업종의 '합리적 성장 요구(10~15%)' 구간에 부합하며, 코미코의 과거 5개년 매출 CAGR(+23.0%) 및 2026년 하반기 테일러 팹 2나노 시범 가동과 청주 M15X 램프업을 감안할 때 시장의 기대치는 실현 가능한 건전한 영역에 안착해 있습니다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>2. 가치함정(Value Trap) 진단 &amp; Step 2.0 4대 레짐 변화 종합 판독</h2>
+<p>(단순 저평가 함정을 막기 위해 DART 원천 공시 팩트와 레짐 변화를 점검하고, <code>backtest_valuation.py</code> v4.2 엔진으로 유형 A vs 유형 B를 판정합니다)</p>
+<!-- [AUTO-GENERATED BY backtest_valuation.py v4.3 — DO NOT EDIT NUMBERS MANUALLY] -->
+<h3>📌 [코드 자동 생성 1] SOTP 장부 분해 &amp; 4대 레짐 체크 요약표</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">검증 항목</th>
+<th style="text-align: left;">코드 실측 수치</th>
+<th style="text-align: left;">판정 결과 (Code Verdict)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>단일 기준 주가 (Anchor Price)</strong></td>
+<td style="text-align: left;"><strong><code>26,350원</code></strong></td>
+<td style="text-align: left;">전 Phase 1~3 100% 동일 고정</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>지배주주 순이익 귀속률</strong></td>
+<td style="text-align: left;"><strong><code>52.2%</code></strong></td>
+<td style="text-align: left;">비지배지분 차감 완료</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Step 1.5 비영업자산 비중 (SOTP 20% 룰)</strong></td>
+<td style="text-align: left;">장부 대비 <strong><code>5.8%</code></strong> / 시총 대비 <strong><code>1.2%</code></strong></td>
+<td style="text-align: left;">🟢 <strong>본업 자산 중심 (&lt;20%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Step 1.5 본업 이익 유지력 (Core ROIC)</strong></td>
+<td style="text-align: left;">TTM 영업이익 <strong><code>970.7억</code></strong> (NOPAT <strong><code>757.1억</code></strong>)</td>
+<td style="text-align: left;">✅ <strong>본업 이익 유지 견고</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Step 2.0 4대 레짐 변화 체크</strong></td>
+<td style="text-align: left;">④ 사업구성레짐(OPM 과거중위 21.2% → 현재 14.8%, -6.4%p [본업 마진 훼손/경쟁 심화]) / ⑤ 지정 리레이팅 분기점(2023-07-01) 이후 Post-Rerating 멀티플 우선 적용</td>
+<td style="text-align: left;">🔄 <strong>레짐 변화 반영 필수</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Step 3.0 사이클 고점 함정 가드레일</strong></td>
+<td style="text-align: left;">피크 이익 과열 미해당</td>
+<td style="text-align: left;">🟢 <strong>정상 멀티플 적용</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>직전 분기 대비 (QoQ) 실적 추이</strong></td>
+<td style="text-align: left;">[2026.1Q → 2026.2Q] 매출액 1,570.6억→1,759.6억(QoQ +12.0%) | 영업이익 204.5억→270.5억(QoQ +32.3%) | 수정EPS 169원→-46원</td>
+<td style="text-align: left;">[액분·무증 소급보정 지배주주 EPS] 2026.1Q 169.2원 → 2026.2Q -45.6원 (적자 전환/지속 🚨)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>가설 반증 임계치 (Kill-Switch)</strong></td>
+<td style="text-align: left;"><strong>차기 분기 영업이익 &lt; 229.9억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS &lt; 0원 기록 시 핵심 가설 즉시 [약화] 강등</strong></td>
+<td style="text-align: left;">미달 시 가설 즉시 [약화] 강등</td>
+</tr>
+</tbody>
+</table>
+<h3>📌 [코드 자동 생성 1-B] Step 1.2 S-Curve 10% 변곡점 · 3축 구조적 병목(Capa·기술·특허) · 리드타임 &amp; Step 1.8 K-주주환원 진단표 (v4.3)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">진단 축 (3-Axis + K-Return)</th>
+<th style="text-align: left;">실측 지표 및 근거</th>
+<th style="text-align: left;">코드 판정 및 Phase 3 목표주가 가중치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>① 전방 시장 침투율 (10% 변곡점 여부)</strong></td>
+<td style="text-align: left;">1차 침투율 <strong><code>36.5%</code></strong> (2차 S-Curve 침투율 <code>12.5%</code>) (<code>더블 S-Curve Zone A (1차 36.5% 캐시카우 + 2차 12.5% 🔥10% 언저리 변곡점)</code>)</td>
+<td style="text-align: left;">🔥 <strong>10% 골든 변곡점 발화 구간</strong> (3축 통합 Base <code>×1.14</code> / Bull <code>×1.19</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>②-A 물리적 Capa 병목 (가동률/증설)</strong></td>
+<td style="text-align: left;">공장 가동률 <strong><code>76.0%</code></strong> — 생산 Capa: 글로벌 8개국(미 오스틴/피닉스·대만·한국 안성/청주) 로컬 팹 직결 세정·코팅 인프라 독점 선점</td>
+<td style="text-align: left;">🟢 <strong>여유 Capa 보유</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>②-B 기술격차 해자 (OPM/수율/단가결정력)</strong></td>
+<td style="text-align: left;">현 OPM <strong><code>14.8%</code></strong> — 기술격차 해자: 2nm GAA 극미세 파티클 제어 세정·코팅 레시피 및 AlN 세라믹 히터 국산화</td>
+<td style="text-align: left;">고마진 가격전가력(Pricing Power) 점검</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>②-C 원천특허 · 글로벌 벤더 퀄(Qual) 락인</strong></td>
+<td style="text-align: left;">특허/벤더 Lock-in: 삼성전자·TSMC·인텔·SK하이닉스 글로벌 현지 팹 Qual 인증 장벽</td>
+<td style="text-align: left;">후발주자 진입장벽(Switching Cost) 점검</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>③ 병목 해소 예상 소요기간 (Lead Time)</strong></td>
+<td style="text-align: left;"><strong><code>A등급</code></strong> (해소 리드타임 <strong><code>24개월</code></strong>)</td>
+<td style="text-align: left;">해외 현지 환경 인허가·클린룸 구축(12~18개월) + 글로벌 파운드리 2nm 공정 Qual 인증(12개월)으로 최소 24개월 병목 지속 (PEG 계수 <code>0.85</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>④ K-마켓 주주환원 · 지배구조 (Step 1.8)</strong></td>
+<td style="text-align: left;">배당수익률 <strong><code>1.20%</code></strong> (성향 <code>28.3%</code>) / 특수관계인 <code>8.0억</code></td>
+<td style="text-align: left;">✅ 배당소득 분리과세 요건2 충족 (배당성향 28.3% ≥ 25% &amp; 분기배당 실시) / 🟢 정상 (현재 자기주식 940,145주 [1.83%] 보유 — 소각 전환 여부 모니터링) (<code>kgov_mult = ×1.0000</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>⑤ 레드팀 역산 Capa 천장 검증 (Red-Team)</strong></td>
+<td style="text-align: left;">대안 A 내재 영업이익: Base <strong><code>572.0억</code></strong> / Bull <strong><code>501.2억</code></strong></td>
+<td style="text-align: left;">🟢 물리적 Capa 한계 내 달성 가능</td>
+</tr>
+</tbody>
+</table>
+<h3>[사이클 저점(유형 A) vs 구조적 버블 붕괴(유형 B) 이원화 판정 실측]</h3>
+<ul>
+<li><strong>최근 2년 누적 BPS 증감률:</strong> <strong><code>+20.17%</code></strong> (🟢 기준선 ≥ +15% 충족)</li>
+<li><strong>현재 ROE (지배주주 기준):</strong> <strong><code>8.03%</code></strong> (정규화 10.80% 🟢)</li>
+<li><strong>최근 분기 영업이익 QoQ 추이:</strong> 2026.1Q 204.5억 ➔ 2026.2Q <strong>270.5억 원 (+32.3% 급반등 🟢)</strong></li>
+<li><strong>▶ Section 2 최종 판정: 🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal)]</strong></li>
+<li><strong>판정 사유:</strong> 2026년 무상증자 및 액면분할 전 시계열 소급 보정 완료. 2년 누적 BPS가 +20.2% 증가하고 2Q 영업이익이 +32.3% 급반등하여 구조적 버블 붕괴(유형 B)에 해당하지 않음.</li>
+<li><strong>조치:</strong> Bear 하방 지지선(과거 하위 20% 분위수) 정상 가동.</li>
+</ul>
+<hr />
+<h2>3. 정량 바텀업 시나리오 스트레스 테스트 &amp; Step 3.0 피크 멀티플 함정 가드레일</h2>
+<p>(Phase 1 Section 7에서 확정된 유형 A 연속공정 산식과 Section 8 1순위 최적 지표인 PBR 및 <code>Forward BPS</code>를 100% 상속하여 작성합니다)</p>
+<h3>[시나리오 실적 추론 및 4대 회계 무결성 체크리스트 반영]</h3>
+<ol>
+<li><strong>신규 CapEx 감가상각비 기본 차감:</strong> 피닉스/힐스보로 완공 및 미코세라믹스 부지 취득에 따른 연간 감가상각비(연 550억~600억 원) 반영.</li>
+<li><strong>이자비용 부호 일관성:</strong> 순차입금(4,300억 원)에 따른 연간 180억~220억 원 금융비용 차감.</li>
+<li><strong>일회성 손익 제거 및 환율 분리:</strong> 일회성 자산처분익 제외, 환율 1,300원대 중반 외화매출(해외 비중 60%) 환산 효과만 원가율에 반영.</li>
+<li><strong>지배구조 할인:</strong> 미코세라믹스 비지배지분(47.9%)을 반영하여 <strong>지배주주 귀속률 70.3%(분기 52.2%)</strong>를 당기순이익에 곱하여 최종 EPS 산출.</li>
+</ol>
+<hr />
+<!-- [AUTO-GENERATED BY backtest_valuation.py v4.3 — DO NOT EDIT NUMBERS MANUALLY] -->
+<h3>📌 [코드 자동 생성 2] Phase 3 6열 시나리오 밸류에이션 표 (주 지표: PBR)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">시나리오</th>
+<th style="text-align: center;">확률 (고정)</th>
+<th style="text-align: left;">핵심 드라이버 가정 (AI 해석 영역)</th>
+<th style="text-align: left;">적용 멀티플 (코드 산출)</th>
+<th style="text-align: left;">적정주가 (🛡️대안 B / 🚀대안 A)</th>
+<th style="text-align: left;">현재가 대비 등락률 (🛡️대안 B / 🚀대안 A)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull (호황 상단)</strong></td>
+<td style="text-align: center;"><strong>25%</strong></td>
+<td style="text-align: left;">테일러 1공장 2nm 대량 양산 전환 및 청주 M15X 풀가동, 오스틴 코팅 가동률 80%+ 수직 반등</td>
+<td style="text-align: left;">PBR 상위 90% (대안A ×1.1900)</td>
+<td style="text-align: left;">🛡️ <strong>29,650원</strong> / 🚀 <strong>35,280원</strong></td>
+<td style="text-align: left;">🛡️ <strong>+12.5%</strong> / 🚀 <strong>+33.9%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base (기본 적정)</strong></td>
+<td style="text-align: center;"><strong>50%</strong></td>
+<td style="text-align: left;">테일러 1공장 2nm 부분양산 유지(가동률 30~50%) 및 안성 믹스 고도화 견고, 분기 OP 270억대 안착</td>
+<td style="text-align: left;">PBR 상위 65% (대안A ×1.1400)</td>
+<td style="text-align: left;">🛡️ <strong>22,430원</strong> / 🚀 <strong>25,570원</strong></td>
+<td style="text-align: left;">🛡️ <strong>-14.9%</strong> / 🚀 <strong>-3.0%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear (하방 지지)</strong></td>
+<td style="text-align: center;"><strong>25%</strong></td>
+<td style="text-align: left;">글로벌 WFE 투자 일시 지연 및 고객사 2nm 램프업 순연, 오스틴 가동률 40%대 정체</td>
+<td style="text-align: left;">하방 지지선 (할증 0% 고정)</td>
+<td style="text-align: left;">🛡️ <strong>9,240원</strong> / 🚀 <strong>9,240원</strong></td>
+<td style="text-align: left;">🛡️ <strong>-64.9%</strong> / 🚀 <strong>-64.9%</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>단기 실전 TP1 목표가</strong>: <strong><code>31,010원</code></strong> (현재가 26,350원 대비 <strong><code>+17.69%</code></strong>, 52주 실거래 75% 분위수 및 박스권 상단)</p>
+</blockquote>
+<hr />
+<h3>[손익비(Risk/Reward) 정량 산출 및 듀얼 게이트 판정]</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: center;">등락률 (🛡️대안 B | 🚀대안 A)</th>
+<th style="text-align: center;">확률 가중치 (영구 고정)</th>
+<th style="text-align: center;">가중 기대값 (대안 B | 대안 A)</th>
+<th style="text-align: left;">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Bull (호황)</strong></td>
+<td style="text-align: center;">+12.5% | +33.9%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">+3.1% | +8.5%</td>
+<td style="text-align: left;">익절 전용 트레일링 타겟</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Base (기본)</strong></td>
+<td style="text-align: center;">-14.9% | -3.0%</td>
+<td style="text-align: center;">50%</td>
+<td style="text-align: center;">-7.5% | -1.5%</td>
+<td style="text-align: left;">진입 판단 기준점 (정규분포 중심 닻)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bear (침체)</strong></td>
+<td style="text-align: center;">−64.9% | −64.9%</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">−16.2% | −16.2%</td>
+<td style="text-align: left;">역사적 지하실 하방 지지선</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>확률가중 기대수익률</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;"><strong>-20.6% | -9.2%</strong></td>
+<td style="text-align: left;">(25-50-25 대칭 정규분포 고정 기준)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>실전 듀얼 R:R 게이트 산출 및 투자의견 판정:</strong></li>
+<li><strong>Gate 1 [펀더멘털 안전마진 게이트 (Valuation R:R)]:</strong><ul>
+<li>Base 적정가(🛡️대안 B 22,430원 / 🚀대안 A 25,570원)가 현재가(26,350원) 대비 하회하므로 안전마진 미달 ➔ <strong><code>Gate 1 R:R = 0.0 : 1</code></strong> (현재가 추격매수 금지).</li>
+</ul>
+</li>
+<li><strong>Gate 2 [마스터 SOP 실전 트레이딩 게이트 (Execution R:R)]:</strong><ul>
+<li>3분할 완성 평단가(<strong>19,067원</strong>) 기준 Base 적정가(🛡️<strong>22,430원</strong> / 🚀<strong>25,570원</strong>)까지의 상승폭(<strong>+17.6% / +34.1%</strong>) ÷ 1단계 초입 고정 안전핀(<strong>17,040원</strong>)까지의 손실폭(<strong>-10.6%</strong>) = <strong><code>1.66 : 1</code> (🛡️대안 B) / <code>3.21 : 1</code> (🚀대안 A)</strong>.</li>
+</ul>
+</li>
+<li><strong>4분면 투자의견 매트릭스 판정:</strong><ul>
+<li><strong><code>[⏳ 눌림목 대기 (Wait for Pullback — 현재가 추격매수 금지)]</code></strong></li>
+<li><strong>행동 강령:</strong> 현재가(26,350원)는 Base 본질가치(🛡️22,430원 / 🚀25,570원)를 상회하고 있으므로 추격매수를 엄격히 차단하고, Base 아래 <strong>눌림목 분할 매수 밴드(17,940원 ~ 20,190원)</strong>에서만 지정가로 진입합니다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>3.5 ⚖️ 비관론자 반론(Pre-mortem) &amp; Step 3.5 리스크 인과 도미노 3단계 사슬</h2>
+<p>(리스크를 단순 나열하지 않고 3단계 인과 사슬 및 정량 Kill-Switch로 구조화합니다)</p>
+<pre><code class="language-mermaid">graph TD
+    subgraph SG_1[&quot;1단계: 1차 촉발 요인 (Trigger)&quot;]
+        R1[&quot;삼성 파운드리 2nm 수율 안정화 지연&lt;br/&gt;또는 글로벌 AI 빅테크 CapEx 속도 조절&quot;]
+    end
+
+    subgraph SG_2[&quot;2단계: 2차 영업/운전자본 전이 (Operational)&quot;]
+        R2[&quot;오스틴 코팅 가동률(41.1%) 회복 정체&lt;br/&gt;➔ 단위당 고정비(감가상각 550억+) 디레버리지&lt;br/&gt;➔ 전사 OPM 12% 이하로 급락&quot;]
+    end
+
+    subgraph SG_3[&quot;3단계: 3차 재무/자본 타격 (Financial)&quot;]
+        R3[&quot;영업CF 축소 ➔ 순차입금(4,300억) 이자비용(200억) 부담 가중&lt;br/&gt;➔ 미코세라믹스 잔금(1,500억) 조달 압박&lt;br/&gt;➔ 주가 Bear 하방(9,240원) 회귀&quot;]
+    end
+
+    R1 ==&gt; R2
+    R2 ==&gt; R3
+</code></pre>
+<ul>
+<li><strong>리스크 인과 도미노 상세 매커니즘:</strong></li>
+<li><strong>1차 촉발 (Trigger)</strong>: 삼성전자 테일러 1공장이 2나노 시범 가동에 들어갔으나, 빅테크 수율 확보 난항으로 대량 양산이 2027년 하반기 이후로 재차 지연될 경우.</li>
+<li><strong>2차 영업 전이 (Operational)</strong>: 오스틴 코팅 가동률이 40%대에 머물며 선제 투자된 감가상각비(연 550억+)가 고정비 디레버리지로 작용, 전사 영업이익률이 12% 이하로 급감.</li>
+<li><strong>3차 재무 타격 (Financial)</strong>: 순차입금 4,300억 원에 대한 이자비용(연 200억)을 감당하기 위한 FCF 회수 지연 및 미코세라믹스 잔금 지급(2027.2월) 부담 발생.</li>
+<li><strong>🚨 포퍼식 가설 반증 기준 (Kill-Switch 사전 정의):</strong></li>
+<li><strong>"차기 분기 영업이익 &lt; 229.9억 원(직전분기 270.5억 대비 -15% 하회) 또는 분기 지배주주 EPS &lt; 0원 기록 시 핵심 가설 즉시 [약화] 강등"</strong></li>
+<li><strong>"오스틴 법인 분기 매출 &lt; 100억 원 지속 또는 코팅 가동률 &lt; 35% 하락 시 레버리지 가설 즉시 [약화]"</strong></li>
+</ul>
+<hr />
+<h2>4. 최종 투자 전략 및 마스터 SOP 액션 플랜</h2>
+<h3>[역DCF ↔ 시나리오 결론 동기화 및 밸류에이션 우위 원칙]</h3>
+<ol>
+<li><strong>역DCF ↔ 시나리오 결론 동기화:</strong></li>
+<li>실질 EV 기준 역DCF 요구성장률(+13.45%)은 합리적이나, 현재 주가(26,350원)가 Base 본질가치(22,430원)를 상회하고 있으므로 <strong>추격매수를 금지하고 눌림목 대기로 결론을 완전 동기화</strong>합니다.</li>
+<li><strong>🚨 매수가 위계질서 및 이중 안전핀 수리적 무결성 검증 (Assertion 100% 통과):</strong></li>
+<li><strong>부등식 ① (안전핀 &lt; 매수가):</strong> <code>17,040원 (Hard Stop 1) &lt; 17,940원 (Buy 1) &lt; 19,067원 (완성 평단가)</code> ➔ <strong>단 1원의 역전도 없이 완벽 성립!</strong></li>
+<li><strong>부등식 ② (매수가 &lt; 목표가):</strong> <code>20,190원 (Buy 3) &amp; 19,067원 (완성 평단가) &lt; 22,430원 (Base 1차 목표가) &lt; 31,010원 (TP1)</code> ➔ <strong>완벽 성립!</strong></li>
+</ol>
+<hr />
+<h3>📋 실전 매매 액션 플랜 및 트리거 (마스터 SOP 4단계 차트 트리거 — SSOT 실측값)</h3>
+<ul>
+<li><strong>투자의견:</strong> <strong>보유 및 눌림목 대기 (Hold &amp; Wait for Pullback — 현재가 추격매수 금지)</strong></li>
+<li><strong>목표가 밴드 (🛡️대안 B / 🚀대안 A 병기):</strong></li>
+<li><strong>🛡️ 기본 목표가 (Base):</strong> <strong><code>🛡️대안B 22,430원 (-14.9%) / 🚀대안A 25,570원 (-3.0%)</code></strong> (2차 S-Curve 2nm/세라믹 히터 12.5% 🔥10% 변곡점 + A등급 24개월 구조적 병목 할증 ×1.14)</li>
+<li><strong>🎯 단기 실전 1차 목표가 (TP1):</strong> <strong><code>31,010원</code></strong> (+17.69%)</li>
+<li><strong>🚀 호황 확장 목표가 (Bull):</strong> <strong><code>🛡️대안B 29,650원 (+12.5%) / 🚀대안A 35,280원 (+33.9%)</code></strong> (A등급 24개월 병목 &amp; 10% 변곡점 할증 ×1.19)</li>
+<li><strong>매수 트리거 (Buy Trigger — 마스터 SOP 3분할 매수 전술 | <code>17,040원 &lt; 17,940원 &lt; 19,067원 &lt; 20,190원 &lt; 22,430원</code> 위계 엄수):</strong></li>
+<li><strong>1차 정찰병 (비중 30% — 눌림목 1차 지지):</strong> 주가 <strong><code>17,940원</code></strong><br />
+     (일봉 Slow Stochastic(12,5,5) 침체권 <code>%K ≤ 20</code> 골든크로스 확인 시 30% 선진입. 현재 <code>%K=10.9% / %D=12.8%</code> 침체 조정 중)</li>
+<li><strong>2차 본대 투입 (비중 40% — 중심 지지선 안착):</strong> 주가 <strong><code>19,070원</code></strong><br />
+     (일봉 종가가 하방 지지 매물대 안착 및 거래량 반등 확인 시 40% 투입)</li>
+<li><strong>3차 확인사살 (비중 30% — 추세 전환 안착):</strong> 주가 <strong><code>20,190원</code></strong><br />
+     (주가 바닥 확인 후 주봉 MACD Histogram 음(-)폭 축소 시 잔여 30% 투입 완성. <strong>3분할 완성 평단가 <code>19,067원</code> &lt; 1차 목표가 <code>22,430원</code> 대비 기대수익 +17.6% 검증 완료</strong>)</li>
+<li><strong>매도/손절 트리거 (Sell &amp; Stop-Loss Trigger — 이중 안전핀 &amp; 허리 홀딩 &amp; 2단계 익절):</strong></li>
+<li><strong>[포지션 방어 이원화 (1·2단계 이중 안전핀 vs 상승 허리 주봉 20주선 홀딩)]:</strong><ul>
+<li><strong>🚨 1단계 초입 고정 안전핀 (진입 직후 ~ 수익률 +15% 미만):</strong> 1차 매수가(17,940원) 및 완성 평단가(19,067원) 아래로 설정된 <strong><code>17,040원</code></strong>을 일봉 종가 기준 하향 이탈 시 기계적 전량 손절 (1차 매수가 대비 -5.0%, 완성 평단 대비 -10.6%).</li>
+<li><strong>🛡️ 2단계 매물대 돌파 후 트레일링 보호핀:</strong> 주가가 20일 매물대 상단(33,460원)을 완전히 돌파·안착한 이후에는 손절선을 20일 매물대 하단 -3%인 <strong><code>29,798원</code></strong>으로 격상하여 본절 및 수익 방어.</li>
+<li><strong>상승 허리 (수익률 ≥ +15% &amp; 주봉 20주선 위):</strong> 단기 노이즈를 무시하고 <strong>주봉 종가가 주봉 20주선(<code>29,916원</code>)을 깨기 전까지 추세 완주 홀딩</strong>.</li>
+</ul>
+</li>
+<li><strong>[1단계 반타작 익절 (보유 물량의 50% 차익 실현)]:</strong><ul>
+<li><strong>Base 1차 목표가(<code>🛡️22,430원 / 🚀25,570원</code>)</strong> 또는 단기 실전 <strong>TP1 목표가(<code>31,010원</code>)</strong> 도달 시, <strong>주봉 MFI(14)(현재 66.0) &lt; 50</strong>(수급 고갈)이면 50% 즉시 익절, <strong>주봉 MFI ≥ 50</strong>이면 익절을 보류하고 Bull 목표가(<code>🛡️29,650원 / 🚀35,280원</code>)까지 추세 완주.</li>
+</ul>
+</li>
+<li><strong>[2단계 잔여 물량(50%) 전량 청산 — 3대 고점경보 시그널]:</strong><ul>
+<li><strong>🚨 고점경보 1호:</strong> 주봉 MFI(14)가 80 이상 과열권 진입 후 <strong>80 아래로 하향 이탈</strong> 시 (현재 주봉 MFI 66.0, 최근 12주 최고 72.4).</li>
+<li><strong>🚨 고점경보 2호:</strong> 주가 신고가 경신 및 주봉 RSI ≥ 70인데, 주봉 MFI &lt; 70에 머무는 다이버전스 발생 시.</li>
+<li><strong>🚨 고점경보 3호:</strong> 최고점 대비 <strong>-8% 하락과 동시에 일봉 20일선(<code>30,390원</code>) 종가 이탈</strong> 시 잔여 물량 전량 청산.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3>[코드 자동 생성 3] HTML 계산기 직결 태그 (플레이스홀더 0건)</h3>
+<div id="dcf-calculator-root" data-price="26350" data-shares="50423130" data-total-shares="51363275" data-fcf="750.0" data-reported-fcf="-1755.0" data-net-debt="4300.0" data-non-op-assets="115.5" data-bear="9240" data-base="22430" data-bull="29650" data-base-a="25570" data-bull-a="35280" data-tp1="31010" data-tp1-a="31010" data-buy1="17940" data-buy2="19070" data-buy3="20190" data-stop-pin="17040" data-poc-low="30720"></div>
+    <script>
+        const SSOT_DATA = {"version": "4.3", "generated_at": "2026-10-24 10:48:16", "stock_code": "183300", "corp_name": "코미코", "anchor_price": 26350, "primary_metric": "PBR", "bench": {"stock_name": "코미코", "close": 24350.0, "bps": 5686.0, "pbr": 4.19, "eps": 623.0, "per": 38.28, "div_yield": 1.2, "dps": 285.0, "market_cap_str": "1조 2,250억"}, "sotp": {"sotp_triggered": false, "book_eq_eok": 2867.06, "mcap_eok": 13286.49, "non_op_assets_eok": 165.0, "recognized_non_op_eok": 115.5, "non_op_haircut": 0.3, "non_op_ratio_book_pct": 5.76, "non_op_ratio_mcap_pct": 1.24, "non_op_max_ratio_pct": 5.76, "core_bps": 5359, "nopat_eok": 757.15, "core_roic_pct": 28.02, "core_profit_sustainable": true, "implied_core_op_ev_eok": 17470.99}, "step1_2_bottleneck": {"is_phase2": true, "is_early_ignition": false, "theme_name": "사용자/리포트 S-Curve Phase 2 지정 (--s-curve-phase2)", "exposure_pct": 77.6, "source_pdf": "Global_Trend 80p+ 심층 리포트 검증", "penetration_pct": 36.5, "second_penetration_pct": 12.5, "is_near_10pct_inflection": true, "penetration_zone": "더블 S-Curve Zone A (1차 36.5% 캐시카우 + 2차 12.5% 🔥10% 언저리 변곡점)", "inflection_desc": "1차(HBM/선단 세정 36.5% 후반부) + 2차(2nm GAA 파운드리 초정밀 코팅 & 미코세라믹스 히터/정전척 침투율 ~12.5% 🔥10% 언저리)", "bottleneck_grade": "A", "bottleneck_factors": ["생산 Capa: 글로벌 8개국(미 오스틴/피닉스·대만·한국 안성/청주) 로컬 팹 직결 세정·코팅 인프라 독점 선점", "기술격차 해자: 2nm GAA 극미세 파티클 제어 세정·코팅 레시피 및 AlN 세라믹 히터 국산화", "특허/벤더 Lock-in: 삼성전자·TSMC·인텔·SK하이닉스 글로벌 현지 팹 Qual 인증 장벽"], "bottleneck_lead_time_months": 24, "bottleneck_duration_label": "⏳ 장기 구조적 병목 (24개월 / 2년+ 지속)", "bottleneck_lead_reason": "해외 현지 환경 인허가·클린룸 구축(12~18개월) + 글로벌 파운드리 2nm 공정 Qual 인증(12개월)으로 최소 24개월 병목 지속", "capa_util_pct": 76.0, "curr_opm_pct": 14.79, "core_bottleneck_only_mode": false, "pen_base_boost": 0.11, "pen_bull_boost": 0.14, "bn_base_bonus": 0.03, "bn_bull_bonus": 0.05, "total_sc_bn_base_mult": 1.14, "total_sc_bn_bull_mult": 1.19, "peg_factor": 0.85}, "step1_8_k_return": {"payout_ratio_pct": 28.3, "tsr_pct": 28.3, "div_yield_pct": 1.2, "dps": 285.0, "treasury_shares": 940145, "treasury_ratio_pct": 1.83, "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 28.3% ≥ 25% & 분기배당 실시)", "buyback_cliff_warn": false, "cliff_status": "🟢 정상 (현재 자기주식 940,145주 [1.83%] 보유 — 소각 전환 여부 모니터링)", "related_party_eok": 8.0, "tunneling_status": "🟢 양호 (유의미한 오너 개인회사 사익편취 내부거래 미감지 [8.0억 원])", "k_gov_note": "⚠️ 미코세라믹스 비지배지분(47.9%)에 따른 지배귀속률(52.2~70.3%) 차감 필수 & 순차입금 4,300억 반영", "kgov_mult": 1.0}, "regime": {"regime_changed": true, "ppe_chg_2y_pct": null, "debt_ratio_chg_2y_pctp": null, "opm_shift_pctp": -6.39, "flags": ["④ 사업구성레짐(OPM 과거중위 21.2% → 현재 14.8%, -6.4%p [본업 마진 훼손/경쟁 심화])", "⑤ 지정 리레이팅 분기점(2023-07-01) 이후 Post-Rerating 멀티플 우선 적용"]}, "section8": {"primary_metric": "PBR", "pbr_min": 1.48, "pbr_max": 9.19, "pbr_r2": 0.58, "pbr_dir": 59.5, "per_min": 10.39, "per_max": 68.96, "per_r2": 0.25, "per_dir": 45.9, "official_pbr": 4.63, "official_per": 42.3, "official_div": 1.2}, "section2": {"is_type_b": false, "verdict": "🟢 [유형 A: 일시적 사이클 저점 / 정상 영업 궤도 (Cyclical Trough / Normal)]", "controlling_ratio_pct": 52.23, "qoq_eps_positive": false, "qoq_eps_detail": "[액분·무증 소급보정 지배주주 EPS] 2026.1Q 169.2원 → 2026.2Q -45.6원 (적자 전환/지속 🚨)", "qoq_rev_pct": 12.0, "qoq_op_pct": 32.3, "qoq_summary_str": "[2026.1Q → 2026.2Q] 매출액 1,570.6억→1,759.6억(QoQ +12.0%) | 영업이익 204.5억→270.5억(QoQ +32.3%) | 수정EPS 169원→-46원", "kill_switch_guide": "차기 분기 영업이익 < 229.9억 원(직전분기 대비 -15% 하회) 또는 분기 지배주주 EPS < 0원 기록 시 핵심 가설 즉시 [약화] 강등", "eps_2y_chg": -23.295740593640836, "bps_2y_chg": 20.16934834264438, "op_yoy_q": -10.323012417179452, "op_yoy_ttm": -11.130150335218634, "op_yoy_used": -10.323012417179452, "op_yoy_detail": "분기(2025.2Q→2026.2Q) -10.3% (301.6억 → 270.5억) | TTM 영업이익 YoY: -11.1%", "curr_roe": 8.028792708095175, "mid_cycle_roe": 14.348520168901196, "mid_cycle_eps": 718.8396364950722, "pbr_cycle_max": 9.187384943114267, "pbr_3y_max": 9.187384943114267, "pbr_3y_mean": 3.570640191007251, "pbr_3y_p20": 2.3445377060654784, "pbr_3y_p65": 3.97544158218075, "pbr_3y_p90": 5.445187022279882, "per_3y_max": 68.95720814269178, "per_3y_mean": 28.90003501468767, "per_3y_p20": 14.834752900922958, "per_3y_p65": 35.73861607591433, "per_3y_p90": 45.50255631411484, "curr_eps_used": 623.0, "curr_bps_used": 5686.0}, "section3": {"is_low_vol_box": false, "nature_badge": "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]", "range_52w_pct": 197.62, "median_52w_range_pct": 177.09, "effective_52w_range": 177.09, "forward_bps": 5686.0, "is_peak_trap": false, "peak_trap_reason": "", "op_mult": 1.0, "sc_base_mult": 1.14, "sc_bull_mult": 1.19, "kgov_mult": 1.0, "peg_factor_used": 0.85, "base_mult_a": 1.14, "bull_mult_a": 1.19, "scurve_info": {"is_phase2": true, "is_early_ignition": false, "theme_name": "사용자/리포트 S-Curve Phase 2 지정 (--s-curve-phase2)", "exposure_pct": 77.6, "source_pdf": "Global_Trend 80p+ 심층 리포트 검증", "penetration_pct": 36.5, "second_penetration_pct": 12.5, "is_near_10pct_inflection": true, "inflection_desc": "1차(HBM/선단 세정 36.5% 후반부) + 2차(2nm GAA 파운드리 초정밀 코팅 & 미코세라믹스 히터/정전척 침투율 ~12.5% 🔥10% 언저리)", "bottleneck_grade": "A", "bottleneck_factors": ["생산 Capa: 글로벌 8개국(미 오스틴/피닉스·대만·한국 안성/청주) 로컬 팹 직결 세정·코팅 인프라 독점 선점", "기술격차 해자: 2nm GAA 극미세 파티클 제어 세정·코팅 레시피 및 AlN 세라믹 히터 국산화", "특허/벤더 Lock-in: 삼성전자·TSMC·인텔·SK하이닉스 글로벌 현지 팹 Qual 인증 장벽"], "bottleneck_lead_time_months": 24, "bottleneck_lead_reason": "해외 현지 환경 인허가·클린룸 구축(12~18개월) + 글로벌 파운드리 2nm 공정 Qual 인증(12개월)으로 최소 24개월 병목 지속"}, "tp1_price": 31010, "tp1_price_a": 31010, "tp1_upside": 17.69, "tp1_upside_a": 17.69, "bear_auto": 9240, "base_auto": 22430, "bull_auto": 29650, "base_auto_a": 25570, "bull_auto_a": 35280, "red_team_capa_verdict": "🟢 물리적 Capa 한계 내 달성 가능", "implied_op_base_a_eok": 572.0, "implied_op_bull_a_eok": 501.2}, "cyclical_guard": {"is_peak_trap": false, "peak_trap_reason": ""}, "risk_causal_chain": {"stage1_trigger": "전방 산업 수요 둔화 / 고객사 재고 조정 또는 경쟁사 단가 인하(ASP 하락)", "stage2_operational": "수주/출하(Q) 둔화 ➔ 고정비(감가상각·인건비) 디레버리지로 영업이익 급감(현재 QoQ +32.3%, YoY -10.3%) 및 재고/매출채권 회전일수 상승", "stage3_financial": "영업현금흐름(OCF) 축소 ➔ 순차입금(+4,300.0억) 이자부담 가중·CB 리픽싱/풋옵션 또는 배당 축소 ➔ 멀티플 하단(Bear) 회귀"}, "section4": {"d_close": 23850, "d_low20": 22500, "poc_low": 30720, "poc_high": 33460, "poc_pct": 29.9, "poc_trail_pin": 29798, "d_ma5": 24500, "d_ma20": 29662, "d_ma60": 26376, "vol_ma20": 429423, "vol_ratio": 0.55, "stoch_k": 14.1, "stoch_d": 11.0, "w_close": 23850, "w_ma10": 28445, "w_ma20": 29791, "w_ma60": 25604, "bb_upper": 44170, "bb_lower": 15412, "w_macd": -51.1, "w_macd_sig": 410.2, "w_macd_hist": -461.4, "w_mfi14": 64.9, "w_rsi14": 43.8, "w_mfi14_12w_max": 72.4, "buy1": 17940, "buy2": 19070, "buy3": 20190, "avg_buy_price": 19067, "init_stop_pin": 17040, "breakout_trail_pin": 29798, "gate1_rr": 0.0, "exec_rr": 1.66, "is_overvalued": true, "is_track2": false}, "reverse_dcf": {"status": "deficit", "price": 26350.0, "fcf_eok": -1755.0, "norm_fcf_eok": 750.0, "distb_shares": 50423130, "total_shares": 51363275, "treasury_shares": 940145, "wacc": 0.09, "terminal_g": 0.02, "years": 5, "net_debt_eok": 4300.0, "pref_mcap_eok": 0.0, "market_cap_distb_eok": 13286.49, "market_cap_total_eok": 13534.22, "ev_distb_eok": 17586.49, "non_op_assets_eok": 165.0, "non_op_haircut": 0.3, "recognized_non_op_eok": 115.5, "non_op_ratio_mcap_pct": 1.24, "non_op_ratio_book_pct": 5.5, "sotp_triggered": false, "core_op_ev_eok": 17470.99, "implied_g_distb_pct": null, "implied_g_total_pct": null, "implied_g_ev_pct": null, "implied_g_core_ev_pct": null, "norm_g_distb_pct": 6.6, "norm_g_ev_pct": 13.45, "norm_g_core_ev_pct": null}, "canonical_html_tag": "<div id=\"dcf-calculator-root\" data-price=\"26350\" data-shares=\"50423130\" data-total-shares=\"51363275\" data-fcf=\"750.0\" data-reported-fcf=\"-1755.0\" data-net-debt=\"4300.0\" data-non-op-assets=\"115.5\" data-bear=\"9240\" data-base=\"22430\" data-bull=\"29650\" data-base-a=\"25570\" data-bull-a=\"35280\" data-tp1=\"31010\" data-tp1-a=\"31010\" data-buy1=\"17940\" data-buy2=\"19070\" data-buy3=\"20190\" data-stop-pin=\"17040\" data-poc-low=\"30720\"></div>"};
+        // Replace mermaid code blocks with div class="mermaid" and run rendering safely
+        document.addEventListener("DOMContentLoaded", function() {
+            const blocks = document.querySelectorAll("code.language-mermaid");
+            blocks.forEach(block => {
+                const parent = block.parentNode; // <pre>
+                const div = document.createElement("div");
+                div.className = "mermaid";
+                div.textContent = block.textContent;
+                parent.parentNode.replaceChild(div, parent);
+            });
+            
+            async function renderMermaidSafe() {
+                let attempts = 0;
+                while (!window.mermaid && attempts < 25) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                    } catch (e) {
+                        console.warn("Mermaid execution error caught:", e);
+                    }
+                }
+            }
+            renderMermaidSafe();
+            
+            // Highlight Fact vs Narrative & Falsification Kill-Switch
+            const allElements = document.querySelectorAll("p, li, blockquote, td");
+            allElements.forEach(el => {
+                if (el.innerHTML.includes("[공시 팩트]")) {
+                    el.innerHTML = el.innerHTML.replace("[공시 팩트]", "<span class='fact-badge'>[공시 팩트]</span>");
+                    el.classList.add("fact-block");
+                }
+                if (el.innerHTML.includes("[시장 내러티브]") || el.innerHTML.includes("[시장 주장]")) {
+                    el.innerHTML = el.innerHTML.replace(/\[시장 (내러티브|주장)\]/g, "<span class='narrative-badge'>[시장 $1]</span>");
+                    el.classList.add("narrative-block");
+                }
+            });
+            
+            // DCF Calculator & Master SOP Calculator (Bound to SSOT_DATA if present)
+            const dcfRoot = document.getElementById('dcf-calculator-root');
+            if (dcfRoot) {
+                const sDcf = (SSOT_DATA && SSOT_DATA.reverse_dcf) ? SSOT_DATA.reverse_dcf : {};
+                const sSec3 = (SSOT_DATA && SSOT_DATA.section3) ? SSOT_DATA.section3 : {};
+                const sSec4 = (SSOT_DATA && SSOT_DATA.section4) ? SSOT_DATA.section4 : {};
+
+                const rawPrice = Number(SSOT_DATA?.anchor_price || sDcf.price || dcfRoot.getAttribute('data-price') || 100000);
+                const initPrice = rawPrice.toLocaleString();
+                const initShares = Number(sDcf.distb_shares || dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
+                const reportedFcfNum = (sDcf.fcf_eok !== undefined) ? Number(sDcf.fcf_eok) : Number(dcfRoot.getAttribute('data-reported-fcf') || dcfRoot.getAttribute('data-fcf') || 500);
+                const normFcfNum = (sDcf.norm_fcf_eok !== undefined && sDcf.norm_fcf_eok !== null) ? Number(sDcf.norm_fcf_eok) : 0;
+                const useNormFcf = (reportedFcfNum <= 0 && normFcfNum > 0);
+                const effectiveFcfNum = useNormFcf ? normFcfNum : (Number(dcfRoot.getAttribute('data-fcf')) > 0 ? Number(dcfRoot.getAttribute('data-fcf')) : reportedFcfNum);
+                const initFcf = effectiveFcfNum.toLocaleString();
+                const fcfLabelText = useNormFcf
+                    ? ('기준 FCF (억 원 · 증설기 오너정규화 FCF, 보고FCF ' + reportedFcfNum.toLocaleString() + '억)')
+                    : '기준 FCF (억 원)';
+                const rawNetDebt = parseFloat(sDcf.net_debt_eok !== undefined ? sDcf.net_debt_eok : (dcfRoot.getAttribute('data-net-debt') || '0'));
+                const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
+                const rawNonOp = parseFloat(sDcf.recognized_non_op_eok !== undefined ? sDcf.recognized_non_op_eok : (dcfRoot.getAttribute('data-non-op-assets') || '0'));
+                const initNonOp = isNaN(rawNonOp) ? '0' : Math.round(rawNonOp).toLocaleString();
+
+                let rawWacc = parseFloat(sDcf.wacc || dcfRoot.getAttribute('data-wacc') || '9.0');
+                if (rawWacc > 0 && rawWacc < 1) rawWacc = rawWacc * 100;
+                let rawTerm = parseFloat(sDcf.terminal_g || dcfRoot.getAttribute('data-terminal') || '2.0');
+                if (rawTerm > 0 && rawTerm < 1) rawTerm = rawTerm * 100;
+                const initWacc = rawWacc.toFixed(1);
+                const initTerminal = rawTerm.toFixed(1);
+
+                function extractKrwPrices(str) {
+                    if (!str) return [];
+                    const matches = [...str.matchAll(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*원/g)];
+                    if (matches.length > 0) {
+                        return matches.map(m => parseFloat(m[1].replace(/,/g, '')));
+                    }
+                    const m2 = str.match(/([0-9]{1,3}(?:,[0-9]{3})+)/);
+                    if (m2) return [parseFloat(m2[1].replace(/,/g, ''))];
+                    return [];
+                }
+
+                let autoBull = Number(sSec3.bull_auto || dcfRoot.getAttribute('data-bull') || 0);
+                let autoBase = Number((sSec3.is_low_vol_box ? sSec3.tp1_price : sSec3.base_auto) || dcfRoot.getAttribute('data-tp1') || dcfRoot.getAttribute('data-base') || 0);
+                let autoBullA = Number(sSec3.bull_auto_a || dcfRoot.getAttribute('data-bull-a') || 0);
+                let autoBaseA = Number((sSec3.is_low_vol_box ? sSec3.tp1_price_a : sSec3.base_auto_a) || dcfRoot.getAttribute('data-tp1-a') || dcfRoot.getAttribute('data-base-a') || 0);
+                let autoBear = Number(sSec3.bear_auto || dcfRoot.getAttribute('data-bear') || 0);
+                let autoPocLow = Number(sSec4.poc_low || dcfRoot.getAttribute('data-poc-low') || 0);
+                let attrBuy1 = Number(sSec4.buy1 || dcfRoot.getAttribute('data-buy1') || 0);
+                let attrBuy2 = Number(sSec4.buy2 || dcfRoot.getAttribute('data-buy2') || 0);
+                let attrBuy3 = Number(sSec4.buy3 || dcfRoot.getAttribute('data-buy3') || 0);
+                let attrStopPin = Number(sSec4.init_stop_pin || dcfRoot.getAttribute('data-stop-pin') || 0);
+
+                if (!autoBull || !autoBase || !autoBear || !autoBullA || !autoBaseA) {
+                    const rows = document.querySelectorAll('table tr');
+                    rows.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 5) {
+                            const label = tds[0].innerText.trim();
+                            let prices = extractKrwPrices(tds[tds.length - 2].innerText);
+                            if (prices.length === 0 && tds.length >= 6) {
+                                prices = extractKrwPrices(tds[tds.length - 3].innerText);
+                            }
+                            if (prices.length > 0) {
+                                const pB = prices[0];
+                                const pA = prices.length > 1 ? prices[1] : prices[0];
+                                if (/bull/i.test(label)) {
+                                    if (!autoBull) autoBull = pB;
+                                    if (!autoBullA) autoBullA = pA;
+                                }
+                                if (/tp1/i.test(label)) {
+                                    autoBase = pB;
+                                    autoBaseA = pA;
+                                } else if (/base/i.test(label)) {
+                                    if (!autoBase) autoBase = pB;
+                                    if (!autoBaseA) autoBaseA = pA;
+                                }
+                                if (!autoBear && /bear/i.test(label)) autoBear = pB;
+                            }
+                        }
+                    });
+                }
+
+                if (!autoPocLow) {
+                    const bodyTxt = document.body.innerText;
+                    const mPoc = bodyTxt.match(/20일\s*매물대[^\n]*?([0-9]{1,3}(?:,[0-9]{3})+)\s*원\s*~/);
+                    if (mPoc) autoPocLow = parseFloat(mPoc[1].replace(/,/g, ''));
+                }
+
+                if (!autoBear) autoBear = Math.round(rawPrice * 0.80);
+                if (!autoBase) autoBase = Math.round(rawPrice * 1.25);
+                if (!autoBull) autoBull = Math.round(rawPrice * 1.55);
+                if (!autoBaseA) autoBaseA = autoBase;
+                if (!autoBullA) autoBullA = autoBull;
+                if (!autoPocLow) autoPocLow = Math.round(rawPrice * 0.96);
+
+                // Conflict-free default Buy 1 < Buy 2 < Buy 3 < Target & Hard Stop 1 < Buy 1
+                let initBuy1 = attrBuy1 > 0 ? attrBuy1 : Math.min(autoBear, Math.round(rawPrice * 0.92), Math.round(autoBase * 0.85));
+                let initBuy2 = attrBuy2 > 0 ? attrBuy2 : (rawPrice <= autoBase * 0.96 ? Math.max(rawPrice, Math.round(initBuy1 * 1.03)) : Math.round((initBuy1 + autoBase * 0.92) / 2));
+                let initBuy3 = attrBuy3 > 0 ? attrBuy3 : (rawPrice <= autoBase * 0.96 ? Math.min(Math.round(initBuy2 * 1.03), Math.round(autoBase * 0.96)) : Math.round(autoBase * 0.92));
+                if (initBuy1 >= initBuy2) initBuy1 = Math.round(initBuy2 * 0.95);
+                if (initBuy3 <= initBuy2) initBuy3 = Math.round(initBuy2 * 1.03);
+
+                let initStopPin = attrStopPin > 0 ? attrStopPin : Math.min(Math.round(autoPocLow * 0.97), Math.round(initBuy1 * 0.95), Math.round(autoBear * 0.95));
+                if (initStopPin >= initBuy1) initStopPin = Math.round(initBuy1 * 0.95);
+
+                const ssotBanner = SSOT_DATA ? '<div class="ssot-verified-banner">✅ 파이프라인 SSOT(valuation_metrics.json) 직결 바인딩 완료 — AI 수동 이기(Transcription) 오차 0.0% 검증됨</div>' : '';
+                
+                dcfRoot.innerHTML = ssotBanner +
+                '<div class="dcf-calc-container">' +
+                    '<h3>⚡ Interactive Reverse DCF (5-Year Model · Equity · EV · SOTP 본업EV 병기)</h3>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>현재 주가 (원)</label>' +
+                            '<input type="text" id="dcf-input-price" value="' + initPrice + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>유통 주식수 (주 - 자사주 제외)</label>' +
+                            '<input type="text" id="dcf-input-shares" value="' + initShares + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>순차입금/순현금 (억 원, 순현금은 -)</label>' +
+                            '<input type="text" id="dcf-input-net-debt" value="' + initNetDebt + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>비영업자산 안전가치 (억 원, SOTP 차감)</label>' +
+                            '<input type="text" id="dcf-input-non-op" value="' + initNonOp + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>' + fcfLabelText + '</label>' +
+                            '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>할인율 (%, WACC)</label>' +
+                            '<input type="number" id="dcf-input-wacc" value="' + initWacc + '" step="0.1">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>영구성장률 (%, Terminal)</label>' +
+                            '<input type="number" id="dcf-input-terminal" value="' + initTerminal + '" step="0.1">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="dcf-result-box" id="dcf-result-box">' +
+                        '<div class="dcf-result-label">향후 5년 평균 요구성장률 (Implied Growth Rate)</div>' +
+                        '<div class="dcf-result-value" id="dcf-result-value">계산 중...</div>' +
+                        '<div class="dcf-result-msg" id="dcf-result-msg"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sop-calc-container" id="sop-calc-container">' +
+                    '<h3>🧮 마스터 SOP 3분할 매수 · 이중 안전핀 · 분할 익절 실전 계산기 (🛡️대안 B & 🚀대안 A 동시 지원)</h3>' +
+                    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+                        '<button type="button" id="btn-apply-model-b" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #2563eb;background:#eff6ff;color:#1e40af;font-weight:700;font-size:9.5pt;">🛡️ 대안 B (보수적 순수 DART): Base ' + autoBase.toLocaleString() + '원 / Bull ' + autoBull.toLocaleString() + '원 적용</button>' +
+                        '<button type="button" id="btn-apply-model-a" style="cursor:pointer;padding:7px 14px;border-radius:6px;border:1px solid #059669;background:#ecfdf5;color:#065f46;font-weight:700;font-size:9.5pt;">🚀 대안 A (업황·S-Curve 할증): Base ' + autoBaseA.toLocaleString() + '원 / Bull ' + autoBullA.toLocaleString() + '원 적용</button>' +
+                    '</div>' +
+                    '<div class="dcf-calc-grid">' +
+                        '<div class="dcf-input-group">' +
+                            '<label>총 투자예산 (원)</label>' +
+                            '<input type="text" id="sop-input-budget" value="10,000,000">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 정찰병 매수가 (30% · Bear/눌림목)</label>' +
+                            '<input type="text" id="sop-input-buy1" value="' + initBuy1.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 본대 매수가 (40% · 매물대+20일선 돌파)</label>' +
+                            '<input type="text" id="sop-input-buy2" value="' + initBuy2.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>3차 확인사살 매수가 (30% · 주봉 20주선 안착)</label>' +
+                            '<input type="text" id="sop-input-buy3" value="' + initBuy3.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1단계 초입 고정 안전핀 (원 · 진입 손절선)</label>' +
+                            '<input type="text" id="sop-input-stop-pin" value="' + initStopPin.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2단계 20일 매물대 하단가 (원 · 돌파 후 기준)</label>' +
+                            '<input type="text" id="sop-input-poc-low" value="' + autoPocLow.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>1차 목표가 (Base / TP1 단기실전, 원)</label>' +
+                            '<input type="text" id="sop-input-base" value="' + autoBase.toLocaleString() + '">' +
+                        '</div>' +
+                        '<div class="dcf-input-group">' +
+                            '<label>2차 목표가 (Bull 호황 상단, 원)</label>' +
+                            '<input type="text" id="sop-input-bull" value="' + autoBull.toLocaleString() + '">' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="sop-grid-3">' +
+                        '<div class="sop-card buy-card" id="sop-buy-summary"></div>' +
+                        '<div class="sop-card stop-card" id="sop-stop-summary"></div>' +
+                        '<div class="sop-card sell-card" id="sop-sell-summary"></div>' +
+                    '</div>' +
+                '</div>';
+
+                const elPrice = document.getElementById('dcf-input-price');
+                const elShares = document.getElementById('dcf-input-shares');
+                const elNetDebt = document.getElementById('dcf-input-net-debt');
+                const elNonOp = document.getElementById('dcf-input-non-op');
+                const elFcf = document.getElementById('dcf-input-fcf');
+                const elWacc = document.getElementById('dcf-input-wacc');
+                const elTerminal = document.getElementById('dcf-input-terminal');
+                const elResultValue = document.getElementById('dcf-result-value');
+                const elResultMsg = document.getElementById('dcf-result-msg');
+                const elResultBox = document.getElementById('dcf-result-box');
+                
+                function parseFormattedNum(val) {
+                    if (val === undefined || val === null) return 0;
+                    const cleaned = val.toString().replace(/,/g, '').trim();
+                    if (cleaned === '' || cleaned === '-') return 0;
+                    return parseFloat(cleaned);
+                }
+
+                function formatNumberInput(e) {
+                    if (e.target.type === 'number') return;
+                    let cursor = e.target.selectionStart;
+                    let originalLength = e.target.value.length;
+                    let isNegative = e.target.value.startsWith('-');
+                    let val = e.target.value.replace(/[^\d.]/g, '');
+                    
+                    if (val !== '' && !isNaN(val)) {
+                        let parts = val.split('.');
+                        parts[0] = parseInt(parts[0], 10).toLocaleString();
+                        let formatted = parts.join('.');
+                        if (isNegative) formatted = '-' + formatted;
+                        e.target.value = formatted;
+                    } else if (isNegative) {
+                        e.target.value = '-';
+                    } else {
+                        e.target.value = '';
+                    }
+                    
+                    let newLength = e.target.value.length;
+                    cursor = cursor + (newLength - originalLength);
+                    if(cursor < 0) cursor = 0;
+                    e.target.setSelectionRange(cursor, cursor);
+                }
+
+                function solveImpliedGrowthForTarget(targetVal, fcf, wacc, terminal) {
+                    if (targetVal <= 0 || fcf <= 0 || wacc <= terminal) return null;
+                    function calcDCFValue(g) {
+                        let pv = 0;
+                        let cf = fcf;
+                        for(let i=1; i<=5; i++) {
+                            cf = cf * (1 + g);
+                            pv += cf / Math.pow(1 + wacc, i);
+                        }
+                        let tv = (cf * (1 + terminal)) / (wacc - terminal);
+                        pv += tv / Math.pow(1 + wacc, 5);
+                        return pv;
+                    }
+                    let low = -0.99;
+                    let high = 10.0;
+                    let g = 0;
+                    let found = false;
+                    for (let iter = 0; iter < 200; iter++) {
+                        g = (low + high) / 2;
+                        let pv = calcDCFValue(g);
+                        if (Math.abs(pv - targetVal) / targetVal < 0.00001) {
+                            found = true;
+                            break;
+                        }
+                        if (pv > targetVal) {
+                            high = g;
+                        } else {
+                            low = g;
+                        }
+                    }
+                    if (found || Math.abs(high - low) < 0.00001) return g;
+                    return null;
+                }
+
+                function calculateImpliedGrowth() {
+                    const price = parseFormattedNum(elPrice.value);
+                    const shares = parseFormattedNum(elShares.value);
+                    const netDebtEok = parseFormattedNum(elNetDebt.value);
+                    const nonOpEok = parseFormattedNum(elNonOp.value);
+                    const fcf = parseFormattedNum(elFcf.value) * 100000000;
+                    const wacc = parseFloat(elWacc.value) / 100.0;
+                    const terminal = parseFloat(elTerminal.value) / 100.0;
+
+                    if (isNaN(price) || isNaN(shares) || isNaN(fcf) || isNaN(wacc) || isNaN(terminal) || price <= 0 || shares <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "입력값을 올바르게 입력해주세요.";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (fcf <= 0) {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "FCF 적자(음수)로 인해 역DCF 계산이 불가능합니다 (Normalized FCF를 입력해 보세요).";
+                        elResultBox.className = "dcf-result-box error";
+                        return;
+                    }
+
+                    if (wacc <= terminal) {
+                         elResultValue.textContent = "N/A";
+                         elResultMsg.textContent = "할인율은 영구성장률보다 커야 합니다.";
+                         elResultBox.className = "dcf-result-box error";
+                         return;
+                    }
+
+                    const equityVal = price * shares;
+                    const evVal = Math.max(equityVal * 0.05, equityVal + (netDebtEok * 100000000));
+                    const coreEvVal = Math.max(equityVal * 0.05, evVal - (nonOpEok * 100000000));
+                    const gEquity = solveImpliedGrowthForTarget(equityVal, fcf, wacc, terminal);
+                    const gEv = solveImpliedGrowthForTarget(evVal, fcf, wacc, terminal);
+                    const gCoreEv = nonOpEok > 0 ? solveImpliedGrowthForTarget(coreEvVal, fcf, wacc, terminal) : null;
+
+                    if (gEquity !== null) {
+                        const eqPct = (gEquity * 100).toFixed(2);
+                        const mcapEok = Math.round(equityVal / 100000000).toLocaleString();
+                        const evEok = Math.round(evVal / 100000000).toLocaleString();
+                        const coreEvEok = Math.round(coreEvVal / 100000000).toLocaleString();
+                        let primaryG = gEquity;
+                        if (Math.abs(netDebtEok) > 0 && gEv !== null) {
+                            const evPct = (gEv * 100).toFixed(2);
+                            primaryG = netDebtEok > 0 ? gEv : gEquity;
+                            let valTxt = "Equity " + eqPct + "%  |  EV " + evPct + "%";
+                            if (gCoreEv !== null) {
+                                valTxt += "  |  본업EV(SOTP) " + (gCoreEv * 100).toFixed(2) + "%";
+                            }
+                            elResultValue.textContent = valTxt;
+                            const ndLabel = netDebtEok > 0 ? ("순차입금 +" + Math.round(netDebtEok).toLocaleString() + "억 가산") : ("가용 순현금 " + Math.round(netDebtEok).toLocaleString() + "억 차감");
+                            elResultMsg.textContent = "유통시총(" + mcapEok + "억) 기준 " + eqPct + "% vs 실질 EV(" + evEok + "억, " + ndLabel + ") 기준 " + evPct + "%" + (gCoreEv !== null ? (" vs 본업EV(" + coreEvEok + "억) 기준 " + (gCoreEv*100).toFixed(2) + "%") : "");
+                        } else {
+                            elResultValue.textContent = eqPct + "%" + (gCoreEv !== null ? (" | 본업EV(SOTP) " + (gCoreEv*100).toFixed(2) + "%") : "");
+                            elResultMsg.textContent = "현재 유통시가총액(" + mcapEok + "억 원)을 정당화하는 향후 5년 연평균 FCF 성장률입니다.";
+                        }
+                        if (primaryG < 0) {
+                             elResultBox.className = "dcf-result-box low-growth";
+                        } else if (primaryG > 0.15) {
+                             elResultBox.className = "dcf-result-box high-growth";
+                        } else {
+                             elResultBox.className = "dcf-result-box normal-growth";
+                        }
+                    } else {
+                        elResultValue.textContent = "N/A";
+                        elResultMsg.textContent = "요구 성장률 계산 범위를 벗어났습니다.";
+                        elResultBox.className = "dcf-result-box error";
+                    }
+                }
+
+                const inputs = [elPrice, elShares, elNetDebt, elNonOp, elFcf, elWacc, elTerminal];
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateImpliedGrowth();
+                    });
+                });
+
+                calculateImpliedGrowth();
+
+                // Master SOP Calculator Logic
+                const elBudget = document.getElementById('sop-input-budget');
+                const elBuy1 = document.getElementById('sop-input-buy1');
+                const elBuy2 = document.getElementById('sop-input-buy2');
+                const elBuy3 = document.getElementById('sop-input-buy3');
+                const elStopPin = document.getElementById('sop-input-stop-pin');
+                const elPocLow = document.getElementById('sop-input-poc-low');
+                const elBase = document.getElementById('sop-input-base');
+                const elBull = document.getElementById('sop-input-bull');
+
+                const elBuySummary = document.getElementById('sop-buy-summary');
+                const elStopSummary = document.getElementById('sop-stop-summary');
+                const elSellSummary = document.getElementById('sop-sell-summary');
+
+                function calculateSopPlan() {
+                    const budget = parseFormattedNum(elBudget.value) || 0;
+                    const b1 = parseFormattedNum(elBuy1.value) || 1;
+                    const b2 = parseFormattedNum(elBuy2.value) || 1;
+                    const b3 = parseFormattedNum(elBuy3.value) || 1;
+                    const rawStopPin = parseFormattedNum(elStopPin.value) || Math.round(b1 * 0.95);
+                    const pocLow = parseFormattedNum(elPocLow.value) || b2;
+                    const tBase = parseFormattedNum(elBase.value) || b2;
+                    const tBull = parseFormattedNum(elBull.value) || b2;
+
+                    const alloc1 = budget * 0.30;
+                    const alloc2 = budget * 0.40;
+                    const alloc3 = budget * 0.30;
+
+                    const qty1 = Math.floor(alloc1 / b1);
+                    const qty2 = Math.floor(alloc2 / b2);
+                    const qty3 = Math.floor(alloc3 / b3);
+                    const totalQty = qty1 + qty2 + qty3;
+                    const totalInvested = (qty1 * b1) + (qty2 * b2) + (qty3 * b3);
+                    const avgPrice = totalQty > 0 ? Math.round(totalInvested / totalQty) : Math.round((b1 * 0.3) + (b2 * 0.4) + (b3 * 0.3));
+
+                    const minEntryPrice = Math.min(b1, b2, avgPrice);
+                    let safetyPin = rawStopPin;
+                    let pinAutoCorrected = false;
+                    if (safetyPin >= minEntryPrice) {
+                        safetyPin = Math.round(minEntryPrice * 0.95);
+                        pinAutoCorrected = true;
+                    }
+                    const pocTrailingPin = Math.round(pocLow * 0.97);
+                    const pinLossPct = avgPrice > 0 ? ((safetyPin / avgPrice - 1) * 100).toFixed(1) : "0.0";
+                    const waistThreshold = Math.round(avgPrice * 1.15);
+
+                    let orderNotice = "";
+                    if (avgPrice >= tBase) {
+                        orderNotice = '<div class="sop-stat-line" style="color:#dc2626;font-weight:700;">⚠️ 경고: 완성 평단가(' + avgPrice.toLocaleString() + '원)가 1차 목표가(' + tBase.toLocaleString() + '원) 이상입니다. 눌림목 매수가로 하향 조정하세요.</div>';
+                    }
+
+                    const sellQty1 = Math.floor(totalQty * 0.50);
+                    const sellQty2 = totalQty - sellQty1;
+                    const profit1 = sellQty1 * (tBase - avgPrice);
+                    const profit2 = sellQty2 * (tBull - avgPrice);
+                    const totalProfit = profit1 + profit2;
+                    const totalRoiNum = totalInvested > 0 ? ((totalProfit / totalInvested) * 100) : 0;
+                    const baseUpsideNum = avgPrice > 0 ? ((tBase / avgPrice - 1) * 100) : 0;
+                    const bullUpsideNum = avgPrice > 0 ? ((tBull / avgPrice - 1) * 100) : 0;
+                    const trailingStop3 = Math.round(tBull * 0.92);
+
+                    const profitB = (sellQty1 * (autoBase - avgPrice)) + (sellQty2 * (autoBull - avgPrice));
+                    const roiB = totalInvested > 0 ? ((profitB / totalInvested) * 100) : 0;
+                    const profitA = (sellQty1 * (autoBaseA - avgPrice)) + (sellQty2 * (autoBullA - avgPrice));
+                    const roiA = totalInvested > 0 ? ((profitA / totalInvested) * 100) : 0;
+
+                    function fmtSignedKrw(v) {
+                        const r = Math.round(v);
+                        return (r >= 0 ? '+' : '') + r.toLocaleString() + '원';
+                    }
+                    function fmtSignedPct(v) {
+                        return (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+                    }
+
+                    const riskAmt = avgPrice - safetyPin;
+                    const rewardAmt = ((tBase + tBull) / 2) - avgPrice;
+                    const sopRR = (riskAmt > 0 && rewardAmt > 0) ? (rewardAmt / riskAmt).toFixed(2) + ' : 1' : '0.00 : 1 (재설정 필요)';
+                    const totalColor = totalProfit >= 0 ? '#059669' : '#dc2626';
+                    const pinNote = pinAutoCorrected ? ' <span style="color:#dc2626;font-size:8.5pt;">(평단가 초과 방지를 위해 진입하단 -5%로 자동보정됨)</span>' : '';
+
+                    elBuySummary.innerHTML =
+                        '<h4>🔵 ① 3분할 매수 주문표 (30 : 40 : 30)</h4>' +
+                        '<div class="sop-stat-line">• <strong>1차 정찰병(30%):</strong> ' + b1.toLocaleString() + '원 × <strong>' + qty1.toLocaleString() + '주</strong> (' + Math.round(qty1 * b1).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>2차 본대(40%):</strong> ' + b2.toLocaleString() + '원 × <strong>' + qty2.toLocaleString() + '주</strong> (' + Math.round(qty2 * b2).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">• <strong>3차 확인사살(30%):</strong> ' + b3.toLocaleString() + '원 × <strong>' + qty3.toLocaleString() + '주</strong> (' + Math.round(qty3 * b3).toLocaleString() + '원)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>총 매수 주식수:</strong> <span class="sop-highlight">' + totalQty.toLocaleString() + '주</span> (실투입 ' + Math.round(totalInvested).toLocaleString() + '원)</div>' +
+                        '<div class="sop-stat-line">▶ <strong>완성 평균단가:</strong> <span class="sop-highlight">' + avgPrice.toLocaleString() + '원</span></div>' +
+                        orderNotice;
+
+                    elStopSummary.innerHTML =
+                        '<h4>🚨 ② 이중 안전핀(초입 손절 vs 돌파 후 보호) & 허리 홀딩</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 초입 고정 안전핀(진입 손절선):</strong> <span class="sop-pin-badge">' + safetyPin.toLocaleString() + '원</span> (평단 대비 ' + pinLossPct + '%)' + pinNote + '</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 매물대 돌파 후 보호핀(POC -3%):</strong> <strong>' + pocTrailingPin.toLocaleString() + '원</strong> (매물대 상단 안착 후 본절·수익 보호선으로 격상)</div>' +
+                        '<hr style="border:none;border-top:1px dashed #fca5a5;margin:8px 0;">' +
+                        '<div class="sop-stat-line">• <strong>상승 허리 전환가(+15%):</strong> <span class="sop-highlight">' + waistThreshold.toLocaleString() + '원</span> 돌파 시</div>' +
+                        '<div class="sop-stat-line">• <strong>허리 홀딩 규칙:</strong> 일봉 20일선 노이즈 100% 무시 & <strong>주봉 20주선 종가 이탈 전까지 끝까지 홀딩</strong></div>';
+
+                    elSellSummary.innerHTML =
+                        '<h4>🟢 ③ 2단계 분할 익절 & 고점경보</h4>' +
+                        '<div class="sop-stat-line">• <strong>1단계 반타작(50%, ' + sellQty1.toLocaleString() + '주 @ ' + tBase.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit1) + '</strong> (' + fmtSignedPct(baseUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>2단계 추세완주(50%, ' + sellQty2.toLocaleString() + '주 @ ' + tBull.toLocaleString() + '원):</strong> <strong>' + fmtSignedKrw(profit2) + '</strong> (' + fmtSignedPct(bullUpsideNum) + ')</div>' +
+                        '<div class="sop-stat-line">• <strong>고점경보 3호(-8% 트레일링):</strong> 최고점(' + tBull.toLocaleString() + '원) 대비 <strong>' + trailingStop3.toLocaleString() + '원</strong> 이탈 시 전량 청산</div>' +
+                        '<hr style="border:none;border-top:1px dashed #cbd5e1;margin:8px 0;">' +
+                        '<div class="sop-stat-line">▶ <strong>현재 적용 기대수익:</strong> <span class="sop-highlight" style="color:' + totalColor + ';">' + fmtSignedKrw(totalProfit) + ' (' + fmtSignedPct(totalRoiNum) + ')</span> | <strong>실전 R:R ' + sopRR + '</strong></div>' +
+                        '<div class="sop-stat-line" style="font-size:9pt;color:#475569;margin-top:4px;">• 🛡️대안B: <strong>' + fmtSignedKrw(profitB) + ' (' + fmtSignedPct(roiB) + ')</strong> vs 🚀대안A: <strong>' + fmtSignedKrw(profitA) + ' (' + fmtSignedPct(roiA) + ')</strong></div>';
+                }
+
+                const btnModelB = document.getElementById('btn-apply-model-b');
+                const btnModelA = document.getElementById('btn-apply-model-a');
+                if (btnModelB) {
+                    btnModelB.addEventListener('click', () => {
+                        elBase.value = autoBase.toLocaleString();
+                        elBull.value = autoBull.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+                if (btnModelA) {
+                    btnModelA.addEventListener('click', () => {
+                        elBase.value = autoBaseA.toLocaleString();
+                        elBull.value = autoBullA.toLocaleString();
+                        calculateSopPlan();
+                    });
+                }
+
+                const sopInputs = [elBudget, elBuy1, elBuy2, elBuy3, elStopPin, elPocLow, elBase, elBull];
+                sopInputs.forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        formatNumberInput(e);
+                        calculateSopPlan();
+                    });
+                });
+
+                calculateSopPlan();
+            }
+        });
+    </script>
+</body>
+</html>

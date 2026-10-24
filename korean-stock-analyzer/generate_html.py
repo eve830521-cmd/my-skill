@@ -133,10 +133,12 @@ for sp in candidate_ssot_paths:
         except Exception:
             pass
 
-# Pipeline Integrity Audit: Check if Markdown numbers match SSOT JSON
+# Pipeline Integrity Audit: Check if Markdown numbers match SSOT JSON (v4.3 Full 7-Point Verification)
 pipeline_audit_warnings = []
 if ssot_data:
     anchor_price = ssot_data.get("anchor_price") or ssot_data.get("reverse_dcf", {}).get("price")
+    s3 = ssot_data.get("section3", {})
+    s4 = ssot_data.get("section4", {})
     if anchor_price:
         m_root_price = re.search(r'data-price="([0-9.,]+)"', md_text)
         if m_root_price:
@@ -145,6 +147,23 @@ if ssot_data:
                 pipeline_audit_warnings.append(
                     f"[주가 불일치 자동교정] 마크다운 data-price({md_p:,.0f}원) != 코드 SSOT 원본({float(anchor_price):,.0f}원)"
                 )
+        for attr_name, ssot_val in [
+            ("data-base", s3.get("base_auto")),
+            ("data-base-a", s3.get("base_auto_a")),
+            ("data-bull", s3.get("bull_auto")),
+            ("data-bull-a", s3.get("bull_auto_a")),
+            ("data-bear", s3.get("bear_auto")),
+            ("data-buy1", s4.get("buy1")),
+            ("data-stop-pin", s4.get("init_stop_pin")),
+        ]:
+            if ssot_val:
+                m_attr = re.search(rf'{attr_name}="([0-9.,]+)"', md_text)
+                if m_attr:
+                    md_v = float(m_attr.group(1).replace(",", ""))
+                    if abs(md_v - float(ssot_val)) >= 1.0:
+                        pipeline_audit_warnings.append(
+                            f"[{attr_name} 불일치 자동교정] 마크다운({md_v:,.0f}원) != 코드 SSOT 원본({float(ssot_val):,.0f}원)"
+                        )
         # Auto-replace canonical dcf-calculator-root tag if canonical_html_tag is in SSOT
         canonical_tag = ssot_data.get("canonical_html_tag")
         if canonical_tag and 'id="dcf-calculator-root"' in md_text:
@@ -157,6 +176,8 @@ if ssot_data:
 if pipeline_audit_warnings:
     for w in pipeline_audit_warnings:
         print(f"⚠️ {w}")
+elif ssot_data:
+    print(f"✅ [SSOT 무결성 검증 통과] {os.path.basename(md_file)} ↔ valuation_metrics.json (기준가 {ssot_data.get('anchor_price', 0):,}원)")
 
 # Pre-process Mermaid diagrams to ensure strict Mermaid v10.9.8+ syntax compliance
 md_text = sanitize_mermaid_in_markdown(md_text)
@@ -302,7 +323,14 @@ html_template = f"""<!DOCTYPE html>
                 const rawPrice = Number(SSOT_DATA?.anchor_price || sDcf.price || dcfRoot.getAttribute('data-price') || 100000);
                 const initPrice = rawPrice.toLocaleString();
                 const initShares = Number(sDcf.distb_shares || dcfRoot.getAttribute('data-shares') || 10000000).toLocaleString();
-                const initFcf = Number(sDcf.fcf_eok || dcfRoot.getAttribute('data-fcf') || 500).toLocaleString();
+                const reportedFcfNum = (sDcf.fcf_eok !== undefined) ? Number(sDcf.fcf_eok) : Number(dcfRoot.getAttribute('data-reported-fcf') || dcfRoot.getAttribute('data-fcf') || 500);
+                const normFcfNum = (sDcf.norm_fcf_eok !== undefined && sDcf.norm_fcf_eok !== null) ? Number(sDcf.norm_fcf_eok) : 0;
+                const useNormFcf = (reportedFcfNum <= 0 && normFcfNum > 0);
+                const effectiveFcfNum = useNormFcf ? normFcfNum : (Number(dcfRoot.getAttribute('data-fcf')) > 0 ? Number(dcfRoot.getAttribute('data-fcf')) : reportedFcfNum);
+                const initFcf = effectiveFcfNum.toLocaleString();
+                const fcfLabelText = useNormFcf
+                    ? ('기준 FCF (억 원 · 증설기 오너정규화 FCF, 보고FCF ' + reportedFcfNum.toLocaleString() + '억)')
+                    : '기준 FCF (억 원)';
                 const rawNetDebt = parseFloat(sDcf.net_debt_eok !== undefined ? sDcf.net_debt_eok : (dcfRoot.getAttribute('data-net-debt') || '0'));
                 const initNetDebt = isNaN(rawNetDebt) ? '0' : Math.round(rawNetDebt).toLocaleString();
                 const rawNonOp = parseFloat(sDcf.recognized_non_op_eok !== undefined ? sDcf.recognized_non_op_eok : (dcfRoot.getAttribute('data-non-op-assets') || '0'));
@@ -413,7 +441,7 @@ html_template = f"""<!DOCTYPE html>
                             '<input type="text" id="dcf-input-non-op" value="' + initNonOp + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +
-                            '<label>기준 FCF (억 원)</label>' +
+                            '<label>' + fcfLabelText + '</label>' +
                             '<input type="text" id="dcf-input-fcf" value="' + initFcf + '">' +
                         '</div>' +
                         '<div class="dcf-input-group">' +

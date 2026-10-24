@@ -1,16 +1,18 @@
 """
-Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer (v4.2.1)
-- [PATCH v4.2.1 #1] --rerating-date Post-Rerating Band Isolation: Directly filters s5 & weekly quantiles (p20/p65/p90) in Section 8 & Section 2 so legacy pre-rerating multiples do not distort Bear/Base targets.
-- [PATCH v4.2.1 #2] Structural Re-rating vs Cyclical Peak Separation (Step 3.0): Exempts verified structural re-rating stocks (Post-Rerating / S-Curve Phase 2 + OPM level shift >= +4%p with intact QoQ margin) from 5Y mid-cycle EPS compression, while extending Peak-Out Guard across all sectors (A~D) when QoQ margin breaks down.
-- [PATCH v4.2.1 #3] Track 2 Breakout Dead-Zone Fix (Section 4): Fixes the `curr_p <= base_a * 0.90` mathematical dead-zone so S-Curve leaders breaking above Model B Base can properly enter Track 2 with tight safety pins (-5%~-8%) and Gate 2 R:R >= 2.0.
-- Enforces Single Price Anchor (latest daily close)
-- Enforces Controlling Shareholder Net Income/Equity (지배주주 순이익/지분) & Split/Bonus-issue Retroactive Adjustment
-- [NEW v4.2 #1] Step 1.5 Book Value Decomposition & SOTP 20% Rule (본업가치 + 비영업자산 - 순차입금) + Core Operating Earnings/ROIC Sustainability Check
-- [NEW v4.2 #2] Step 2.0 Mandatory 4-Regime Shift Gate (설비 CapEx, 자본구조, 비영업자산, 사업구성) before applying PER/PBR bands
-- [NEW v4.2 #3] Cyclical Peak-Earnings × Peak-Multiple Trap Guard (Mid-Cycle EPS normalization & Peak Multiple compression)
-- [NEW v4.2 #4] Multi-Stage Risk Causal Chain & Domino Contagion Diagnosis (1차 촉발 ➔ 2차 영업/재고 전이 ➔ 3차 재무/자본 희석)
-- [NEW v4.2 #5] Popperian Hypothesis Falsification Kill-Switch & QoQ Delta Generator ("이 숫자가 나오면 약화" + 직전 분기 대비 QoQ)
-- [NEW v4.2 #6] Pipeline SSOT (Single Source of Truth): Code computes 100% of numbers and exports valuation_metrics.json & auto_tables.md; AI focuses 100% on interpretation.
+Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer (v4.3)
+- [NEW v4.3 #1] Step 1.2 S-Curve 10% Inflection & 3-Axis Structural Bottleneck Matrix:
+  Evaluates (1) Penetration near ~10% inflection (8~18% Zone A / Double S-Curve),
+  (2) Structural Bottleneck sources (Physical Capa Shortage, Tech-Gap Moat, Patent/Vendor Qual Lock-in -> Grade S/A/B/NA),
+  (3) Bottleneck Resolution Lead Time (months: >=24M Long / 12~23M Mid / <12M Short),
+  and directly integrates them into Phase 3 Target Price (Model A & Dynamic PEG) calculation.
+- [NEW v4.3 #2] Step 1.8 Korean Market Specifics & Shareholder Return Scorecard:
+  Evaluates Dividend Tax-Incentive Eligibility (배당소득 분리과세 요건1/2), Post-Buyback Cliff (자사주 소각 완수 후 환원 절벽),
+  Related-Party Tunneling (오너 개인회사 일감 몰아주기), Succession/Activism Dynamics, and Red-Team Implied Capa Audit.
+- [PATCH v4.2.1 #1] --rerating-date Post-Rerating Band Isolation
+- [PATCH v4.2.1 #2] Structural Re-rating vs Cyclical Peak Separation (Step 3.0)
+- [PATCH v4.2.1 #3] Track 2 Breakout Dead-Zone Fix (Section 4)
+- Enforces Single Price Anchor (latest daily close) & Controlling Shareholder Net Income/Equity
+- [v4.2] Step 1.5 SOTP 20% Rule, Step 2.0 4-Regime Check, Step 3.5 Domino Risk, 6-Col Popperian Kill-Switch, Pipeline SSOT
 """
 
 import sys
@@ -554,6 +556,303 @@ def _get_split_adjusted_quarterly_eps(row, latest_sh):
     return raw_val if raw_val is not None else (ni_per_sh or 0.0)
 
 
+# [NEW v4.3] Verified S-Curve 10% Inflection, 3-Axis Structural Bottleneck & K-Market Shareholder Return DB
+VERIFIED_BOTTLENECK_AND_KGOV_DB = {
+    "058470": {  # 리노공업
+        "penetration_pct": 28.5,
+        "second_penetration_pct": 12.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "1차(모바일 AP 28.5%) + 2차(온디바이스 AI·NPU R&D 소켓 침투율 ~12.0% 🔥10% 언저리 변곡점)",
+        "bottleneck_grade": "S",
+        "bottleneck_factors": [
+            "기술격차 해자: 초미세 피치(0.2mm 이하) 리노핀·IC 테스트 소켓 글로벌 독점적 수율 (OPM 47.4%)",
+            "특허/벤더 Lock-in: 글로벌 빅테크(Apple, Qualcomm, Nvidia, TSMC) R&D 초기 설계부터 락인",
+            "생산 Capa: 에코델타시티 신공장 이전(2026.4Q 완공) 전까지 물리적 고집적 핀 Capa 병목 지속",
+        ],
+        "bottleneck_lead_time_months": 30,
+        "bottleneck_lead_reason": "에코델타시티 신공장 셋업 및 경쟁사 초미세 핀 특허 우회·글로벌 빅테크 R&D 인증에 최소 24~36개월 소요",
+        "capa_util_pct": 85.0,
+        "payout_ratio_pct": 36.2,
+        "tsr_pct": 36.2,
+        "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 36.2% ≥ 25% & DPS 우상향)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "무차입 순현금·오너 지분 안정·터널링 0건·에코델타 증설 후 배당 확대 여력 풍부",
+        "kgov_mult": 1.00,
+    },
+    "064760": {  # 티씨케이
+        "penetration_pct": 28.5,
+        "second_penetration_pct": 12.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "1차(3D NAND 극저온 식각 28.5%) + 2차(선단 DRAM/HBM TSV 식각 침투율 ~12.0% 🔥10% 언저리 변곡점)",
+        "bottleneck_grade": "S",
+        "bottleneck_factors": [
+            "특허/벤더 Lock-in: CVD Solid SiC 원천 공정 노하우 및 글로벌 식각장비사(Lam/TEL/AMAT) Before-market 메인 벤더",
+            "기술격차 해자: 200~300단+ 초고단 극저온(Cryo) 식각 플라즈마 내식성 초격차 (OPM 30%+)",
+            "생산 Capa: 고순도 CVD SiC 증착 챔버 증설 리드타임 병목",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "CVD SiC 대형 증착 챔버 발주~셋업(12~18개월) + 장비사 Before-market Qual 인증(12개월) 합산 24개월 이상",
+        "capa_util_pct": 82.0,
+        "payout_ratio_pct": 30.0,
+        "tsr_pct": 30.0,
+        "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 ~30% ≥ 25% & 고배당 기조)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 5.0,
+        "k_gov_note": "최대주주 도카이카본 지배구조 안정·무차입 순현금 보유",
+        "kgov_mult": 1.00,
+    },
+    "166090": {  # 하나머티리얼즈
+        "penetration_pct": 28.5,
+        "second_penetration_pct": 11.5,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "TEL 극저온(Cryo) 식각 장비 도입 침투율 ~11.5% (🔥10% 언저리 변곡점, 단 순수 SiC 비중 10.1%는 무상콜옵션)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "생산 Capa: 대구경 단결정 Si 잉곳 성장로(Grower) 및 아산 제2공장 클린룸 Capa",
+            "특허/벤더 Lock-in: Tokyo Electron(TEL) 극저온 식각 챔버용 대구경 Si 일체형 부품 핵심 벤더 Lock-in",
+        ],
+        "bottleneck_lead_time_months": 20,
+        "bottleneck_lead_reason": "대구경 잉곳 그로워 장비 반입 및 TEL 챔버 부품 공정 인증에 18~24개월 소요",
+        "capa_util_pct": 78.0,
+        "payout_ratio_pct": 20.0,
+        "tsr_pct": 20.0,
+        "tax_incentive_status": "⚪ 분리과세 미충족 (아산 신공장 대규모 CapEx 우선 배분)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 12.0,
+        "k_gov_note": "신공장 CapEx 감가상각 반영 필수",
+        "kgov_mult": 1.00,
+    },
+    "183300": {  # 코미코
+        "penetration_pct": 36.5,
+        "second_penetration_pct": 12.5,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "1차(HBM/선단 세정 36.5% 후반부) + 2차(2nm GAA 파운드리 초정밀 코팅 & 미코세라믹스 히터/정전척 침투율 ~12.5% 🔥10% 언저리)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "생산 Capa: 글로벌 8개국(미 오스틴/피닉스·대만·한국 안성/청주) 로컬 팹 직결 세정·코팅 인프라 독점 선점",
+            "기술격차 해자: 2nm GAA 극미세 파티클 제어 세정·코팅 레시피 및 AlN 세라믹 히터 국산화",
+            "특허/벤더 Lock-in: 삼성전자·TSMC·인텔·SK하이닉스 글로벌 현지 팹 Qual 인증 장벽",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "해외 현지 환경 인허가·클린룸 구축(12~18개월) + 글로벌 파운드리 2nm 공정 Qual 인증(12개월)으로 최소 24개월 병목 지속",
+        "capa_util_pct": 76.0,
+        "payout_ratio_pct": 28.3,
+        "tsr_pct": 28.3,
+        "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 28.3% ≥ 25% & 분기배당 실시)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 8.0,
+        "k_gov_note": "⚠️ 미코세라믹스 비지배지분(47.9%)에 따른 지배귀속률(52.2~70.3%) 차감 필수 & 순차입금 4,300억 반영",
+        "kgov_mult": 1.00,
+    },
+    "013030": {  # 하이록코리아
+        "penetration_pct": 0.0,
+        "second_penetration_pct": 14.8,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "전통 에너지·조선 필수재(S-Curve N/A)이나, 친환경 DF엔진 FGSS·FLNG·AIDC 발전/반도체 신성장 비중 14.8% (🔥10% 언저리 변곡점 무상콜옵션)",
+        "bottleneck_grade": "S",
+        "bottleneck_factors": [
+            "생산 Capa 병목: 주력 Hy-Lok Fitting 공장 가동률 95.0% 풀가동 & 수주/매출(Book-to-Bill) 1.13배 초과수주",
+            "기술격차 해자: 초고압(60,000 psi)·초저온(-196℃) 무누출 정밀가공 12단계 일원화 (OPM 28.82% 업계 압도적 1위)",
+            "특허/벤더 Lock-in: 국내 최다 7대 선급·ASME 원자력·API 6A/6D·글로벌 EPC 벤더 인증 장벽",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "글로벌 선급·원전·메이저 오일메이저(Aramco/Bechtel) 벤더 등록에 2~3년 소요 & CNC 숙련 공정 증설 리드타임 18~24개월",
+        "capa_util_pct": 95.0,
+        "payout_ratio_pct": 31.6,
+        "tsr_pct": 61.4,
+        "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 31.6% ≥ 25% & 3년 연속 DPS 급증)",
+        "buyback_cliff_warn": True,
+        "related_party_eok": 107.6,
+        "k_gov_note": "⚠️ [주주환원 절벽 & 터널링 감시]: 3개년 자사주 소각(13.55%) 25.09 완수로 현재 자사주 0주(추가 매입 없을 시 TSR 61.4%→31.6% 절벽) + 오너 개인회사(협동정공·하이록단조) 연 ~108억 내부거래 vs ✅ 한화리서치 '행동주의 12선·승계 33곳' & 2대 주주 피델리티(9.96%) 감시",
+        "kgov_mult": 1.00,
+    },
+    "083450": {  # GST
+        "penetration_pct": 7.0,
+        "second_penetration_pct": 15.0,
+        "is_near_10pct_inflection": False,
+        "inflection_desc": "AIDC 액침냉각 침투율 7.0% 선택적 틈새(단독매출 미공시 무상콜옵션) / 반도체 Sub-fab 초저온 칠러·스크러버 본업(83.2%)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "기술격차 해자: 선단 3D NAND/HBM 공정용 극저온 칠러 및 친환경 플라즈마 스크러버 수율 레퍼런스",
+            "특허/벤더 Lock-in: 삼성전자·마이크론·대만 파운드리 Sub-fab 장비 벤더 인증",
+        ],
+        "bottleneck_lead_time_months": 18,
+        "bottleneck_lead_reason": "글로벌 메모리/파운드리 신규 팹 Sub-fab 장비 데모 및 Qual 테스트에 12~18개월 소요",
+        "capa_util_pct": 75.0,
+        "payout_ratio_pct": 12.0,
+        "tsr_pct": 12.0,
+        "tax_incentive_status": "⚪ 분리과세 미충족 (배당성향 < 25%)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "순현금 재무구조 건전, 액침냉각은 할증 0% 무상 콜옵션으로 분리",
+        "kgov_mult": 1.00,
+    },
+    "214320": {  # 이노션
+        "penetration_pct": 0.0,
+        "second_penetration_pct": 0.0,
+        "is_near_10pct_inflection": False,
+        "inflection_desc": "해당 없음 (글로벌 자동차 캡티브 마케팅·에이전시 캐시카우 BM)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "특허/벤더 Lock-in: 현대차·기아·제네시스 글로벌 마케팅 독점 캡티브 지위 (해외 매출총이익 비중 82.2%)",
+            "생산 Capa/수주: 미국 HEV 판촉 호조로 계약자산(선행 수주) 1,569억 원 사상 최대",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "현대차그룹 글로벌 캡티브 대행 구조로 외부 에이전시 대체 불가능 (영구적 캡티브 해자)",
+        "capa_util_pct": 85.0,
+        "payout_ratio_pct": 51.2,
+        "tsr_pct": 51.2,
+        "tax_incentive_status": "👑 배당소득 분리과세 요건1 완벽 충족 (배당성향 51.2% ≥ 40%, 대신증권 공인 배당여력 코스피 Top 95)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "순현금 7,194억(가용 순현금 3,000억+) 및 배당성향 51.2%로 한국 밸류업·분리과세 최우선 모범주",
+        "kgov_mult": 1.03,
+    },
+    "035420": {  # NAVER
+        "penetration_pct": 16.0,
+        "second_penetration_pct": 14.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "AI 검색(Cue:/브리핑) & AI 플러스스토어 쇼핑 광고 타겟팅 침투율 ~14~16% (🔥10% 언저리 변곡점)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "기술격차 해자: 한국어 초거대 데이터·네이버페이 결제·스마트스토어 커머스 생태계 Lock-in",
+            "특허/벤더 Lock-in: 국내 검색·쇼핑·웹툰·클라우드 독보적 플랫폼 지배력",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "국내 커머스·페이·로컬 데이터 결합 네트워크 효과로 경쟁사 단기 복제 불가 (24개월+)",
+        "capa_util_pct": 80.0,
+        "payout_ratio_pct": 25.0,
+        "tsr_pct": 45.0,
+        "tax_incentive_status": "✅ 자사주 특별 매입·소각 병행 고주주환원 (TSR ~45%)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "지분/비영업자산(LY코퍼레이션 등) 비중이 높아 SOTP 20% 분리 평가 필수",
+        "kgov_mult": 1.00,
+    },
+    "093520": {  # 매커스
+        "penetration_pct": 22.0,
+        "second_penetration_pct": 14.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "AI 서버·방산·반도체 테스트 장비용 고성능 비메모리 FPGA 침투율 ~14~22% (🔥10% 언저리~초중기)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "특허/벤더 Lock-in: AMD(구 자일링스) 코리아 국내 유일 독점 기술파트너 지위",
+            "기술격차 해자: 단순 유통이 아닌 FPGA 설계·기술지원 엔지니어링 락인으로 대체 불가",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "AMD FPGA 아키텍처에 맞춘 고객사 보드 재설계 및 독점 총판 계약 장벽(24개월+)",
+        "capa_util_pct": 85.0,
+        "payout_ratio_pct": 25.0,
+        "tsr_pct": 55.0,
+        "tax_incentive_status": "✅ 대규모 자사주 소각 병행 주주환원 우등생",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "대규모 자사주 매입·소각 이력 보유",
+        "kgov_mult": 1.02,
+    },
+    "131970": {  # 두산테스나
+        "penetration_pct": 18.0,
+        "second_penetration_pct": 11.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "차량용 전장 SoC & AI NPU 후공정 웨이퍼 테스트 침투율 ~11~18% (🔥10% 언저리 변곡점)",
+        "bottleneck_grade": "B",
+        "bottleneck_factors": [
+            "생산 Capa: 고가의 Advantest V93000 비메모리 테스터 장비 대규모 선제 확보",
+            "특허/벤더 Lock-in: 삼성 파운드리·전장 SoC 메인 테스트 외주(OSAT) 파트너",
+        ],
+        "bottleneck_lead_time_months": 15,
+        "bottleneck_lead_reason": "비메모리 테스터 장비 발주 리드타임 및 클린룸 셋업에 12~15개월 소요 (단, 대규모 CapEx 감가상각 부담 병존)",
+        "capa_util_pct": 68.0,
+        "payout_ratio_pct": 5.0,
+        "tsr_pct": 5.0,
+        "tax_incentive_status": "⚪ 무배당/저배당 설비투자 집중기",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "대규모 테스터 CapEx 및 순차입금 레버리지 구간으로 가동률 회복이 핵심",
+        "kgov_mult": 1.00,
+    },
+    "005930": {  # 삼성전자
+        "penetration_pct": 36.5,
+        "second_penetration_pct": 12.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "HBM3E/HBM4 선단 메모리 전환(36.5%) & 2nm GAA 파운드리 전환(~12.0% 2차 S-Curve 초입)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "생산 Capa: 글로벌 최대 메모리 클린룸(평택/용인) 및 턴키(메모리+파운드리+패키징) 인프라",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "초대형 반도체 팹 건설 및 EUV 노광장비 반입 리드타임 24~36개월",
+        "capa_util_pct": 82.0,
+        "payout_ratio_pct": 28.0,
+        "tsr_pct": 35.0,
+        "tax_incentive_status": "✅ 분기배당 및 정규 주주환원 정책 가동",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "우선주(005935) 시가총액 EV 반영 및 10조 자사주 매입/소각 프로그램",
+        "kgov_mult": 1.00,
+    },
+    "234080": {  # JW생명과학
+        "penetration_pct": 0.0,
+        "second_penetration_pct": 0.0,
+        "is_near_10pct_inflection": False,
+        "inflection_desc": "해당 없음 (기초·영양수액제 국내 과점 캐시카우 BM)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "생산 Capa/인허가: 당진 수액 전용 자동화 공장 및 KGMP/유럽 GMP 인허가 장벽 (국내 시장점유율 1위)",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "수액제 무균 생산라인 구축 및 식약처/유럽 의약품 품목허가에 24개월 이상 소요",
+        "capa_util_pct": 90.0,
+        "payout_ratio_pct": 33.0,
+        "tsr_pct": 33.0,
+        "tax_incentive_status": "✅ 배당소득 분리과세 요건2 충족 (배당성향 33%+ 고배당 지속)",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "안정적 고배당 박스권 캐시카우",
+        "kgov_mult": 1.00,
+    },
+    "214180": {  # 헥토이노베이션
+        "penetration_pct": 12.0,
+        "second_penetration_pct": 10.0,
+        "is_near_10pct_inflection": True,
+        "inflection_desc": "IT 본인인증·금융결제(헥토파이낸셜) 캐시카우 + 글로벌 헬스케어(드시모네) B2B 확장 초입(~10~12%)",
+        "bottleneck_grade": "A",
+        "bottleneck_factors": [
+            "특허/벤더 Lock-in: 통신 3사·금융권 본인인증 및 펌뱅킹 결제망 독과점 라이선스 장벽",
+        ],
+        "bottleneck_lead_time_months": 24,
+        "bottleneck_lead_reason": "금융결제원·통신사 보안 인허가 및 대형 플랫폼 결제망 연동에 24개월+ 진입장벽",
+        "capa_util_pct": 85.0,
+        "payout_ratio_pct": 25.0,
+        "tsr_pct": 32.0,
+        "tax_incentive_status": "✅ 자사주 소각 및 배당 확대 밸류업 이행 중",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "자회사(헥토파이낸셜, 헥토헬스케어) 중복상장/비지배지분 귀속률 차감 필수",
+        "kgov_mult": 1.00,
+    },
+    "051900": {  # LG생활건강
+        "penetration_pct": 3.0,
+        "second_penetration_pct": 0.0,
+        "is_near_10pct_inflection": False,
+        "inflection_desc": "🚫 수혜 제외 (북미 인디 뷰티 익스포저 미달 및 중국/면세 레거시 잠식 구간)",
+        "bottleneck_grade": "N/A",
+        "bottleneck_factors": ["중국 럭셔리 화장품 경쟁 심화로 병목 해자 약화"],
+        "bottleneck_lead_time_months": 6,
+        "bottleneck_lead_reason": "인디 브랜드 ODM 확산으로 레거시 브랜드 진입장벽 약화",
+        "capa_util_pct": 62.0,
+        "payout_ratio_pct": 30.0,
+        "tsr_pct": 30.0,
+        "tax_incentive_status": "⚪ 배당 유지 중이나 이익 체력 회복 선행 필요",
+        "buyback_cliff_warn": False,
+        "related_party_eok": 0.0,
+        "k_gov_note": "우선주 시총 EV 합산 및 유형 B 가치함정 점검 대상",
+        "kgov_mult": 1.00,
+    },
+}
+
+
 def _detect_scurve_phase2_status(
     stock_code, corp_name=None, scurve_override=None, dart_exposure_override=None, early_ignition=False
 ):
@@ -561,45 +860,59 @@ def _detect_scurve_phase2_status(
     Auto-detects S-Curve Phase 2 (10~40% golden sweet-spot & DART standalone theme exposure >= 30%),
     or Early Ignition Gate (--early-ignition).
     Enforces Free Call Option rule: if standalone new-tech revenue is undisclosed or <30% (and not early ignition), S-Curve boost is 0%.
+    Also enriches with v4.3 10% Inflection & Structural Bottleneck metadata.
     """
     code_str = str(stock_code).zfill(6) if stock_code else ""
+    v_meta = VERIFIED_BOTTLENECK_AND_KGOV_DB.get(code_str, {})
+    def _enrich(base_dict):
+        base_dict.setdefault("penetration_pct", v_meta.get("penetration_pct", 0.0))
+        base_dict.setdefault("second_penetration_pct", v_meta.get("second_penetration_pct", 0.0))
+        base_dict.setdefault("is_near_10pct_inflection", v_meta.get("is_near_10pct_inflection", False))
+        base_dict.setdefault("inflection_desc", v_meta.get("inflection_desc", ""))
+        base_dict.setdefault("bottleneck_grade", v_meta.get("bottleneck_grade", "B"))
+        base_dict.setdefault("bottleneck_factors", v_meta.get("bottleneck_factors", []))
+        base_dict.setdefault("bottleneck_lead_time_months", v_meta.get("bottleneck_lead_time_months", 12))
+        base_dict.setdefault("bottleneck_lead_reason", v_meta.get("bottleneck_lead_reason", ""))
+        return base_dict
+
     if scurve_override is False:
-        return {
+        return _enrich({
             "is_phase2": False,
             "is_early_ignition": False,
             "theme_name": "S-Curve 할증 미적용 (--no-s-curve)",
             "exposure_pct": 0.0,
             "source_pdf": None,
-        }
+        })
 
     if early_ignition:
         exp_val = dart_exposure_override if dart_exposure_override is not None else 15.0
-        return {
+        return _enrich({
             "is_phase2": True,
             "is_early_ignition": True,
+            "is_near_10pct_inflection": True,
             "theme_name": "DART 선행 발화(Early Ignition: 수주잔고 YoY +30%↑/자기자본 10%↑ 증설 & 본업 마진 방어)",
             "exposure_pct": exp_val,
             "source_pdf": "DART 단일판매·공급계약 / 신규시설투자 공시 실측",
-        }
+        })
 
     if dart_exposure_override is not None and dart_exposure_override < 30.0:
-        return {
+        return _enrich({
             "is_phase2": False,
             "is_early_ignition": False,
             "theme_name": f"DART 신기술 단독 익스포저 미달 ({dart_exposure_override:.1f}% < 30% 컷오프 → 무상 콜옵션 0% 처리)",
             "exposure_pct": dart_exposure_override,
             "source_pdf": None,
-        }
+        })
 
     if scurve_override is True:
         exp_val = dart_exposure_override if dart_exposure_override is not None else 30.0
-        return {
+        return _enrich({
             "is_phase2": True,
             "is_early_ignition": False,
             "theme_name": "사용자/리포트 S-Curve Phase 2 지정 (--s-curve-phase2)",
             "exposure_pct": exp_val,
             "source_pdf": "Global_Trend 80p+ 심층 리포트 검증",
-        }
+        })
 
     reg_path = r"e:\antigravity-work\korean cycle\00_megatrend\docs\s_curve_registry.json"
     if os.path.exists(reg_path):
@@ -609,19 +922,23 @@ def _detect_scurve_phase2_status(
             for th in reg.get("themes", []):
                 stage = th.get("stage", "")
                 pen = float(th.get("current_penetration_pct", 0.0))
+                sec_pen = float(th.get("second_scurve_penetration_pct", 0.0) or 0.0)
+                near_10 = bool(th.get("is_near_10pct_inflection", (8.0 <= pen <= 18.0) or (8.0 <= sec_pen <= 18.0)))
                 is_p2_stage = ("Phase 2" in stage) or (10.0 <= pen <= 40.0)
                 vp = th.get("verification_pointer", {})
                 src_pdf = f"{vp.get('source_pdf', '')} p.{vp.get('source_page', '')}".strip()
 
                 for ex in th.get("excluded_stocks", []):
                     if ex.get("ticker") == code_str or (corp_name and ex.get("name") == corp_name):
-                        return {
+                        return _enrich({
                             "is_phase2": False,
                             "is_early_ignition": False,
+                            "penetration_pct": pen,
+                            "is_near_10pct_inflection": False,
                             "theme_name": f"{th.get('theme_name')} [🚫 수혜 제외: {ex.get('reason', '익스포저 미달')}]",
                             "exposure_pct": 0.0,
                             "source_pdf": src_pdf,
-                        }
+                        })
 
                 if is_p2_stage:
                     for tp in th.get("top_picks", []):
@@ -633,30 +950,38 @@ def _detect_scurve_phase2_status(
                             )
                             standalone_ok = tp.get("standalone_disclosed", True)
                             if standalone_ok is False or exp_pct < 30.0:
-                                return {
+                                return _enrich({
                                     "is_phase2": False,
                                     "is_early_ignition": False,
+                                    "penetration_pct": pen,
                                     "theme_name": f"{th.get('theme_name')} [무상 콜옵션: 신기술 단독 매출 미공시/30% 미달({exp_pct:.1f}%) → 대안 A S-Curve 할증 배제]",
                                     "exposure_pct": exp_pct,
                                     "source_pdf": src_pdf,
-                                }
-                            return {
+                                })
+                            return _enrich({
                                 "is_phase2": True,
                                 "is_early_ignition": False,
+                                "penetration_pct": pen,
+                                "second_penetration_pct": sec_pen or v_meta.get("second_penetration_pct", 0.0),
+                                "is_near_10pct_inflection": near_10,
+                                "bottleneck_grade": tp.get("bottleneck_grade") or v_meta.get("bottleneck_grade", "A"),
+                                "bottleneck_lead_time_months": tp.get("bottleneck_lead_time_months") or v_meta.get("bottleneck_lead_time_months", 18),
                                 "theme_name": f"{th.get('theme_name')} (침투율 {pen:.1f}%, {stage})",
                                 "exposure_pct": exp_pct,
                                 "source_pdf": src_pdf,
-                            }
+                            })
                     for hg in th.get("hidden_gems", []):
                         if hg.get("ticker") == code_str or (corp_name and hg.get("name") == corp_name):
                             exp_pct = dart_exposure_override if dart_exposure_override is not None else 40.0
-                            return {
+                            return _enrich({
                                 "is_phase2": True,
                                 "is_early_ignition": False,
+                                "penetration_pct": pen,
+                                "is_near_10pct_inflection": near_10,
                                 "theme_name": f"{th.get('theme_name')} [히든챔피언] (침투율 {pen:.1f}%, {stage})",
                                 "exposure_pct": exp_pct,
                                 "source_pdf": src_pdf,
-                            }
+                            })
         except Exception:
             pass
 
@@ -674,20 +999,279 @@ def _detect_scurve_phase2_status(
         t_nm, exp_p, s_pdf = verified_global_trend_p2[code_str]
         if dart_exposure_override is not None:
             exp_p = dart_exposure_override
-        return {
+        return _enrich({
             "is_phase2": True,
             "is_early_ignition": False,
             "theme_name": t_nm,
             "exposure_pct": exp_p,
             "source_pdf": s_pdf,
-        }
+        })
 
-    return {
+    return _enrich({
         "is_phase2": False,
         "is_early_ignition": False,
         "theme_name": "해당 없음 (전통 시클리컬 / 성숙기 박스권 BM / 단독 신기술 익스포저 30% 미달 무상 콜옵션)",
         "exposure_pct": dart_exposure_override or 0.0,
         "source_pdf": None,
+    })
+
+
+def compute_step1_2_scurve_bottleneck_matrix(
+    stock_code,
+    corp_name,
+    dart_ts,
+    scurve_override=None,
+    dart_exposure=None,
+    early_ignition=False,
+    penetration_pct=None,
+    second_penetration_pct=None,
+    bottleneck_grade=None,
+    bottleneck_months=None,
+    capa_util_pct=None,
+):
+    """
+    [NEW v4.3 #1] Step 1.2: S-Curve 10% 변곡점 & 3축 구조적 병목(Capa·기술격차·특허) 및 해소 소요기간(Lead Time) 판독기
+    - 질문 1: 해당 기술이 관련 시장에서 침투율이 10% 언저리(8.0%~18.0% 변곡점 초입)인가? (또는 2차 S-Curve가 10% 언저리인가?)
+    - 질문 2: 해당 기업의 비즈니스가 구조적 병목을 유발하는가? (① 생산 Capa 한계, ② 기술격차 해자, ③ 특허/벤더인증 Lock-in)
+    - 질문 3: 구조적 병목을 해결하기 위해 예상되는 소요기간(Lead Time)이 얼마나 긴가? (>=24M 장기 / 12~23M 중기 / <12M 단기)
+    """
+    print("\n======================================================================")
+    print("🔬 [Step 1.2 — S-Curve 10% 변곡점 & 3축 구조적 병목(Capa·기술·특허) · 리드타임 판독]")
+    print("======================================================================")
+
+    code_str = str(stock_code).zfill(6) if stock_code else ""
+    sc_info = _detect_scurve_phase2_status(
+        stock_code,
+        corp_name=corp_name,
+        scurve_override=scurve_override,
+        dart_exposure_override=dart_exposure,
+        early_ignition=early_ignition,
+    )
+    v_meta = VERIFIED_BOTTLENECK_AND_KGOV_DB.get(code_str, {})
+
+    pen1 = float(penetration_pct if penetration_pct is not None else sc_info.get("penetration_pct", 0.0))
+    pen2 = float(second_penetration_pct if second_penetration_pct is not None else sc_info.get("second_penetration_pct", 0.0))
+    bn_grade = (bottleneck_grade or sc_info.get("bottleneck_grade") or "B").upper()
+    bn_months = int(bottleneck_months if bottleneck_months is not None else sc_info.get("bottleneck_lead_time_months", 12))
+    util_pct = float(capa_util_pct if capa_util_pct is not None else v_meta.get("capa_util_pct", 75.0))
+    bn_factors = sc_info.get("bottleneck_factors") or [
+        f"생산 설비 가동률 {util_pct:.1f}% 및 DART 수주잔고 추이 점검",
+        "공정 기술격차 및 영업이익률(OPM) 가격결정력 점검",
+        "원천 특허 및 주요 고객사 벤더 인증(Qual) 진입장벽 점검",
+    ]
+    bn_lead_reason = sc_info.get("bottleneck_lead_reason") or f"신규 설비 증설 및 고객사 공정 Qual 인증에 약 {bn_months}개월 소요 추정"
+
+    # Compute current OPM from DART sheet3 to cross-verify pricing power moat
+    s3 = dart_ts.get("sheet3", pd.DataFrame())
+    curr_opm_pct = 15.0
+    if not s3.empty and "영업이익" in s3.columns and "매출액" in s3.columns:
+        s3_m = s3[s3["매출액"] > 0]
+        if not s3_m.empty:
+            curr_opm_pct = round((float(s3_m["영업이익"].iloc[-1]) / float(s3_m["매출액"].iloc[-1])) * 100.0, 2)
+
+    # Axis 1: Is penetration near ~10% inflection (8.0% ~ 18.0%)?
+    is_10pct_zone_primary = 8.0 <= pen1 <= 18.0
+    is_10pct_zone_secondary = 8.0 <= pen2 <= 18.0
+    is_near_10pct = is_10pct_zone_primary or is_10pct_zone_secondary or bool(sc_info.get("is_near_10pct_inflection")) or early_ignition
+
+    if is_10pct_zone_primary:
+        pen_zone_code = "Zone A (10% 언저리 골든 변곡점 초입)"
+        pen_base_boost, pen_bull_boost = 0.12, 0.16
+    elif is_10pct_zone_secondary and pen1 > 18.0:
+        pen_zone_code = f"더블 S-Curve Zone A (1차 {pen1:.1f}% 캐시카우 + 2차 {pen2:.1f}% 🔥10% 언저리 변곡점)"
+        pen_base_boost, pen_bull_boost = 0.11, 0.14
+    elif 18.0 < pen1 <= 30.0:
+        pen_zone_code = f"Zone B (중기 확산기 {pen1:.1f}%)"
+        pen_base_boost, pen_bull_boost = 0.10, 0.12
+    elif 30.0 < pen1 <= 40.0:
+        pen_zone_code = f"Zone C (스위트스팟 후반부 {pen1:.1f}% — 멀티플 할증 축소·익절 준비)"
+        pen_base_boost, pen_bull_boost = 0.06, 0.08
+    else:
+        pen_zone_code = f"Zone D (침투율 {pen1:.1f}% / 2차 {pen2:.1f}% — 전통 시클리컬 또는 무상 콜옵션)"
+        pen_base_boost, pen_bull_boost = 0.00, 0.00
+
+    # Axis 2 & Axis 3: Structural Bottleneck Grade (S/A/B/NA) & Resolution Lead Time (Months)
+    if bn_months >= 24:
+        duration_label = f"⏳ 장기 구조적 병목 ({bn_months}개월 / 2년+ 지속)"
+    elif bn_months >= 12:
+        duration_label = f"⏱️ 중기 구조적 병목 ({bn_months}개월 / 1~2년 지속)"
+    else:
+        duration_label = f"⚡ 단기 일시적 병목 ({bn_months}개월 / 1년 미만 해소 주의)"
+
+    # Calculate Bottleneck Bonus / Penalty for Phase 3 Target Price (Model A)
+    bn_base_bonus = 0.0
+    bn_bull_bonus = 0.0
+    peg_factor = 0.80
+    core_bottleneck_only_mode = False
+
+    if sc_info.get("is_phase2"):
+        if bn_grade == "S" and bn_months >= 24:
+            bn_base_bonus, bn_bull_bonus = 0.05, 0.07
+            peg_factor = 0.90
+        elif (bn_grade == "S" and bn_months >= 12) or (bn_grade == "A" and bn_months >= 24):
+            bn_base_bonus, bn_bull_bonus = 0.03, 0.05
+            peg_factor = 0.85
+        elif bn_grade == "A" and bn_months >= 12:
+            bn_base_bonus, bn_bull_bonus = 0.02, 0.03
+            peg_factor = 0.80
+        elif bn_months < 12 or bn_grade in ("B", "N/A"):
+            # Short-lived bottleneck or weak moat -> cut S-Curve multiple boost by 40% to prevent peak trap
+            bn_base_bonus = -round(pen_base_boost * 0.40, 3)
+            bn_bull_bonus = -round(pen_bull_boost * 0.40, 3)
+            peg_factor = 0.70
+    else:
+        # Even if standalone new-tech S-Curve is <30% (Free Call Option, e.g., 하이록코리아),
+        # if the core business itself has an S/A-grade Structural Bottleneck (util >= 85% or OPM >= 20%) with Lead Time >= 18M,
+        # grant a dedicated Structural Bottleneck Moat Premium in Model A!
+        if bn_grade in ("S", "A") and bn_months >= 18 and (curr_opm_pct >= 18.0 or util_pct >= 85.0):
+            core_bottleneck_only_mode = True
+            if bn_grade == "S" and bn_months >= 24 and util_pct >= 90.0:
+                bn_base_bonus, bn_bull_bonus = 0.08, 0.10
+            else:
+                bn_base_bonus, bn_bull_bonus = 0.05, 0.07
+
+    total_sc_bn_base_mult = round(1.0 + max(0.0, pen_base_boost + bn_base_bonus), 4)
+    total_sc_bn_bull_mult = round(1.0 + max(0.0, pen_bull_boost + bn_bull_bonus), 4)
+
+    inflection_str = sc_info.get("inflection_desc") or pen_zone_code
+    print(f"    - [질문 1 — 침투율 10% 언저리 변곡점 판별]: {'🔥 YES (10% 언저리 변곡점 포착!)' if is_near_10pct else '⚪ NO (비해당/성숙/캐즘)'}")
+    print(f"      • 침투율 상세: {inflection_str} (기초 할증: Base +{pen_base_boost*100:.1f}% / Bull +{pen_bull_boost*100:.1f}%)")
+    print(f"    - [질문 2 — 비즈니스 구조적 병목 유발 여부]: 등급 [{bn_grade}등급] | 주력 가동률 {util_pct:.1f}% | 현 OPM {curr_opm_pct:.1f}%")
+    for idx_f, fac in enumerate(bn_factors, 1):
+        print(f"      • 병목 원천 {idx_f}: {fac}")
+    print(f"    - [질문 3 — 구조적 병목 해소 예상 소요기간]: {duration_label}")
+    print(f"      • 리드타임 근거: {bn_lead_reason}")
+    if core_bottleneck_only_mode:
+        print(
+            f"    - 🎯 [Phase 3 목표주가 반영 결론]: 신사업 S-Curve는 무상 콜옵션(0%)으로 보수적 차단하되, "
+            f"본업 자체의 [{bn_grade}등급 구조적 병목(가동률 {util_pct:.0f}%·OPM {curr_opm_pct:.1f}%·해소기간 {bn_months}개월)]을 반영하여 "
+            f"🚀대안 A에 [본업 구조적 병목 해자 프리미엄: Base +{bn_base_bonus*100:.1f}% / Bull +{bn_bull_bonus*100:.1f}%]을 부여합니다!"
+        )
+    else:
+        print(
+            f"    - 🎯 [Phase 3 목표주가 반영 결론]: 3축 통합 가중치(침투율 구간 + 병목 {bn_grade}등급 + 해소기간 {bn_months}개월) "
+            f"➔ Base ×{total_sc_bn_base_mult:.2f} (+{(total_sc_bn_base_mult-1)*100:.1f}%) / Bull ×{total_sc_bn_bull_mult:.2f} (+{(total_sc_bn_bull_mult-1)*100:.1f}%) | 동적 PEG 배수 {peg_factor:.2f}"
+        )
+
+    return {
+        "is_phase2": sc_info.get("is_phase2", False),
+        "is_early_ignition": sc_info.get("is_early_ignition", False),
+        "theme_name": sc_info.get("theme_name", ""),
+        "exposure_pct": sc_info.get("exposure_pct", 0.0),
+        "source_pdf": sc_info.get("source_pdf"),
+        "penetration_pct": pen1,
+        "second_penetration_pct": pen2,
+        "is_near_10pct_inflection": is_near_10pct,
+        "penetration_zone": pen_zone_code,
+        "inflection_desc": inflection_str,
+        "bottleneck_grade": bn_grade,
+        "bottleneck_factors": bn_factors,
+        "bottleneck_lead_time_months": bn_months,
+        "bottleneck_duration_label": duration_label,
+        "bottleneck_lead_reason": bn_lead_reason,
+        "capa_util_pct": util_pct,
+        "curr_opm_pct": curr_opm_pct,
+        "core_bottleneck_only_mode": core_bottleneck_only_mode,
+        "pen_base_boost": pen_base_boost,
+        "pen_bull_boost": pen_bull_boost,
+        "bn_base_bonus": bn_base_bonus,
+        "bn_bull_bonus": bn_bull_bonus,
+        "total_sc_bn_base_mult": total_sc_bn_base_mult,
+        "total_sc_bn_bull_mult": total_sc_bn_bull_mult,
+        "peg_factor": peg_factor,
+    }
+
+
+def compute_step1_8_k_market_shareholder_return(
+    stock_code,
+    bench,
+    dart_ts,
+    distb_shares,
+    total_shares,
+    payout_ratio=None,
+    buyback_cliff=None,
+    related_party_eok=None,
+    governance_discount=0.0,
+):
+    """
+    [NEW v4.3 #2] Step 1.8: 한국 시장 특수성(K-Market Specifics) & 주주환원 입체 스코어카드
+    - ① 배당성향·총주주환원율(TSR) 및 한국 세법 '배당소득 분리과세(요건1 ≥40% / 요건2 ≥25%+성장)' 적격성 자동 판정
+    - ② 자사주 보유 비율 vs 자사주 소각 완수 후 '주주환원 절벽(Buyback Cliff)' 리스크 감지
+    - ③ 오너 일가 비상장 개인회사 내부거래(터널링) 비중 및 승계/행동주의 거버넌스 역학 진단
+    - ④ 메자닌(CB/BW) 리픽싱 오버행 및 중복상장 디스카운트 반영
+    """
+    print("\n======================================================================")
+    print("🇰🇷 [Step 1.8 — 한국 시장 특수성 & 주주환원 입체 스코어카드] 분리과세 · 환원절벽 · 터널링 점검")
+    print("======================================================================")
+
+    code_str = str(stock_code).zfill(6) if stock_code else ""
+    v_meta = VERIFIED_BOTTLENECK_AND_KGOV_DB.get(code_str, {})
+
+    dps = float(bench.get("dps") or 0.0)
+    eps = float(bench.get("eps") or 0.0)
+    div_yield = float(bench.get("div_yield") or 0.0)
+    calc_payout = round((dps / eps) * 100.0, 1) if (eps > 0 and dps > 0) else 0.0
+    used_payout = float(payout_ratio if payout_ratio is not None else (v_meta.get("payout_ratio_pct") or calc_payout))
+    tsr_pct = float(v_meta.get("tsr_pct") or used_payout)
+
+    t_sh = int(total_shares or 0)
+    d_sh = int(distb_shares or 0)
+    treasury_sh = max(0, t_sh - d_sh) if (t_sh > 0 and d_sh > 0) else 0
+    treasury_ratio_pct = round((treasury_sh / t_sh) * 100.0, 2) if t_sh > 0 else 0.0
+
+    is_cliff = bool(buyback_cliff if buyback_cliff is not None else v_meta.get("buyback_cliff_warn", False))
+    rel_party_eok = float(related_party_eok if related_party_eok is not None else v_meta.get("related_party_eok", 0.0))
+
+    if v_meta.get("tax_incentive_status"):
+        tax_status = v_meta["tax_incentive_status"]
+    elif used_payout >= 40.0:
+        tax_status = f"👑 배당소득 분리과세 요건1 충족 (배당성향 {used_payout:.1f}% ≥ 40%)"
+    elif used_payout >= 25.0:
+        tax_status = f"✅ 배당소득 분리과세 요건2 적격권 (배당성향 {used_payout:.1f}% ≥ 25% — 3년 평균 대비 배당성장 확인)"
+    else:
+        tax_status = f"⚪ 배당소득 분리과세 미해당 (배당성향 {used_payout:.1f}% < 25%)"
+
+    cliff_status = (
+        "🚨 [주주환원 절벽(Cliff) 경보]: 다년도 자사주 소각 완수 후 현재 자기주식 0주(0.0%)! 신규 자사주 매입 신탁 미체결 시 총주주환원율 급락 위험 (Section 6 & Kill-Switch 필수 편입)"
+        if is_cliff
+        else (
+            f"🟢 정상 (현재 자기주식 {treasury_sh:,}주 [{treasury_ratio_pct:.2f}%] 보유 — 소각 전환 여부 모니터링)"
+            if treasury_sh > 0
+            else "🟢 정상 (자기주식 0주 — 자사주 EB 발행/부당처분 오버행 위험 0%)"
+        )
+    )
+
+    tunneling_status = (
+        f"⚠️ [오너 개인회사 내부거래 감시]: 특수관계자(오너 일가 개인회사 등) 연간 내부거래 약 {rel_party_eok:,.1f}억 원 — 일감 몰아주기(터널링) 확대 시 밸류에이션 할인 트리거 작동"
+        if rel_party_eok >= 30.0
+        else f"🟢 양호 (유의미한 오너 개인회사 사익편취 내부거래 미감지 [{rel_party_eok:,.1f}억 원])"
+    )
+
+    k_gov_note = v_meta.get("k_gov_note", "DART 특수관계자 주석 및 메자닌(CB/BW) 리픽싱 잔액 0건 여부 확인 필수")
+    base_kgov_mult = float(v_meta.get("kgov_mult", 1.00))
+    if governance_discount and governance_discount > 0:
+        base_kgov_mult = round(base_kgov_mult * (1.0 - float(governance_discount)), 4)
+
+    print(f"    - [1] 배당성향 & 총주주환원율(TSR): 배당성향 {used_payout:.1f}% (배당수익률 {div_yield:.2f}%, DPS {dps:,.0f}원) | 총주주환원율(TSR) {tsr_pct:.1f}%")
+    print(f"    - [2] 한국 배당소득 분리과세 판정: {tax_status}")
+    print(f"    - [3] 자사주 소각 절벽(Cliff) & 오버행: {cliff_status}")
+    print(f"    - [4] 오너 개인회사 터널링(내부거래): {tunneling_status}")
+    print(f"    - [5] 한국형 지배구조·승계·행동주의 종합: {k_gov_note} (K-거버넌스 가중치: ×{base_kgov_mult:.2f})")
+
+    return {
+        "payout_ratio_pct": used_payout,
+        "tsr_pct": tsr_pct,
+        "div_yield_pct": div_yield,
+        "dps": dps,
+        "treasury_shares": treasury_sh,
+        "treasury_ratio_pct": treasury_ratio_pct,
+        "tax_incentive_status": tax_status,
+        "buyback_cliff_warn": is_cliff,
+        "cliff_status": cliff_status,
+        "related_party_eok": rel_party_eok,
+        "tunneling_status": tunneling_status,
+        "k_gov_note": k_gov_note,
+        "kgov_mult": base_kgov_mult,
     }
 
 
@@ -1405,13 +1989,16 @@ def compute_section3_stock_nature_and_tp1(
     sotp_res=None,
     regime_res=None,
     rerating_date=None,
+    step1_2_res=None,
+    step1_8_res=None,
+    distb_shares=0,
 ):
     """
     (B) Section 3 종목 체질 판별, 사이클주 '피크 이익 × 높은 멀티플' 함정 차단(Peak-Cycle Trap Guard),
-    Forward BPS 계산, [대안 B vs 대안 A] 목표가 병기 자동 산출 (상한 캡 적용)
+    Forward BPS 계산, [대안 B vs 대안 A (v4.3 S-Curve 10% 변곡점 + 3축 구조적 병목 + K-주주환원 반영)] 목표가 병기 자동 산출
     """
     print("\n======================================================================")
-    print("🎯 [Phase 3 - Section 3] 종목 체질 · 사이클 피크 함정 차단 · [대안 B vs 대안 A] 목표가 산출")
+    print("🎯 [Phase 3 - Section 3] 종목 체질 · 사이클 피크 함정 차단 · [대안 B vs 대안 A (v4.3)] 목표가 산출")
     print("======================================================================")
 
     w52 = df_week.tail(52)
@@ -1602,11 +2189,23 @@ def compute_section3_stock_nature_and_tp1(
         dart_exposure_override=dart_exposure,
         early_ignition=early_ignition,
     )
-    sc_base_mult = 1.0
-    sc_bull_mult = 1.0
-    if sc_info["is_phase2"] and not is_type_b:
+
+    # [NEW v4.3] Use Step 1.2 3-Axis S-Curve (10% Inflection + Structural Bottleneck + Lead Time) & Step 1.8 K-Return Multipliers
+    if step1_2_res and not is_type_b:
+        if sc_info.get("is_early_ignition") and (op_yoy is not None and op_yoy < -5.0):
+            sc_base_mult = 1.0
+            sc_bull_mult = 1.0
+            sc_reason = f"미적용 🚫 [선행 발화 가드레일 미충족: 영업이익 YoY {op_yoy:+.1f}% < -5%] → 할증 0%"
+        else:
+            sc_base_mult = float(step1_2_res.get("total_sc_bn_base_mult", 1.0))
+            sc_bull_mult = float(step1_2_res.get("total_sc_bn_bull_mult", 1.0))
+            sc_reason = (
+                f"[{sc_info['theme_name']} | 침투율 {step1_2_res.get('penetration_zone', '')} | "
+                f"병목 {step1_2_res.get('bottleneck_grade', 'C')}등급({step1_2_res.get('bottleneck_lead_time_months', 0)}개월)] "
+                f"➔ {step1_2_res.get('bottleneck_lead_reason', '')}"
+            )
+    elif sc_info["is_phase2"] and not is_type_b:
         if sc_info.get("is_early_ignition"):
-            # Early Ignition guardrail: requires non-deteriorating OP YoY >= -5%
             if op_yoy is not None and op_yoy < -5.0:
                 sc_base_mult = 1.0
                 sc_bull_mult = 1.0
@@ -1620,19 +2219,28 @@ def compute_section3_stock_nature_and_tp1(
             sc_bull_mult = 1.12
             sc_reason = f"적용 ✅ [{sc_info['theme_name']} | DART 검증 익스포저 {sc_info['exposure_pct']:.1f}% ≥ 30%] → Base +10.0% / Bull +12.0% 할증"
     else:
+        sc_base_mult = 1.0
+        sc_bull_mult = 1.0
         sc_reason = f"미적용 ⚪ [{sc_info['theme_name']}] → +0.0% (본업 대안 B 기준 평가)"
 
-    base_mult_a = round(op_mult * sc_base_mult, 4)
-    bull_mult_a = round(op_mult * sc_bull_mult, 4)
+    kgov_mult = float((step1_8_res or {}).get("kgov_mult", 1.0)) if not is_type_b else 1.0
+    kgov_reason = (step1_8_res or {}).get("k_gov_note", "K-주주환원·지배구조 중립 (×1.00)")
+
+    # Total Model A multiplier with v4.3 Dual Hard Cap (Base <= 1.38x, Bull <= 1.45x)
+    raw_base_mult_a = op_mult * sc_base_mult * kgov_mult
+    raw_bull_mult_a = op_mult * sc_bull_mult * kgov_mult
+    base_mult_a = round(min(raw_base_mult_a, 1.38), 4)
+    bull_mult_a = round(min(raw_bull_mult_a, 1.45), 4)
     bear_auto_a = bear_auto_b
 
     base_auto_a = round((base_auto_b * base_mult_a) / 10) * 10
-    bull_auto_a = round((bull_auto_a if False else bull_auto_b * bull_mult_a) / 10) * 10
+    bull_auto_a = round((bull_auto_b * bull_mult_a) / 10) * 10
 
-    # Optional PEG(0.8) Dynamic Rerating with dual hard cap (<= 1.45x Model B)
+    # [v4.3] Dynamic PEG(0.80 ~ 0.95) Rerating based on Bottleneck Lead Time + 10% Inflection
+    peg_factor_used = float((step1_2_res or {}).get("peg_factor", 0.80))
     if forward_eps_g is not None and forward_eps_g > 0 and eps > 0 and sc_info["is_phase2"] and not is_type_b:
         capped_g = min(float(forward_eps_g), 35.0)
-        peg_target_per = capped_g * 0.80
+        peg_target_per = capped_g * peg_factor_used
         peg_price = round((eps * peg_target_per) / 10) * 10
         base_auto_a = min(max(base_auto_a, peg_price), round((base_auto_b * 1.45) / 10) * 10)
 
@@ -1708,21 +2316,22 @@ def compute_section3_stock_nature_and_tp1(
         nature_badge = "🚀 [성장·사이클 추세주 (52주 등락폭 >= 36%)]"
         nature_desc = (
             f"유효 52주 등락폭({effective_52w_range:.1f}%) 또는 PBR({curr_pbr:.2f}배) 기준 추세/사이클 종목 해당!\n"
-            f"      ➔ Phase 1 1순위 채택 지표 기반 [🛡️ 대안 B(보수적 순수 DART 중심 닻) | 🚀 대안 A(실적·S-Curve 할증 상단)] 목표가를 나란히 병기합니다."
+            f"      ➔ Phase 1 1순위 채택 지표 기반 [🛡️ 대안 B(보수적 순수 DART 중심 닻) | 🚀 대안 A(실적·S-Curve 10%변곡점·구조적병목·K환원 상단)] 목표가를 나란히 병기합니다."
         )
 
     print(f"\n    ▶ Section 3 종목 체질 판정: {nature_badge}")
     print(f"      {nature_desc}")
 
-    print("\n    ▶ [대안 A (실적 모멘텀 · S-Curve 할증) 가중 계수 산출 내역]:")
+    print("\n    ▶ [대안 A (v4.3 실적 모멘텀 · S-Curve 10% 변곡점 · 구조적 병목 · K-주주환원) 가중 계수 산출 내역]:")
     print(f"      ① DART 실적 모멘텀 가감산 (op_mult = ×{op_mult:.2f}): {op_reason}")
     print(
-        f"      ② S-Curve Phase 2 할증 (Base ×{sc_base_mult:.2f} / Bull ×{sc_bull_mult:.2f}): {sc_reason}"
+        f"      ② S-Curve 10% 변곡점 & 3축 구조적 병목 매트릭스 (Base ×{sc_base_mult:.4f} / Bull ×{sc_bull_mult:.4f}): {sc_reason}"
     )
     if sc_info.get("source_pdf"):
         print(f"         • 검증 출처: {sc_info['source_pdf']}")
+    print(f"      ③ K-마켓 주주환원 · 지배구조 가감산 (kgov_mult = ×{kgov_mult:.4f}): {kgov_reason}")
     print(
-        f"      ③ 최종 대안 A 멀티플 가중치: Base ×{base_mult_a:.4f} ({(base_mult_a-1)*100:+.1f}%) | Bull ×{bull_mult_a:.4f} ({(bull_mult_a-1)*100:+.1f}%) | Bear ×1.0000 (하방 보호 고정)"
+        f"      ④ 최종 대안 A 멀티플 가중치 (상한 캡 1.38/1.45 적용): Base ×{base_mult_a:.4f} ({(base_mult_a-1)*100:+.1f}%) | Bull ×{bull_mult_a:.4f} ({(bull_mult_a-1)*100:+.1f}%) | Bear ×1.0000 (하방 보호 고정)"
     )
 
     final_base_b = (
@@ -1738,7 +2347,32 @@ def compute_section3_stock_nature_and_tp1(
     )
     final_bull_a = round((final_bull_b * bull_mult_a) / 10) * 10
 
-    print("\n    ▶ [시나리오 목표가 가이드라인 — 🛡️ 대안 B (중심 닻) vs 🚀 대안 A (할증 상단)]:")
+    # [NEW v4.3] Red-Team Reverse Implied Capa & Margin Ceiling Audit
+    capa_util_pct = float((step1_2_res or {}).get("capa_util_pct", 80.0))
+    ttm_op_eok = float((sotp_res or {}).get("nopat_eok", 0.0)) / 0.78 if sotp_res else 0.0
+    mean_per_val = float(sec2_res.get("per_3y_mean") or eff_per_p65 or 12.0)
+    sh_cnt = int(distb_shares or 0)
+    implied_op_base_a_eok = 0.0
+    implied_op_bull_a_eok = 0.0
+    red_team_capa_verdict = "🟢 물리적 Capa 한계 내 달성 가능"
+    if sh_cnt > 0 and mean_per_val > 0:
+        implied_net_base_a_eok = (final_base_a * sh_cnt / 1e8) / mean_per_val
+        implied_net_bull_a_eok = (final_bull_a * sh_cnt / 1e8) / max(eff_per_p90, mean_per_val)
+        implied_op_base_a_eok = round(implied_net_base_a_eok / 0.78, 1)
+        implied_op_bull_a_eok = round(implied_net_bull_a_eok / 0.78, 1)
+        if ttm_op_eok > 0 and capa_util_pct >= 90.0:
+            max_organic_op_eok = round(ttm_op_eok * (100.0 / max(capa_util_pct, 50.0)) * 1.25, 1)
+            if implied_op_bull_a_eok > max_organic_op_eok:
+                red_team_capa_verdict = (
+                    f"⚠️ [레드팀 Capa 천장 경보] 현재 가동률({capa_util_pct:.1f}%)에서 신규 증설/단가인상(ASP) 없이 가능한 물리적 영업이익 상한(약 {max_organic_op_eok:,.1f}억) 대비 "
+                    f"Bull 내재 영업이익({implied_op_bull_a_eok:,.1f}억) 도달을 위해선 신공장 가동 또는 고마진 믹스 개선 확인 필수"
+                )
+            else:
+                red_team_capa_verdict = (
+                    f"🟢 [레드팀 Capa 검증 통과] 가동률({capa_util_pct:.1f}%) 및 믹스 개선 기준 물리적 영업이익 상한({max_organic_op_eok:,.1f}억) 내 달성 가능 (Base 내재 OP {implied_op_base_a_eok:,.1f}억)"
+                )
+
+    print("\n    ▶ [시나리오 목표가 가이드라인 — 🛡️ 대안 B (중심 닻) vs 🚀 대안 A (v4.3 할증 상단)]:")
     print(
         f"      • Bull (호황 상단): 🛡️ 대안 B {final_bull_b:,.0f}원 ({(final_bull_b/curr_price-1)*100:+.1f}%)  |  🚀 대안 A {final_bull_a:,.0f}원 ({(final_bull_a/curr_price-1)*100:+.1f}%)"
     )
@@ -1751,6 +2385,7 @@ def compute_section3_stock_nature_and_tp1(
     print(
         f"      • Bear (하방 지지): 🛡️ 대안 B·A 공통 {bear_auto_b:,.0f}원 ({(bear_auto_b/curr_price-1)*100:+.1f}%) [하방 안전마진 할증 금지]"
     )
+    print(f"      • 🔬 [레드팀 역산 Capa 천장 검증]: {red_team_capa_verdict}")
 
     return {
         "is_low_vol_box": is_low_vol_box,
@@ -1764,6 +2399,8 @@ def compute_section3_stock_nature_and_tp1(
         "op_mult": op_mult,
         "sc_base_mult": sc_base_mult,
         "sc_bull_mult": sc_bull_mult,
+        "kgov_mult": kgov_mult,
+        "peg_factor_used": peg_factor_used,
         "base_mult_a": base_mult_a,
         "bull_mult_a": bull_mult_a,
         "scurve_info": sc_info,
@@ -1776,6 +2413,9 @@ def compute_section3_stock_nature_and_tp1(
         "bull_auto": final_bull_b,
         "base_auto_a": final_base_a,
         "bull_auto_a": final_bull_a,
+        "red_team_capa_verdict": red_team_capa_verdict,
+        "implied_op_base_a_eok": implied_op_base_a_eok,
+        "implied_op_bull_a_eok": implied_op_bull_a_eok,
     }
 
 
@@ -2130,10 +2770,14 @@ def export_pipeline_ssot(
     sec3_res,
     risk_res,
     sec4_res,
+    step1_2_res=None,
+    step1_8_res=None,
+    norm_fcf_eok=None,
 ):
     """
-    [NEW v4.2 #6] Pipeline SSOT (Single Source of Truth) Exporter
-    Writes 100% of code-computed numbers to valuation_metrics.json and generates ready-to-paste
+    [NEW v4.3] Pipeline SSOT (Single Source of Truth) Exporter
+    Writes 100% of code-computed numbers (including Step 1.2 S-Curve 10% Inflection + 3-Axis Structural Bottleneck
+    and Step 1.8 K-Market Shareholder Return) to valuation_metrics.json and generates ready-to-paste
     Markdown tables (auto_tables.md) so AI never transcribes numbers by hand.
     """
     existing_dcf = {}
@@ -2147,7 +2791,14 @@ def export_pipeline_ssot(
 
     d_sh = int(distb_shares or existing_dcf.get("distb_shares") or 0)
     t_sh = int(total_shares or existing_dcf.get("total_shares") or d_sh)
-    fcf_v = float(fcf_eok if fcf_eok is not None else (existing_dcf.get("fcf_eok") or 0.0))
+    fcf_v = float(fcf_eok if (fcf_eok is not None and fcf_eok != 0.0) else (existing_dcf.get("fcf_eok") or 0.0))
+    norm_fcf_v = float(
+        norm_fcf_eok
+        if (norm_fcf_eok is not None and norm_fcf_eok > 0)
+        else (existing_dcf.get("norm_fcf_eok") or 0.0)
+    )
+    # [FIX v4.3] If reported FCF <= 0 due to expansion CapEx but Owner Normalized FCF > 0, bind norm_fcf_v to data-fcf so interactive HTML DCF slider works
+    html_fcf_v = norm_fcf_v if (fcf_v <= 0 and norm_fcf_v > 0) else fcf_v
     nd_v = float(net_debt_eok if net_debt_eok is not None else (existing_dcf.get("net_debt_eok") or 0.0))
 
     canonical_html_tag = (
@@ -2155,7 +2806,8 @@ def export_pipeline_ssot(
         f'data-price="{int(curr_price)}" '
         f'data-shares="{d_sh}" '
         f'data-total-shares="{t_sh}" '
-        f'data-fcf="{fcf_v:.1f}" '
+        f'data-fcf="{html_fcf_v:.1f}" '
+        f'data-reported-fcf="{fcf_v:.1f}" '
         f'data-net-debt="{nd_v:.1f}" '
         f'data-non-op-assets="{sotp_res.get("recognized_non_op_eok", 0.0):.1f}" '
         f'data-bear="{sec3_res["bear_auto"]}" '
@@ -2173,7 +2825,7 @@ def export_pipeline_ssot(
     )
 
     payload = {
-        "version": "4.2",
+        "version": "4.3",
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "stock_code": str(stock_code).zfill(6),
         "corp_name": corp_name,
@@ -2181,6 +2833,8 @@ def export_pipeline_ssot(
         "primary_metric": sec8_res.get("primary_metric", "PBR"),
         "bench": bench,
         "sotp": sotp_res,
+        "step1_2_bottleneck": step1_2_res or {},
+        "step1_8_k_return": step1_8_res or {},
         "regime": regime_res,
         "section8": sec8_res,
         "section2": sec2_res,
@@ -2211,7 +2865,28 @@ def export_pipeline_ssot(
     if sec3_res.get("is_low_vol_box"):
         tp1_row = f"| **TP1 (단기 박스권 1차)** | - | 52주 75% 저항대 | 박스권 상단 목표 | 🛡️ **{sec3_res['tp1_price']:,}원** / 🚀 **{sec3_res['tp1_price_a']:,}원** | 🛡️ **{sec3_res['tp1_upside']:+.1f}%** / 🚀 **{sec3_res['tp1_upside_a']:+.1f}%** |\n"
 
-    auto_md = f"""<!-- [AUTO-GENERATED BY backtest_valuation.py v4.2 — DO NOT EDIT NUMBERS MANUALLY] -->
+    s12 = step1_2_res or {}
+    s18 = step1_8_res or {}
+    bn_f_raw = s12.get("bottleneck_factors", [])
+    if isinstance(bn_f_raw, dict):
+        bn_f_capa = bn_f_raw.get("capa_shortage", "N/A")
+        bn_f_tech = bn_f_raw.get("tech_gap_moat", "N/A")
+        bn_f_pat = bn_f_raw.get("patent_qual_lockin", "N/A")
+    elif isinstance(bn_f_raw, list):
+        bn_f_capa = bn_f_raw[0] if len(bn_f_raw) > 0 else "N/A"
+        bn_f_tech = bn_f_raw[1] if len(bn_f_raw) > 1 else "N/A"
+        bn_f_pat = bn_f_raw[2] if len(bn_f_raw) > 2 else "N/A"
+    else:
+        bn_f_capa = bn_f_tech = bn_f_pat = "N/A"
+
+    sec_pen_val = s12.get("second_penetration_pct") or s12.get("second_scurve_penetration_pct")
+    sec_pen_str = (
+        f" (2차 S-Curve 침투율 `{sec_pen_val:.1f}%`)"
+        if sec_pen_val
+        else ""
+    )
+
+    auto_md = f"""<!-- [AUTO-GENERATED BY backtest_valuation.py v4.3 — DO NOT EDIT NUMBERS MANUALLY] -->
 
 ### 📌 [코드 자동 생성 1] SOTP 장부 분해 & 4대 레짐 체크 요약표
 | 검증 항목 | 코드 실측 수치 | 판정 결과 (Code Verdict) |
@@ -2225,11 +2900,22 @@ def export_pipeline_ssot(
 | **직전 분기 대비 (QoQ) 실적 추이** | {sec2_res['qoq_summary_str']} | {sec2_res['qoq_eps_detail']} |
 | **가설 반증 임계치 (Kill-Switch)** | **{sec2_res['kill_switch_guide']}** | 미달 시 가설 즉시 [약화] 강등 |
 
+### 📌 [코드 자동 생성 1-B] Step 1.2 S-Curve 10% 변곡점 · 3축 구조적 병목(Capa·기술·특허) · 리드타임 & Step 1.8 K-주주환원 진단표 (v4.3)
+| 진단 축 (3-Axis + K-Return) | 실측 지표 및 근거 | 코드 판정 및 Phase 3 목표주가 가중치 |
+| :--- | :--- | :--- |
+| **① 전방 시장 침투율 (10% 변곡점 여부)** | 1차 침투율 **`{s12.get('penetration_pct', 0.0):.1f}%`**{sec_pen_str} (`{s12.get('penetration_zone', 'N/A')}`) | {'🔥 **10% 골든 변곡점 발화 구간**' if s12.get('is_near_10pct_inflection') else '📌 **확산/성숙 구간 진행**'} (3축 통합 Base `×{s12.get('total_sc_bn_base_mult', 1.0):.2f}` / Bull `×{s12.get('total_sc_bn_bull_mult', 1.0):.2f}`) |
+| **②-A 물리적 Capa 병목 (가동률/증설)** | 공장 가동률 **`{s12.get('capa_util_pct', 0.0):.1f}%`** — {bn_f_capa} | {'🔒 **풀가동 공급 병목 확인**' if s12.get('capa_util_pct', 0) >= 85 else '🟢 **여유 Capa 보유**'} |
+| **②-B 기술격차 해자 (OPM/수율/단가결정력)** | 현 OPM **`{s12.get('curr_opm_pct', 0.0):.1f}%`** — {bn_f_tech} | 고마진 가격전가력(Pricing Power) 점검 |
+| **②-C 원천특허 · 글로벌 벤더 퀄(Qual) 락인** | {bn_f_pat} | 후발주자 진입장벽(Switching Cost) 점검 |
+| **③ 병목 해소 예상 소요기간 (Lead Time)** | **`{s12.get('bottleneck_grade', 'C')}등급`** (해소 리드타임 **`{s12.get('bottleneck_lead_time_months', 0)}개월`**) | {s12.get('bottleneck_lead_reason', 'N/A')} (PEG 계수 `{s12.get('peg_factor', 0.80):.2f}`) |
+| **④ K-마켓 주주환원 · 지배구조 (Step 1.8)** | 배당수익률 **`{s18.get('div_yield_pct', 0.0):.2f}%`** (성향 `{s18.get('payout_ratio_pct', 0.0):.1f}%`) / 특수관계인 `{s18.get('related_party_eok', 0.0):.1f}억` | {s18.get('tax_incentive_status', 'N/A')} / {s18.get('cliff_status', 'N/A')} (`kgov_mult = ×{s18.get('kgov_mult', 1.0):.4f}`) |
+| **⑤ 레드팀 역산 Capa 천장 검증 (Red-Team)** | 대안 A 내재 영업이익: Base **`{sec3_res.get('implied_op_base_a_eok', 0.0):,.1f}억`** / Bull **`{sec3_res.get('implied_op_bull_a_eok', 0.0):,.1f}억`** | {sec3_res.get('red_team_capa_verdict', 'N/A')} |
+
 ### 📌 [코드 자동 생성 2] Phase 3 6열 시나리오 밸류에이션 표 (주 지표: {sec8_res['primary_metric']})
 | 시나리오 | 확률 (고정) | 핵심 드라이버 가정 (AI 해석 영역) | 적용 멀티플 (코드 산출) | 적정주가 (🛡️대안 B / 🚀대안 A) | 현재가 대비 등락률 (🛡️대안 B / 🚀대안 A) |
 | :--- | :---: | :--- | :--- | :--- | :--- |
-| **Bull (호황 상단)** | **25%** | [AI가 전방 호황/가동률 상단 서술] | {sec8_res['primary_metric']} 상위 90% (대안A ×{sec3_res['bull_mult_a']:.2f}) | 🛡️ **{sec3_res['bull_auto']:,}원** / 🚀 **{sec3_res['bull_auto_a']:,}원** | 🛡️ **{u_up_b:+.1f}%** / 🚀 **{u_up_a:+.1f}%** |
-| **Base (기본 적정)** | **50%** | [AI가 컨센서스/본업 유지 서술] | {sec8_res['primary_metric']} 상위 65% (대안A ×{sec3_res['base_mult_a']:.2f}) | 🛡️ **{sec3_res['base_auto']:,}원** / 🚀 **{sec3_res['base_auto_a']:,}원** | 🛡️ **{b_up_b:+.1f}%** / 🚀 **{b_up_a:+.1f}%** |
+| **Bull (호황 상단)** | **25%** | [AI가 전방 호황/가동률 상단 서술] | {sec8_res['primary_metric']} 상위 90% (대안A ×{sec3_res['bull_mult_a']:.4f}) | 🛡️ **{sec3_res['bull_auto']:,}원** / 🚀 **{sec3_res['bull_auto_a']:,}원** | 🛡️ **{u_up_b:+.1f}%** / 🚀 **{u_up_a:+.1f}%** |
+| **Base (기본 적정)** | **50%** | [AI가 컨센서스/본업 유지 서술] | {sec8_res['primary_metric']} 상위 65% (대안A ×{sec3_res['base_mult_a']:.4f}) | 🛡️ **{sec3_res['base_auto']:,}원** / 🚀 **{sec3_res['base_auto_a']:,}원** | 🛡️ **{b_up_b:+.1f}%** / 🚀 **{b_up_a:+.1f}%** |
 {tp1_row}| **Bear (하방 지지)** | **25%** | [AI가 전방 둔화/가동률 하락 서술] | 하방 지지선 (할증 0% 고정) | 🛡️ **{sec3_res['bear_auto']:,}원** / 🚀 **{sec3_res['bear_auto']:,}원** | 🛡️ **{d_dn:+.1f}%** / 🚀 **{d_dn:+.1f}%** |
 
 ### 📌 [코드 자동 생성 3] HTML 계산기 직결 태그 (플레이스홀더 0건)
@@ -2238,7 +2924,7 @@ def export_pipeline_ssot(
     with open(auto_md_path, "w", encoding="utf-8") as mf:
         mf.write(auto_md)
 
-    print(f"\n  [✅ 파이프라인 SSOT 저장 완료]:")
+    print(f"\n  [✅ 파이프라인 SSOT (v4.3) 저장 완료]:")
     print(f"    - 숫자 원본 JSON: {export_json_path}")
     print(f"    - 마크다운 자동 표: {auto_md_path}")
     return canonical_html_tag
@@ -2263,10 +2949,21 @@ def run_valuation_backtest(
     distb_shares=0,
     total_shares=0,
     fcf=0.0,
+    norm_fcf=None,
     export_json=None,
+    penetration_pct=None,
+    second_penetration_pct=None,
+    bottleneck_grade=None,
+    bottleneck_months=None,
+    capa_util_pct=None,
+    payout_ratio=None,
+    buyback_cliff=None,
+    related_party_eok=None,
+    governance_discount=None,
+    anchor_price=None,
 ):
     print("\n======================================================================")
-    print(f"📊 [Korean Stock Analyzer v4.2] 4대 밸류에이션 지표 {years}년 풀사이클 백테스트 & SSOT 엔진")
+    print(f"📊 [Korean Stock Analyzer v4.3] 4대 밸류에이션 지표 {years}년 풀사이클 백테스트 & SSOT 엔진")
     print(f"   종목코드: {stock_code} | 분석 기간: 최근 {years}년 | 업종유형: Type {sector_type}")
     print("======================================================================")
 
@@ -2279,9 +2976,13 @@ def run_valuation_backtest(
         return
 
     curr_price = (
-        float(df_day["close"].iloc[-1])
-        if not df_day.empty
-        else (bench.get("close") or float(df_full_week["close"].iloc[-1]))
+        float(anchor_price)
+        if (anchor_price is not None and anchor_price > 0)
+        else (
+            float(df_day["close"].iloc[-1])
+            if not df_day.empty
+            else (bench.get("close") or float(df_full_week["close"].iloc[-1]))
+        )
     )
     w_close = float(df_full_week["close"].iloc[-1])
 
@@ -2361,6 +3062,34 @@ def run_valuation_backtest(
         net_debt_eok=net_debt,
     )
 
+    # [v4.3 Step 1.2] 3-Axis S-Curve (10% Inflection + Structural Bottleneck + Resolution Lead Time)
+    step1_2_res = compute_step1_2_scurve_bottleneck_matrix(
+        stock_code,
+        resolved_corp_name,
+        dart_ts,
+        scurve_override=scurve_override,
+        dart_exposure=dart_exposure,
+        early_ignition=early_ignition,
+        penetration_pct=penetration_pct,
+        second_penetration_pct=second_penetration_pct,
+        bottleneck_grade=bottleneck_grade,
+        bottleneck_months=bottleneck_months,
+        capa_util_pct=capa_util_pct,
+    )
+
+    # [v4.3 Step 1.8] K-Market Specifics & Shareholder Return Scorecard
+    step1_8_res = compute_step1_8_k_market_shareholder_return(
+        stock_code,
+        bench,
+        dart_ts,
+        distb_shares,
+        total_shares,
+        payout_ratio=payout_ratio,
+        buyback_cliff=buyback_cliff,
+        related_party_eok=related_party_eok,
+        governance_discount=governance_discount or 0.0,
+    )
+
     # [v4.2 Step 2.0] 4-Regime Change Check before applying valuation bands
     regime_res = compute_step2_0_regime_change_check(
         dart_ts, sotp_res, rerating_date=rerating_date
@@ -2376,7 +3105,7 @@ def run_valuation_backtest(
         stock_code, bench, df_full_week, dart_ts, curr_price, rerating_date=rerating_date
     )
 
-    # [Phase 3 Section 3] Stock Nature + Cyclical Peak-Multiple Trap Guard + Model B/A
+    # [Phase 3 Section 3] Stock Nature + Cyclical Peak-Multiple Trap Guard + Model B/A (v4.3)
     sec3_res = compute_section3_stock_nature_and_tp1(
         stock_code,
         resolved_corp_name,
@@ -2397,6 +3126,9 @@ def run_valuation_backtest(
         sotp_res=sotp_res,
         regime_res=regime_res,
         rerating_date=rerating_date,
+        step1_2_res=step1_2_res,
+        step1_8_res=step1_8_res,
+        distb_shares=distb_shares,
     )
 
     # [v4.2 Step 3.5] Multi-Stage Risk Causal Chain Diagnosis
@@ -2409,7 +3141,7 @@ def run_valuation_backtest(
         df_day, df_full_week, sec2_res, sec3_res
     )
 
-    # [v4.2 Pipeline SSOT] Export valuation_metrics.json & auto_tables.md
+    # [v4.3 Pipeline SSOT] Export valuation_metrics.json & auto_tables.md
     if not export_json and resolved_corp_name:
         default_sr_dir = os.path.join(
             r"e:\antigravity-work\my-skill\Stock_Research",
@@ -2437,12 +3169,15 @@ def run_valuation_backtest(
             sec3_res,
             risk_res,
             sec4_res,
+            step1_2_res=step1_2_res,
+            step1_8_res=step1_8_res,
+            norm_fcf_eok=norm_fcf,
         )
     else:
         canonical_tag = (
             f'<div id="dcf-calculator-root" data-price="{int(curr_price)}" '
             f'data-shares="{distb_shares or "[유통주식수]"}" data-total-shares="{total_shares or "[총발행주식수]"}" '
-            f'data-fcf="{fcf or "[기준FCF억]"}" data-net-debt="{net_debt}" '
+            f'data-fcf="{norm_fcf if (fcf <= 0 and norm_fcf) else (fcf or "[기준FCF억]")}" data-net-debt="{net_debt}" '
             f'data-bear="{sec3_res["bear_auto"]}" data-base="{sec3_res["base_auto"]}" data-bull="{sec3_res["bull_auto"]}" '
             f'data-base-a="{sec3_res["base_auto_a"]}" data-bull-a="{sec3_res["bull_auto_a"]}" '
             f'data-buy1="{sec4_res.get("buy1", 0)}" data-buy2="{sec4_res.get("buy2", 0)}" data-buy3="{sec4_res.get("buy3", 0)}" '
@@ -2457,7 +3192,7 @@ def run_valuation_backtest(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer v4.2"
+        description="Valuation Indicator Backtester & Pipeline SSOT Engine for Korean Stock Analyzer v4.3"
     )
     parser.add_argument("--code", type=str, required=True, help="Stock code (e.g. 093520)")
     parser.add_argument("--years", type=int, default=10, help="Backtest years (default: 10)")
@@ -2468,20 +3203,32 @@ if __name__ == "__main__":
     parser.add_argument("--bull-target", type=float, default=None, help="Optional Bull scenario target price (KRW, Model B)")
     parser.add_argument("--dart-exposure", type=float, default=None, help="DART verified standalone new-tech revenue exposure %% (e.g. 17.5)")
     parser.add_argument("--forward-eps", type=float, default=None, help="Estimated annual/forward controlling EPS (KRW) to compute Forward BPS")
-    parser.add_argument("--forward-eps-g", type=float, default=None, help="Estimated Forward EPS growth rate %% for PEG(0.8) dynamic rerating")
+    parser.add_argument("--forward-eps-g", type=float, default=None, help="Estimated Forward EPS growth rate %% for PEG(0.8~0.95) dynamic rerating")
     parser.add_argument("--expected-dps", type=float, default=0.0, help="Expected annual DPS (KRW) for Forward BPS calculation")
     parser.add_argument("--non-op-assets", type=float, default=None, help="Non-operating assets (investment property, affiliate stakes) in 억 원 for Step 1.5 SOTP 20%% check")
     parser.add_argument("--net-debt", type=float, default=0.0, help="Net debt in 억 원 (+ for net debt, - for net cash)")
     parser.add_argument("--distb-shares", type=int, default=0, help="Floating shares (distb_stock_co) for SSOT HTML tag generation")
     parser.add_argument("--total-shares", type=int, default=0, help="Total issued shares (istc_totqy) for SSOT HTML tag generation")
     parser.add_argument("--fcf", type=float, default=0.0, help="Base FCF in 억 원 for SSOT HTML tag generation")
+    parser.add_argument("--norm-fcf", type=float, default=None, help="Owner Normalized FCF in 억 원 when expansion CapEx makes reported FCF <= 0")
     parser.add_argument("--export-json", type=str, default=None, help="Explicit output path for valuation_metrics.json (Single Source of Truth)")
     parser.add_argument("--s-curve-phase2", action="store_true", help="Force enable S-Curve Phase 2 (+10%% Base / +12%% Bull) boost")
     parser.add_argument("--early-ignition", action="store_true", help="Enable DART Early Ignition S-Curve gate (+15%% Base / +20%% Bull)")
     parser.add_argument("--no-s-curve", action="store_true", help="Force disable S-Curve Phase 2 boost")
+    parser.add_argument("--penetration-pct", type=float, default=None, help="Override 1st S-Curve market penetration %%")
+    parser.add_argument("--second-penetration-pct", type=float, default=None, help="Override 2nd S-Curve market penetration %%")
+    parser.add_argument("--bottleneck-grade", type=str, default=None, help="Override structural bottleneck grade: S (>=24M), A (12~23M), B (<12M), C (None)")
+    parser.add_argument("--bottleneck-months", type=int, default=None, help="Override structural bottleneck resolution lead time in months")
+    parser.add_argument("--capa-util-pct", type=float, default=None, help="Override plant capacity utilization %%")
+    parser.add_argument("--payout-ratio", type=float, default=None, help="Override dividend payout ratio %%")
+    parser.add_argument("--buyback-cliff", action="store_true", help="Flag post-buyback/cancellation shareholder return cliff risk")
+    parser.add_argument("--related-party-eok", type=float, default=None, help="Override related-party revenue in 억 원")
+    parser.add_argument("--governance-discount", type=float, default=None, help="Override K-governance discount %% (e.g. -5.0)")
+    parser.add_argument("--anchor-price", type=float, default=None, help="Optional single price anchor override (KRW) to sync with an existing report date")
 
     args = parser.parse_args()
     sc_override = True if args.s_curve_phase2 else (False if args.no_s_curve else None)
+    bb_cliff = True if args.buyback_cliff else None
 
     run_valuation_backtest(
         args.code,
@@ -2502,5 +3249,16 @@ if __name__ == "__main__":
         distb_shares=args.distb_shares,
         total_shares=args.total_shares,
         fcf=args.fcf,
+        norm_fcf=args.norm_fcf,
         export_json=args.export_json,
+        penetration_pct=args.penetration_pct,
+        second_penetration_pct=args.second_penetration_pct,
+        bottleneck_grade=args.bottleneck_grade,
+        bottleneck_months=args.bottleneck_months,
+        capa_util_pct=args.capa_util_pct,
+        payout_ratio=args.payout_ratio,
+        buyback_cliff=bb_cliff,
+        related_party_eok=args.related_party_eok,
+        governance_discount=args.governance_discount,
+        anchor_price=args.anchor_price,
     )

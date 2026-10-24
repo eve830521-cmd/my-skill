@@ -19,6 +19,18 @@ if hasattr(sys.stdout, "reconfigure"):
 STOCK_RESEARCH_DIR = r"e:\antigravity-work\my-skill\Stock_Research"
 DEFAULT_OUTPUT_LOCAL = os.path.join(STOCK_RESEARCH_DIR, "00_모바일_통합요약본.html")
 DEFAULT_OUTPUT_GDRIVE = r"G:\내 드라이브\01.현탁\01.재테크(G)\02. 보유\00_모바일_통합요약본.html"
+PORTFOLIO_STATUS_PATH = os.path.join(STOCK_RESEARCH_DIR, "portfolio_status.json")
+
+
+def load_portfolio_status() -> dict:
+    """Loads portfolio_status.json (SSOT for holding vs watchlist)."""
+    if os.path.exists(PORTFOLIO_STATUS_PATH):
+        try:
+            with open(PORTFOLIO_STATUS_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"[경고] portfolio_status.json 로드 실패: {e}")
+    return {"updated_at": datetime.now().isoformat(), "items": {}}
 
 
 def clean_md(text: str) -> str:
@@ -132,13 +144,19 @@ def extract_opt_valuation_metric(comp_dir: str, p3_text: str) -> str:
     return "-"
 
 
-def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
+def extract_company_summary(comp_dir: str, comp_name: str, portfolio_status: dict = None) -> dict:
     p3_path = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
     thesis_path = os.path.join(comp_dir, "Weekly_Trend", "thesis_log.md")
     ssot_path = os.path.join(comp_dir, "2_Translated_DB", "valuation_metrics.json")
 
+    # Determine status: default to holding if not specified
+    p_items = (portfolio_status or {}).get("items", {})
+    comp_meta = p_items.get(comp_name, {})
+    comp_status = comp_meta.get("status", "holding")
+
     data = {
         "name": comp_name,
+        "status": comp_status,
         "updated_at": "-",
         "opt_metric": "-",
         "s_curve_badge": "-",
@@ -200,7 +218,7 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     ) or "무상 콜옵션" in data["s_curve_badge"]:
         data["free_call_option"] = True
 
-    # v4.2 New Badges from SSOT or Markdown (SOTP 20%, Regime Shift, Cyclical Peak Trap)
+    # v4.2 & v4.3 Badges from SSOT or Markdown (SOTP 20%, Regime Shift, Cyclical Peak Trap, 10% Inflection, Bottleneck, K-Return)
     if ssot.get("sotp", {}).get("sotp_triggered") or re.search(r"SOTP\s*분리\s*평가\s*강제\s*발동", text):
         non_op_pct = ssot.get("sotp", {}).get("non_op_max_ratio_pct")
         data["sotp_badge"] = f"🏛️ SOTP분리(비영업 {non_op_pct:.0f}%)" if non_op_pct else "🏛️ SOTP분리(비영업≥20%)"
@@ -208,6 +226,25 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         data["regime_badge"] = "🔄 4대레짐변화검토"
     if ssot.get("cyclical_guard", {}).get("is_peak_trap") or re.search(r"사이클\s*고점\s*이익\s*함정\s*경보", text):
         data["cyclical_trap_badge"] = "🚨 피크멀티플제한(Mid-Cycle캡)"
+
+    s12_ssot = ssot.get("step1_2_bottleneck", {})
+    s18_ssot = ssot.get("step1_8_k_return", {})
+    data["inflection_badge"] = ""
+    data["bottleneck_badge"] = ""
+    data["kreturn_badge"] = ""
+    if s12_ssot.get("is_near_10pct_inflection"):
+        pen_v = s12_ssot.get("second_penetration_pct") or s12_ssot.get("second_scurve_penetration_pct") or s12_ssot.get("penetration_pct") or 10.0
+        data["inflection_badge"] = f"🔥 10%변곡점({pen_v:.1f}%)"
+    if s12_ssot.get("bottleneck_grade") in ("S", "A"):
+        bg = s12_ssot["bottleneck_grade"]
+        bm = s12_ssot.get("bottleneck_lead_time_months", 0)
+        cu = s12_ssot.get("capa_util_pct", 0)
+        data["bottleneck_badge"] = f"🔒 병목{bg}등급({bm}M·가동{cu:.0f}%)"
+    if s18_ssot.get("buyback_cliff_warn") or s18_ssot.get("buyback_cliff_risk"):
+        data["kreturn_badge"] = "⚠️ 자사주환원절벽주의"
+    elif "충족" in str(s18_ssot.get("tax_incentive_status", "")) or "적격" in str(s18_ssot.get("tax_incentive_status", "")) or s18_ssot.get("tax_sep_eligible"):
+        pr = s18_ssot.get("payout_ratio_pct", 0)
+        data["kreturn_badge"] = f"💰 분리과세적격(성향{pr:.0f}%)"
 
     # Current Price (SSOT Priority -> HTML Tag -> Markdown Table)
     if ssot.get("anchor_price"):
@@ -264,7 +301,7 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         if m_sp_text:
             data["stop_pin"] = m_sp_text.group(1)
 
-    # Section 1: Reverse DCF Growth Rates
+    # Section 1: Reverse DCF Growth Rates (v4.3: Reported FCF -> Owner Normalized FCF -> Markdown Fallback)
     dcf_ssot = ssot.get("reverse_dcf", {})
     if dcf_ssot.get("implied_g_distb_pct") is not None:
         data["equity_growth"] = f"{dcf_ssot['implied_g_distb_pct']:+.2f}%"
@@ -272,6 +309,13 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
             data["ev_growth"] = f"{dcf_ssot['implied_g_ev_pct']:+.2f}%"
         if dcf_ssot.get("implied_g_core_ev_pct") is not None:
             data["core_ev_growth"] = f"{dcf_ssot['implied_g_core_ev_pct']:+.2f}%"
+        data["implied_growth"] = f"Equity {data['equity_growth']} | EV {data['ev_growth']}"
+    elif dcf_ssot.get("norm_g_distb_pct") is not None:
+        data["equity_growth"] = f"{dcf_ssot['norm_g_distb_pct']:+.2f}%(정규화)"
+        if dcf_ssot.get("norm_g_ev_pct") is not None:
+            data["ev_growth"] = f"{dcf_ssot['norm_g_ev_pct']:+.2f}%"
+        if dcf_ssot.get("norm_g_core_ev_pct") is not None:
+            data["core_ev_growth"] = f"{dcf_ssot['norm_g_core_ev_pct']:+.2f}%"
         data["implied_growth"] = f"Equity {data['equity_growth']} | EV {data['ev_growth']}"
     else:
         sec1_match = re.search(r"##\s*1\..*?(?=##\s*2\.|\Z)", text, re.DOTALL)
@@ -314,44 +358,69 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
                     raw_ig = "연간 " + raw_ig
                 data["implied_growth"] = clean_md(raw_ig)
 
-    # Section 3: Scenarios & R:R
+    # Section 3: Scenarios & R:R (v4.3: SSOT Priority -> Markdown Fallback)
+    sec3_ssot = ssot.get("section3", {})
+    anchor_p = float(ssot.get("anchor_price") or 0.0)
     sec3_match = re.search(r"##\s*3\..*?(?=##\s*(?:3\.5|4)\b|\Z)", text, re.DOTALL)
     sec3_text = sec3_match.group(0) if sec3_match else text
 
-    def _format_price_upside_cell(raw_p_cell: str, raw_u_cell: str) -> str:
-        if "/" in raw_p_cell and "/" in raw_u_cell:
-            p_parts = [clean_md(x.strip()) for x in raw_p_cell.split("/")]
-            u_parts = [clean_md(x.strip()) for x in raw_u_cell.split("/")]
-            if len(p_parts) >= 2 and len(u_parts) >= 2:
-                return f"🛡️B: {p_parts[0]} ({u_parts[0]})<br>🚀A: {p_parts[1]} ({u_parts[1]})"
-        price_str = clean_md(raw_p_cell)
-        upside_str = clean_md(raw_u_cell)
-        return f"{price_str} ({upside_str})"
+    if sec3_ssot.get("base_auto") and sec3_ssot.get("bull_auto") and sec3_ssot.get("bear_auto") and anchor_p > 0:
+        b_b = int(sec3_ssot["base_auto"])
+        b_a = int(sec3_ssot.get("base_auto_a") or b_b)
+        u_b = int(sec3_ssot["bull_auto"])
+        u_a = int(sec3_ssot.get("bull_auto_a") or u_b)
+        d_b = int(sec3_ssot["bear_auto"])
+        data["bull_target"] = (
+            f"🛡️B: {u_b:,}원 ({(u_b/anchor_p-1)*100:+.1f}%)<br>"
+            f"🚀A: {u_a:,}원 ({(u_a/anchor_p-1)*100:+.1f}%)"
+        )
+        data["base_target"] = (
+            f"🛡️B: {b_b:,}원 ({(b_b/anchor_p-1)*100:+.1f}%)<br>"
+            f"🚀A: {b_a:,}원 ({(b_a/anchor_p-1)*100:+.1f}%)"
+        )
+        data["bear_target"] = f"{d_b:,}원 ({(d_b/anchor_p-1)*100:+.1f}%)"
+        if sec3_ssot.get("is_low_vol_box") and sec3_ssot.get("tp1_price"):
+            tp_b = int(sec3_ssot["tp1_price"])
+            tp_a = int(sec3_ssot.get("tp1_price_a") or tp_b)
+            data["tp1_target"] = (
+                f"🛡️B: {tp_b:,}원 ({(tp_b/anchor_p-1)*100:+.1f}%)<br>"
+                f"🚀A: {tp_a:,}원 ({(tp_a/anchor_p-1)*100:+.1f}%)"
+            )
+    else:
+        def _format_price_upside_cell(raw_p_cell: str, raw_u_cell: str) -> str:
+            if "/" in raw_p_cell and "/" in raw_u_cell:
+                p_parts = [clean_md(x.strip()) for x in raw_p_cell.split("/")]
+                u_parts = [clean_md(x.strip()) for x in raw_u_cell.split("/")]
+                if len(p_parts) >= 2 and len(u_parts) >= 2:
+                    return f"🛡️B: {p_parts[0]} ({u_parts[0]})<br>🚀A: {p_parts[1]} ({u_parts[1]})"
+            price_str = clean_md(raw_p_cell)
+            upside_str = clean_md(raw_u_cell)
+            return f"{price_str} ({upside_str})"
 
-    for line in sec3_text.splitlines():
-        s_line = line.strip()
-        if not s_line.startswith("|") or "---" in s_line:
-            continue
-        cells = [c.strip() for c in s_line.strip("|").split("|")]
-        if len(cells) < 5:
-            continue
-        first_col = re.sub(r"[*`]", "", cells[0]).strip()
-        target_key = None
-        if re.match(r"^Bull\b", first_col, re.IGNORECASE):
-            target_key = "bull_target"
-        elif re.match(r"^Base\b", first_col, re.IGNORECASE):
-            target_key = "base_target"
-        elif re.match(r"^TP1\b", first_col, re.IGNORECASE):
-            target_key = "tp1_target"
-        elif re.match(r"^Bear\b", first_col, re.IGNORECASE):
-            target_key = "bear_target"
-        if target_key:
-            raw_p_cell = cells[-2]
-            raw_u_cell = cells[-1]
-            if len(cells) >= 6 and ("%" in cells[-2]) and ("원" in cells[-3]):
-                raw_p_cell = cells[-3]
-                raw_u_cell = cells[-2]
-            data[target_key] = _format_price_upside_cell(raw_p_cell, raw_u_cell)
+        for line in sec3_text.splitlines():
+            s_line = line.strip()
+            if not s_line.startswith("|") or "---" in s_line:
+                continue
+            cells = [c.strip() for c in s_line.strip("|").split("|")]
+            if len(cells) < 5:
+                continue
+            first_col = re.sub(r"[*`]", "", cells[0]).strip()
+            target_key = None
+            if re.match(r"^Bull\b", first_col, re.IGNORECASE):
+                target_key = "bull_target"
+            elif re.match(r"^Base\b", first_col, re.IGNORECASE):
+                target_key = "base_target"
+            elif re.match(r"^TP1\b", first_col, re.IGNORECASE):
+                target_key = "tp1_target"
+            elif re.match(r"^Bear\b", first_col, re.IGNORECASE):
+                target_key = "bear_target"
+            if target_key:
+                raw_p_cell = cells[-2]
+                raw_u_cell = cells[-1]
+                if len(cells) >= 6 and ("%" in cells[-2]) and ("원" in cells[-3]):
+                    raw_p_cell = cells[-3]
+                    raw_u_cell = cells[-2]
+                data[target_key] = _format_price_upside_cell(raw_p_cell, raw_u_cell)
 
     if data["tp1_target"] != "-":
         clean_tp = re.sub(r"<br>.*", "", data["tp1_target"])
@@ -362,32 +431,35 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
         clean_base = re.sub(r"<br>.*", "", data["base_target"])
         data["primary_target"] = f"Base: {clean_base}"
 
-    m_g1 = re.search(
-        r"Gate\s*1[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|바닥권)",
-        sec3_text,
-        re.IGNORECASE,
-    )
-    m_g2 = re.search(
-        r"Gate\s*2[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|관망|차단|진입차단)",
-        sec3_text,
-        re.IGNORECASE,
-    )
-    if m_g1 and m_g2:
-        g1_str = re.sub(r"\s+", "", m_g1.group(1))
-        g2_str = re.sub(r"\s+", "", m_g2.group(1))
-        data["rr_ratio"] = f"G1 {g1_str} | G2 {g2_str}"
+    if sec4_ssot.get("gate1_rr") is not None and sec4_ssot.get("exec_rr") is not None:
+        data["rr_ratio"] = f"G1 {sec4_ssot['gate1_rr']:.2f}:1 | G2 {sec4_ssot['exec_rr']:.2f}:1"
     else:
-        rr_patterns = [
-            r"Base\s*(?:기준\s*)?(?:R:R|손익비|상승폭)[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
-            r"순수\s*Base\s*대\s*Bear\s*손익비[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
-            r"R:R\s*Ratio[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
-            r"손익비[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
-        ]
-        for pat in rr_patterns:
-            m_rr = re.search(pat, sec3_text, re.IGNORECASE)
-            if m_rr:
-                data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
-                break
+        m_g1 = re.search(
+            r"Gate\s*1[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|바닥권)",
+            sec3_text,
+            re.IGNORECASE,
+        )
+        m_g2 = re.search(
+            r"Gate\s*2[\s\S]{0,250}?([0-9]+\.[0-9]+\s*:\s*1|음수|산출\s*불가|관망|차단|진입차단)",
+            sec3_text,
+            re.IGNORECASE,
+        )
+        if m_g1 and m_g2:
+            g1_str = re.sub(r"\s+", "", m_g1.group(1))
+            g2_str = re.sub(r"\s+", "", m_g2.group(1))
+            data["rr_ratio"] = f"G1 {g1_str} | G2 {g2_str}"
+        else:
+            rr_patterns = [
+                r"Base\s*(?:기준\s*)?(?:R:R|손익비|상승폭)[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
+                r"순수\s*Base\s*대\s*Bear\s*손익비[^\n]*?([0-9]+\.[0-9]+\s*:\s*1)",
+                r"R:R\s*Ratio[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
+                r"손익비[\s\S]{0,350}?([0-9]+\.[0-9]+\s*:\s*1)",
+            ]
+            for pat in rr_patterns:
+                m_rr = re.search(pat, sec3_text, re.IGNORECASE)
+                if m_rr:
+                    data["rr_ratio"] = re.sub(r"\s+", " ", m_rr.group(1)).strip()
+                    break
 
     sec4_match = re.search(r"##\s*4\..*", text, re.DOTALL)
     sec4_text = sec4_match.group(0) if sec4_match else text
@@ -466,147 +538,178 @@ def extract_company_summary(comp_dir: str, comp_name: str) -> dict:
     return data
 
 
-def build_mobile_html(items: list) -> str:
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    cards_html = ""
+def render_stock_card(item: dict) -> str:
+    theses_li = ""
+    if item["theses"]:
+        for th in item["theses"][-4:]:
+            theses_li += f"<li>{th}</li>"
+    else:
+        theses_li = "<li>등록된 가설 로그 없음</li>"
 
-    for item in items:
-        theses_li = ""
-        if item["theses"]:
-            for th in item["theses"][-4:]:
-                theses_li += f"<li>{th}</li>"
-        else:
-            theses_li = "<li>등록된 가설 로그 없음</li>"
+    metric_chip = (
+        f'<span class="chip-metric">👑 {item["opt_metric"]} 1위</span>'
+        if item["opt_metric"] != "-"
+        else ""
+    )
+    free_opt_chip = (
+        '<span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>'
+        if item["free_call_option"]
+        else ""
+    )
+    sotp_chip = (
+        f'<span class="chip-sotp">{item["sotp_badge"]}</span>'
+        if item.get("sotp_badge")
+        else ""
+    )
+    regime_chip = (
+        f'<span class="chip-regime">{item["regime_badge"]}</span>'
+        if item.get("regime_badge")
+        else ""
+    )
+    cyc_chip = (
+        f'<span class="chip-cyc">{item["cyclical_trap_badge"]}</span>'
+        if item.get("cyclical_trap_badge")
+        else ""
+    )
+    inflection_chip = (
+        f'<span class="chip-sotp" style="background:rgba(249,115,22,0.18);border-color:rgba(249,115,22,0.45);color:#fdba74;">{item["inflection_badge"]}</span>'
+        if item.get("inflection_badge")
+        else ""
+    )
+    bottleneck_chip = (
+        f'<span class="chip-metric" style="background:rgba(16,185,129,0.18);border-color:rgba(16,185,129,0.45);color:#6ee7b7;">{item["bottleneck_badge"]}</span>'
+        if item.get("bottleneck_badge")
+        else ""
+    )
+    kreturn_chip = (
+        f'<span class="chip-regime" style="background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.42);color:#7dd3fc;">{item["kreturn_badge"]}</span>'
+        if item.get("kreturn_badge")
+        else ""
+    )
 
-        metric_chip = (
-            f'<span class="chip-metric">👑 {item["opt_metric"]} 1위</span>'
-            if item["opt_metric"] != "-"
-            else ""
+    action_bar_html = ""
+    has_stop = item["stop_pin"] != "-"
+    has_tgt = item["primary_target"] != "-"
+    if has_stop or has_tgt:
+        stop_sub = (
+            f"분할매수가: {item['buy_prices']}"
+            if item["buy_prices"] != "-"
+            else "일봉 종가 이탈 시 기계적 손절"
         )
-        free_opt_chip = (
-            '<span class="chip-free-opt">🎁 무상콜옵션 (할증0%)</span>'
-            if item["free_call_option"]
-            else ""
+        tgt_sub = (
+            f"실전 손익비: {item['rr_ratio']}"
+            if item["rr_ratio"] != "-"
+            else "1차 목표가 도달 시 반타작 분할익절"
         )
-        sotp_chip = (
-            f'<span class="chip-sotp">{item["sotp_badge"]}</span>'
-            if item.get("sotp_badge")
-            else ""
-        )
-        regime_chip = (
-            f'<span class="chip-regime">{item["regime_badge"]}</span>'
-            if item.get("regime_badge")
-            else ""
-        )
-        cyc_chip = (
-            f'<span class="chip-cyc">{item["cyclical_trap_badge"]}</span>'
-            if item.get("cyclical_trap_badge")
-            else ""
-        )
-
-        action_bar_html = ""
-        has_stop = item["stop_pin"] != "-"
-        has_tgt = item["primary_target"] != "-"
-        if has_stop or has_tgt:
-            stop_sub = (
-                f"분할매수가: {item['buy_prices']}"
-                if item["buy_prices"] != "-"
-                else "일봉 종가 이탈 시 기계적 손절"
-            )
-            tgt_sub = (
-                f"실전 손익비: {item['rr_ratio']}"
-                if item["rr_ratio"] != "-"
-                else "1차 목표가 도달 시 반타작 분할익절"
-            )
-            action_bar_html = f"""
-            <div class="core-action-bar">
-                <div class="action-card stop-card">
-                    <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
-                    <div class="act-val stop-val">{item['stop_pin']}</div>
-                    <div class="act-sub">{stop_sub}</div>
-                </div>
-                <div class="action-card target-card">
-                    <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
-                    <div class="act-val target-val">{item['primary_target']}</div>
-                    <div class="act-sub">{tgt_sub}</div>
-                </div>
+        action_bar_html = f"""
+        <div class="core-action-bar">
+            <div class="action-card stop-card">
+                <div class="act-label">🚨 1단계 고정 안전핀 (Hard Stop)</div>
+                <div class="act-val stop-val">{item['stop_pin']}</div>
+                <div class="act-sub">{stop_sub}</div>
             </div>
-            """
-
-        if item["equity_growth"] != "-" and item["ev_growth"] != "-":
-            core_ev_span = (
-                f'<span class="growth-chip sotp">본업EV {item["core_ev_growth"]}</span>'
-                if item.get("core_ev_growth") and item["core_ev_growth"] != "-"
-                else ""
-            )
-            dcf_display = f"""
-            <div class="growth-chips-row">
-                <span class="growth-chip eq">주주(Eq) {item['equity_growth']}</span>
-                <span class="growth-chip ev">실질(EV) {item['ev_growth']}</span>
-                {core_ev_span}
+            <div class="action-card target-card">
+                <div class="act-label">🎯 1차 목표가 (Base / TP1)</div>
+                <div class="act-val target-val">{item['primary_target']}</div>
+                <div class="act-sub">{tgt_sub}</div>
             </div>
-            <div class="rr-line">손익비: <strong>{item['rr_ratio']}</strong></div>
-            """
-        else:
-            dcf_display = f"""
-            <div class="m-val">{item['implied_growth']} <span class="rr-sub">(R:R {item['rr_ratio']})</span></div>
-            """
-
-        cards_html += f"""
-        <div class="stock-card" data-name="{item['name']}">
-            <div class="card-header">
-                <div class="title-wrap">
-                    <span class="stock-title">{item['name']}</span>
-                    {metric_chip}
-                    {free_opt_chip}
-                    {sotp_chip}
-                    {regime_chip}
-                    {cyc_chip}
-                    <span class="update-date">({item['updated_at']})</span>
-                </div>
-                <div class="price-pill">현재가: {item['current_price']}</div>
-            </div>
-            <div class="badges-row">
-                <div class="badge-line">🧭 <strong>S-Curve:</strong> {item['s_curve_badge']}</div>
-                <div class="badge-line">🛡️ <strong>밸류체인:</strong> {item['hybrid_badge']}</div>
-            </div>
-            {action_bar_html}
-            <div class="metrics-grid">
-                <div class="metric-box bull">
-                    <div class="m-label">Bull (호황 목표가)</div>
-                    <div class="m-val">{item['bull_target']}</div>
-                </div>
-                <div class="metric-box base">
-                    <div class="m-label">Base (기본 적정가)</div>
-                    <div class="m-val">{item['base_target']}</div>
-                </div>
-                <div class="metric-box bear">
-                    <div class="m-label">Bear (하방 지지선)</div>
-                    <div class="m-val">{item['bear_target']}</div>
-                </div>
-                <div class="metric-box dcf">
-                    <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
-                    {dcf_display}
-                </div>
-            </div>
-            <div class="triggers-box">
-                <div class="t-row"><strong>🎯 의견/밴드:</strong> {item['opinion']}</div>
-                <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br>{item['buy_trigger']}</div>
-                <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br>{item['sell_trigger']}</div>
-            </div>
-            <details class="thesis-details">
-                <summary>💡 핵심 투자 가설 · 직전분기(QoQ) · 반증 기준 보기 ({len(item['theses'])}건)</summary>
-                <ul>{theses_li}</ul>
-            </details>
         </div>
         """
+
+    if item["equity_growth"] != "-" and item["ev_growth"] != "-":
+        core_ev_span = (
+            f'<span class="growth-chip sotp">본업EV {item["core_ev_growth"]}</span>'
+            if item.get("core_ev_growth") and item["core_ev_growth"] != "-"
+            else ""
+        )
+        dcf_display = f"""
+        <div class="growth-chips-row">
+            <span class="growth-chip eq">주주(Eq) {item['equity_growth']}</span>
+            <span class="growth-chip ev">실질(EV) {item['ev_growth']}</span>
+            {core_ev_span}
+        </div>
+        <div class="rr-line">손익비: <strong>{item['rr_ratio']}</strong></div>
+        """
+    else:
+        dcf_display = f"""
+        <div class="m-val">{item['implied_growth']} <span class="rr-sub">(R:R {item['rr_ratio']})</span></div>
+        """
+
+    holding_active = "active" if item.get("status") == "holding" else ""
+    watchlist_active = "active" if item.get("status") == "watchlist" else ""
+
+    return f"""
+    <div class="stock-card" data-name="{item['name']}" data-status="{item.get('status', 'holding')}">
+        <div class="card-header">
+            <div class="title-wrap">
+                <span class="stock-title">{item['name']}</span>
+                <div class="status-btn-group">
+                    <button type="button" class="status-btn btn-holding {holding_active}" onclick="updateStockStatus('{item['name']}', 'holding', event)">💼 보유</button>
+                    <button type="button" class="status-btn btn-watchlist {watchlist_active}" onclick="updateStockStatus('{item['name']}', 'watchlist', event)">👀 관심</button>
+                </div>
+                {metric_chip}
+                {free_opt_chip}
+                {sotp_chip}
+                {regime_chip}
+                {cyc_chip}
+                {inflection_chip}
+                {bottleneck_chip}
+                {kreturn_chip}
+                <span class="update-date">({item['updated_at']})</span>
+            </div>
+            <div class="price-pill">현재가: {item['current_price']}</div>
+        </div>
+        <div class="badges-row">
+            <div class="badge-line">🧭 <strong>S-Curve:</strong> {item['s_curve_badge']}</div>
+            <div class="badge-line">🛡️ <strong>밸류체인:</strong> {item['hybrid_badge']}</div>
+        </div>
+        {action_bar_html}
+        <div class="metrics-grid">
+            <div class="metric-box bull">
+                <div class="m-label">Bull (호황 목표가)</div>
+                <div class="m-val">{item['bull_target']}</div>
+            </div>
+            <div class="metric-box base">
+                <div class="m-label">Base (기본 적정가)</div>
+                <div class="m-val">{item['base_target']}</div>
+            </div>
+            <div class="metric-box bear">
+                <div class="m-label">Bear (하방 지지선)</div>
+                <div class="m-val">{item['bear_target']}</div>
+            </div>
+            <div class="metric-box dcf">
+                <div class="m-label">역DCF 실질 요구성장률 / 손익비</div>
+                {dcf_display}
+            </div>
+        </div>
+        <div class="triggers-box">
+            <div class="t-row"><strong>🎯 의견/밴드:</strong> {item['opinion']}</div>
+            <div class="t-row buy-t"><strong>🔵 매수 트리거:</strong><br>{item['buy_trigger']}</div>
+            <div class="t-row sell-t"><strong>🔴 매도 트리거:</strong><br>{item['sell_trigger']}</div>
+        </div>
+        <details class="thesis-details">
+            <summary>💡 핵심 투자 가설 · 직전분기(QoQ) · 반증 기준 보기 ({len(item['theses'])}건)</summary>
+            <ul>{theses_li}</ul>
+        </details>
+    </div>
+    """
+
+
+def build_mobile_html(items: list) -> str:
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    holding_items = [it for it in items if it.get("status") == "holding"]
+    watchlist_items = [it for it in items if it.get("status") == "watchlist"]
+
+    holding_cards_html = "".join(render_stock_card(it) for it in holding_items)
+    watchlist_cards_html = "".join(render_stock_card(it) for it in watchlist_items)
 
     html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.2)</title>
+    <title>📱 내 보유·관심종목 모바일 1페이지 통합 요약본 (v4.2.3)</title>
     <style>
         :root {{
             --bg: #0b1120;
@@ -633,7 +736,7 @@ def build_mobile_html(items: list) -> str:
         }}
         .top-bar {{
             max-width: 760px;
-            margin: 0 auto 14px auto;
+            margin: 0 auto 16px auto;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid var(--border);
             border-radius: 14px;
@@ -649,9 +752,58 @@ def build_mobile_html(items: list) -> str:
             gap: 6px;
         }}
         .top-bar .sub {{
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--muted);
             margin-bottom: 12px;
+        }}
+        .portfolio-stats-bar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 17, 32, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }}
+        .stat-pills {{
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }}
+        .stat-pill {{
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }}
+        .stat-pill.holding {{
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: #34d399;
+        }}
+        .stat-pill.watchlist {{
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+        }}
+        .sync-copy-btn {{
+            background: #1e293b;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }}
+        .sync-copy-btn:hover {{
+            background: var(--accent);
+            color: #0f172a;
         }}
         .search-input {{
             width: 100%;
@@ -667,9 +819,53 @@ def build_mobile_html(items: list) -> str:
         .search-input:focus {{
             border-color: var(--accent);
         }}
-        .container {{
+        .section-wrap {{
             max-width: 760px;
-            margin: 0 auto;
+            margin: 0 auto 24px auto;
+        }}
+        .section-title-bar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: #151e32;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+        }}
+        .holding-title {{
+            border-left: 4px solid #34d399;
+        }}
+        .watchlist-title {{
+            border-left: 4px solid #fbbf24;
+            cursor: pointer;
+            user-select: none;
+        }}
+        .section-title-bar h2 {{
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }}
+        .sec-desc {{
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-left: 8px;
+            font-weight: normal;
+        }}
+        .section-toggle-btn {{
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }}
+        .container {{
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -680,6 +876,14 @@ def build_mobile_html(items: list) -> str:
             border-radius: 14px;
             padding: 15px;
             box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }}
+        .stock-card.just-moved {{
+            animation: highlightPulse 1.2s ease-out;
+        }}
+        @keyframes highlightPulse {{
+            0% {{ outline: 2px solid var(--accent); box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }}
+            100% {{ outline: 2px solid transparent; }}
         }}
         .card-header {{
             display: flex;
@@ -702,6 +906,36 @@ def build_mobile_html(items: list) -> str:
             font-weight: 800;
             color: #fff;
             letter-spacing: -0.02em;
+        }}
+        .status-btn-group {{
+            display: inline-flex;
+            background: #0b1120;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2px;
+            gap: 2px;
+            margin-right: 4px;
+        }}
+        .status-btn {{
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+        .status-btn.btn-holding.active {{
+            background: rgba(52, 211, 153, 0.25);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.5);
+        }}
+        .status-btn.btn-watchlist.active {{
+            background: rgba(251, 191, 36, 0.25);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.5);
         }}
         .chip-metric {{
             background: rgba(96, 165, 250, 0.15);
@@ -889,31 +1123,242 @@ def build_mobile_html(items: list) -> str:
             padding-left: 18px;
         }}
         .thesis-details li {{ margin-bottom: 8px; color: #cbd5e1; }}
+        .toast {{
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--accent);
+            color: #f8fafc;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            z-index: 9999;
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+        }}
+        .toast.show {{
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }}
         @media (max-width: 480px) {{
             .core-action-bar {{ grid-template-columns: 1fr; }}
             .metrics-grid {{ grid-template-columns: 1fr; }}
+            .portfolio-stats-bar {{ flex-direction: column; align-items: stretch; }}
+            .sync-copy-btn {{ text-align: center; }}
         }}
     </style>
 </head>
 <body>
     <div class="top-bar">
         <h1>📱 내 투자 종목 모바일 1페이지 통합 요약본</h1>
-        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | v4.2 SOTP·4대레짐·사이클캡·반증가설·SSOT 연동</div>
-        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 하나머티리얼즈, GST...)" oninput="filterCards()">
+        <div class="sub">총 {len(items)}개 분석 종목 | 최종 갱신: {now_str} | v4.2.3 포트폴리오(보유/관심) 연동</div>
+        <div class="portfolio-stats-bar">
+            <div class="stat-pills">
+                <span class="stat-pill holding">💼 보유 <strong id="holdingCount">{len(holding_items)}</strong>개</span>
+                <span class="stat-pill watchlist">👀 관심 <strong id="watchlistCount">{len(watchlist_items)}</strong>개</span>
+            </div>
+            <button type="button" class="sync-copy-btn" onclick="copyPortfolioStatus()">📋 분류 상태 복사</button>
+        </div>
+        <input type="text" id="searchBox" class="search-input" placeholder="🔍 종목명 검색 (예: 삼성전자, 하나머티리얼즈, 매커스...)" oninput="filterCards()">
     </div>
-    <div class="container" id="cardContainer">
-        {cards_html}
+
+    <!-- 1. 보유 종목 섹션 (상단) -->
+    <div class="section-wrap" id="holdingSectionWrap">
+        <div class="section-title-bar holding-title">
+            <h2>💼 현재 보유 종목 (<span id="holdingHeaderCount">{len(holding_items)}</span>)</h2>
+            <span class="sec-desc">정기/일괄 분석 업데이트 대상</span>
+        </div>
+        <div class="container" id="holdingContainer">
+            {holding_cards_html}
+        </div>
     </div>
+
+    <!-- 2. 관심 종목 섹션 (하단 - 접기/펼치기 가능) -->
+    <div class="section-wrap watchlist-wrap" id="watchlistSectionWrap">
+        <div class="section-title-bar watchlist-title" onclick="toggleWatchlistSection()">
+            <div>
+                <h2>👀 관심 · 레이더 종목 (<span id="watchlistHeaderCount">{len(watchlist_items)}</span>)</h2>
+                <span class="sec-desc">업데이트 일시 동결 (보유 전환 시 갱신 재개)</span>
+            </div>
+            <button type="button" id="watchlistToggleBtn" class="section-toggle-btn">▼ 접기</button>
+        </div>
+        <div class="container" id="watchlistContainer">
+            {watchlist_cards_html}
+        </div>
+    </div>
+
+    <div id="toastMessage" class="toast"></div>
+
     <script>
+        const STORAGE_KEY = "korean_stock_portfolio_status_v1";
+
+        function showToast(msg) {{
+            const t = document.getElementById('toastMessage');
+            if (!t) return;
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => {{
+                t.classList.remove('show');
+            }}, 2600);
+        }}
+
+        function getStoredPortfolio() {{
+            try {{
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : {{}};
+            }} catch(e) {{
+                return {{}};
+            }}
+        }}
+
+        function saveStoredPortfolio(dict) {{
+            try {{
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dict));
+            }} catch(e) {{}}
+        }}
+
+        function updateCounts() {{
+            const holdingCards = document.querySelectorAll('#holdingContainer .stock-card');
+            const watchlistCards = document.querySelectorAll('#watchlistContainer .stock-card');
+
+            const hCount = holdingCards.length;
+            const wCount = watchlistCards.length;
+
+            document.getElementById('holdingCount').innerText = hCount;
+            document.getElementById('holdingHeaderCount').innerText = hCount;
+            document.getElementById('watchlistCount').innerText = wCount;
+            document.getElementById('watchlistHeaderCount').innerText = wCount;
+        }}
+
+        function updateStockStatus(compName, targetStatus, event) {{
+            if (event) event.stopPropagation();
+
+            const card = document.querySelector(`.stock-card[data-name="${{compName}}"]`);
+            if (!card) return;
+
+            const curStatus = card.getAttribute('data-status');
+            if (curStatus === targetStatus) return;
+
+            // DOM move
+            const targetContainer = (targetStatus === 'holding') 
+                ? document.getElementById('holdingContainer') 
+                : document.getElementById('watchlistContainer');
+
+            card.setAttribute('data-status', targetStatus);
+
+            // Button active classes
+            const btnHolding = card.querySelector('.btn-holding');
+            const btnWatchlist = card.querySelector('.btn-watchlist');
+            if (btnHolding && btnWatchlist) {{
+                if (targetStatus === 'holding') {{
+                    btnHolding.classList.add('active');
+                    btnWatchlist.classList.remove('active');
+                }} else {{
+                    btnHolding.classList.remove('active');
+                    btnWatchlist.classList.add('active');
+                }}
+            }}
+
+            targetContainer.appendChild(card);
+            card.classList.remove('just-moved');
+            void card.offsetWidth; // trigger reflow
+            card.classList.add('just-moved');
+
+            // Save to localStorage
+            const stored = getStoredPortfolio();
+            stored[compName] = targetStatus;
+            saveStoredPortfolio(stored);
+
+            updateCounts();
+            const statusLabel = (targetStatus === 'holding') ? '💼 보유' : '👀 관심';
+            showToast(`[${{compName}}] 종목이 '${{statusLabel}}'(으)로 분류 이동되었습니다.`);
+        }}
+
+        function toggleWatchlistSection() {{
+            const container = document.getElementById('watchlistContainer');
+            const btn = document.getElementById('watchlistToggleBtn');
+            if (!container || !btn) return;
+
+            if (container.style.display === 'none') {{
+                container.style.display = 'flex';
+                btn.innerText = '▼ 접기';
+            }} else {{
+                container.style.display = 'none';
+                btn.innerText = '▶ 펼치기';
+            }}
+        }}
+
+        function copyPortfolioStatus() {{
+            const holdingList = [];
+            const watchlistList = [];
+
+            document.querySelectorAll('#holdingContainer .stock-card').forEach(c => {{
+                holdingList.push(c.getAttribute('data-name'));
+            }});
+            document.querySelectorAll('#watchlistContainer .stock-card').forEach(c => {{
+                watchlistList.push(c.getAttribute('data-name'));
+            }});
+
+            const syncPayload = {{
+                updated_at: new Date().toISOString(),
+                holding: holdingList,
+                watchlist: watchlistList
+            }};
+
+            const textToCopy = `[포트폴리오 상태 내역]\n` +
+                               `- 보유 (${{holdingList.length}}개): ${{holdingList.join(', ')}}\n` +
+                               `- 관심 (${{watchlistList.length}}개): ${{watchlistList.join(', ')}}\n\n` +
+                               `JSON:\n${{JSON.stringify(syncPayload, null, 2)}}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {{
+                showToast("📋 포트폴리오 상태가 클립보드에 복사되었습니다! 대화창에 붙여넣어 동기화할 수 있습니다.");
+            }}).catch(() => {{
+                showToast("복사 실패: 권한을 확인해주세요.");
+            }});
+        }}
+
         function filterCards() {{
             const q = document.getElementById('searchBox').value.trim().toLowerCase();
             const cards = document.querySelectorAll('.stock-card');
             cards.forEach(c => {{
-                const name = c.getAttribute('data-name').toLowerCase();
+                const name = (c.getAttribute('data-name') || '').toLowerCase();
                 const text = c.innerText.toLowerCase();
                 c.style.display = (name.includes(q) || text.includes(q)) ? 'block' : 'none';
             }});
         }}
+
+        // Initialize state from localStorage
+        window.addEventListener('DOMContentLoaded', () => {{
+            const stored = getStoredPortfolio();
+            let changed = false;
+
+            document.querySelectorAll('.stock-card').forEach(card => {{
+                const name = card.getAttribute('data-name');
+                const htmlStatus = card.getAttribute('data-status');
+                if (stored[name]) {{
+                    if (stored[name] !== htmlStatus) {{
+                        updateStockStatus(name, stored[name], null);
+                    }}
+                }} else {{
+                    stored[name] = htmlStatus;
+                    changed = true;
+                }}
+            }});
+
+            if (changed) {{
+                saveStoredPortfolio(stored);
+            }}
+            updateCounts();
+        }});
     </script>
 </body>
 </html>
@@ -927,6 +1372,8 @@ def main(output_local: str = DEFAULT_OUTPUT_LOCAL):
         print(f"[Error] Stock_Research 폴더가 존재하지 않습니다: {STOCK_RESEARCH_DIR}")
         return
 
+    portfolio_status = load_portfolio_status()
+
     for entry in sorted(os.listdir(STOCK_RESEARCH_DIR)):
         if entry == "Global_Trend":
             continue
@@ -936,7 +1383,7 @@ def main(output_local: str = DEFAULT_OUTPUT_LOCAL):
         p3_file = os.path.join(comp_dir, "3_Final_Reports", "Phase3_DCF.md")
         if not os.path.exists(p3_file):
             continue
-        summary = extract_company_summary(comp_dir, entry)
+        summary = extract_company_summary(comp_dir, entry, portfolio_status)
         items.append(summary)
 
     html_out = build_mobile_html(items)
